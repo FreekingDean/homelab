@@ -81,7 +81,7 @@ Below will be automatically installed as part of the further steps.
 3. [Homebrew] Install workstation dependencies
 
     ```sh
-    task init
+    go-task init
     ```
 
 ### ⚠️ pre-commit
@@ -91,13 +91,13 @@ It is advisable to install [pre-commit](https://pre-commit.com/) and the pre-com
 1. Enable Pre-Commit
 
     ```sh
-    task precommit:init
+    go-task precommit:init
     ```
 
 2. Update Pre-Commit, though it will occasionally make mistakes, so verify its results.
 
     ```sh
-    task precommit:update
+    go-task precommit:update
     ```
 
 ### 🔐 Setting up Age
@@ -107,7 +107,7 @@ It is advisable to install [pre-commit](https://pre-commit.com/) and the pre-com
 1. Create a Age Private / Public Key
 
     ```sh
-    task age
+    go-task age
     ```
 
 2. Fill out the Age public key in the appropriate variable in configuration section below, **note** the public key should start with `age`...
@@ -137,13 +137,13 @@ In order to use Terraform and `cert-manager` with the GCP DNS challenge you will
 2. Once that is done, verify the configuration is correct by running:
 
     ```sh
-    task verify
+    go-task verify
     ```
 
 3. If you do not encounter any errors run start having the script wire up the templated files and place them where they need to be.
 
     ```sh
-    task configure
+    go-task configure
     ```
 
 ### ☁️ Configuring Infrastructure with Terraform
@@ -153,19 +153,19 @@ In order to use Terraform and `cert-manager` with the GCP DNS challenge you will
 1. Pull in the Terraform deps
 
     ```sh
-    task terraform:init
+    go-task terraform:init
     ```
 
 2. Review the changes Terraform will make to your Cloudflare domain
 
     ```sh
-    task terraform:plan
+    go-task terraform:plan
     ```
 
 3. Have Terraform apply your Cloudflare settings
 
     ```sh
-    task terraform:apply
+    go-task terraform:apply
     ```
 
 The cluster application [external-dns](https://github.com/kubernetes-sigs/external-dns) will be managing the rest of the DNS records you will need.
@@ -177,7 +177,7 @@ The cluster application [external-dns](https://github.com/kubernetes-sigs/extern
 1. Verify Flux can be installed
 
     ```sh
-    task cluster:verify
+    go-task cluster:verify
     # ► checking prerequisites
     # ✔ kubectl 1.21.5 >=1.18.0-0
     # ✔ Kubernetes 1.21.5+k3s1 >=1.16.0-0
@@ -197,7 +197,7 @@ The cluster application [external-dns](https://github.com/kubernetes-sigs/extern
 3. Install Flux and sync the cluster to the Git repository
 
     ```sh
-    task cluster:install
+    go-task cluster:install
     # namespace/flux-system configured
     # customresourcedefinition.apiextensions.k8s.io/alerts.notification.toolkit.fluxcd.io created
     ```
@@ -205,7 +205,7 @@ The cluster application [external-dns](https://github.com/kubernetes-sigs/extern
 4. Verify Flux components are running in the cluster
 
     ```sh
-    task cluster:pods -- -n flux-system
+    go-task cluster:pods -- -n flux-system
     # NAME                                       READY   STATUS    RESTARTS   AGE
     # helm-controller-5bbd94c75-89sb4            1/1     Running   0          1h
     # kustomize-controller-7b67b6b77d-nqc67      1/1     Running   0          1h
@@ -220,49 +220,49 @@ _Mic check, 1, 2_ - In a few moments applications should be lighting up like a C
 You are able to run all the commands below with one task
 
 ```sh
-task cluster:resources
+go-task cluster:resources
 ```
 
 1. View the Flux Git Repositories
 
     ```sh
-    task cluster:gitrepositories
+    go-task cluster:gitrepositories
     ```
 
 2. View the Flux kustomizations
 
     ```sh
-    task cluster:kustomizations
+    go-task cluster:kustomizations
     ```
 
 3. View all the Flux Helm Releases
 
     ```sh
-    task cluster:helmreleases
+    go-task cluster:helmreleases
     ```
 
 4. View all the Flux Helm Repositories
 
     ```sh
-    task cluster:helmrepositories
+    go-task cluster:helmrepositories
     ```
 
 5. View all the Pods
 
     ```sh
-    task cluster:pods
+    go-task cluster:pods
     ```
 
 6. View all the certificates and certificate requests
 
     ```sh
-    task cluster:certificates
+    go-task cluster:certificates
     ```
 
 7. View all the ingresses
 
     ```sh
-    task cluster:ingresses
+    go-task cluster:ingresses
     ```
 
 🏆 **Congratulations** if all goes smooth you'll have a Kubernetes cluster managed by Flux, your Git repository is driving the state of your cluster.
@@ -402,11 +402,11 @@ The benefits of a public repository include:
   7. Commit and push changes
   8. Force flux to reconcile your changes
      ```sh
-     task cluster:reconcile
+     go-task cluster:reconcile
      ```
   9. Verify git repository is now using SSH:
       ```sh
-      task cluster:gitrepositories
+      go-task cluster:gitrepositories
       ```
   10. Optionally set your repository to Private in your repository settings.
 </details>

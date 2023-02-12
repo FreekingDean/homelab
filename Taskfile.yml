@@ -21,18 +21,9 @@ tasks:
   init:
     desc: Initialize workstation dependencies with Pacman, Pacaur, and Brew
     cmds:
-      - pacman -Syu {{.CLI_ARGS}}
-      - pacman -S {{.PACMAN_DEPS}} {{.CLI_ARGS}}
-      - pacman -S {{.PACAUR_DEPS}} {{.CLI_ARGS}}
-      - brew install {{.BREW_DEPS}} {{.CLI_ARGS}}
-    preconditions:
-      - sh: command -v pacman
-        msg: |
-          Pacman is not installed (you sure you are doing this right?)
-      - sh: command -v brew
-        msg: |
-          Homebrew is not installed. Using MacOS, Linux or WSL?
-          Head over to https://brew.sh to get up and running.
+      - sudo pacman -Syu {{.CLI_ARGS}}
+      - sudo pacman -S {{.PACMAN_DEPS}} {{.CLI_ARGS}}
+      - yay -S {{.PACAUR_DEPS}} {{.CLI_ARGS}}
     vars:
       PACMAN_DEPS: >-
         age
@@ -51,11 +42,9 @@ tasks:
         yq
       PACAUR_DEPS: >-
         go-task
-        brew
         tflint
-      BREW_DEPS: >-
-        fluxcd/tap/flux
-        weaveworks/tap/gitops
+        flux-bin
+        weave-gitops-bin
 
   age:
     desc: Setup keys

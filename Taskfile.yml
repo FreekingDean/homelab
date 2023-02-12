@@ -3,7 +3,6 @@ version: "3"
 
 vars:
   KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
-  ANSIBLE_DIR: "{{.ROOT_DIR}}/ansible"
   TERRAFORM_DIR: "{{.ROOT_DIR}}/terraform"
 
 dotenv: [".config.env"]
@@ -13,7 +12,6 @@ env:
   SOPS_AGE_KEY_FILE: ~/.config/sops/age/keys.txt
 
 includes:
-  ansible: .taskfiles/AnsibleTasks.yml
   cluster: .taskfiles/ClusterTasks.yml
   precommit: .taskfiles/PrecommitTasks.yml
   terraform: .taskfiles/TerraformTasks.yml
@@ -21,35 +19,52 @@ includes:
 tasks:
 
   init:
-    desc: Initialize workstation dependencies with Brew
+    desc: Initialize workstation dependencies with Pacman, Pacaur, and Brew
     cmds:
-      - brew install {{.DEPS}} {{.CLI_ARGS}}
+      - pacman -Syu {{.CLI_ARGS}}
+      - pacman -S {{.PACMAN_DEPS}} {{.CLI_ARGS}}
+      - pacman -S {{.PACAUR_DEPS}} {{.CLI_ARGS}}
+      - brew install {{.BREW_DEPS}} {{.CLI_ARGS}}
     preconditions:
+      - sh: command -v pacman
+        msg: |
+          Pacman is not installed (you sure you are doing this right?)
       - sh: command -v brew
         msg: |
           Homebrew is not installed. Using MacOS, Linux or WSL?
           Head over to https://brew.sh to get up and running.
     vars:
-      DEPS: >-
+      PACMAN_DEPS: >-
         age
-        ansible
         direnv
-        fluxcd/tap/flux
-        go-task/tap/go-task
         helm
         ipcalc
         jq
-        kubernetes-cli
+        kubectl
         kustomize
-        pre-commit
+        python-pre-commit
         prettier
         sops
         stern
         terraform
-        tflint
-        weaveworks/tap/gitops
         yamllint
         yq
+      PACAUR_DEPS: >-
+        go-task
+        brew
+        tflint
+      BREW_DEPS: >-
+        fluxcd/tap/flux
+        weaveworks/tap/gitops
+
+  age:
+    desc: Setup keys
+    cmds:
+      - age-keygen -o age.agekey
+      - mkdir -p ~/.config/sops/age
+      - mv age.agekey ~/.config/sops/age/keys.txt
+      - export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt"
+      - echo "export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt" > $HOME/.bashrc
 
   verify:
     desc: Verify env settings

@@ -1,44 +1,40 @@
 # Template for deploying k3s backed by Flux
 
-Highly opinionated template for deploying a single [k3s](https://k3s.io) cluster with [Ansible](https://www.ansible.com) and [Terraform](https://www.terraform.io) backed by [Flux](https://toolkit.fluxcd.io/) and [SOPS](https://toolkit.fluxcd.io/guides/mozilla-sops/).
+[Many thanks to the original by onedr0p](https://github.com/onedr0p/flux-cluster-template)
 
-The purpose here is to showcase how you can deploy an entire Kubernetes cluster and show it off to the world using the [GitOps](https://www.weave.works/blog/what-is-gitops-really) tool [Flux](https://toolkit.fluxcd.io/). When completed, your Git repository will be driving the state of your Kubernetes cluster. In addition with the help of the [Ansible](https://github.com/ansible-collections/community.sops), [Terraform](https://github.com/carlpett/terraform-provider-sops) and [Flux](https://toolkit.fluxcd.io/guides/mozilla-sops/) SOPS integrations you'll be able to commit [Age](https://github.com/FiloSottile/age) encrypted secrets to your public repo.
+Highly opinionated template for deploying a single [k3s](https://k3s.io) cluster with [Terraform](https://www.terraform.io) backed by [Flux](https://toolkit.fluxcd.io/) and [SOPS](https://toolkit.fluxcd.io/guides/mozilla-sops/).
+
+The purpose here is to showcase how you can deploy an entire Kubernetes cluster and show it off to the world using the [GitOps](https://www.weave.works/blog/what-is-gitops-really) tool [Flux](https://toolkit.fluxcd.io/). When completed, your Git repository will be driving the state of your Kubernetes cluster. In addition with the help of the [Terraform](https://github.com/carlpett/terraform-provider-sops) and [Flux](https://toolkit.fluxcd.io/guides/mozilla-sops/) SOPS integrations you'll be able to commit [Age](https://github.com/FiloSottile/age) encrypted secrets to your public repo.
 
 ## Overview
 
-- [Introduction](https://github.com/onedr0p/flux-cluster-template#-introduction)
-- [Prerequisites](https://github.com/onedr0p/flux-cluster-template#-prerequisites)
-- [Repository structure](https://github.com/onedr0p/flux-cluster-template#-repository-structure)
-- [Lets go!](https://github.com/onedr0p/flux-cluster-template#-lets-go)
-- [Post installation](https://github.com/onedr0p/flux-cluster-template#-post-installation)
-- [Troubleshooting](https://github.com/onedr0p/flux-cluster-template#-troubleshooting)
-- [What's next](https://github.com/onedr0p/flux-cluster-template#-whats-next)
-- [Thanks](https://github.com/onedr0p/flux-cluster-template#-thanks)
+- [Introduction](#introduction)
+- [Prerequisites](#prerequisites)
+- [Repository structure](#repository-structure)
+- [Lets go!](#lets-go)
+- [Post installation](#post-installation)
+- [Troubleshooting](#troubleshooting)
+- [What's next](#whats-next)
+- [Thanks](#thanks)
 
 ## 👋 Introduction
 
 The following components will be installed in your [k3s](https://k3s.io/) cluster by default. Most are only included to get a minimum viable cluster up and running.
 
 - [flux](https://toolkit.fluxcd.io/) - GitOps operator for managing Kubernetes clusters from a Git repository
-- [kube-vip](https://kube-vip.io/) - Load balancer for the Kubernetes control plane nodes
 - [metallb](https://metallb.universe.tf/) - Load balancer for Kubernetes services
 - [cert-manager](https://cert-manager.io/) - Operator to request SSL certificates and store them as Kubernetes resources
-- [calico](https://www.tigera.io/project-calico/) - Container networking interface for inter pod and service networking
 - [external-dns](https://github.com/kubernetes-sigs/external-dns) - Operator to publish DNS records to Cloudflare (and other providers) based on Kubernetes ingresses
-- [k8s_gateway](https://github.com/ori-edge/k8s_gateway) - DNS resolver that provides local DNS to your Kubernetes ingresses
-- [ingress-nginx](https://kubernetes.github.io/ingress-nginx/) - Kubernetes ingress controller used for a HTTP reverse proxy of Kubernetes ingresses
+- [traefik](https://traefik.io/) - Kubernetes ingress controller used for a HTTP reverse proxy of Kubernetes ingresses
 - [local-path-provisioner](https://github.com/rancher/local-path-provisioner) - provision persistent local storage with Kubernetes
 
 _Additional applications include [hajimari](https://github.com/toboshii/hajimari), [error-pages](https://github.com/tarampampam/error-pages), [echo-server](https://github.com/Ealenn/Echo-Server), [system-upgrade-controller](https://github.com/rancher/system-upgrade-controller), [reloader](https://github.com/stakater/Reloader), and [kured](https://github.com/weaveworks/kured)_
 
 For provisioning the following tools will be used:
 
-- [Ansible](https://www.ansible.com) - Sets up the operating system and installs k3s
-- [Terraform](https://www.terraform.io) - Provisions an existing Cloudflare domain and certain DNS records to be used with your Kubernetes cluster
+- [Terraform](https://www.terraform.io) - Provisions all nodes and API keys needed in the cluster.
 
 ## 📝 Prerequisites
-
-**Note:** _This template has not been tested on cloud providers like AWS EC2, Hetzner, Scaleway etc... Those cloud offerings probably have a better way of provsioning a Kubernetes cluster and it's advisable to use those instead of the Ansible playbooks included here. This repository can still be tweaked for the GitOps/Flux portion if there's a cluster working in one those environments._
 
 First and foremost some experience in debugging/troubleshooting problems **and a positive attitude is required** ;)
 
@@ -48,10 +44,10 @@ First and foremost some experience in debugging/troubleshooting problems **and a
 
 ### 💻 Systems
 
-- One or more nodes with a fresh install of [Fedora Server 36](https://getfedora.org/en/server/download/) or [Ubuntu 22.04 Server](https://ubuntu.com/download/server).
-  - These nodes can be ARM64/AMD64 bare metal or VMs.
+- One or more nodes with a fresh install of [Proxmox](https://pve.proxmox.com/)
+  - These nodes should be AMD64 bare metal.
   - An odd number of control plane nodes, greater than or equal to 3 is required if deploying more than one control plane node.
-- A [Cloudflare](https://www.cloudflare.com/) account with a domain, this will be managed by Terraform and external-dns. You can [register new domains](https://www.cloudflare.com/products/registrar/) directly thru Cloudflare.
+- A [GCP](https://cloud.google.com/) account with a domain, this will be managed by Terraform and external-dns.
 
 📍 It is recommended to have 3 master nodes for a highly available control plane.
 
@@ -68,34 +64,21 @@ The Git repository contains the following directories under `kubernetes` and are
 
 ## 🚀 Lets go
 
-Very first step will be to create a new **public** repository by clicking the big green **Use this template** button on this page.
-
-Clone **your new repo** to you local workstation and `cd` into it.
-
-📍 **All of the below commands** are run on your **local** workstation, **not** on any of your cluster nodes.
-
 ### 🔧 Workstation Tools
 
 📍 Install the **most recent version** of the CLI tools below. If you are **having trouble with future steps**, it is very likely you don't have the most recent version of these CLI tools, **!especially sops AND yq!**.
 
-1. Install the following CLI tools on your workstation, if you are **NOT** using [Homebrew](https://brew.sh/) on MacOS or Linux **ignore** steps 4 and 5.
+1. Install the following CLI tools on your workstation, [yay](https://aur.archlinux.org/packages/yay) and [go-task](https://aur.archlinux.org/packages/go-task)
 
-    * Required: [age](https://github.com/FiloSottile/age), [ansible](https://www.ansible.com), [flux](https://toolkit.fluxcd.io/), [weave-gitops](https://docs.gitops.weave.works/docs/installation/weave-gitops/), [go-task](https://github.com/go-task/task), [direnv](https://github.com/direnv/direnv), [ipcalc](http://jodies.de/ipcalc), [jq](https://stedolan.github.io/jq/), [kubectl](https://kubernetes.io/docs/tasks/tools/), [python-pip3](https://pypi.org/project/pip/), [pre-commit](https://github.com/pre-commit/pre-commit), [sops v3](https://github.com/mozilla/sops), [terraform](https://www.terraform.io), [yq v4](https://github.com/mikefarah/yq)
+Below will be automatically installed as part of the further steps.
+
+    * Required: [age](https://github.com/FiloSottile/age), [flux](https://toolkit.fluxcd.io/), [weave-gitops](https://docs.gitops.weave.works/docs/installation/weave-gitops/), [go-task](https://github.com/go-task/task), [direnv](https://github.com/direnv/direnv), [ipcalc](http://jodies.de/ipcalc), [jq](https://stedolan.github.io/jq/), [kubectl](https://kubernetes.io/docs/tasks/tools/), [python-pip3](https://pypi.org/project/pip/), [pre-commit](https://github.com/pre-commit/pre-commit), [sops v3](https://github.com/mozilla/sops), [terraform](https://www.terraform.io), [yq v4](https://github.com/mikefarah/yq)
 
     * Recommended: [helm](https://helm.sh/), [kustomize](https://github.com/kubernetes-sigs/kustomize), [stern](https://github.com/stern/stern), [yamllint](https://github.com/adrienverge/yamllint)
 
 2. This guide heavily relies on [go-task](https://github.com/go-task/task) as a framework for setting things up. It is advised to learn and understand the commands it is running under the hood.
 
-3. Install Python 3 and pip3 using your Linux OS package manager, or Homebrew if using MacOS.
-    - Ensure `pip3` is working on your command line by running `pip3 --version`
-
-4. [Homebrew] Install [go-task](https://github.com/go-task/task)
-
-    ```sh
-    brew install go-task/tap/go-task
-    ```
-
-5. [Homebrew] Install workstation dependencies
+3. [Homebrew] Install workstation dependencies
 
     ```sh
     task init
@@ -119,45 +102,29 @@ It is advisable to install [pre-commit](https://pre-commit.com/) and the pre-com
 
 ### 🔐 Setting up Age
 
-📍 Here we will create a Age Private and Public key. Using [SOPS](https://github.com/mozilla/sops) with [Age](https://github.com/FiloSottile/age) allows us to encrypt secrets and use them in Ansible, Terraform and Flux.
+📍 Here we will create a Age Private and Public key. Using [SOPS](https://github.com/mozilla/sops) with [Age](https://github.com/FiloSottile/age) allows us to encrypt secrets and use them in  Terraform and Flux.
 
 1. Create a Age Private / Public Key
 
     ```sh
-    age-keygen -o age.agekey
+    task age
     ```
 
-2. Set up the directory for the Age key and move the Age file to it
+2. Fill out the Age public key in the appropriate variable in configuration section below, **note** the public key should start with `age`...
 
-    ```sh
-    mkdir -p ~/.config/sops/age
-    mv age.agekey ~/.config/sops/age/keys.txt
-    ```
+### ☁️ GCP API Key
 
-3. Export the `SOPS_AGE_KEY_FILE` variable in your `bashrc`, `zshrc` or `config.fish` and source it, e.g.
+In order to use Terraform and `cert-manager` with the GCP DNS challenge you will need to create a API key.
 
-    ```sh
-    export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt
-    source ~/.bashrc
-    ```
+1. Head over to GCP and create a API key by going [here](https://console.cloud.google.com/iam-admin/serviceaccounts)
 
-4. Fill out the Age public key in the appropriate variable in configuration section below, **note** the public key should start with `age`...
+2. Either create a service account, or use an existing with the proper permissions.
 
-### ☁️ Global Cloudflare API Key
-
-In order to use Terraform and `cert-manager` with the Cloudflare DNS challenge you will need to create a API key.
-
-1. Head over to Cloudflare and create a API key by going [here](https://dash.cloudflare.com/profile/api-tokens).
-
-2. Under the `API Keys` section, create a global API Key.
-
-3. Use the API Key in the appropriate variable in configuration section below.
-
-📍 You may wish to update this later on to a Cloudflare **API Token** which can be scoped to certain resources. I do not recommend using a Cloudflare **API Key**, however for the purposes of this template it is easier getting started without having to define which scopes and resources are needed. For more information see the [Cloudflare docs on API Keys and Tokens](https://developers.cloudflare.com/api/).
+3. Generate a .json key to use with the account.
 
 ### 📄 Configuration
 
-📍 The `.config.env` file contains necessary configuration that is needed by Ansible, Terraform and Flux.
+📍 The `.config.env` file contains necessary configuration that is needed by Terraform and Flux.
 
 1. Copy the `.config.sample.env` to `.config.env` and start filling out all the environment variables.
 
@@ -179,84 +146,9 @@ In order to use Terraform and `cert-manager` with the Cloudflare DNS challenge y
     task configure
     ```
 
-### ⚡ Preparing Fedora or Ubuntu Server with Ansible
+### ☁️ Configuring Infrastructure with Terraform
 
-📍 Here we will be running a Ansible Playbook to prepare Fedora or Ubuntu Server for running a Kubernetes cluster.
-
-📍 Nodes are not security hardened by default, you can do this with [dev-sec/ansible-collection-hardening](https://github.com/dev-sec/ansible-collection-hardening) or similar if supported. This is an advanced configuration and generally not recommended unless you want to [DevSecOps](https://www.ibm.com/topics/devsecops) your cluster and nodes.
-
-1. Ensure you are able to SSH into your nodes from your workstation using a private SSH key **without a passphrase**. This is how Ansible is able to connect to your remote nodes.
-
-   [How to configure SSH key-based authentication](https://www.digitalocean.com/community/tutorials/how-to-configure-ssh-key-based-authentication-on-a-linux-server)
-
-2. Install the Ansible deps
-
-    ```sh
-    task ansible:init
-    ```
-
-3. Verify Ansible can view your config
-
-    ```sh
-    task ansible:list
-    ```
-
-4. Verify Ansible can ping your nodes
-
-    ```sh
-    task ansible:ping
-    ```
-
-5. Run the Fedora/Ubuntu Server Ansible prepare playbook
-
-    ```sh
-    task ansible:prepare
-    ```
-
-6. Reboot the nodes (if not done in step 5)
-
-    ```sh
-    task ansible:force-reboot
-    ```
-
-### ⛵ Installing k3s with Ansible
-
-📍 Here we will be running a Ansible Playbook to install [k3s](https://k3s.io/) with [this](https://galaxy.ansible.com/xanmanning/k3s) wonderful k3s Ansible galaxy role. After completion, Ansible will drop a `kubeconfig` in `./kubeconfig` for use with interacting with your cluster with `kubectl`.
-
-☢️ If you run into problems, you can run `task ansible:nuke` to destroy the k3s cluster and start over.
-
-1. Verify Ansible can view your config
-
-    ```sh
-    task ansible:list
-    ```
-
-2. Verify Ansible can ping your nodes
-
-    ```sh
-    task ansible:ping
-    ```
-
-3. Install k3s with Ansible
-
-    ```sh
-    task ansible:install
-    ```
-
-4. Verify the nodes are online
-
-    ```sh
-    task cluster:nodes
-    # NAME           STATUS   ROLES                       AGE     VERSION
-    # k8s-0          Ready    control-plane,master      4d20h   v1.21.5+k3s1
-    # k8s-1          Ready    worker                    4d20h   v1.21.5+k3s1
-    ```
-
-### ☁️ Configuring Cloudflare DNS with Terraform
-
-📍 Review the Terraform scripts under `./terraform/cloudflare/` and make sure you understand what it's doing (no really review it).
-
-If your domain already has existing DNS records **be sure to export those DNS settings before you continue**.
+📍 Review the Terraform scripts under `./terraform/infra/` and make sure you understand what it's doing (no really review it).
 
 1. Pull in the Terraform deps
 
@@ -276,8 +168,6 @@ If your domain already has existing DNS records **be sure to export those DNS se
     task terraform:apply
     ```
 
-If Terraform was ran successfully you can log into Cloudflare and validate the DNS records are present.
-
 The cluster application [external-dns](https://github.com/kubernetes-sigs/external-dns) will be managing the rest of the DNS records you will need.
 
 ### 🔹 GitOps with Flux
@@ -296,7 +186,7 @@ The cluster application [external-dns](https://github.com/kubernetes-sigs/extern
 
 2. Push you changes to git
 
-    📍 **Verify** all the `*.sops.yaml` and `*.sops.yml` files under the `./ansible`, `./kubernetes`, and `./terraform` folders are **encrypted** with SOPS
+    📍 **Verify** all the `*.sops.yaml` and `*.sops.yml` files under the `./kubernetes`, and `./terraform` folders are **encrypted** with SOPS
 
     ```sh
     git add -A
@@ -377,8 +267,6 @@ task cluster:resources
 
 🏆 **Congratulations** if all goes smooth you'll have a Kubernetes cluster managed by Flux, your Git repository is driving the state of your cluster.
 
-☢️ If you run into problems, you can run `task ansible:nuke` to destroy the k3s cluster and start over.
-
 🧠 Now it's time to pause and go get some coffee ☕ because next is describing how DNS is handled.
 
 ## 📣 Post installation
@@ -403,7 +291,7 @@ Now if nothing is working, that is expected. This is DNS after all!
 
 ### 🤖 Renovatebot
 
-[Renovatebot](https://www.mend.io/free-developer-tools/renovate/) will scan your repository and offer PRs when it finds dependencies out of date. Common dependencies it will discover and update are Flux, Ansible Galaxy Roles, Terraform Providers, Kubernetes Helm Charts, Kubernetes Container Images, Pre-commit hooks updates, and more!
+[Renovatebot](https://www.mend.io/free-developer-tools/renovate/) will scan your repository and offer PRs when it finds dependencies out of date. Common dependencies it will discover and update are Flux, Terraform Providers, Kubernetes Helm Charts, Kubernetes Container Images, Pre-commit hooks updates, and more!
 
 The base Renovate configuration provided in your repository can be view at [.github/renovate.json5](https://github.com/onedr0p/flux-cluster-template/blob/main/.github/renovate.json5). If you notice this only runs on weekends and you can [change the schedule to anything you want](https://docs.renovatebot.com/presets-schedule/) or simply remove it.
 
@@ -563,4 +451,5 @@ The world is your cluster, have at it!
 
 Big shout out to all the authors and contributors to the projects that we are using in this repository.
 
+[Many thanks to the original by onedr0p](https://github.com/onedr0p/flux-cluster-template)
 [@whazor](https://github.com/whazor) created [this website](https://nanne.dev/k8s-at-home-search/) as a creative way to search Helm Releases across GitHub. You may use it as a means to get ideas on how to configure an applications' Helm values.

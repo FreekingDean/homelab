@@ -26,14 +26,14 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    autoscaling:
-      enabled: true
-      minReplicas: 3
-      maxReplicas: 10
-      metrics:
-        type: Resource
-        resource:
-          name: cpu
-          target:
-            type: Utilization
-            averageUtilization: 60
+  #  autoscaling:
+  #    enabled: true
+  #    minReplicas: 3
+  #    maxReplicas: 10
+  #    metrics:
+  #      type: Resource
+  #      resource:
+  #        name: cpu
+  #        target:
+  #          type: Utilization
+  #          averageUtilization: 60

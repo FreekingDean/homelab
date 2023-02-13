@@ -52,7 +52,7 @@ spec:
               - path: /
                 pathType: Prefix
         tls:
-          - secretName: letsencrypt-production
+          - secretName: deangalvin-com-production-tls
             hosts:
               - *host
     podAnnotations:

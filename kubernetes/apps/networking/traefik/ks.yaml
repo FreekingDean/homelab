@@ -23,8 +23,8 @@ metadata:
   name: cluster-apps-traefik
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: cluster-apps-traefik-certificates
+  dependsOn: []
+  #  - name: cluster-apps-traefik-certificates
   path: ./kubernetes/apps/networking/traefik/app
   prune: true
   sourceRef:

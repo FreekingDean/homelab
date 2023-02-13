@@ -9,9 +9,12 @@ spec:
     privateKeySecretRef:
       name: letsencrypt-production
     solvers:
-      - http01:
-          ingress:
-            class: "${INGRESS_CLASS}"
+      - dns01:
+          cloudDNS:
+            project: "${GCP_PROJECT}"
+            serviceAccountSecretRef:
+              name: clouddns-dns01-solver-svc-acct
+              key: key.json
         selector:
           dnsZones:
             - "${LOCAL_DOMAIN}"
@@ -28,9 +31,12 @@ spec:
     privateKeySecretRef:
       name: letsencrypt-staging
     solvers:
-      - http01:
-          ingress:
-            class: "${INGRESS_CLASS}"
+      - dns01:
+          cloudDNS:
+            project: "${GCP_PROJECT}"
+            serviceAccountSecretRef:
+              name: clouddns-dns01-solver-svc-acct
+              key: key.json
         selector:
           dnsZones:
             - "${LOCAL_DOMAIN}"

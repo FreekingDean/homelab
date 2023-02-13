@@ -11,6 +11,7 @@ spec:
     kind: ClusterIssuer
   commonName: "${DOMAIN}"
   dnsNames:
+    - "${DOMAIN}"
     - "${PUBLIC_DOMAIN}"
     - "*.${PUBLIC_DOMAIN}"
     - "${LOCAL_DOMAIN}"
@@ -28,6 +29,7 @@ spec:
     kind: ClusterIssuer
   commonName: "${DOMAIN}"
   dnsNames:
+    - "${DOMAIN}"
     - "${PUBLIC_DOMAIN}"
     - "*.${PUBLIC_DOMAIN}"
     - "${LOCAL_DOMAIN}"

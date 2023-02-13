@@ -26,6 +26,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    logs:
+      access:
+        enabled: true
   #  autoscaling:
   #    enabled: true
   #    minReplicas: 3

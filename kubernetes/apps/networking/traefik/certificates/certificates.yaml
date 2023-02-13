@@ -6,6 +6,11 @@ metadata:
   namespace: networking
 spec:
   secretName: "${DOMAIN/./-}-production-tls"
+  secretTemplate:
+    annotations:
+      reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "default,monitoring,flux-system"
+      reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+      reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
@@ -24,6 +29,11 @@ metadata:
   namespace: networking
 spec:
   secretName: "${DOMAIN/./-}-staging-tls"
+  secretTemplate:
+    annotations:
+      reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "default,monitoring,flux-system"
+      reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+      reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
   issuerRef:
     name: letsencrypt-staging
     kind: ClusterIssuer

@@ -6,7 +6,7 @@ metadata:
 spec:
   ipWhiteList:
     ipStrategy:
-      exludeIPs:
+      excludeIPs:
         - 10.42.0.0/16
     sourceRange:
       - 127.0.0.1/32

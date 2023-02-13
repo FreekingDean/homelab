@@ -23,8 +23,8 @@ metadata:
   name: cluster-apps-traefik
   namespace: flux-system
 spec:
-  dependsOn: []
-  #  - name: cluster-apps-traefik-certificates
+  dependsOn:
+    - name: cluster-apps-traefik-certificates
   path: ./kubernetes/apps/networking/traefik/app
   prune: true
   sourceRef:
@@ -35,6 +35,23 @@ spec:
       kind: HelmRelease
       name: traefik
       namespace: networking
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: cluster-apps-traefik-middlewares
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cluster-apps-traefik
+  path: ./kubernetes/apps/networking/traefik/middlewares
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
   interval: 30m
   retryInterval: 1m
   timeout: 3m

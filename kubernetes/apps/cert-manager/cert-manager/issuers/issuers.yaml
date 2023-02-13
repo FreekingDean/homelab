@@ -17,6 +17,7 @@ spec:
               key: key.json
         selector:
           dnsZones:
+            - "${DOMAIN}"
             - "${LOCAL_DOMAIN}"
             - "${PUBLIC_DOMAIN}"
 ---
@@ -39,5 +40,6 @@ spec:
               key: key.json
         selector:
           dnsZones:
+            - "${DOMAIN}"
             - "${LOCAL_DOMAIN}"
             - "${PUBLIC_DOMAIN}"

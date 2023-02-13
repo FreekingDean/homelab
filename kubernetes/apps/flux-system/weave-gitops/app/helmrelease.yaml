@@ -33,6 +33,8 @@ spec:
       enabled: true
       className: "${INGRESS_CLASS}"
       annotations:
+        traefik.ingress.kubernetes.io/router.middlewares: localonly
+
         hajimari.io/icon: sawtooth-wave
       hosts:
         - host: &host "gitops.${LOCAL_DOMAIN}"

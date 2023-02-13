@@ -7,9 +7,8 @@ resources:
   - ./emberstack.yaml
   - ./external-dns.yaml
   - ./hajimari.yaml
-  - ./ingress-nginx.yaml
+  - ./traefik.yaml
   - ./jetstack.yaml
   - ./kubernetes-dashboard.yaml
   - ./stakater.yaml
-  - ./traefik.yaml
   - ./weave-gitops.yaml

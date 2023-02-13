@@ -5,6 +5,9 @@ metadata:
   name: localonly
 spec:
   ipWhiteList:
+    ipStrategy:
+      exludeIPs:
+        - 10.42.0.0/16
     sourceRange:
       - 127.0.0.1/32
       - 192.168.2.0/24

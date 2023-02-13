@@ -26,9 +26,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    ports:
-      traefik:
-        exposePort: true
   #  autoscaling:
   #    enabled: true
   #    minReplicas: 3

@@ -10,12 +10,12 @@ spec:
       name: letsencrypt-production
     solvers:
       - http01:
-        ingress:
-          class: "${INGRESS_CLASS}"
-        selector:
-          dnsZones:
-            - "${LOCAL_DOMAIN}"
-            - "${PUBLIC_DOMAIN}"
+          ingress:
+            class: "${INGRESS_CLASS}"
+          selector:
+            dnsZones:
+              - "${LOCAL_DOMAIN}"
+              - "${PUBLIC_DOMAIN}"
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -29,9 +29,9 @@ spec:
       name: letsencrypt-staging
     solvers:
       - http01:
-        ingress:
-          class: "${INGRESS_CLASS}"
-        selector:
-          dnsZones:
-            - "${LOCAL_DOMAIN}"
-            - "${PUBLIC_DOMAIN}"
+          ingress:
+            class: "${INGRESS_CLASS}"
+          selector:
+            dnsZones:
+              - "${LOCAL_DOMAIN}"
+              - "${PUBLIC_DOMAIN}"

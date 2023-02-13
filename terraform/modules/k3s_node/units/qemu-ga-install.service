@@ -1,0 +1,12 @@
+[Unit]
+Description=Install qemu-ga with rpm-ostree
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/qemu-ga-installer
+TimeoutSec=300
+
+[Install]
+WantedBy=multi-user.target

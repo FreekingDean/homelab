@@ -24,7 +24,7 @@ The following components will be installed in your [k3s](https://k3s.io/) cluste
 - [flux](https://toolkit.fluxcd.io/) - GitOps operator for managing Kubernetes clusters from a Git repository
 - [metallb](https://metallb.universe.tf/) - Load balancer for Kubernetes services
 - [cert-manager](https://cert-manager.io/) - Operator to request SSL certificates and store them as Kubernetes resources
-- [external-dns](https://github.com/kubernetes-sigs/external-dns) - Operator to publish DNS records to Cloudflare (and other providers) based on Kubernetes ingresses
+- [external-dns](https://github.com/kubernetes-sigs/external-dns) - Operator to publish DNS records to your DNS providers based on Kubernetes ingresses
 - [traefik](https://traefik.io/) - Kubernetes ingress controller used for a HTTP reverse proxy of Kubernetes ingresses
 - [local-path-provisioner](https://github.com/rancher/local-path-provisioner) - provision persistent local storage with Kubernetes
 
@@ -156,13 +156,13 @@ In order to use Terraform and `cert-manager` with the GCP DNS challenge you will
     go-task terraform:init
     ```
 
-2. Review the changes Terraform will make to your Cloudflare domain
+2. Review the changes Terraform will make
 
     ```sh
     go-task terraform:plan
     ```
 
-3. Have Terraform apply your Cloudflare settings
+3. Have Terraform apply your settings
 
     ```sh
     go-task terraform:apply
@@ -277,7 +277,7 @@ go-task cluster:resources
 
 ### 🌐 DNS
 
-📍 The [external-dns](https://github.com/kubernetes-sigs/external-dns) application created in the `networking` namespace will handle creating public DNS records. By default, `echo-server` and the `flux-webhook` are the only public domain exposed on your Cloudflare domain. In order to make additional applications public you must set an ingress annotation (`external-dns.alpha.kubernetes.io/target`) like done in the `HelmRelease` for `echo-server`. You do not need to use Terraform to create additional DNS records unless you need a record outside the purposes of your Kubernetes cluster (e.g. setting up MX records).
+📍 The [external-dns](https://github.com/kubernetes-sigs/external-dns) application created in the `networking` namespace will handle creating public DNS records. By default, `echo-server` and the `flux-webhook` are the only public domain exposed on your domain. In order to make additional applications public you must set an ingress annotation (`external-dns.alpha.kubernetes.io/target`) like done in the `HelmRelease` for `echo-server`. You do not need to use Terraform to create additional DNS records unless you need a record outside the purposes of your Kubernetes cluster (e.g. setting up MX records).
 
 [k8s_gateway](https://github.com/ori-edge/k8s_gateway) is deployed on the IP choosen for `${BOOTSTRAP_METALLB_K8S_GATEWAY_ADDR}`. Inorder to test DNS you can point your clients DNS to the `${BOOTSTRAP_METALLB_K8S_GATEWAY_ADDR}` IP address and load `https://hajimari.${BOOTSTRAP_CLOUDFLARE_DOMAIN}` in your browser.
 

@@ -43,13 +43,11 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: "${INGRESS_CLASS}"
         annotations:
-          nginx.ingress.kubernetes.io/whitelist-source-range: |
-            10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
           hajimari.io/enable: "false"
         hosts:
-          - host: &host "hajimari.${SECRET_DOMAIN}"
+          - host: &host "apps.${LOCAL_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix

@@ -35,12 +35,12 @@ spec:
       - --token-ttl=43200
     ingress:
       enabled: true
-      className: nginx
+      className: "${INGRESS_CLASS}"
       annotations:
         cert-manager.io/cluster-issuer: letsencrypt-staging
         hajimari.io/icon: mdi:kubernetes
       hosts:
-        - &host "kubernetes.${SECRET_DOMAIN}"
+        - &host "kubernetes.${LOCAL_DOMAIN}"
       tls:
         - hosts:
             - *host

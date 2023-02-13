@@ -1,0 +1,3 @@
+#! /bin/bash
+echo -e "label:gpt\nname=${label}" | sfdisk /dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi${scsi_id}
+mkfs.ext4 /dev/disk/by-partlabel/${label}

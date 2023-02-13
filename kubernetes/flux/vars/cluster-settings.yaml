@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-settings
+  namespace: flux-system
+data:
+  DOMAIN: "deangalvin.com"
+  LOCAL_DOMAIN: "local.deangalvin.com"
+  PUBLIC_DOMAIN: "public.deangalvin.com"
+  TIMEZONE: "America/New_York"

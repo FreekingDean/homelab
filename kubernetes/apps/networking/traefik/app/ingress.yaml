@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: "${INGRESS_CLASS}"
   rules:
-    - host: &host "deangalvin.com"
+    - host: &local_host "*.local.deangalvin.com"
       http:
         paths:
           - path: /
@@ -18,8 +18,21 @@ spec:
               service:
                 name: legacy-server
                 port:
-                  number: 443
+                  number: 8080
+    - host: &public_host "*.public.deangalvin.com"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: legacy-server
+                port:
+                  number: 8080
   tls:
     - hosts:
-        - *host
+        - *public_host
+      secretName: deangalvin-com-production-tls
+    - hosts:
+        - *local_host
       secretName: deangalvin-com-production-tls

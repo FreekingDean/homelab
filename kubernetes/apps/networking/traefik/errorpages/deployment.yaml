@@ -23,4 +23,4 @@ spec:
           - name: SHOW_DETAILS
             value: "true"
         ports:
-          - containerPort: 80
+          - containerPort: 8080

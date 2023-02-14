@@ -20,7 +20,7 @@ spec:
               service:
                 name: traefik-errorpages
                 port:
-                  number: 80
+                  number: 8080
   tls:
     - hosts:
         - *host

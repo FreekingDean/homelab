@@ -28,7 +28,7 @@ spec:
   values:
     service:
       annotations:
-        external-dns.alpha.kubernetes.io/hostname: "*.deangalvin.com,deangalvin.com,*.deangalvin.dev,deangalvin.dev"
+        external-dns.alpha.kubernetes.io/hostname: "*.deangalvin.dev,deangalvin.dev"
       spec:
         externalTrafficPolicy: Local
     logs:

@@ -1,0 +1,25 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: legacy-server
+  namespace: networking
+  annotations:
+    hajimari.io/enable: "false"
+spec:
+  ingressClassName: "${INGRESS_CLASS}"
+  rules:
+    - host: &host "deangalvin.com"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: legacy-server
+                port:
+                  number: 443
+  tls:
+    - hosts:
+        - *host
+      secretName: deangalvin-com-production-tls

@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./traefik/ks.yaml
+  - ./external-dns/ks.yaml

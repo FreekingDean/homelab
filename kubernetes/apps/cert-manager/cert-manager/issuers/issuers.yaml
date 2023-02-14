@@ -1,3 +1,4 @@
+---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
@@ -17,9 +18,8 @@ spec:
               key: key.json
         selector:
           dnsZones:
-            - "${DOMAIN}"
-            - "${LOCAL_DOMAIN}"
-            - "${PUBLIC_DOMAIN}"
+            - "deangalvin.com"
+            - "deangalvin.dev"
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer

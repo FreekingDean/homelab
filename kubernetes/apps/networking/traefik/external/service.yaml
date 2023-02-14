@@ -11,6 +11,3 @@ spec:
       port: 443
       targetPort: 443
   externalName: 10.0.0.131
-  selector:
-    app.kubernetes.io/instance: traefik
-    app.kubernetes.io/name: traefik

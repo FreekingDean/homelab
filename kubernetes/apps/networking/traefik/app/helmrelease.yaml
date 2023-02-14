@@ -33,7 +33,7 @@ spec:
         externalTrafficPolicy: Local
     logs:
       access:
-        enabled: true
+        enabled: false
   # autoscaling:
   #   enabled: true
   #   minReplicas: 3

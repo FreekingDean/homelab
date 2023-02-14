@@ -19,8 +19,8 @@
   "suppressNotifications": ["prIgnoreNotification"],
   "rebaseWhen": "conflicted",
   "schedule": [
-    "after 9am everyday",
-    "before 5pm everyday"
+    "after 9am",
+    "before 5pm"
   ],
   "pre-commit": {
     "enabled": true

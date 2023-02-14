@@ -26,6 +26,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    ports:
+      websecure:
+        middlewares:
+          - networking-traefik-errors@kubernetescrd
     providers:
       kubernetesIngress:
         allowExternalNameServices: true

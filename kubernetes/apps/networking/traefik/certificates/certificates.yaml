@@ -6,6 +6,8 @@ metadata:
   namespace: networking
 spec:
   secretName: "deangalvin-dev-production-tls"
+  secretTemplate:
+    annotations: []
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
@@ -21,6 +23,8 @@ metadata:
   namespace: networking
 spec:
   secretName: "deangalvin-com-production-tls"
+  secretTemplate:
+    annotations: []
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
@@ -37,6 +41,7 @@ metadata:
 spec:
   secretName: "deangalvin-com-staging-tls"
   secretTemplate:
+    annotations: []
   issuerRef:
     name: letsencrypt-staging
     kind: ClusterIssuer

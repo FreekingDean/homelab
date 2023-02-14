@@ -11,6 +11,16 @@ metadata:
 spec:
   ingressClassName: "${INGRESS_CLASS}"
   rules:
+    - host: &host "deangalvin.dev"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: traefik-errorpages
+                port:
+                  number: 8080
     - host: &host "*.deangalvin.dev"
       http:
         paths:

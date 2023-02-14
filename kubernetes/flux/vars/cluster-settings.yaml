@@ -5,6 +5,6 @@ metadata:
   name: cluster-settings
   namespace: flux-system
 data:
-  DOMAIN: "deangalvin.com"
+  DOMAIN: "deangalvin.dev"
   TIMEZONE: "America/New_York"
   PRODUCTION_TLS: "deangalvin-dev-production-tls"

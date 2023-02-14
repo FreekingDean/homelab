@@ -5,7 +5,7 @@ metadata:
   name: "deangalvin-dev-production"
   namespace: networking
 spec:
-  secretName: "deangalvin-dev-production-tls"
+  secretName: "${PRODUCTION_TLS}"
   secretTemplate:
     annotations: []
   issuerRef:
@@ -48,4 +48,4 @@ spec:
   commonName: "deangalvin.com"
   dnsNames:
     - "deangalvin.com"
-    - "*.deangalvin.coom"
+    - "*.deangalvin.com"

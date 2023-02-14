@@ -42,7 +42,7 @@ spec:
             - path: /
               pathType: Prefix
       tls:
-        - secretName: deangalvin-com-production-tls
+        - secretName: "${PRODUCTION_TLS}"
           hosts:
             - *host
     networkPolicy:

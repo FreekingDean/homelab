@@ -28,7 +28,7 @@ spec:
   values:
     providers:
       kubernetesIngress:
-        allowExternalNameServices: false
+        allowExternalNameServices: true
     service:
       annotations:
         external-dns.alpha.kubernetes.io/hostname: "*.deangalvin.dev,deangalvin.dev"

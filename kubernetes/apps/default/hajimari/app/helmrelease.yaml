@@ -47,7 +47,7 @@ spec:
         annotations:
           hajimari.io/enable: "false"
         hosts:
-          - host: &host "apps.${LOCAL_DOMAIN}"
+          - host: &host "apps.${DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix

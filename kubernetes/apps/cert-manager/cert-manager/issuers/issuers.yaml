@@ -41,5 +41,3 @@ spec:
         selector:
           dnsZones:
             - "${DOMAIN}"
-            - "${LOCAL_DOMAIN}"
-            - "${PUBLIC_DOMAIN}"

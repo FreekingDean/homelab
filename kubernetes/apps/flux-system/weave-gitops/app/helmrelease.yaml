@@ -37,7 +37,7 @@ spec:
 
         hajimari.io/icon: sawtooth-wave
       hosts:
-        - host: &host "gitops.${LOCAL_DOMAIN}"
+        - host: &host "gitops.${DOMAIN}"
           paths:
             - path: /
               pathType: Prefix

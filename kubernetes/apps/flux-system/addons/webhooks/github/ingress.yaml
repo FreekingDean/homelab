@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: "${INGRESS_CLASS}"
   rules:
-    - host: &host "flux-webhook.${PUBLIC_DOMAIN}"
+    - host: &host "flux-webhook.${DOMAIN}"
       http:
         paths:
           - path: /hook/

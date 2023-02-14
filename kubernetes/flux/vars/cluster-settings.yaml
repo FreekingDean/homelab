@@ -6,7 +6,5 @@ metadata:
   namespace: flux-system
 data:
   DOMAIN: "deangalvin.com"
-  LOCAL_DOMAIN: "local.deangalvin.dev"
-  PUBLIC_DOMAIN: "public.deangalvin.dev"
   TIMEZONE: "America/New_York"
   PRODUCTION_TLS: "deangalvin-dev-production-tls"

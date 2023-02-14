@@ -3,3 +3,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./certificates.yaml
+patches:
+  - op: add
+    path: "/spec/secretTemplate/annotations"
+    value:
+      reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "default,monitoring,flux-system"
+      reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+      reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"

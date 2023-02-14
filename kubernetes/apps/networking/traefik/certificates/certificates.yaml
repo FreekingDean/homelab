@@ -2,45 +2,45 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: "${DOMAIN/./-}-production"
+  name: "deangalvin-dev-production"
   namespace: networking
 spec:
-  secretName: "${DOMAIN/./-}-production-tls"
-  secretTemplate:
-    annotations:
-      reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "default,monitoring,flux-system"
-      reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
-      reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
+  secretName: "deangalvin-dev-production-tls"
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: "${DOMAIN}"
+  commonName: "deangalvin.dev"
   dnsNames:
-    - "${DOMAIN}"
-    - "${PUBLIC_DOMAIN}"
-    - "*.${PUBLIC_DOMAIN}"
-    - "${LOCAL_DOMAIN}"
-    - "*.${LOCAL_DOMAIN}"
+    - "deangalvin.dev"
+    - "*.deangalvin.dev"
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: "${DOMAIN/./-}-staging"
+  name: "deangalvin-com-production"
   namespace: networking
 spec:
-  secretName: "${DOMAIN/./-}-staging-tls"
+  secretName: "deangalvin-com-production-tls"
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: "deangalvin.com"
+  dnsNames:
+    - "deangalvin.com"
+    - "*.deangalvin.com"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: "deangalvin-com-staging"
+  namespace: networking
+spec:
+  secretName: "deangalvin-com-staging-tls"
   secretTemplate:
-    annotations:
-      reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "default,monitoring,flux-system"
-      reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
-      reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
   issuerRef:
     name: letsencrypt-staging
     kind: ClusterIssuer
-  commonName: "${DOMAIN}"
+  commonName: "deangalvin.com"
   dnsNames:
-    - "${DOMAIN}"
-    - "${PUBLIC_DOMAIN}"
-    - "*.${PUBLIC_DOMAIN}"
-    - "${LOCAL_DOMAIN}"
-    - "*.${LOCAL_DOMAIN}"
+    - "deangalvin.com"
+    - "*.deangalvin.coom"

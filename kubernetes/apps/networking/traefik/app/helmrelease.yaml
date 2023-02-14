@@ -28,20 +28,20 @@ spec:
   values:
     service:
       annotations:
-        external-dns.alpha.kubernetes.io/hostname: "*.test.deangalvin.com,test.deangalvin.com,*.local.deangalvin.com,local.deangalvin.com,*.public.deangalvin.com,public.deangalvin.com"
+        external-dns.alpha.kubernetes.io/hostname: "*.deangalvin.com,deangalvin.com,*.deangalvin.dev,deangalvin.dev"
       spec:
         externalTrafficPolicy: Local
     logs:
       access:
         enabled: true
-  #  autoscaling:
-  #    enabled: true
-  #    minReplicas: 3
-  #    maxReplicas: 10
-  #    metrics:
-  #      type: Resource
-  #      resource:
-  #        name: cpu
-  #        target:
-  #          type: Utilization
-  #          averageUtilization: 60
+  # autoscaling:
+  #   enabled: true
+  #   minReplicas: 3
+  #   maxReplicas: 10
+  #   metrics:
+  #     type: Resource
+  #     resource:
+  #       name: cpu
+  #       target:
+  #         type: Utilization
+  #         averageUtilization: 60

@@ -1,0 +1,53 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: external-dns
+  namespace: networking
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: external-dns
+      version: 1.12.1
+      sourceRef:
+        kind: HelmRepository
+        name: external-dns
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    interval: 2m
+    # logLevel: debug
+    provider: cloudflare
+    env:
+      - name: GOOGLE_APPLICATION_CREDENTIALS
+        value: /var/lib/gcp/key.json
+    extraArgs:
+      - "--google-project ${GCP_PROJECT}"
+    policy: sync
+    # sources: [""]
+    txtPrefix: k8s.
+    txtOwnerId: default
+    domainFilters: ["deangalvin.com"]
+    serviceMonitor:
+      enabled: false
+    podAnnotations:
+      secret.reloader.stakater.com/reload: external-dns-secret
+    extraVolumeMounts:
+      - name: gcp-credentials
+        mountPath: "/var/lib/gcp"
+        readOnly: true
+    extraVolumes:
+      - name: gcp-credentials
+        secret:
+          secretName: google-service-account

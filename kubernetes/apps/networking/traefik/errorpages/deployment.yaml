@@ -1,0 +1,26 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traefik-errorpages
+	namespace: networking
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: traefik-errorpages
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: traefik-errorpages
+    spec:
+      containers:
+      - name: error-pages
+        image: ghcr.io/tarampampam/error-pages:2.20.0
+        env:
+          - name: TEMPLATE_NAME
+            value: ghost
+          - name: SHOW_DETAILS
+            value: "true"
+        ports:
+          - containerPort: 80

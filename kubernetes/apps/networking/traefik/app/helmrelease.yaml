@@ -27,6 +27,8 @@ spec:
     keepHistory: false
   values:
     service:
+      annotations:
+        external-dns.alpha.kubernetes.io/hostname: "*.test.deangalvin.com"
       spec:
         externalTrafficPolicy: Local
     logs:

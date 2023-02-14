@@ -38,7 +38,7 @@ spec:
     # sources: [""]
     txtPrefix: k8s.
     txtOwnerId: default
-    domainFilters: ["deangalvin.com"]
+    domainFilters: ["deangalvin.com", "deangalvin.dev", "bananaboydean.com", "bananaboydean.dev"]
     serviceMonitor:
       enabled: false
     podAnnotations:

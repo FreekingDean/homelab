@@ -11,7 +11,7 @@ module "enterprise" {
   cluster_server = module.ds9.cluster_server_ip
 
   servers    = 0
-  agents     = 0
+  agents     = 2
   ceph_nodes = []
 }
 
@@ -28,7 +28,7 @@ module "voyager" {
   cluster_server = module.ds9.cluster_server_ip
 
   servers    = 0
-  agents     = 1
+  agents     = 2
   ceph_nodes = []
 }
 

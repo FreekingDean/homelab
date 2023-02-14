@@ -31,7 +31,7 @@ metadata:
   namespace: networking
   annotations:
     traefik.ingress.kubernetes.io/router.middlewares: networking-localonly@kubernetescrd
-    hajimari.io/enable: "true"
+    hajimari.io/icon: video-input-antenna
 spec:
   ingressClassName: "${INGRESS_CLASS}"
   rules:

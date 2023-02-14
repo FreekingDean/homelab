@@ -6,6 +6,8 @@ resources:
 patches:
   - op: add
     path: "/spec/secretTemplate/annotations"
+    target:
+      kind: Certificate
     value:
       reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "default,monitoring,flux-system"
       reflector.v1.k8s.emberstack.com/reflection-allowed: "true"

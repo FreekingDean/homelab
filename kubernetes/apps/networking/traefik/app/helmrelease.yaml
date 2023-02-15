@@ -43,6 +43,12 @@ spec:
         enabled: false
     deployment:
       kind: DaemonSet
+    ingressRoute:
+      dashboard:
+        entryPoints: ["websecure"]
+        middlewares:
+          - "networking-localonly@kubernetescrd"
+
   # autoscaling:
   #   enabled: true
   #   minReplicas: 3

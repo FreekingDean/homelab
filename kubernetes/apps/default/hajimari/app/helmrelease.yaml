@@ -32,14 +32,18 @@ spec:
       alwaysTargetBlank: true
       showGreeting: false
       showAppGroups: false
-      showAppStatus: false
+      showAppStatus: true
       showBookmarkGroups: false
       showGlobalBookmarks: false
-      showAppUrls: false
+      showAppUrls: true
       defaultEnable: true
       namespaceSelector:
         matchNames:
           - default
+          - rook-ceph
+          - monitoring
+          - kube-system
+          - flux-system
     ingress:
       main:
         enabled: true

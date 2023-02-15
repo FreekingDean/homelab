@@ -43,6 +43,3 @@ spec:
         enabled: false
     deployment:
       kind: DaemonSet
-    ingressRoute:
-      dashboard:
-        enabled: false

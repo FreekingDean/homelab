@@ -42,7 +42,7 @@ spec:
       access:
         enabled: false
     deployment:
-      king: Daemonset
+      kind: Daemonset
   # autoscaling:
   #   enabled: true
   #   minReplicas: 3

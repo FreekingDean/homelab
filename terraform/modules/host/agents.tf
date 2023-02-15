@@ -2,7 +2,7 @@ module "agents" {
   source  = "../../modules/k3s_node"
   count   = var.agents
   node    = var.node
-  id      = count.index + 1
+  id      = count.index + 1 + 20
   node_id = var.id
   memory  = 8 * 1024
   cpus    = 8

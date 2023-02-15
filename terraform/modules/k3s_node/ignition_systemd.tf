@@ -3,8 +3,6 @@ locals {
   base_args = concat([
     "--data-dir /var/lib/k3sdata",
     "--token spinthedata",
-    "--disable traefik",
-    "--disable-helm-controller",
   ], local.taint_args)
 
   agent_args = join(" ", concat(local.base_args, ["--server https://${var.server_ip}:6443"]))
@@ -12,6 +10,8 @@ locals {
   server_arg = var.server_ip == var.ip ? "--cluster-init" : "--server https://${var.server_ip}:6443"
   server_args = join(" ", concat(local.base_args, [
     local.server_arg,
+    "--disable traefik",
+    "--disable-helm-controller",
     "--node-taint \"CriticalAddonsOnly=true:NoExecute\"",
     "--etcd-expose-metrics true",
   ]))

@@ -24,6 +24,7 @@ data "ignition_config" "k3s" {
     data.ignition_file.qemu_ga_installer.rendered,
     data.ignition_file.hostname.rendered,
     data.ignition_file.network_interface.rendered,
+    data.ignition_file.node_password.rendered,
   ], [for o in data.ignition_file.additional_partition : o.rendered])
 
   systemd = concat([

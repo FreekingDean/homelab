@@ -65,6 +65,14 @@ data "ignition_link" "timezone" {
   target = "/usr/share/zoneinfo/America/New_York"
 }
 
+data "ignition_file" "node_password" {
+  path = "/etc/rancher/node/password"
+  mode = 384
+  content {
+    content = local.hostname
+  }
+}
+
 data "ignition_file" "network_interface" {
   path = "/etc/NetworkManager/system-connections/ens18.nmconnection"
   mode = 384

@@ -43,7 +43,13 @@ module "ds9" {
   k3s_subversion = local.k3s.subversion
 
 
-  servers    = 3
-  agents     = 0
-  ceph_nodes = []
+  servers = 3
+  agents  = 0
+  ceph_nodes = [
+    {
+      disks = [
+        "/dev/disk/by-path/pci-0000:05:00.0-sas-exp0x500c04f2efd2d03f-phy31-lun-0"
+      ],
+    },
+  ]
 }

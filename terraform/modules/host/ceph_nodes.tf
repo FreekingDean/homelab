@@ -2,7 +2,7 @@ module "ceph_nodes" {
   source  = "../../modules/k3s_node"
   count   = length(var.ceph_nodes)
   node    = var.node
-  id      = count.index + 1
+  id      = count.index + 1 + 80
   node_id = var.id
   memory  = length(var.ceph_nodes[count.index].disks) * 5 * 1024
   cpus    = length(var.ceph_nodes[count.index].disks) * 2

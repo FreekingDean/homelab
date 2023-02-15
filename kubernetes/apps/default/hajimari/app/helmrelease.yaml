@@ -45,6 +45,7 @@ spec:
         enabled: true
         ingressClassName: "${INGRESS_CLASS}"
         annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd"
           hajimari.io/enable: "false"
         hosts:
           - host: &host "apps.${DOMAIN}"

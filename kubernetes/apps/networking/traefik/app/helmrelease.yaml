@@ -27,6 +27,8 @@ spec:
     keepHistory: false
   values:
     ports:
+      traefik:
+        expose: true
       websecure:
         middlewares:
           - networking-traefik-errors@kubernetescrd

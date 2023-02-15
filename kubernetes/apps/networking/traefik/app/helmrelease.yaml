@@ -45,18 +45,4 @@ spec:
       kind: DaemonSet
     ingressRoute:
       dashboard:
-        entryPoints: ["websecure"]
-        middlewares:
-          - "networking-localonly@kubernetescrd"
-
-  # autoscaling:
-  #   enabled: true
-  #   minReplicas: 3
-  #   maxReplicas: 10
-  #   metrics:
-  #     type: Resource
-  #     resource:
-  #       name: cpu
-  #       target:
-  #         type: Utilization
-  #         averageUtilization: 60
+        enabled: false

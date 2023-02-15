@@ -49,3 +49,29 @@ spec:
     - hosts:
         - "*.local.deangalvin.com"
       secretName: deangalvin-com-production-tls
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: traefik-dashboard
+  namespace: networking
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: networking-localonly@kubernetescrd
+    hajimari.io/icon: video-input-antenna
+spec:
+  ingressClassName: "${INGRESS_CLASS}"
+  rules:
+    - host: "traefik.${DOMAIN}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: traefik
+                port:
+                  number: 9000
+  tls:
+    - hosts:
+        - "traefik.${DOMAIN}"
+      secretName: "${PRODUCTION_TLS}"

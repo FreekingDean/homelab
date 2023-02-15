@@ -37,14 +37,14 @@ spec:
       enabled: true
       className: "${INGRESS_CLASS}"
       annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-staging
+        traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd"
         hajimari.io/icon: mdi:kubernetes
       hosts:
         - &host "kubernetes.${DOMAIN}"
       tls:
         - hosts:
             - *host
-          secretName: kubernetes-dashboard-tls
+          secretName: "${PRODUCTION_TLS}"
     metricsScraper:
       enabled: true
     serviceMonitor:

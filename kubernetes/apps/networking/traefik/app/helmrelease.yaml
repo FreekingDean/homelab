@@ -47,6 +47,7 @@ spec:
       dashboard:
         matchRule: "Host(`traefik.deangalvin.dev`)"
         entryPoints: ["websecure"]
-        middlewares: "networking-localonly@kubernetescrd"
+        middlewares:
+          - "networking-localonly@kubernetescrd"
         tls:
           secretName: "${PRODUCTION_TLS}"

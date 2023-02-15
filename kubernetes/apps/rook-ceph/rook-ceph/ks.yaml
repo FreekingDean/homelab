@@ -21,6 +21,8 @@ metadata:
   name: cluster-apps-rook-ceph-cluster
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: cluster-apps-rook-ceph-operator
   path: ./kubernetes/apps/rook-ceph/rook-ceph/cluster
   prune: true
   sourceRef:

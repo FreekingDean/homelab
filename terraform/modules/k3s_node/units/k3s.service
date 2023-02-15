@@ -15,6 +15,7 @@ LimitNPROC=infinity
 LimitCORE=infinity
 TasksMax=infinity
 TimeoutStartSec=0
+TimeoutSec=300
 Restart=always
 RestartSec=5s
 

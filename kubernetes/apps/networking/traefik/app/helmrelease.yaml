@@ -41,6 +41,8 @@ spec:
     logs:
       access:
         enabled: false
+    deployment:
+      replicas: 3
   # autoscaling:
   #   enabled: true
   #   minReplicas: 3

@@ -37,6 +37,7 @@ spec:
       annotations:
         external-dns.alpha.kubernetes.io/hostname: "*.deangalvin.dev,deangalvin.dev"
       spec:
+        internalTrafficPolicy: Local
         externalTrafficPolicy: Local
     logs:
       access:

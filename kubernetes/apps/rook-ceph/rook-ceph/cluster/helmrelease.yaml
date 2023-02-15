@@ -69,7 +69,6 @@ spec:
       crashCollector:
         disable: false
       dashboard:
-        port: 8080
         enabled: true
         urlPrefix: /
         ssl: false

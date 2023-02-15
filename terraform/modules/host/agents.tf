@@ -12,6 +12,15 @@ module "agents" {
   storage_name = "local-thin"
   storage_size = 16
 
+  additional_storages = [
+    {
+      mount   = "/var/lib/rook"
+      size    = 64
+      label   = "ROOK_DATA"
+      storage = "local-thin"
+    }
+  ]
+
   ip        = "10.0.${var.id}2.1${format("%02d", count.index + 1)}"
   server_ip = var.cluster_server == "" ? "10.0.${var.id}1.101" : var.cluster_server
 

@@ -31,6 +31,7 @@ spec:
       createPrometheusRules: false
     ingress:
       dashboard:
+        enabled: true
         ingressClassName: "${INGRESS_CLASS}"
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd"

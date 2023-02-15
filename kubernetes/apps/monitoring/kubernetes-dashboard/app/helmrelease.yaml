@@ -30,7 +30,6 @@ spec:
     env:
       TZ: "${TIMEZONE}"
     extraArgs:
-      - --insecure-bind-address=0.0.0.0
       - --enable-skip-login
       - --disable-settings-authorizer
       - --enable-insecure-login

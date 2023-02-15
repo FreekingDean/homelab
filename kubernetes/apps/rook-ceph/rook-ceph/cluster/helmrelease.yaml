@@ -1,0 +1,85 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: rook-ceph-cluster
+  namespace: rook-ceph
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: rook-ceph-cluster
+      version: v1.10.10
+      sourceRef:
+        kind: HelmRepository
+        name: rook-ceph
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    monitoring:
+      enabled: false
+      createPrometheusRules: false
+    ingress:
+      dashboard:
+        ingressClassName: "${INGRESS_CLASS}"
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd"
+          hajimari.io/appName: "Rook"
+          hajimari.io/icon: mdi:chess-rook
+        host:
+          name: &host "rook.${DOMAIN}"
+          path: /
+        tls:
+          - hosts:
+              - *host
+            secretName: "${PRODUCTION_TLS}"
+    toolbox:
+      enabled: true
+    configOverride: |
+      [global]
+      bdev_enable_discard = true
+      bdev_async_discard = true
+    cephClusterSpec:
+      placement:
+        prepareOsd:
+          tolerations:
+            - key: CephOSDOnly
+              operator: Exists
+        osd:
+          tolerations:
+            - key: CephOSDOnly
+              operator: Exists
+      network:
+        provider: host
+        connections:
+          compression:
+            # TODO: Test out enabling this on next cluster rebuild
+            enabled: true
+      crashCollector:
+        disable: false
+      dashboard:
+        enabled: true
+        urlPrefix: /
+        ssl: false
+      storage:
+        useAllNodes: false
+        useAllDevices: false
+        config:
+          osdsPerDevice: "1"
+        nodes:
+          - name: coreos-agent-381
+            devices:
+              - name: "/dev/disk/by-path/pci-0000:05:00.0-sas-exp0x500c04f2efd2d03f-phy31-lun-0"
+    cephBlockPools: []
+    cephFileSystems: []
+    cephObjectStores: []

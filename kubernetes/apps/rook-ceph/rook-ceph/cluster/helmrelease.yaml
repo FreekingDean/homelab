@@ -52,7 +52,7 @@ spec:
       bdev_async_discard = true
     cephClusterSpec:
       placement:
-        prepareOsd:
+        prepareosd:
           tolerations:
             - key: CephOSDOnly
               operator: Exists

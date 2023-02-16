@@ -79,7 +79,7 @@ spec:
         config:
           osdsPerDevice: "1"
         nodes:
-          - name: coreos-agent-381
+          - name: coreos-ceph-381
             devices:
               - name: "/dev/disk/by-path/pci-0000:00:05.0-scsi-0:0:3:0"
     cephBlockPools: []

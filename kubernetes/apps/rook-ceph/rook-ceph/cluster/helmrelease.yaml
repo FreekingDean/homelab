@@ -61,6 +61,7 @@ spec:
           tolerations:
             - key: CephOSDOnly
               operator: Exists
+              effect: NoExecute
       network:
         provider: host
         connections:

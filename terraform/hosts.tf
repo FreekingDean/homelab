@@ -10,9 +10,15 @@ module "enterprise" {
 
   cluster_server = module.ds9.cluster_server_ip
 
-  servers    = 0
-  agents     = 2
-  ceph_nodes = []
+  servers = 0
+  agents  = 2
+  ceph_nodes = [
+    {
+      disks = [
+        "/dev/disk/by-path/pci-0000:03:00.0-sas-phy3-lun-0"
+      ]
+    }
+  ]
 }
 
 module "voyager" {
@@ -51,5 +57,13 @@ module "ds9" {
         "/dev/disk/by-path/pci-0000:05:00.0-sas-exp0x500c04f2efd2d03f-phy31-lun-0"
       ],
     },
+  ]
+}
+
+locals {
+  hosts = [
+    module.enterprise,
+    module.voyager,
+    module.ds9,
   ]
 }

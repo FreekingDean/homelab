@@ -13,3 +13,4 @@ resources:
   - ./stakater.yaml
   - ./weave-gitops.yaml
   - ./rook.yaml
+  - ./prometheus-community.yaml

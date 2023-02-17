@@ -42,10 +42,10 @@ spec:
             - /usr/bin/kured
             - --drain-timeout=120s
             - --reboot-command="shutdown now"
+            - --period=1m
 #            - --force-reboot=false
 #            - --drain-grace-period=-1
 #            - --skip-wait-for-delete-timeout=0
-#            - --period=1h
 #            - --ds-namespace=kube-system
 #            - --ds-name=kured
 #            - --lock-annotation=weave.works/kured-node-lock

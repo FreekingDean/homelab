@@ -3,6 +3,7 @@ locals {
   base_args = concat([
     "--data-dir /var/lib/k3sdata",
     "--node-label topology.rook.io/chassis=${var.node}",
+    "--node-label topology.rook.io/rack=main",
     "--token spinthedata",
   ], local.taint_args)
 

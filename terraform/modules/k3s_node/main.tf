@@ -63,3 +63,20 @@ resource "proxmox_node_virtual_machine" "guest" {
     firewall = true
   }
 }
+
+resource "null_resource" "reboot_if_update" {
+  triggers = {
+    ignition = local.ign_rendered
+  }
+  connection {
+    type        = "ssh"
+    user        = "k3suser"
+    private_key = file("~/.ssh/id_ed25519")
+    host        = var.ip
+  }
+
+  provisioner "remote-exec" {
+    inline     = ["sudo touch /var/run/reboot-required"]
+    on_failure = continue
+  }
+}

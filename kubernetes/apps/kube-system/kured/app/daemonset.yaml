@@ -45,7 +45,7 @@ spec:
           command:
             - /usr/bin/kured
             - --drain-timeout=120s
-            - --reboot-command="shutdown now"
+            - --reboot-command="/usr/sbin/shutdown shutdown now"
             - --period=1m
 #            - --force-reboot=false
 #            - --drain-grace-period=-1

@@ -33,9 +33,15 @@ module "voyager" {
 
   cluster_server = module.ds9.cluster_server_ip
 
-  servers    = 0
-  agents     = 2
-  ceph_nodes = []
+  servers = 0
+  agents  = 2
+  ceph_nodes = [
+    {
+      disks = [
+        "/dev/disk/by-path/pci-0000:03:00.0-sas-phy7-lun-0"
+      ]
+    }
+  ]
 }
 
 module "ds9" {

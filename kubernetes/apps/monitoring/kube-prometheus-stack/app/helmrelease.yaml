@@ -1,0 +1,150 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      version: 45.1.1
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    crds: CreateReplace
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    cleanPrometheusOperatorObjectNames: true
+    alertmanager:
+      config:
+        global:
+          resolve_timeout: 5m
+        receivers: []
+        route: []
+        inhibit_rules: []
+      ingress:
+        enabled: true
+        pathType: Prefix
+        ingressClassName: "${INGRESS_CLASS}"
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd"
+          hajimari.io/appName: "Alert Manager"
+          hajimari.io/icon: mdi:alert-decagram-outline
+        hosts:
+          - &host "alert-manager.${DOMAIN}"
+        tls:
+          - secretName: "${PRODUCTION_TLS}"
+            hosts:
+              - *host
+      alertmanagerSpec:
+        replicas: 3
+        podAntiAffinity: hard
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: local-path
+              resources:
+                requests:
+                  storage: 1Gi
+    grafana:
+      enabled: false
+      forceDeployDashboards: true
+      sidecar:
+        dashboards:
+          multicluster:
+            etcd:
+              enabled: true
+    kubelet:
+      enabled: true
+      serviceMonitor:
+        metricRelabelings:
+          - action: replace
+            sourceLabels: ["node"]
+            targetLabel: instance
+    kube-state-metrics:
+      metricLabelsAllowlist: ["persistentvolumeclaims=[*]"]
+      prometheus:
+        monitor:
+          enabled: true
+          relabelings:
+            - action: replace
+              regex: (.*)
+              replacement: $1
+              sourceLabels: ["__meta_kubernetes_pod_node_name"]
+              targetLabel: kubernetes_node
+    kubeApiServer:
+      enabled: true
+    kubeControllerManager:
+      enabled: true
+      endpoints:
+        - "10.0.31.101"
+        - "10.0.31.102"
+        - "10.0.31.103"
+    kubeScheduler:
+      enabled: true
+      endpoints:
+        - "10.0.31.101"
+        - "10.0.31.102"
+        - "10.0.31.103"
+    kubeProxy:
+      enabled: false # Enable if not using eBPF
+      # endpoints: ["192.168.42.10", "192.168.42.11", "192.168.42.12"]
+    kubeEtcd:
+      enabled: true
+      endpoints:
+        - "10.0.31.101"
+        - "10.0.31.102"
+        - "10.0.31.103"
+      service:
+        enabled: true
+        port: 2381
+        targetPort: 2381
+    prometheus:
+      ingress:
+        enabled: true
+        pathType: Prefix
+        ingressClassName: "${INGRESS_CLASS}"
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd"
+          hajimari.io/appName: "Alert Manager"
+          hajimari.io/icon: simple-icons:prometheus
+        hosts:
+          - &host "alert-manager.${DOMAIN}"
+        tls:
+          - secretName: "${PRODUCTION_TLS}"
+            hosts:
+              - *host
+      prometheusSpec:
+        replicas: 3
+        retention: 2d
+        retentionSize: 6GB
+        enableAdminAPI: true
+        walCompression: true
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: gp-replicapool
+              resources:
+                requests:
+                  storage: 20Gi
+        resources:
+          requests:
+            cpu: 150m
+            memory: 2000Mi
+          limits:
+            memory: 7000Mi

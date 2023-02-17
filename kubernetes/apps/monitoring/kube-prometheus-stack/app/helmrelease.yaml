@@ -62,8 +62,22 @@ spec:
                 requests:
                   storage: 1Gi
     grafana:
-      enabled: false
+      enabled: true
       forceDeployDashboards: true
+      ingress:
+        enabled: true
+        pathType: Prefix
+        ingressClassName: "${INGRESS_CLASS}"
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd"
+          hajimari.io/appName: "Grafana"
+          hajimari.io/icon: simple-icons:grafana
+        hosts:
+          - &host "grafana.${DOMAIN}"
+        tls:
+          - secretName: "${PRODUCTION_TLS}"
+            hosts:
+              - *host
       sidecar:
         dashboards:
           multicluster:
@@ -121,10 +135,10 @@ spec:
         ingressClassName: "${INGRESS_CLASS}"
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd"
-          hajimari.io/appName: "Alert Manager"
+          hajimari.io/appName: "Prometheus"
           hajimari.io/icon: simple-icons:prometheus
         hosts:
-          - &host "alert-manager.${DOMAIN}"
+          - &host "prometheus.${DOMAIN}"
         tls:
           - secretName: "${PRODUCTION_TLS}"
             hosts:

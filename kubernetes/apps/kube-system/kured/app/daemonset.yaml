@@ -18,12 +18,16 @@ spec:
       serviceAccountName: kured
       tolerations:
         - key: CriticalAddonsOnly
+          operator: Exists
           effect: NoExecute
         - key: CephOSDOnly
+          operator: Exists
           effect: NoExecute
         - key: node-role.kubernetes.io/control-plane
+          operator: Exists
           effect: NoSchedule
         - key: node-role.kubernetes.io/master
+          operator: Exists
           effect: NoSchedule
       hostPID: true # Facilitate entering the host mount namespace via init
       restartPolicy: Always

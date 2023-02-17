@@ -1,6 +1,5 @@
 [Unit]
 Description=Partition ${label} disk if part not exists
-ConditionPathExists=!/dev/disk/by-partlabel/${label}
 
 [Service]
 Type=oneshot

@@ -1,4 +1,19 @@
 #! /bin/bash
+
+set -e
+
+if [ -e '/dev/disk/by-partlabel/${label}' ]
+then
+  echo "Partition exists"
+  exit 0
+fi
+
+echo "Paritioning Disk"
 echo -e "label:gpt\nname=${label}" | sfdisk /dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi${scsi_id}
-partx -a /dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi${scsi_id}
+
+echo "Waiting For Label"
+sleep 10
+udevadm settle --timeout=15 --exit-if-exists=/dev/disk/by-partlabel/${label}
+
+echo "Making Filesystem"
 mkfs.ext4 /dev/disk/by-partlabel/${label}

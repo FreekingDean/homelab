@@ -2,6 +2,7 @@ locals {
   taint_args = [for taint in var.taints : "--node-taint \"${taint}\""]
   base_args = concat([
     "--data-dir /var/lib/k3sdata",
+    "--node-label topology.rook.io/chassis=${var.node}",
     "--token spinthedata",
   ], local.taint_args)
 

@@ -155,7 +155,7 @@ spec:
               storageClassName: gp-cephpool
               resources:
                 requests:
-                  storage: 20Gi
+                  storage: 25Gi
         resources:
           requests:
             cpu: 150m

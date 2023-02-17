@@ -40,7 +40,7 @@ spec:
                   fieldPath: spec.nodeName
           command:
             - /usr/bin/kured
-            - --drain-timeout="120s"
+            - --drain-timeout=120s
             - --reboot-command="shutdown now"
 #            - --force-reboot=false
 #            - --drain-grace-period=-1

@@ -5,7 +5,7 @@ metadata:
   name: home-kubernetes
   namespace: flux-system
 spec:
-  interval: 30s
+  interval: 10m
   ref:
     branch: main
   url: "https://github.com/FreekingDean/homelab"

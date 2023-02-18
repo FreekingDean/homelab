@@ -63,6 +63,7 @@ spec:
       dashboard:
         enabled: true
         urlPrefix: /
+        port: 8443
         ssl: true
       storage:
         useAllNodes: false

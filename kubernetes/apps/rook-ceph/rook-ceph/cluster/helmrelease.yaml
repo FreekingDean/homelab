@@ -46,10 +46,6 @@ spec:
             secretName: "${PRODUCTION_TLS}"
     toolbox:
       enabled: true
-    configOverride: |
-      [global]
-      bdev_enable_discard = true
-      bdev_async_discard = true
     cephClusterSpec:
       placement:
         prepareosd:
@@ -62,11 +58,6 @@ spec:
             - key: CephOSDOnly
               operator: Exists
               effect: NoExecute
-      network:
-        connections:
-          compression:
-            # TODO: Test out enabling this on next cluster rebuild
-            enabled: false
       crashCollector:
         disable: false
       dashboard:

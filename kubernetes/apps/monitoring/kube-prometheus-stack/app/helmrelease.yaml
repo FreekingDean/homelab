@@ -106,7 +106,7 @@ spec:
         enabled: true
         port: 2381
         targetPort: 2381
-    prometheusNodeExporter:
+    prometheus-node-exporter:
       tolerations:
         - key: CriticalAddonsOnly
           operator: Exists

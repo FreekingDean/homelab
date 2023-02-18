@@ -108,7 +108,7 @@ spec:
         targetPort: 2381
     prometheusNodeExporter:
       tolerations:
-        - key: CriticialAddonsOnly
+        - key: CriticalAddonsOnly
           operator: Exists
           effect: NoExecute
         - key: CephOSDOnly

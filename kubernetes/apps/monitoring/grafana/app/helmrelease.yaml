@@ -169,7 +169,7 @@ spec:
       enabled: true
     ingress:
       enabled: true
-      ingressClassName: nginx
+      ingressClassName: "${INGRESS_CLASS}"
       annotations:
         traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd"
         hajimari.io/appName: "Grafana"

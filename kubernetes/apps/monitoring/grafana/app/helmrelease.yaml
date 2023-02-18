@@ -47,14 +47,10 @@ spec:
       GF_PATHS_PROVISIONING: /etc/grafana/provisioning
       GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
       GF_SECURITY_ALLOW_EMBEDDING: true
-      GF_SECURITY_COOKIE_SAMESITE: grafana
       GF_SERVER_ROOT_URL: "https://grafana.${DOMAIN}"
     grafana.ini:
       auth.anonymous:
         enabled: true
-        org_name: Homelab
-        org_id: 1
-        org_role: Viewer
     dashboardProviders:
       dashboardproviders.yaml:
         apiVersion: 1

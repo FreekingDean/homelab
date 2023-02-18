@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./kured/ks.yaml
+  - ./external-secrets/ks.yaml
   - ./reloader/ks.yaml
   - ./reflector/ks.yaml
   - ./secrets.sops.yaml

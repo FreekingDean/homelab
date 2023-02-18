@@ -15,3 +15,4 @@ resources:
   - ./rook.yaml
   - ./prometheus-community.yaml
   - ./grafana.yaml
+  - ./external-secrets.yaml

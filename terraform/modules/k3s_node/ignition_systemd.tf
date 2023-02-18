@@ -5,6 +5,7 @@ locals {
     "--node-label topology.rook.io/chassis=${var.node}",
     "--node-label topology.rook.io/rack=main",
     "--token spinthedata",
+    "--kube-proxy-arg metrics-bind-address=0.0.0.0",
   ], local.taint_args)
 
   agent_args = join(" ", concat(local.base_args, ["--server https://${var.server_ip}:6443"]))
@@ -12,6 +13,10 @@ locals {
   server_arg = var.server_ip == var.ip ? "--cluster-init" : "--server https://${var.server_ip}:6443"
   server_args = join(" ", concat(local.base_args, [
     local.server_arg,
+    "--kube-controller-manager-arg address=0.0.0.0",
+    "--kube-controller-manager-arg bind-address=0.0.0.0",
+    "--kube-scheduler-arg address=0.0.0.0",
+    "--kube-scheduler-arg bind-address=0.0.0.0",
     "--disable traefik",
     "--disable-helm-controller",
     "--node-taint \"CriticalAddonsOnly=true:NoExecute\"",

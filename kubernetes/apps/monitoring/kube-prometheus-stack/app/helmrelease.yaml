@@ -61,28 +61,6 @@ spec:
               resources:
                 requests:
                   storage: 1Gi
-    grafana:
-      enabled: true
-      forceDeployDashboards: true
-      ingress:
-        enabled: true
-        pathType: Prefix
-        ingressClassName: "${INGRESS_CLASS}"
-        annotations:
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd"
-          hajimari.io/appName: "Grafana"
-          hajimari.io/icon: simple-icons:grafana
-        hosts:
-          - &host "grafana.${DOMAIN}"
-        tls:
-          - secretName: "${PRODUCTION_TLS}"
-            hosts:
-              - *host
-      sidecar:
-        dashboards:
-          multicluster:
-            etcd:
-              enabled: true
     kubelet:
       enabled: true
       serviceMonitor:

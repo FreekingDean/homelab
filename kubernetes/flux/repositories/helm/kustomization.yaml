@@ -14,3 +14,4 @@ resources:
   - ./weave-gitops.yaml
   - ./rook.yaml
   - ./prometheus-community.yaml
+  - ./grafana.yaml

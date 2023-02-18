@@ -62,9 +62,7 @@ spec:
         disable: false
       dashboard:
         enabled: true
-        port: 7000
         urlPrefix: /
-        ssl: false
       storage:
         useAllNodes: false
         useAllDevices: false

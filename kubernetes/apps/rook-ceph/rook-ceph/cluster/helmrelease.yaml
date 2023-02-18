@@ -26,13 +26,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    mgr:
-      modules:
-        - name: rook
-          enabled: true
     monitoring:
-      enabled: false
-      createPrometheusRules: false
+      enabled: true
+      createPrometheusRules: true
     ingress:
       dashboard:
         enabled: true
@@ -51,6 +47,10 @@ spec:
     toolbox:
       enabled: true
     cephClusterSpec:
+      mgr:
+        modules:
+          - name: rook
+            enabled: true
       placement:
         prepareosd:
           tolerations:

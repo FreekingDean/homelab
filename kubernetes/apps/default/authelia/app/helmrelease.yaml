@@ -54,6 +54,8 @@ spec:
           enabled: false
       authentication_backend:
         ldap:
+          username_attribute: uid
+          users_filter: (&({username_attribute}={input})(objectClass=posixAccount))
           url: ldap://glauth
           base_dn: DC=home,DC=lab
           user: CN=search_user,DC=home,DC=lab

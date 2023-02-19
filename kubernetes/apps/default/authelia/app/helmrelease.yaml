@@ -44,6 +44,9 @@ spec:
             hosts:
               - *host
       configMap:
+        session:
+          redis:
+            enabled: false
         authentication_backend:
           ldap:
             url: ldap://glauth

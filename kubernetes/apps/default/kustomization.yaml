@@ -8,3 +8,4 @@ resources:
   - ./echo-server/ks.yaml
   - ./glauth/ks.yaml
   - ./hajimari/ks.yaml
+  - ./redis/ks.yaml

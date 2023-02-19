@@ -43,6 +43,8 @@ spec:
         enabled: true
         secret: "${PRODUCTION_TLS}"
     configMap:
+      access_control:
+        default_policy: one_factor
       session:
         redis:
           host: redis

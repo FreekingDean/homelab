@@ -45,6 +45,9 @@ spec:
     configMap:
       access_control:
         default_policy: one_factor
+        rules:
+          - domain: plex.public.deangalvin.com
+            policy: bypass
       session:
         redis:
           host: redis-master

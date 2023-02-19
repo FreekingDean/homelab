@@ -43,21 +43,21 @@ spec:
           - secretName: "${PRODUCTION_TLS}"
             hosts:
               - *host
-      configMap:
-        session:
-          redis:
-            enabled: false
-        authentication_backend:
-          ldap:
-            url: ldap://glauth
-            base_dn: DC=home,DC=lab
-        storage:
-          postgres:
-            enabled: false
-          local:
+    configMap:
+      session:
+        redis:
+          enabled: false
+      authentication_backend:
+        ldap:
+          url: ldap://glauth
+          base_dn: DC=home,DC=lab
+      storage:
+        postgres:
+          enabled: false
+        local:
+          enabled: true
+      telemetry:
+        metrics:
+          enabled: true
+          serviceMonitor:
             enabled: true
-        telemetry:
-          metrics:
-            enabled: true
-            serviceMonitor:
-              enabled: true

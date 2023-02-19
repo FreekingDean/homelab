@@ -53,6 +53,18 @@ spec:
       session:
         redis:
           host: redis-master
+        domain: dengalvin.dev
+        expiration: 7200
+        inactivity: 3600
+        remember_me_duration: 1y
+        portal_url: https://auth.deangalvin.dev
+        domains:
+          - domain: "deangalvin.com"
+            portal_url: https://auth.deangalvin.com
+            expiration: 3600
+            inactivity: 300
+            remember_me_duration: 1y
+
       notifier:
         filesystem:
           enabled: true

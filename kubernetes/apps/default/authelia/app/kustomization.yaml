@@ -4,4 +4,5 @@ kind: Kustomization
 namespace: default
 resources:
   - ./externalsecret.yaml
+  - ./ingress.yaml
   - ./helmrelease.yaml

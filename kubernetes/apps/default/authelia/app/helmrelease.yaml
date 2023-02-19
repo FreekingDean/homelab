@@ -27,6 +27,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    domain: deangalvin.dev
     secret:
       existingSecret: authelia-external
       ldap:
@@ -38,15 +39,9 @@ spec:
       className: "${INGRESS_CLASS}"
       annotations:
         hajimari.io/icon: mdi:shield-account
-      hosts:
-        - host: &host "auth.${DOMAIN}"
-          paths:
-            - path: /
-              pathType: Prefix
       tls:
-        - secretName: "${PRODUCTION_TLS}"
-          hosts:
-            - *host
+        enabled: true
+        secret: "${PRODUCTION_TLS}"
     configMap:
       session:
         redis:

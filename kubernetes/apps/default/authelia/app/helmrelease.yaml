@@ -43,6 +43,9 @@ spec:
             hosts:
               - *host
     configMap:
+      notifier:
+        smtp:
+          enabled: false
       session:
         redis:
           enabled: false

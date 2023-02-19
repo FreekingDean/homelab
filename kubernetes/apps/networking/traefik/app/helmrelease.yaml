@@ -32,7 +32,6 @@ spec:
       websecure:
         middlewares:
           - networking-traefik-errors@kubernetescrd
-          - networking-authelia@kubernetescrd
     providers:
       kubernetesIngress:
         allowExternalNameServices: true

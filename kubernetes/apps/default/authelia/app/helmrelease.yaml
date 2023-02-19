@@ -27,6 +27,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    secret:
+      existingSecret: authelia
+      secret.ldap.key: LDAP_PASSWORD
     ingress:
       main:
         enabled: true

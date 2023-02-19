@@ -26,7 +26,6 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  # AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD: "{{ .AUTHELIA_AUTHENTICATION_BACKEND_LDAP_PASSWORD }}"
   values:
     ingress:
       main:

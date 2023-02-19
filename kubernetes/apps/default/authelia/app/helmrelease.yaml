@@ -47,6 +47,8 @@ spec:
         redis:
           enabled: false
       notifier:
+        filesystem:
+          enabled: true
         smtp:
           enabled: false
       authentication_backend:

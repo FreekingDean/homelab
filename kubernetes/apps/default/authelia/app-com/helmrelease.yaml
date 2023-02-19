@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: &app authelia
+  name: &app authelia-com
   namespace: default
 spec:
   interval: 15m
@@ -27,7 +27,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    domain: deangalvin.dev
+    domain: deangalvin.com
     secret:
       existingSecret: authelia-external
       ldap:
@@ -41,11 +41,15 @@ spec:
         hajimari.io/icon: mdi:shield-account
       tls:
         enabled: true
-        secret: "${PRODUCTION_TLS}"
+        secret: deangalvin-com-production-tls
     configMap:
       access_control:
         default_policy: one_factor
-        rules: []
+        rules:
+          - domain: plex.public.deangalvin.com
+            policy: bypass
+          - domain: hass.public.deangalvin.com
+            policy: bypass
       session:
         redis:
           host: redis-master

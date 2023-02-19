@@ -28,9 +28,11 @@ spec:
     keepHistory: false
   values:
     secret:
-      existingSecret: authelia
-      secret.ldap.key: LDAP_PASSWORD
-      secret.jwt.key: JWT_KEY
+      existingSecret: authelia-external
+      ldap:
+        key: LDAP_PASSWORD
+      jwt:
+        key: JWT_KEY
     ingress:
       main:
         enabled: true

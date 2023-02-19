@@ -22,3 +22,12 @@ spec:
     service:
       name: traefik-errorpages
       port: 8080
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: authelia
+spec:
+  address: "https://auth.deangalvin.dev/api/verify?rd=https%3A%2F%2Fauth.example.com%2F"
+  trustForwardAuthHeader: true
+  authResponseHeaders: "Remote-User,Remote-Groups,Remote-Name,Remote-Email"

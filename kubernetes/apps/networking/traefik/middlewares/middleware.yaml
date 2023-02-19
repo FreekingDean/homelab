@@ -30,7 +30,6 @@ metadata:
 spec:
   forwardAuth:
     address: "http://authelia.default/api/verify?rd=https%3A%2F%2Fauth.peangalvin.dev%2F"
-    trustForwardHeader: true
     authResponseHeaders:
       - Remote-User
       - Remote-Groups

@@ -34,20 +34,19 @@ spec:
       jwt:
         key: JWT_KEY
     ingress:
-      main:
-        enabled: true
-        ingressClassName: "${INGRESS_CLASS}"
-        annotations:
-          hajimari.io/icon: mdi:shield-account
-        hosts:
-          - host: &host "auth.${DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - secretName: "${PRODUCTION_TLS}"
-            hosts:
-              - *host
+      enabled: true
+      className: "${INGRESS_CLASS}"
+      annotations:
+        hajimari.io/icon: mdi:shield-account
+      hosts:
+        - host: &host "auth.${DOMAIN}"
+          paths:
+            - path: /
+              pathType: Prefix
+      tls:
+        - secretName: "${PRODUCTION_TLS}"
+          hosts:
+            - *host
     configMap:
       session:
         redis:

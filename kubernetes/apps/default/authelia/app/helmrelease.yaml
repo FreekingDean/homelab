@@ -47,7 +47,7 @@ spec:
         default_policy: one_factor
       session:
         redis:
-          host: redis
+          host: redis-master
       notifier:
         filesystem:
           enabled: true

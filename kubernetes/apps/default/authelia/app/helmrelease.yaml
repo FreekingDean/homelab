@@ -49,6 +49,7 @@ spec:
       notifier:
         filesystem:
           enabled: true
+          filename: /var/file-notifier.txt
         smtp:
           enabled: false
       authentication_backend:

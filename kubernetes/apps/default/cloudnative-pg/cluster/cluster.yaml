@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/cluster_v1.json
+# apiVersion: postgresql.cnpg.io/v1
+# kind: Cluster
+# metadata:
+#   name: postgres
+#   namespace: default
+# spec:
+#   instances: 3
+#   primaryUpdateStrategy: unsupervised
+#   storage:
+#     size: 20Gi
+#     storageClass: gp-cephpool
+#   postgresql:
+#     parameters:
+#       max_connections: "300"
+#       shared_buffers: 512MB
+#   monitoring:
+#     enablePodMonitor: true

@@ -31,4 +31,8 @@ spec:
   forwardAuth:
     address: "https://auth.deangalvin.dev/api/verify?rd=https%3A%2F%2Fauth.example.com%2F"
     trustForwardAuthHeader: true
-    authResponseHeaders: "Remote-User,Remote-Groups,Remote-Name,Remote-Email"
+    authResponseHeaders:
+      - Remote-User
+      - Remote-Groups
+      - Remote-Name
+      - Remote-Email

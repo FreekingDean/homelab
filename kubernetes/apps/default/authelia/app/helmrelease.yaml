@@ -45,7 +45,7 @@ spec:
     configMap:
       session:
         redis:
-          enabled: false
+          host: redis
       notifier:
         filesystem:
           enabled: true

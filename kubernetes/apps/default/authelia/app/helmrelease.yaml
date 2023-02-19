@@ -9,7 +9,7 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: app-template
+      chart: authelia
       version: 0.8.53
       sourceRef:
         kind: HelmRepository

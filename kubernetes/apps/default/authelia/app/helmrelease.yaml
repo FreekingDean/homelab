@@ -48,6 +48,8 @@ spec:
         rules:
           - domain: plex.public.deangalvin.com
             policy: bypass
+          - domain: hass.public.deangalvin.com
+            policy: bypass
       session:
         redis:
           host: redis-master

@@ -48,7 +48,7 @@ spec:
         rules:
           - domain: sonarr.local.deangalvin.com
             policy: bypass
-          - domain: rook.deangalvin.dev
+          - domain: apps.deangalvin.dev
             policy: bypass
       session:
         redis:

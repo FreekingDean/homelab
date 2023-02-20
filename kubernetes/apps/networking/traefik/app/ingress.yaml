@@ -30,7 +30,7 @@ metadata:
   name: legacy-server-local
   namespace: networking
   annotations:
-    traefik.ingress.kubernetes.io/router.middlewares: networking-localonly@kubernetescrd,networking-authelia-com@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: networking-localonly@kubernetescrd,networking-authelia-com@kubernetescrd,networking-authelia@kubernetescrd
     hajimari.io/icon: video-input-antenna
 spec:
   ingressClassName: "${INGRESS_CLASS}"

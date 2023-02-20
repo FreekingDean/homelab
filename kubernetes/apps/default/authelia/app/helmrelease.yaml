@@ -48,6 +48,8 @@ spec:
         rules:
           - domain: sonarr.local.deangalvin.com
             policy: bypass
+          - domain: rook.deangalvin.dev
+            policy: bypass
       session:
         redis:
           host: redis-master

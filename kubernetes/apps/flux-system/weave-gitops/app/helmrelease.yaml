@@ -26,6 +26,12 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    oidcSecret:
+      create: true
+      clientID: gitops
+      clientSecret: gitops_client_secret
+      issuerURL: https://auth.deangalvin.dev
+      redirectURL: https://gitops.deangalvin.dev/oauth2/callback
     adminUser:
       create: true
       username: admin

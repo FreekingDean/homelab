@@ -65,6 +65,16 @@ spec:
       identity_providers:
         oidc:
           enabled: true
+          cors:
+            endpoints:
+              - authorization
+              - token
+              - revocation
+              - introspection
+          allowed_origins:
+            - https://deangalvin.dev
+            - https://auth.deangalvin.dev
+            - https://proxmox.deangalvin.dev
           clients:
             - id: proxmox
               description: Proxmox

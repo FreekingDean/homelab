@@ -26,6 +26,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    additionalArguments:
+      - "--serversTransport.insecureSkipVerify=true"
     ports:
       web:
         expose: false

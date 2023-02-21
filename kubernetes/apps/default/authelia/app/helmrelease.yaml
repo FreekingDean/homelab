@@ -46,6 +46,11 @@ spec:
         enabled: true
         secret: "${PRODUCTION_TLS}"
     configMap:
+      storage:
+        postgres:
+          enabled: false
+        local:
+          enabled: true
       access_control:
         default_policy: one_factor
         rules: []
@@ -81,11 +86,6 @@ spec:
                 - profile
                 - email
               userinfo_signing_algorithm: none
-      storage:
-        postgres:
-          enabled: false
-        local:
-          enabled: true
       telemetry:
         metrics:
           enabled: true

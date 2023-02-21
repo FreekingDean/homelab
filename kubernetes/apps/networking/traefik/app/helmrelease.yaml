@@ -42,6 +42,8 @@ spec:
         internalTrafficPolicy: Local
         externalTrafficPolicy: Local
     logs:
+      general:
+        level: DEBUG
       access:
         enabled: false
     deployment:

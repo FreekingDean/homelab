@@ -45,11 +45,7 @@ spec:
     configMap:
       access_control:
         default_policy: one_factor
-        rules:
-          - domain: sonarr.local.deangalvin.com
-            policy: bypass
-          - domain: apps.deangalvin.dev
-            policy: bypass
+        rules: []
       session:
         redis:
           host: redis-master

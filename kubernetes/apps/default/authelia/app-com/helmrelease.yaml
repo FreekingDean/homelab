@@ -50,8 +50,6 @@ spec:
             policy: bypass
           - domain: hass.public.deangalvin.com
             policy: bypass
-          - domain: ceph.local.deangalvin.com
-            policy: bypass
       session:
         redis:
           host: redis-master

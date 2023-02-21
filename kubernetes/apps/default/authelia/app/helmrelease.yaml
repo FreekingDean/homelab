@@ -63,6 +63,7 @@ spec:
           base_dn: DC=home,DC=lab
           user: CN=search_user,DC=home,DC=lab
       identity_providers:
+        enabled: true
         oidc:
           clients:
             - id: proxmox

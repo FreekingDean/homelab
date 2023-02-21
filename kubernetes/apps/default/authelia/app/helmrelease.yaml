@@ -82,6 +82,7 @@ spec:
               redirect_uris:
                 - https://gitops.deangalvin.dev/oauth2/callback
               scopes:
+                - offline_access
                 - openid
                 - profile
                 - groups

@@ -27,6 +27,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    pod:
+      kind: Deployment
+      replicas: 1
     domain: deangalvin.dev
     secret:
       existingSecret: authelia-external
@@ -65,16 +68,6 @@ spec:
       identity_providers:
         oidc:
           enabled: true
-          cors:
-            endpoints:
-              - authorization
-              - token
-              - revocation
-              - introspection
-          allowed_origins:
-            - https://deangalvin.dev
-            - https://auth.deangalvin.dev
-            - https://proxmox.deangalvin.dev
           clients:
             - id: proxmox
               description: Proxmox
@@ -90,8 +83,6 @@ spec:
               userinfo_signing_algorithm: none
       storage:
         postgres:
-          enabled: false
-        local:
           enabled: true
       telemetry:
         metrics:

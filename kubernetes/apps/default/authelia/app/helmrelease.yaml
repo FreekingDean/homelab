@@ -64,7 +64,19 @@ spec:
           user: CN=search_user,DC=home,DC=lab
       identity_providers:
         oidc:
-          clients: []
+          clients:
+            - id: proxmox
+              description: Proxmox
+              secret: '$plaintext$proxmox_client_secret'
+              public: false
+              authorization_policy: one_factor
+              redirect_uris:
+                - https://proxmox.deangalvin.dev
+              scopes:
+                - openid
+                - profile
+                - email
+              userinfo_signing_algorithm: none
       storage:
         postgres:
           enabled: false

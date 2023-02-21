@@ -74,6 +74,19 @@ spec:
         oidc:
           enabled: true
           clients:
+            - id: gitops
+              description: Weave Gitops
+              secret: '$plaintext$gitops_client_secret'
+              public: false
+              authorization_policy: one_factor
+              redirect_uris:
+                - https://gitops.deangalvin.dev/oauth2/callback
+              scopes:
+                - openid
+                - profile
+                - groups
+                - email
+              userinfo_signing_algorithm: none
             - id: proxmox
               description: Proxmox
               secret: '$plaintext$proxmox_client_secret'

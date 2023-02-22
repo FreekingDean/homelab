@@ -79,6 +79,9 @@ spec:
       identity_providers:
         oidc:
           enabled: true
+          cors:
+            endpoints: ["authorization", "token", "revocation", "introspection"]
+            allowed_origins_from_client_redirect_uris: true
           clients:
             - id: gitops
               description: Weave Gitops

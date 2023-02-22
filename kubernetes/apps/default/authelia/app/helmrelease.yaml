@@ -70,9 +70,8 @@ spec:
           username_attribute: uid
           display_name_attribute: givenName
           additional_users_dn: ou=users
-          additional_groups_dn: ou=groups
           users_filter: (&({username_attribute}={input})(objectClass=posixAccount))
-          groups_filter: (&(uniqueMember=cn={input},ou=users,dc=home,dc=lab)(objectClass=posixGroup))
+          groups_filter: (&(memberUid={username})(objectClass=posixGroup))
           group_name_attribute: cn
           mail_attribute: mail
           url: ldap://glauth

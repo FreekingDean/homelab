@@ -69,7 +69,13 @@ spec:
       authentication_backend:
         ldap:
           username_attribute: uid
+          display_name_attribute: givenName
+          additional_users_dn: ou=people
           users_filter: (&({username_attribute}={input})(objectClass=posixAccount))
+          groups_filter: (&(memberUid={username})(objectClass=posixGroup))
+          group_name_attribute: cn
+          additional_groups_dn: ou=users
+          mail_attribute: mail
           url: ldap://glauth
           base_dn: DC=home,DC=lab
           user: CN=search_user,DC=home,DC=lab

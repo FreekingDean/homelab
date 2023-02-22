@@ -27,6 +27,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    pod:
+      kind: Deployment
+      replicas: 1
     domain: deangalvin.com
     secret:
       existingSecret: authelia-external

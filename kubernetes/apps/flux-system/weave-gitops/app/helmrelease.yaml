@@ -33,8 +33,7 @@ spec:
       issuerURL: https://auth.deangalvin.dev
       redirectURL: https://gitops.deangalvin.dev/oauth2/callback
     adminUser:
-      create: true
-      username: admin
+      create: false
     ingress:
       enabled: true
       className: "${INGRESS_CLASS}"
@@ -57,7 +56,8 @@ spec:
       enabled: true
     rbac:
       create: true
-      impersonationResourceNames: ["admins", "admin"]
+      impersonationResourceNames: ["admins"]
+      impersonationResources: ["groups"]
     podAnnotations:
       secret.reloader.stakater.com/reload: weave-gitops-secret
   valuesFrom:

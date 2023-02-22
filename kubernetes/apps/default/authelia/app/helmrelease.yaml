@@ -47,7 +47,7 @@ spec:
         secret: "${PRODUCTION_TLS}"
     configMap:
       log:
-        level: debug
+        level: info
       storage:
         postgres:
           enabled: false

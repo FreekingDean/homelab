@@ -57,7 +57,7 @@ spec:
             policy: bypass
           - domain: jeffbot.public.deangalvin.com
             policy: bypass
-          - domain: sonarr.public.deangalvin.com
+          - domain: sonarr.local.deangalvin.com
             policy: bypass
       session:
         redis:

@@ -27,9 +27,9 @@ spec:
     keepHistory: false
   values:
     image:
-      tag: "latest"
+      tag: "reloease-0.6"
     restic:
-      tag: "latest"
+      tag: "release-0.6"
     manageCRDs: true
     metrics:
       disableAuth: true

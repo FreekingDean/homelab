@@ -27,6 +27,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    image:
+      tag: "latest"
+    restic:
+      tag: "latest"
     manageCRDs: true
     metrics:
       disableAuth: true

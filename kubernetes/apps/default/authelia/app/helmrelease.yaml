@@ -53,7 +53,9 @@ spec:
           enabled: true
       access_control:
         default_policy: one_factor
-        rules: []
+        rules:
+          - domain: prowlarr.deangalvin.dev
+            policy: bypass
       session:
         redis:
           host: redis-master

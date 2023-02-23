@@ -27,7 +27,7 @@ spec:
     keepHistory: false
   values:
     image:
-      tag: "reloease-0.6"
+      tag: "release-0.6"
     restic:
       tag: "release-0.6"
     manageCRDs: true

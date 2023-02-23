@@ -40,7 +40,7 @@ spec:
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
-    repository: prowlarr-restic-secret
+    repository: prowlarr-restic-secre
     cacheCapacity: 2Gi
     volumeSnapshotClassName: csi-ceph-blockpool
     storageClassName: gp-cephpool

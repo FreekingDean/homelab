@@ -9,10 +9,10 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: ./helm/volsync
+      chart: volsync
       sourceRef:
-        kind: GitRepository
-        name: volsync
+        kind: HelmRepository
+        name: backube
         namespace: flux-system
   maxHistory: 3
   install:
@@ -26,10 +26,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    image:
-      tag: "release-0.6"
-    restic:
-      tag: "release-0.6"
     manageCRDs: true
     metrics:
       disableAuth: true

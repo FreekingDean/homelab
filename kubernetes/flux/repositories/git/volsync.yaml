@@ -8,4 +8,4 @@ spec:
   interval: 1h
   url: https://github.com/backube/volsync
   ref:
-    branch: main
+    branch: reloease-0.6

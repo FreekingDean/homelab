@@ -9,8 +9,3 @@ spec:
   url: https://github.com/backube/volsync
   ref:
     branch: main
-  ignore: |
-    # exclude all
-    /*
-    # include chart
-    !/helm/volsync

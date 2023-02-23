@@ -15,7 +15,7 @@ resources:
   - ./hajimari.yaml
   - ./jetstack.yaml
   - ./kubernetes-dashboard.yaml
-  - ./piraues.yaml
+  - ./piraeus.yaml
   - ./prometheus-community.yaml
   - ./rook.yaml
   - ./stakater.yaml

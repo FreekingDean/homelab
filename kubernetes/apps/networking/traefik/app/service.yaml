@@ -10,4 +10,4 @@ spec:
     - name: traefik-old-public
       port: 8080
       targetPort: 8080
-  externalName: 10.0.0.111
+  externalName: 10.0.0.112

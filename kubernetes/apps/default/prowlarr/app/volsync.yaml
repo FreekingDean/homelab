@@ -17,8 +17,10 @@ spec:
       data:
         RESTIC_REPOSITORY: "${REPOSITORY_TEMPLATE}/prowlarr"
         RESTIC_PASSWORD: '{{ .password }}'
-        AWS_ACCESS_KEY_ID: '{{ .gcp_access_key }}'
-        AWS_SECRET_ACCESS_KEY: '{{ .gpc_access_secret }}'
+        GOOGLE_PROJECT_ID: "${GOOGLE_PROJECT_ID}"
+        GOOGLE_APPLICATION_CREDENTIALS: "/rando-path"
+        #AWS_ACCESS_KEY_ID: '{{ .gcp_access_key }}'
+        #AWS_SECRET_ACCESS_KEY: '{{ .gpc_access_secret }}'
   dataFrom:
     - extract:
         key: restic

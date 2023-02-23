@@ -40,9 +40,7 @@ spec:
       PROWLARR__PORT: &port 80
       PROWLARR__LOG_LEVEL: info
       PROWLARR__AUTHENTICATION_METHOD: External
-    envFrom:
-      - secretRef:
-          name: prowlarr-secret
+      PROWLARR__API_KEY: bad-api-key
     service:
       main:
         ports:
@@ -51,22 +49,22 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: nginx
+        ingressClassName: "${INGRESS_CLASS}"
         annotations:
           nginx.ingress.kubernetes.io/configuration-snippet: |
             proxy_set_header Accept-Encoding "";
             sub_filter '</head>' '<link rel="stylesheet" type="text/css" href="https://theme-park.devbu.io/css/base/prowlarr/nord.css"></head>';
             sub_filter_once on;
-          nginx.ingress.kubernetes.io/whitelist-source-range: |
-            10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd,networking-authelia@kubernetescrd"
           hajimari.io/icon: mdi:movie-search
         hosts:
-          - host: &host "{{ .Release.Name }}.devbu.io"
+          - host: &host "{{ .Release.Name }}${DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
-          - hosts:
+          - secretName: "${PRODUCTION_TLS}"
+            hosts:
               - *host
     podSecurityContext:
       runAsUser: 568

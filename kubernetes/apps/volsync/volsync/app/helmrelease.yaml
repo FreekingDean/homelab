@@ -9,11 +9,10 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: volsync
-      version: 0.5.1
+      chart: ./helm/volsync
       sourceRef:
-        kind: HelmRepository
-        name: backube
+        kind: GitRepository
+        name: volsync
         namespace: flux-system
   maxHistory: 3
   install:

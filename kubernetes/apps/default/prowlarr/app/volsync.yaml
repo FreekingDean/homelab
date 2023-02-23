@@ -15,7 +15,7 @@ spec:
     template:
       engineVersion: v2
       data:
-        RESTIC_REPOSITORY: '{ $REPOSITORY_TEMPLATE }/prowlarr'
+        RESTIC_REPOSITORY: "${REPOSITORY_TEMPLATE}/prowlarr"
         RESTIC_PASSWORD: '{{ .password }}'
         AWS_ACCESS_KEY_ID: '{{ .gcp_access_key }}'
         AWS_SECRET_ACCESS_KEY: '{{ .gpc_access_secret }}'

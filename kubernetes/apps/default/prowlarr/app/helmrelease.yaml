@@ -58,7 +58,7 @@ spec:
           traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd,networking-authelia@kubernetescrd"
           hajimari.io/icon: mdi:movie-search
         hosts:
-          - host: &host "{{ .Release.Name }}${DOMAIN}"
+          - host: &host "{{ .Release.Name }}.${DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix

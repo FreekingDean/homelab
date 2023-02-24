@@ -1,0 +1,49 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/externalsecret_v1beta1.json
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: sonarr-restic
+  namespace: default
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: onepassword-connect
+  target:
+    name: sonarr-restic-secret
+    creationPolicy: Owner
+    template:
+      engineVersion: v2
+      data:
+        RESTIC_REPOSITORY: "${REPOSITORY_TEMPLATE}/sonarr"
+        RESTIC_PASSWORD: '{{ .password }}'
+        GOOGLE_PROJECT_ID: "${GOOGLE_PROJECT_ID}"
+        GOOGLE_APPLICATION_CREDENTIALS: '{{ .gcp_creds }}'
+  data:
+    - secretKey: gcp_creds
+      remoteRef:
+        key: restic_gcp_creds
+  dataFrom:
+    - extract:
+        key: restic
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/replicationsource_v1alpha1.json
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: sonarr
+  namespace: default
+spec:
+  sourcePVC: config-sonarr-0
+  trigger:
+    schedule: "0 0 * * *"
+  restic:
+    copyMethod: Snapshot
+    pruneIntervalDays: 10
+    repository: sonarr-restic-secret
+    cacheCapacity: 2Gi
+    volumeSnapshotClassName: csi-ceph-blockpool
+    storageClassName: gp-cephpool
+    retain:
+      daily: 3
+      within: 3d

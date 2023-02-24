@@ -10,3 +10,4 @@ resources:
   - ./hajimari/ks.yaml
   - ./prowlarr/ks.yaml
   - ./redis/ks.yaml
+  - ./sonarr/ks.yaml

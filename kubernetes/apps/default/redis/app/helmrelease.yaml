@@ -18,6 +18,7 @@ spec:
   maxHistory: 3
   install:
     createNamespace: true
+    disableWait: false
     remediation:
       retries: 3
   upgrade:
@@ -26,7 +27,6 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
-  wait: false
   values:
     auth:
       enabled: false

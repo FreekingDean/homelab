@@ -11,11 +11,13 @@ module "enterprise" {
   cluster_server = module.ds9.cluster_server_ip
 
   servers = 0
-  agents  = 2
+  agents  = 4
   ceph_nodes = [
     {
       disks = [
-        "/dev/disk/by-path/pci-0000:03:00.0-sas-phy3-lun-0"
+        "/dev/disk/by-path/pci-0000:03:00.0-sas-phy3-lun-0",
+        "/dev/disk/by-path/pci-0000:03:00.0-sas-phy0-lun-0",
+        "/dev/disk/by-path/pci-0000:03:00.0-sas-phy1-lun-0",
       ]
     }
   ]

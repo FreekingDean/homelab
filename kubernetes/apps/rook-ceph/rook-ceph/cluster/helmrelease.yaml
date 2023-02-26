@@ -118,11 +118,11 @@ spec:
             replicated:
               size: 3
           dataPools:
-            - failureDomain: chassis
+            - failureDomain: osd
               name: default
               replicated:
                 size: 2
-            - failureDomain: chassis
+            - failureDomain: osd
               name: erasurecoded
               erasureCoded:
                 dataChunks: 3

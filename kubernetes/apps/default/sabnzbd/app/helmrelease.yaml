@@ -46,9 +46,6 @@ spec:
         sabnzbd.default.svc.cluster,
         sabnzbd.default.svc.cluster.local,
         {{ .Release.Name }}.${DOMAIN}
-    envFrom:
-      - secretRef:
-          name: sabnzbd-secret
     service:
       main:
         ports:

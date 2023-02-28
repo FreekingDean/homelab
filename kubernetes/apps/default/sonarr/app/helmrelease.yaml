@@ -89,18 +89,23 @@ spec:
         size: 10Gi
         storageClass: gp-cephpool
     persistence:
+      media:
+        enabled: true
+        type: pvc
+        existingClaim: media
+        mountPath: /media
       seedbox:
         enabled: true
         type: nfs
         server: 10.0.0.121
         path: /seedbox
         mountPath: /downloads
-      media:
+      oldmedia:
         enabled: true
         type: nfs
         server: 10.0.0.121
         path: /media
-        mountPath: /media
+        mountPath: /oldmedia
     resources:
       requests:
         cpu: 10m

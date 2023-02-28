@@ -39,7 +39,7 @@ spec:
     repository: sabnzbd-restic-secret
     cacheCapacity: 2Gi
     volumeSnapshotClassName: csi-ceph-blockpool
-    storageClassName: ceph-block
+    storageClassName: gp-cephpool
     retain:
       daily: 10
       within: 3d

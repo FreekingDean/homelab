@@ -99,7 +99,7 @@ spec:
       media:
         enabled: true
         type: pvc
-        existingName: media
+        existingClaim: media
         mountPath: /media
       incomplete:
         enabled: true

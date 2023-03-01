@@ -74,7 +74,7 @@ spec:
         enabled: true
         type: nfs
         server: 10.0.0.121
-        path: /oldmedia
+        path: /media
         mountPath: /oldmedia
       transcode:
         enabled: true

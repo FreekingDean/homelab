@@ -26,6 +26,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    additionalArgs:
+      - --auth-methods=oidc
     oidcSecret:
       create: true
       clientID: gitops

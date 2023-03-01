@@ -70,6 +70,12 @@ spec:
         size: 100Gi
         storageClass: gp-cephpool
     persistence:
+      oldmedia-4k:
+        enabled: true
+        type: nfs
+        server: 10.0.0.121
+        path: /media-4k
+        mountPath: /oldmedia-4k
       oldmedia:
         enabled: true
         type: nfs

@@ -9,6 +9,7 @@ resources:
   - ./glauth/ks.yaml
   - ./hajimari/ks.yaml
   - ./media/ks.yaml
+  - ./plex/ks.yaml
   - ./prowlarr/ks.yaml
   - ./redis/ks.yaml
   - ./sabnzbd/ks.yaml

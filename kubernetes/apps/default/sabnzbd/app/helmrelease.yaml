@@ -72,7 +72,7 @@ spec:
         ingressClassName: "${INGRESS_CLASS}"
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd"
-          hajimari.io/enable: "false"
+          hajimari.io/enable: "true"
         hosts:
           - host: &host "{{ .Release.Name }}.${DOMAIN}"
             paths:

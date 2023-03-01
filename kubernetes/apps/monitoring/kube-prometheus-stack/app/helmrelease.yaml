@@ -132,7 +132,7 @@ spec:
             hosts:
               - *host
       prometheusSpec:
-        replicas: 3
+        replicas: 2
         retention: 2d
         retentionSize: 6GB
         enableAdminAPI: true
@@ -153,4 +153,4 @@ spec:
             cpu: 150m
             memory: 2000Mi
           limits:
-            memory: 4000Mi
+            memory: 6000Mi

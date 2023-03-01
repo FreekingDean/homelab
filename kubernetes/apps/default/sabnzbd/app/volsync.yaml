@@ -16,12 +16,16 @@ spec:
       engineVersion: v2
       data:
         RESTIC_REPOSITORY: '{{ .REPOSITORY_TEMPLATE }}/sabnzbd'
-        RESTIC_PASSWORD: '{{ .RESTIC_PASSWORD }}'
-        AWS_ACCESS_KEY_ID: '{{ .AWS_ACCESS_KEY_ID }}'
-        AWS_SECRET_ACCESS_KEY: '{{ .AWS_SECRET_ACCESS_KEY }}'
+        RESTIC_PASSWORD: '{{ .password }}'
+        GOOGLE_PROJECT_ID: "${GOOGLE_PROJECT_ID}"
+        GOOGLE_APPLICATION_CREDENTIALS: '{{ .gcp_creds }}'
+  data:
+    - secretKey: gcp_creds
+      remoteRef:
+        key: restic_gcp_creds
   dataFrom:
     - extract:
-        key: volsync-restic-template
+        key: restic
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/replicationsource_v1alpha1.json
 apiVersion: volsync.backube/v1alpha1

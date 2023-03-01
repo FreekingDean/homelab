@@ -19,9 +19,13 @@ spec:
         RESTIC_PASSWORD: '{{ .password }}'
         GOOGLE_PROJECT_ID: "${GOOGLE_PROJECT_ID}"
         GOOGLE_APPLICATION_CREDENTIALS: '{{ .gcp_creds }}'
+  data:
+    - secretKey: gcp_creds
+      remoteRef:
+        key: restic_gcp_creds
   dataFrom:
     - extract:
-        key: restic_gcp_creds
+        key: restic
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/replicationsource_v1alpha1.json
 apiVersion: volsync.backube/v1alpha1

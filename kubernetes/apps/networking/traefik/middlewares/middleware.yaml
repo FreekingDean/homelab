@@ -17,7 +17,8 @@ metadata:
 spec:
   errors:
     status:
-      - "400-599"
+      - "400"
+      - "402-599"
     query: /{status}.html
     service:
       name: traefik-errorpages

@@ -13,9 +13,10 @@ locals {
   server_arg = var.server_ip == var.ip ? "--cluster-init" : "--server https://${var.server_ip}:6443"
   server_args = join(" ", concat(local.base_args, [
     local.server_arg,
+    "--disable traefik",
+    "--disable servicelb",
     "--kube-controller-manager-arg bind-address=0.0.0.0",
     "--kube-scheduler-arg bind-address=0.0.0.0",
-    "--disable traefik",
     "--disable-helm-controller",
     "--node-taint \"CriticalAddonsOnly=true:NoExecute\"",
     "--etcd-expose-metrics true",

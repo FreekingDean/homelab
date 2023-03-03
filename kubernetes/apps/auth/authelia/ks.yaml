@@ -5,7 +5,7 @@ metadata:
   name: cluster-apps-authelia-secrets
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/default/authelia/secrets
+  path: ./kubernetes/apps/auth/authelia/secrets
   prune: true
   sourceRef:
     kind: GitRepository
@@ -22,7 +22,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-authelia-secrets
-  path: ./kubernetes/apps/default/authelia/app
+  path: ./kubernetes/apps/auth/authelia/app
   prune: true
   sourceRef:
     kind: GitRepository
@@ -31,7 +31,6 @@ spec:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
       name: authelia
-      namespace: default
   interval: 30m
   retryInterval: 1m
   timeout: 3m
@@ -44,7 +43,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-authelia-secrets
-  path: ./kubernetes/apps/default/authelia/app-com
+  path: ./kubernetes/apps/auth/authelia/app-com
   prune: true
   sourceRef:
     kind: GitRepository
@@ -53,7 +52,6 @@ spec:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
       name: authelia
-      namespace: default
   interval: 30m
   retryInterval: 1m
   timeout: 3m

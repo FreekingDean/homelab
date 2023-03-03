@@ -6,12 +6,12 @@ resources:
   - ./authelia/ks.yaml
   - ./glauth/ks.yaml
 patches:
-  patch: |-
-    - op: add
-      path: /spec/targetNamespace
-      value: auth
-  target:
-    version: v1beta2
-    group: kustomize.toolkit.fluxcd.io
-    kind: Kustomization
-    labelSelector: setnamespace.flux.home.arpa/disabled notin (true)
+  - patch: |-
+      - op: add
+        path: /spec/targetNamespace
+        value: auth
+    target:
+      version: v1beta2
+      group: kustomize.toolkit.fluxcd.io
+      kind: Kustomization
+      labelSelector: setnamespace.flux.home.arpa/disabled notin (true)

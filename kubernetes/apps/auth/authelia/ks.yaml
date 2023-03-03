@@ -35,6 +35,10 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+  postBuild:
+    substitue:
+      NAME_SUFFIX: dev
+      AUTH_DOMAIN: deangalvin.dev
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
@@ -44,7 +48,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-authelia-secrets
-  path: ./kubernetes/apps/auth/authelia/app-com
+  path: ./kubernetes/apps/auth/authelia
   prune: true
   sourceRef:
     kind: GitRepository
@@ -57,3 +61,7 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+  postBuild:
+    substitue:
+      NAME_SUFFIX: com
+      AUTH_DOMAIN: deangalvin.com

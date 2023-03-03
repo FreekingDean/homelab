@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./echo-server/ks.yaml
-  - ./glauth/ks.yaml
   - ./hajimari/ks.yaml
   - ./media/ks.yaml
   - ./plex/ks.yaml

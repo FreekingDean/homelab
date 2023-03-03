@@ -57,7 +57,7 @@ spec:
             policy: bypass
       session:
         redis:
-          host: redis-master
+          host: redis-master.default
       notifier:
         filesystem:
           enabled: true

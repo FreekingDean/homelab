@@ -26,10 +26,9 @@ spec:
         - op: add
           path: /spec/decryption
           value:
-            decryption:
-              provider: sops
-              secretRef:
-                name: sops-age
+            provider: sops
+            secretRef:
+              name: sops-age
         - op: add
           path: /spec/postBuild
           value:

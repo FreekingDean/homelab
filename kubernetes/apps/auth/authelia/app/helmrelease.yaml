@@ -29,6 +29,13 @@ spec:
     pod:
       kind: Deployment
       replicas: 1
+      env:
+        - name: AUTHELIA_STORAGE_POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: "postgres-${NAME_SUFFIX}-app"
+              key: password
+
     domain: "${AUTH_DOMAIN}"
     secret:
       existingSecret: authelia-external
@@ -47,9 +54,10 @@ spec:
     configMap:
       storage:
         postgres:
-          enabled: false
-        local:
           enabled: true
+          database: "authelia-${NAME_SUFFIX}"
+          host: "postgres-${NAME_SUFFIX}-rw"
+          username: app
       access_control:
         default_policy: one_factor
         rules:

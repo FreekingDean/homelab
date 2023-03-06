@@ -3,19 +3,19 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: sonarr-restic
+  name: "sonarr-restic${NAME_SUFFIX}"
   namespace: default
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
     name: onepassword-connect
   target:
-    name: sonarr-restic-secret
+    name: "sonarr-restic-secret${NAME_SUFFIX}"
     creationPolicy: Owner
     template:
       engineVersion: v2
       data:
-        RESTIC_REPOSITORY: "${REPOSITORY_TEMPLATE}/sonarr"
+        RESTIC_REPOSITORY: "${REPOSITORY_TEMPLATE}/sonarr${NAME_SUFFIX}"
         RESTIC_PASSWORD: '{{ .password }}'
         GOOGLE_PROJECT_ID: "${GOOGLE_PROJECT_ID}"
         GOOGLE_APPLICATION_CREDENTIALS: '{{ .gcp_creds }}'
@@ -31,16 +31,16 @@ spec:
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: sonarr
+  name: "sonarr${NAME_SUFFIX}"
   namespace: default
 spec:
-  sourcePVC: config-sonarr-0
+  sourcePVC: "config-sonarr${NAME_SUFFIX}-0"
   trigger:
     schedule: "0 0 * * *"
   restic:
     copyMethod: Snapshot
     pruneIntervalDays: 10
-    repository: sonarr-restic-secret
+    repository: "sonarr-restic-secret${NAME_SUFFIX}"
     cacheCapacity: 2Gi
     volumeSnapshotClassName: csi-ceph-blockpool
     storageClassName: gp-cephpool

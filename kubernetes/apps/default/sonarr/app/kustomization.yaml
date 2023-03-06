@@ -6,11 +6,3 @@ namespace: default
 resources:
   - ./helmrelease.yaml
   - ./volsync.yaml
-generatorOptions:
-  disableNameSuffixHash: true
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled
-labels:
-  - pairs:
-      app.kubernetes.io/name: sonarr
-      app.kubernetes.io/instance: sonarr

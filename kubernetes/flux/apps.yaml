@@ -22,7 +22,7 @@ spec:
       - kind: Secret
         name: cluster-secrets
   patchesJson6902:
-    - patch: |-
+    - patch:
         - op: add
           path: /spec/decryption
           value:

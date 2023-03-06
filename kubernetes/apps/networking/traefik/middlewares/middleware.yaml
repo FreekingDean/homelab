@@ -31,7 +31,7 @@ metadata:
   name: authelia
 spec:
   forwardAuth:
-    address: "http://authelia.auth/api/verify?rd=https%3A%2F%2Fauth.deangalvin.dev%2F"
+    address: "http://authelia-dev.auth/api/verify?rd=https%3A%2F%2Fauth.deangalvin.dev%2F"
     authResponseHeaders:
       - Remote-User
       - Remote-Groups

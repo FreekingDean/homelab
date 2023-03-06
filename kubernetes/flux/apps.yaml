@@ -21,7 +21,7 @@ spec:
         name: cluster-settings
       - kind: Secret
         name: cluster-secrets
-  patches:
+  patchesJson6902:
     - patch: |-
         - op: add
           path: /spec/decryption
@@ -30,12 +30,15 @@ spec:
             secretRef:
               name: sops-age
         - op: add
-          path: /spec/postBuild/substituteFrom
+          path: /spec/postBuild/substituteFrom/-
           value:
-            - kind: ConfigMap
-              name: cluster-settings
-            - kind: Secret
-              name: cluster-secrets
+            kind: ConfigMap
+            name: cluster-settings
+        - op: add
+          path: /spec/postBuild/substituteFrom/-
+          value:
+            kind: Secret
+            name: cluster-secrets
       target:
         group: kustomize.toolkit.fluxcd.io
         version: v1beta2

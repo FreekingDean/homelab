@@ -129,7 +129,7 @@ spec:
           enabled: true
           serviceMonitor:
             enabled: true
-  postRender:
+  postRenderers:
     kustomize:
       patches:
         - patch: |-

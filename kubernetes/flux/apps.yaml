@@ -21,7 +21,7 @@ spec:
         name: cluster-settings
       - kind: Secret
         name: cluster-secrets
-  patches:
+  patchesStrategicMerge:
     - patch: |-
         - op: add
           path: /spec/decryption
@@ -29,7 +29,7 @@ spec:
             provider: sops
             secretRef:
               name: sops-age
-        - op: merge
+        - op: add
           path: /spec/postBuild
           value: {}
         - op: add

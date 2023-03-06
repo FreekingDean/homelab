@@ -31,9 +31,6 @@ spec:
     ports:
       web:
         expose: false
-      websecure:
-        middlewares:
-          - networking-traefik-errors@kubernetescrd
     providers:
       kubernetesIngress:
         allowExternalNameServices: true

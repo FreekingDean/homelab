@@ -48,7 +48,7 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-authelia-secrets
-  path: ./kubernetes/apps/auth/authelia
+  path: ./kubernetes/apps/auth/authelia/app
   prune: true
   sourceRef:
     kind: GitRepository

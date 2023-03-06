@@ -129,3 +129,25 @@ spec:
           enabled: true
           serviceMonitor:
             enabled: true
+  postRender:
+    kustomize:
+      patches:
+        - patch: |-
+           apiVersion: apps/v1
+            kind: Deployment
+            metadata:
+              name: authelia-.*
+            spec:
+              template:
+                spec:
+                  containers:
+                    - name: authelia
+                      env:
+                        - name: AUTHELIA_STORAGE_POSTGRES_PASSWORD_FILE
+                          $patch: delete
+                  volumes:
+                    - name: secrets
+                      secret:
+                        items:
+                          - key: STORAGE_PASSWORD
+                            $patch: delete

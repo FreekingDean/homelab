@@ -29,7 +29,7 @@ spec:
             provider: sops
             secretRef:
               name: sops-age
-        - op: add
+        - op: merge
           path: /spec/postBuild
           value: {}
         - op: add

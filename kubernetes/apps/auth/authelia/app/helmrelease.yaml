@@ -145,12 +145,6 @@ spec:
                         env:
                           - name: AUTHELIA_STORAGE_POSTGRES_PASSWORD_FILE
                             $patch: delete
-                    volumes:
-                      - name: secrets
-                        secret:
-                          items:
-                            - key: STORAGE_PASSWORD
-                              $patch: delete
             target:
               group: apps
               version: v1

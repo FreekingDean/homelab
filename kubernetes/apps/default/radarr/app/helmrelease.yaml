@@ -76,16 +76,9 @@ spec:
     persistence:
       media:
         enabled: true
-        type: nfs
-        server: expanse.turbo.ac
-        path: /eros/Media
+        type: pvc
+        existingClaim: media
         mountPath: /media
-      seedbox:
-        enabled: true
-        type: nfs
-        server: 10.0.0.121
-        path: /seedbox
-        mountPath: /downloads
       oldmedia:
         enabled: true
         type: nfs

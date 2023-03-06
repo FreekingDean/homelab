@@ -94,12 +94,6 @@ spec:
         type: pvc
         existingClaim: media
         mountPath: /media
-      seedbox:
-        enabled: true
-        type: nfs
-        server: 10.0.0.121
-        path: /seedbox
-        mountPath: /downloads
       oldmedia:
         enabled: true
         type: nfs

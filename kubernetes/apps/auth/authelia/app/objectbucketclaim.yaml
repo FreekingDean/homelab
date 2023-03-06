@@ -5,4 +5,4 @@ metadata:
   name: "authelia-pg-${NAME_SUFFIX}"
 spec:
   bucketName: "authelia-pg-${NAME_SUFFIX}"
-  storageClassName: rook-ceph-bucket
+  storageClassName: ceph-bucket

@@ -28,7 +28,7 @@ spec:
   values:
     pod:
       kind: Deployment
-      replicas: 1
+      replicas: 3
       env:
         - name: AUTHELIA_STORAGE_POSTGRES_PASSWORD
           valueFrom:

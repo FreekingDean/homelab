@@ -43,6 +43,9 @@ spec:
         key: LDAP_PASSWORD
       jwt:
         key: JWT_KEY
+      storage:
+        key: ""
+        filename: ""
     ingress:
       enabled: true
       className: "${INGRESS_CLASS}"

@@ -21,8 +21,8 @@ spec:
         name: cluster-settings
       - kind: Secret
         name: cluster-secrets
-  patchesJson6902:
-    - patch:
+  patches:
+    - patch: |-
         - op: add
           path: /spec/decryption
           value:
@@ -30,15 +30,15 @@ spec:
             secretRef:
               name: sops-age
         - op: add
-          path: /spec/postBuild/substituteFrom
+          path: /spec/postBuild
           value:
-            - kind: Secret
-              name: cluster-secrets
-            - kind: ConfigMap
-              name: cluster-settings
+            substituteFrom:
+              - kind: ConfigMap
+                name: cluster-settings
+              - kind: Secret
+                name: cluster-secrets
       target:
         group: kustomize.toolkit.fluxcd.io
         version: v1beta2
         kind: Kustomization
         labelSelector: substitution.flux.home.arpa/disabled notin (true)
-        name: ".*"

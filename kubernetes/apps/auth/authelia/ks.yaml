@@ -36,7 +36,7 @@ spec:
   retryInterval: 1m
   timeout: 3m
   postBuild:
-    substitue:
+    substitute:
       NAME_SUFFIX: dev
       AUTH_DOMAIN: deangalvin.dev
 ---
@@ -62,6 +62,6 @@ spec:
   retryInterval: 1m
   timeout: 3m
   postBuild:
-    substitue:
+    substitute:
       NAME_SUFFIX: com
       AUTH_DOMAIN: deangalvin.com

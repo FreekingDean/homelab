@@ -62,7 +62,8 @@ module "ds9" {
   ceph_nodes = [
     {
       disks = [
-        "/dev/disk/by-path/pci-0000:05:00.0-sas-exp0x500c04f2efd2d03f-phy31-lun-0"
+        "/dev/disk/by-path/pci-0000:05:00.0-sas-exp0x500c04f2efd2d03f-phy31-lun-0",
+        "/dev/disk/by-path/pci-0000:05:00.0-sas-exp0x500c04f2efd2d03f-phy33-lun-0"
       ],
     },
   ]

@@ -82,6 +82,11 @@ spec:
         server: 10.0.0.121
         path: /media
         mountPath: /oldmedia
+      media:
+        enabled: true
+        type: pvc
+        existingClaim: media
+        mountPath: /media
       transcode:
         enabled: true
         type: emptyDir

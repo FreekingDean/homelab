@@ -27,6 +27,8 @@ spec:
     keepHistory: false
   values:
     protocolHttp: true
+    service:
+      externalPort: 9090
     env:
       TZ: "${TIMEZONE}"
     extraArgs:

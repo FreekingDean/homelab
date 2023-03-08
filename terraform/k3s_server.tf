@@ -4,7 +4,7 @@ locals {
     subversion = "k3s1"
   }
   coreos = {
-    version = "37.20230122.3.0"
+    version = "37.20230218.3.0"
   }
 }
 

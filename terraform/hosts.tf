@@ -11,7 +11,7 @@ module "enterprise" {
   cluster_server = module.ds9.cluster_server_ip
 
   servers = 0
-  agents  = 4
+  agents  = 3
   ceph_nodes = [
     {
       disks = [

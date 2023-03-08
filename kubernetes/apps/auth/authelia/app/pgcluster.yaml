@@ -28,8 +28,8 @@ spec:
       serverName: "authelia-pg-${NAME_SUFFIX}"
       s3Credentials:
         accessKeyId:
-          name: "authlia-pg-${NAME_SUFFIX}"
+          name: "authelia-pg-${NAME_SUFFIX}"
           key: AWS_ACCESS_KEY_ID
         secretAccessKey:
-          name: "authlia-pg-${NAME_SUFFIX}"
+          name: "authelia-pg-${NAME_SUFFIX}"
           key: AWS_SECRET_ACCESS_KEY

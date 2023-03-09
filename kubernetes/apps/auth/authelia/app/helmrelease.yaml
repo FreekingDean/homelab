@@ -47,7 +47,7 @@ spec:
       enabled: true
       className: "${INGRESS_CLASS}"
       annotations:
-        public.ingress.home.arpa: true
+        public.ingress.home.arpa: "true"
         hajimari.io/icon: mdi:shield-account
       tls:
         enabled: true

@@ -5,7 +5,7 @@ metadata:
   name: legacy-server-public
   namespace: networking
   annotations:
-    public.ingress.home.arpa: true
+    public.ingress.home.arpa: "true"
     traefik.ingress.kubernetes.io/router.middlewares: networking-authelia-com@kubernetescrd
     hajimari.io/enable: "false"
 spec:

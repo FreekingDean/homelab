@@ -25,7 +25,7 @@ spec:
           - resources:
               annotations:
                 traefik.ingress.kubernetes.io/router.middlewares: "?*"
-                public.ingress.home.arpa: true
+                public.ingress.home.arpa: "true"
       mutate:
         patchStrategicMerge:
           metadata:
@@ -43,7 +43,7 @@ spec:
         any:
           - resources:
               annotations:
-                public.ingress.home.arpa: true
+                public.ingress.home.arpa: "true"
       mutate:
         patchStrategicMerge:
           metadata:

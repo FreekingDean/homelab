@@ -1,0 +1,54 @@
+---
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: add-ipallowlist-middleware
+  annotations:
+    policies.kyverno.io/title: Add IPAllowlist Middleware
+    policies.kyverno.io/category: Traefik
+    policies.kyverno.io/subject: Ingress
+    policies.kyverno.io/description: >-
+      This policy adds local only middleware to all ingresses.
+    pod-policies.kyverno.io/autogen-controllers: none
+spec:
+  mutateExistingOnPolicyUpdate: true
+  generateExistingOnPolicyUpdate: true
+  rules:
+    - name: add-ipallowlist-middleware
+      match:
+        any:
+          - resources:
+              kinds:
+                - Ingress
+      exclude:
+        any:
+          - resources:
+              selector:
+                annotations:
+                  traefik.ingress.kubernetes.io/router.middlewares: "?*"
+                  public.ingress.home.arpa: true
+      mutate:
+        patchStrategicMerge:
+          metadata:
+            annotations:
+              traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd"
+    - name: append-ipallowlist-middleware
+      match:
+        any:
+          - resources:
+              kinds:
+                - Ingress
+              selector:
+                annotations:
+                  traefik.ingress.kubernetes.io/router.middlewares: "?*"
+      exclude:
+        any:
+          - resources:
+              selector:
+                annotations:
+                  public.ingress.home.arpa: true
+      mutate:
+        patchStrategicMerge:
+          metadata:
+            annotations:
+              traefik.ingress.kubernetes.io/router.middlewares: "{{ request.object.metadata.annotations.\"traefik.ingress.kubernetes.io/router.middlewares\" }},networking-localonly@kubernetescrd"

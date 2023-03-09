@@ -46,6 +46,7 @@ spec:
         enabled: true
         ingressClassName: "${INGRESS_CLASS}"
         annotations:
+          public.ingress.home.arpa: true
           nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
           hajimari.io/icon: mdi:plex
         hosts:

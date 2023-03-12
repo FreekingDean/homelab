@@ -24,7 +24,7 @@ spec:
         any:
           - resources:
               annotations:
-                traefik.ingress.kubernetes.io/router.middlewares: "?*"
+                traefik.ingress.kubernetes.io/router.middlewares: "*networking-localonly@kubernetescrd*"
           - resources:
               annotations:
                 public.ingress.home.arpa: "true"
@@ -32,22 +32,4 @@ spec:
         patchStrategicMerge:
           metadata:
             annotations:
-              traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd"
-    - name: append-ipallowlist-middleware
-      match:
-        any:
-          - resources:
-              kinds:
-                - Ingress
-              annotations:
-                traefik.ingress.kubernetes.io/router.middlewares: "?*"
-      exclude:
-        any:
-          - resources:
-              annotations:
-                public.ingress.home.arpa: "true"
-      mutate:
-        patchStrategicMerge:
-          metadata:
-            annotations:
-              traefik.ingress.kubernetes.io/router.middlewares: "{{ request.object.metadata.annotations.\"traefik.ingress.kubernetes.io/router.middlewares\" }},networking-localonly@kubernetescrd"
+              +(traefik.ingress.kubernetes.io/router.middlewares): "networking-localonly@kubernetescrd,"

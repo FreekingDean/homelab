@@ -75,7 +75,6 @@ spec:
         config:
           osdsPerDevice: "1"
         nodes:
-          ## NODE ENTRIES ##
           - name: coreos-ceph-181
             devices:
               - name: /dev/disk/by-path/pci-0000:00:05.0-scsi-0:0:3:0
@@ -88,7 +87,8 @@ spec:
             devices:
               - name: /dev/disk/by-path/pci-0000:00:05.0-scsi-0:0:3:0
               - name: /dev/disk/by-path/pci-0000:00:05.0-scsi-0:0:4:0
-    ## NODE ENTRIES END ##
+              - name: /dev/disk/by-path/pci-0000:00:05.0-scsi-0:0:5:0
+              - name: /dev/disk/by-path/pci-0000:00:05.0-scsi-0:0:6:0
     cephBlockPools:
       - name: ceph-blockpool
         spec:

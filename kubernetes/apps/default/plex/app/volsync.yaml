@@ -39,7 +39,7 @@ spec:
   rclone:
     rcloneConfigSection: "gcp"
     rcloneConfig: 'plex-rclone-secret'
-    rcloneDestPath: "${REPOSITOR_TEMPLATE}/plex"
+    rcloneDestPath: "${REPOSITORY_TEMPLATE}/plex"
     copyMethod: Snapshot
     volumeSnapshotClassName: csi-ceph-rbd
     storageClassName: ceph-rbd

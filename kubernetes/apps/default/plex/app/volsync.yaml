@@ -42,6 +42,3 @@ spec:
     copyMethod: Snapshot
     volumeSnapshotClassName: csi-ceph-rbd
     storageClassName: ceph-rbd
-    retain:
-      daily: 10
-      within: 3d

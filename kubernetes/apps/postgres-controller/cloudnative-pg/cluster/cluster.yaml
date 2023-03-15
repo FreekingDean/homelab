@@ -10,7 +10,7 @@
 #   primaryUpdateStrategy: unsupervised
 #   storage:
 #     size: 20Gi
-#     storageClass: ceph-blockpool
+#     storageClass: ceph-rbd
 #   postgresql:
 #     parameters:
 #       max_connections: "300"

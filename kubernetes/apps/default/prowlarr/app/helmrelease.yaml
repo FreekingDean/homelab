@@ -72,7 +72,7 @@ spec:
         mountPath: /config
         accessMode: ReadWriteOnce
         size: 2Gi
-        storageClass: ceph-blockpool
+        storageClass: ceph-rbd
     resources:
       requests:
         cpu: 10m

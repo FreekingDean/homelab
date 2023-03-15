@@ -42,8 +42,8 @@ spec:
     pruneIntervalDays: 10
     repository: plex-restic-secret
     cacheCapacity: 5Gi
-    volumeSnapshotClassName: csi-ceph-blockpool
-    storageClassName: ceph-blockpool
+    volumeSnapshotClassName: csi-ceph-rbd
+    storageClassName: ceph-rbd
     retain:
       daily: 10
       within: 3d

@@ -1,0 +1,32 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "check-fix-${rsrc}-${ts}"
+  namespace: "${namespace}"
+spec:
+  ttlSecondsAfterFinished: 3600
+  template:
+    spec:
+      automountServiceAccountToken: false
+      restartPolicy: OnFailure
+      volumes:
+        - name: gcs
+          secret:
+            secretName: "${rsrc}-restic-secret"
+            items:
+              - key: GOOGLE_APPLICATION_CREDENTIALS
+                path: gcs.json
+      containers:
+        - name: list
+          image: docker.io/restic/restic:0.14.0
+          command: ['sh', '-c', 'while true; do sleep 300; done;']
+          volumeMounts:
+            - name: gcs
+              mountPath: "/creds"
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "/creds/gcs.json"
+          envFrom:
+            - secretRef:
+                name: "${rsrc}-restic-secret"

@@ -40,7 +40,6 @@ spec:
     rcloneConfig: 'plex-rclone-secret'
     rcloneDestPath: "${REPOSITOR_TEMPLATE}/plex"
     copyMethod: Snapshot
-    cacheCapacity: 5Gi
     volumeSnapshotClassName: csi-ceph-rbd
     storageClassName: ceph-rbd
     retain:

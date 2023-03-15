@@ -20,7 +20,7 @@ spec:
           [gcp]
           type = google cloud storage
           project_number = "${GOOGLE_PROJECT_ID}"
-          service_account_file = '${RCLONE_CONFIG_DIR}/gcpcreds.json'
+          service_account_file = $${RCLONE_CONFIG_DIR}/gcpcreds.json
   data:
     - secretKey: gcp_creds
       remoteRef:

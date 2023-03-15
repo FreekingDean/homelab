@@ -28,13 +28,12 @@ variable "servers" {
   type = number
 }
 
-variable "ceph_nodes" {
-  type = list(object({
-    disks = list(string)
-  }))
-}
-
 variable "cluster_server" {
   type    = string
   default = ""
+}
+
+variable "primary_storage" {
+  type    = string
+  default = "local-thin"
 }

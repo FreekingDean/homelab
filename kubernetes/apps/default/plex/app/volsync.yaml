@@ -43,7 +43,7 @@ spec:
     repository: plex-restic-secret
     cacheCapacity: 5Gi
     volumeSnapshotClassName: csi-ceph-blockpool
-    storageClassName: gp-cephpool
+    storageClassName: ceph-blockpool
     retain:
       daily: 10
       within: 3d

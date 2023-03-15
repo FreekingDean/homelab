@@ -69,7 +69,7 @@ spec:
         mountPath: /config
         accessMode: ReadWriteOnce
         size: 100Gi
-        storageClass: gp-cephpool
+        storageClass: ceph-blockpool
     persistence:
       oldmedia-4k:
         enabled: true

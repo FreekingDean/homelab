@@ -9,7 +9,7 @@ module "agents" {
 
 
   coreos_volid = local.coreos_volid
-  storage_name = "local-thin"
+  storage_name = var.primary_storage
   storage_size = 16
 
   additional_storages = [
@@ -17,7 +17,7 @@ module "agents" {
       mount   = "/var/lib/rook"
       size    = 64
       label   = "ROOK_DATA"
-      storage = "local-thin"
+      storage = var.primary_storage
     }
   ]
 
@@ -34,4 +34,6 @@ module "agents" {
   depends_on = [
     null_resource.download_qcow
   ]
+
+  primary_storage = var.primary_storage
 }

@@ -99,3 +99,8 @@ variable "ip" {
 variable "server_ip" {
   type = string
 }
+
+variable "primary_storage" {
+  type    = string
+  default = "local-thin"
+}

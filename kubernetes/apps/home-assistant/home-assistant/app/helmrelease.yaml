@@ -73,7 +73,7 @@ spec:
         mountPath: /config
         accessMode: ReadWriteOnce
         size: 128Gi
-        storageClass: gp-cephpool
+        storageClass: ceph-blockpool
     persistence:
       oldconfig:
         enabled: true

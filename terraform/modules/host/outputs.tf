@@ -5,7 +5,3 @@
 output "cluster_server_ip" {
   value = var.servers > 0 ? "10.0.${var.id}1.101" : ""
 }
-
-output "ceph_nodes" {
-  value = module.ceph_nodes
-}

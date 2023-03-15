@@ -47,48 +47,15 @@ spec:
     toolbox:
       enabled: true
     cephClusterSpec:
-      mgr:
-        modules:
-          - name: rook
-            enabled: true
-      placement:
-        prepareosd:
-          tolerations:
-            - key: CephOSDOnly
-              operator: Exists
-              effect: NoExecute
-        osd:
-          tolerations:
-            - key: CephOSDOnly
-              operator: Exists
-              effect: NoExecute
+      external:
+        enable: true
       crashCollector:
-        disable: false
-      dashboard:
-        enabled: true
-        urlPrefix: /
-        port: 7000
-        ssl: false
-      storage:
-        useAllNodes: false
-        useAllDevices: false
-        config:
-          osdsPerDevice: "1"
-        nodes:
-          - name: coreos-ceph-181
-            devices:
-              - name: /dev/disk/by-path/pci-0000:00:05.0-scsi-0:0:0:3
-              - name: /dev/disk/by-path/pci-0000:00:05.0-scsi-0:0:0:4
-              - name: /dev/disk/by-path/pci-0000:00:05.0-scsi-0:0:0:5
-          - name: coreos-ceph-281
-            devices:
-              - name: /dev/disk/by-path/pci-0000:00:05.0-scsi-0:0:0:3
-          - name: coreos-ceph-381
-            devices:
-              - name: /dev/disk/by-path/pci-0000:00:05.0-scsi-0:0:0:3
-              - name: /dev/disk/by-path/pci-0000:00:05.0-scsi-0:0:0:4
-              - name: /dev/disk/by-path/pci-0000:00:05.0-scsi-0:0:0:5
-              - name: /dev/disk/by-path/pci-0000:00:05.0-scsi-0:0:0:6
+        disable: true
+      healthCheck:
+        daemonHealth:
+          mon:
+            disabled: false
+            interval: 45s
     cephBlockPools:
       - name: ceph-blockpool
         spec:
@@ -97,7 +64,7 @@ spec:
             size: 3
         storageClass:
           enabled: true
-          name: gp-cephpool
+          name: ceph-blockpool
           isDefault: false
           reclaimPolicy: Delete
           allowVolumeExpansion: true

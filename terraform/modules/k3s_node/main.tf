@@ -21,6 +21,7 @@ resource "proxmox_node_virtual_machine" "guest" {
   node        = var.node
   memory      = var.memory
   cpus        = var.cpus
+  cpu         = "host"
   guest_agent = true
   serials = [
     "socket"
@@ -28,7 +29,7 @@ resource "proxmox_node_virtual_machine" "guest" {
 
   scsi {
     import_from = var.coreos_volid
-    storage     = "local-thin"
+    storage     = var.primary_storage
     readonly    = true
   }
 

@@ -27,4 +27,6 @@ module "servers" {
   depends_on = [
     null_resource.download_qcow
   ]
+
+  primary_storage = var.primary_storage
 }

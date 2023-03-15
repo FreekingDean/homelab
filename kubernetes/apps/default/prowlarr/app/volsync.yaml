@@ -43,7 +43,7 @@ spec:
     repository: prowlarr-restic-secret
     cacheCapacity: 2Gi
     volumeSnapshotClassName: csi-ceph-blockpool
-    storageClassName: gp-cephpool
+    storageClassName: ceph-blockpool
     retain:
       daily: 3
       within: 3d

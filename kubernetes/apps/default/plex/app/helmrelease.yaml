@@ -68,7 +68,7 @@ spec:
       - name: config
         mountPath: /config
         accessMode: ReadWriteOnce
-        size: 100Gi
+        size: 150Gi
         storageClass: ceph-rbd
     persistence:
       oldmedia-4k:

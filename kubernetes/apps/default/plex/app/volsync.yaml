@@ -3,29 +3,27 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: plex-restic
+  name: plex-rclone
   namespace: default
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
     name: onepassword-connect
   target:
-    name: plex-restic-secret
+    name: plex-rclone-secret
     creationPolicy: Owner
     template:
       engineVersion: v2
       data:
-        RESTIC_REPOSITORY: "${REPOSITORY_TEMPLATE}/plex"
-        RESTIC_PASSWORD: '{{ .password }}'
-        GOOGLE_PROJECT_ID: "${GOOGLE_PROJECT_ID}"
-        GOOGLE_APPLICATION_CREDENTIALS: '{{ .gcp_creds }}'
+        rclone.conf: |
+          [gcp]
+          type = google cloud storage
+          service_account_credentials = '{{ .gcp_creds }}'
+          project_number = "${GOOGLE_PROJECT_ID}"
   data:
     - secretKey: gcp_creds
       remoteRef:
         key: restic_gcp_creds
-  dataFrom:
-    - extract:
-        key: restic
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/replicationsource_v1alpha1.json
 apiVersion: volsync.backube/v1alpha1
@@ -37,10 +35,11 @@ spec:
   sourcePVC: config-plex-0
   trigger:
     schedule: "0 0 * * *"
-  restic:
+  rclone:
+    rcloneConfigSection: "gcp"
+    rcloneConfig: 'plex-rclone-secret'
+    rcloneDestPath: "${REPOSITOR_TEMPLATE}/plex"
     copyMethod: Snapshot
-    pruneIntervalDays: 10
-    repository: plex-restic-secret
     cacheCapacity: 5Gi
     volumeSnapshotClassName: csi-ceph-rbd
     storageClassName: ceph-rbd

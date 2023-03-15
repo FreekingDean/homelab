@@ -15,11 +15,12 @@ spec:
     template:
       engineVersion: v2
       data:
+        gcpcreds.json: '{{ .gcp_creds }}'
         rclone.conf: |
           [gcp]
           type = google cloud storage
-          service_account_credentials = '{{ .gcp_creds }}'
           project_number = "${GOOGLE_PROJECT_ID}"
+          service_account_file = ${RCLONE_CONFIG_DIR}/gcpcreds.json
   data:
     - secretKey: gcp_creds
       remoteRef:

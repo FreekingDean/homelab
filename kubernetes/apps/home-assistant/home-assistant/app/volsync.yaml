@@ -22,3 +22,4 @@ spec:
       PVC: config-home-assistant-0
       NAMESPACE: home-assistant
       GOOGLE_PROJECT_ID: "${GOOGLE_PROJECT_ID}"
+      REPOSITORY_TEMPLATE: "${REPOSITORY_TEMPLATE}"

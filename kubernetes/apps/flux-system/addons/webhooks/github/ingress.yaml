@@ -5,6 +5,7 @@ metadata:
   name: flux-webhook
   namespace: flux-system
   annotations:
+    public.ingress.home.arpa: "true"
     hajimari.io/enable: "false"
 spec:
   ingressClassName: "${INGRESS_CLASS}"

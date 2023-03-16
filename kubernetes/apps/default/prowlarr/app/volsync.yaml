@@ -5,7 +5,7 @@ metadata:
   name: volsync-prowlarr
 spec:
   dependsOn:
-    - name: cluster-apps-authelia-secrets
+    - name: flux-system/cluster-apps-volsync
   path: ./kubernetes/modules/volsync
   prune: true
   sourceRef:

@@ -18,7 +18,7 @@ spec:
   timeout: 3m
   postBuild:
     substitute:
-      NAME: prowloarr
+      NAME: sabnzbd
       PVC: config-sabsnzbd-0
       NAMESPACE: default
       GOOGLE_PROJECT_ID: "${GOOGLE_PROJECT_ID}"

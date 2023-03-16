@@ -5,7 +5,8 @@ metadata:
   name: volsync-plex
 spec:
   dependsOn:
-    - name: cluster-apps-authelia-secrets
+    - name: cluster-apps-volsync
+      namespace: flux-system
   path: ./kubernetes/modules/volsync
   prune: true
   sourceRef:

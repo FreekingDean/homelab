@@ -21,3 +21,4 @@ spec:
       NAME: radarr${NAME_SUFFIX}
       PVC: config-radarr${NAME_SUFFIX}-0
       NAMESPACE: default
+      GOOGLE_PROJECT_ID: "${GOOGLE_PROJECT_ID}"

@@ -20,4 +20,5 @@ spec:
     substitute:
       NAME: prowloarr
       PVC: config-home-assistant-0
-      NAMESPACE: default
+      NAMESPACE: home-assistant
+      GOOGLE_PROJECT_ID: "${GOOGLE_PROJECT_ID}"

@@ -21,3 +21,4 @@ spec:
       NAME: sonarr${NAME_SUFFIX}
       PVC: config-sonarr${NAME_SUFFIX}-0
       NAMESPACE: default
+      GOOGLE_PROJECT_ID: "${GOOGLE_PROJECT_ID}"

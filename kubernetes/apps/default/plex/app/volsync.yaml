@@ -1,46 +1,22 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/externalsecret_v1beta1.json
-apiVersion: external-secrets.io/v1beta1
-kind: ExternalSecret
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
 metadata:
-  name: plex-rclone
-  namespace: default
+  name: volsync-plex
+  namespace: flux-system
 spec:
-  secretStoreRef:
-    kind: ClusterSecretStore
-    name: onepassword-connect
-  target:
-    name: plex-rclone-secret
-    creationPolicy: Owner
-    template:
-      engineVersion: v2
-      data:
-        gcpcreds.json: '{{ .gcp_creds }}'
-        rclone.conf: |
-          [gcp]
-          type = google cloud storage
-          project_number = "${GOOGLE_PROJECT_ID}"
-          service_account_file = $${RCLONE_CONFIG_DIR}/gcpcreds.json
-          bucket_policy_only = true
-  data:
-    - secretKey: gcp_creds
-      remoteRef:
-        key: restic_gcp_creds
----
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/replicationsource_v1alpha1.json
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationSource
-metadata:
-  name: plex
-  namespace: default
-spec:
-  sourcePVC: config-plex-0
-  trigger:
-    schedule: "0 0 * * *"
-  rclone:
-    rcloneConfigSection: "gcp"
-    rcloneConfig: 'plex-rclone-secret'
-    rcloneDestPath: "${REPOSITORY_TEMPLATE}/plex"
-    copyMethod: Snapshot
-    volumeSnapshotClassName: csi-ceph-rbd
-    storageClassName: ceph-rbd
+  dependsOn:
+    - name: cluster-apps-authelia-secrets
+  path: ./kubernetes/modules/volsync
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
+  postBuild:
+    substitute:
+      NAME: plex
+      PVC: config-plex-0
+      NAMESPACE: default

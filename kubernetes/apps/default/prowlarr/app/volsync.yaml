@@ -5,7 +5,8 @@ metadata:
   name: volsync-prowlarr
 spec:
   dependsOn:
-    - name: flux-system/cluster-apps-volsync
+    - name: cluster-apps-volsync
+      namespace: flux-system
   path: ./kubernetes/modules/volsync
   prune: true
   sourceRef:

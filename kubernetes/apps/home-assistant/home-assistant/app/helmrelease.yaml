@@ -26,14 +26,13 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    command: ['sh', '-c', 'while true; do date; sleep 3; done']
     controller:
       type: statefulset
       annotations:
         reloader.stakater.com/auto: "true"
     image:
-      repository: busybox
-      tag: latest
+      repository: ghcr.io/onedr0p/home-assistant
+      tag: 2023.3.1
     env:
       TZ: America/New_York
     service:
@@ -64,9 +63,9 @@ spec:
       startup:
         enabled: false
     podSecurityContext:
-      runAsUser: 0
-      runAsGroup: 0
-      fsGroup: 0
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
       fsGroupChangePolicy: OnRootMismatch
     volumeClaimTemplates:
       - name: config

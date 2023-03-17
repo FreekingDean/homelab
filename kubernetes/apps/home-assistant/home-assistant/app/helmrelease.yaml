@@ -73,13 +73,6 @@ spec:
         accessMode: ReadWriteOnce
         size: 128Gi
         storageClass: ceph-rbd
-    persistence:
-      oldconfig:
-        enabled: true
-        type: nfs
-        server: 10.0.0.121
-        path: /hass-home-assistant-config
-        mountPath: /oldhassconfig
     resources:
       requests:
         cpu: 10m

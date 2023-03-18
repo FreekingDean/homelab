@@ -4,5 +4,7 @@ kind: Kustomization
 namespace: networking
 resources:
   - ./proxmox.yaml
+  - ./unifi.yaml
+  - ./zwave.yaml
 generatorOptions:
   disableNameSuffixHash: true

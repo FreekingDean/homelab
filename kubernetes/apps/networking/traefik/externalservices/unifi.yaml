@@ -1,0 +1,46 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: &app unifi
+  namespace: networking
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+spec:
+  type: ExternalName
+  externalName: 192.168.2.1
+  ports:
+    - name: https
+      port: &port 443
+      protocol: TCP
+      targetPort: *port
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: &app unifi
+  namespace: networking
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: networking-localonly@kubernetescrd,networking-authelia@kubernetescrd
+    hajimari.io/icon: mdi:server
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+spec:
+  ingressClassName: "${INGRESS_CLASS}"
+  rules:
+    - host: &host unifi.deangalvin.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: *app
+                port:
+                  number: 443
+  tls:
+    - hosts:
+        - *host
+      secretName: "${PRODUCTION_TLS}"

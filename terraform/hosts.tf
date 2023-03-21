@@ -99,6 +99,24 @@ module "cerritos" {
   primary_storage = "local"
 }
 
+module "protostar" {
+  source = "./modules/host"
+
+  node = "protostar"
+  id   = 7
+
+  coreos_version = local.coreos.version
+  k3s_version    = local.k3s.version
+  k3s_subversion = local.k3s.subversion
+
+  cluster_server = module.ds9.cluster_server_ip
+
+  servers = 0
+  agents  = 3
+
+  primary_storage = "local"
+}
+
 locals {
   hosts = [
     module.enterprise,

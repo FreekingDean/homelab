@@ -17,7 +17,7 @@ module "servers" {
   server_ip = var.cluster_server == "" ? "10.0.${var.id}1.101" : var.cluster_server
 
   coreos_volid = local.coreos_volid
-  storage_name = "etcd-storage"
+  storage_name = var.server_storage
   storage_size = 16
 
 

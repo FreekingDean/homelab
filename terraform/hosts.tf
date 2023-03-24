@@ -57,10 +57,11 @@ module "defiant" {
 
   cluster_server = module.ds9.cluster_server_ip
 
-  servers = 0
+  servers = 1
   agents  = 3
 
   primary_storage = "local"
+  server_storage  = "local"
 }
 
 module "discovery" {
@@ -75,10 +76,11 @@ module "discovery" {
 
   cluster_server = module.ds9.cluster_server_ip
 
-  servers = 0
+  servers = 1
   agents  = 3
 
   primary_storage = "local"
+  server_storage  = "local"
 }
 
 module "cerritos" {
@@ -93,10 +95,11 @@ module "cerritos" {
 
   cluster_server = module.ds9.cluster_server_ip
 
-  servers = 0
+  servers = 1
   agents  = 3
 
   primary_storage = "local"
+  server_storage  = "local"
 }
 
 module "protostar" {
@@ -111,10 +114,11 @@ module "protostar" {
 
   cluster_server = module.ds9.cluster_server_ip
 
-  servers = 0
+  servers = 1
   agents  = 3
 
   primary_storage = "local"
+  server_storage  = "local"
 }
 
 locals {

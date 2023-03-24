@@ -37,3 +37,8 @@ variable "primary_storage" {
   type    = string
   default = "local-thin"
 }
+
+variable "server_storage" {
+  type    = string
+  default = "etcd-storage"
+}

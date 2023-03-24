@@ -1,6 +1,6 @@
 [Unit]
 Description=Partition ${label} disk if part not exists
-After=local-fs-pre.target
+After=local-fs.target
 DefaultDependencies=no
 
 [Service]

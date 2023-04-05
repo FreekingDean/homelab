@@ -3,14 +3,14 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: plex
+  name: overseerr
   namespace: default
 spec:
   interval: 15m
   chart:
     spec:
       chart: app-template
-      version: 1.3.1
+      version: 1.3.2
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -30,24 +30,24 @@ spec:
     controller:
       type: statefulset
     image:
-      repository: ghcr.io/onedr0p/plex
-      tag: 1.31.2.6810-a607d384f
+      repository: ghcr.io/sct/overseerr
+      tag: 1.32.5
     env:
       TZ: America/New_York
+      LOG_LEVEL: "info"
+      PORT: &port 80
     service:
       main:
-        type: LoadBalancer
-        externalTrafficPolicy: Local
         ports:
           http:
-            port: 32400
+            port: *port
     ingress:
       main:
         enabled: true
         ingressClassName: "${INGRESS_CLASS}"
         annotations:
           public.ingress.home.arpa: "true"
-          hajimari.io/icon: mdi:plex
+          hajimari.io/icon: mdi:eye-circle
         hosts:
           - host: &host "{{ .Release.Name }}.${DOMAIN}"
             paths:
@@ -61,38 +61,16 @@ spec:
       runAsUser: 568
       runAsGroup: 568
       fsGroup: 568
-      fsGroupChangePolicy: "OnRootMismatch"
-      supplementalGroups: [44, 109, 10000]
+      fsGroupChangePolicy: OnRootMismatch
     volumeClaimTemplates:
       - name: config
-        mountPath: /config
+        mountPath: /app/config
         accessMode: ReadWriteOnce
-        size: 150Gi
+        size: 1Gi
         storageClass: ceph-rbd
-    persistence:
-      oldmedia-4k:
-        enabled: true
-        type: nfs
-        server: 10.0.0.121
-        path: /media-4k
-        mountPath: /oldmedia-4k
-      oldmedia:
-        enabled: true
-        type: nfs
-        server: 10.0.0.121
-        path: /media
-        mountPath: /oldmedia
-      media:
-        enabled: true
-        type: pvc
-        existingClaim: media
-        mountPath: /media
-      transcode:
-        enabled: true
-        type: emptyDir
     resources:
       requests:
-        cpu: 100m
-        memory: 2000Mi
+        cpu: 10m
+        memory: 250Mi
       limits:
-        memory: 10000Mi
+        memory: 1500Mi

@@ -70,18 +70,6 @@ spec:
         size: 150Gi
         storageClass: ceph-rbd
     persistence:
-      oldmedia-4k:
-        enabled: true
-        type: nfs
-        server: 10.0.0.121
-        path: /media-4k
-        mountPath: /oldmedia-4k
-      oldmedia:
-        enabled: true
-        type: nfs
-        server: 10.0.0.121
-        path: /media
-        mountPath: /oldmedia
       media:
         enabled: true
         type: pvc

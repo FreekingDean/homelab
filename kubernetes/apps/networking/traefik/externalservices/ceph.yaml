@@ -34,10 +34,10 @@ subsets:
     ports:
       - name: http
         port: 8080
-        protocol: tcp
+        protocol: TCP
       - name: metrics
         port: 9283
-        protocol: tcp
+        protocol: TCP
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress

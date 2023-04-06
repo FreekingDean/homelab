@@ -53,7 +53,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: ceph
-  namespace: default
+  namespace: networking
 spec:
   endpoints:
     - interval: 30s

@@ -45,8 +45,8 @@ spec:
           command:
             - /usr/bin/kured
             - --drain-timeout=120s
-            - --reboot-command="/usr/sbin/shutdown"
-            - --period=1m
+            - --period=24m
+            - --reboot-sentinel-command="echo 'rebooting'"
 #            - --force-reboot=false
 #            - --drain-grace-period=-1
 #            - --skip-wait-for-delete-timeout=0
@@ -59,7 +59,6 @@ spec:
 #            - --alert-firing-only=false
 #            - --reboot-sentinel=/var/run/reboot-required
 #            - --prefer-no-schedule-taint=""
-#            - --reboot-sentinel-command=""
 #            - --slack-hook-url=https://hooks.slack.com/...
 #            - --slack-username=prod
 #            - --slack-channel=alerting

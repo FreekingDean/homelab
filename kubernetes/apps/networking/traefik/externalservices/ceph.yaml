@@ -1,0 +1,68 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: &app ceph
+  namespace: networking
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+spec:
+  type: ExternalName
+  externalName: 10.0.0.101
+  ports:
+    - name: https
+      port: &port 8080
+      protocol: TCP
+      targetPort: *port
+    - name: metrics
+      port: &metrics 9283
+      protocol: TCP
+      targetPort: *metrics
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: &app ceph
+  namespace: networking
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: networking-localonly@kubernetescrd,networking-authelia@kubernetescrd
+    hajimari.io/icon: mdi:server
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+spec:
+  ingressClassName: "${INGRESS_CLASS}"
+  rules:
+    - host: &host ceph.deangalvin.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: *app
+                port:
+                  number: 8080
+  tls:
+    - hosts:
+        - *host
+      secretName: "${PRODUCTION_TLS}"
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  annotations:
+  name: ceph
+  namespace: default
+spec:
+  endpoints:
+    - interval: 30s
+      port: metrics
+  namespaceSelector:
+    matchNames:
+      - networking
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: ceph
+      app.kubernetes.io/name: ceph

@@ -20,6 +20,25 @@ spec:
       protocol: TCP
       targetPort: *metrics
 ---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: &app ceph
+  namespace: networking
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+subsets:
+  - addresses:
+      - ip: 10.0.0.22
+    ports:
+      - name: http
+        port: 8080
+        protocol: tcp
+      - name: metrics
+        port: 9283
+        protocol: tcp
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:

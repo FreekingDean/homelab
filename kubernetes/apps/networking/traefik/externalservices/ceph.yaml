@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/instance: *app
 spec:
   type: ExternalName
-  externalName: 10.0.0.101
+  externalName: 10.0.0.22
   ports:
     - name: https
       port: &port 8080
@@ -59,6 +59,7 @@ spec:
   endpoints:
     - interval: 30s
       port: metrics
+      path: /metrics
   namespaceSelector:
     matchNames:
       - networking

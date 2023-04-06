@@ -11,7 +11,7 @@ spec:
   type: ExternalName
   externalName: 10.0.0.22
   ports:
-    - name: https
+    - name: http
       port: &port 8080
       protocol: TCP
       targetPort: *port

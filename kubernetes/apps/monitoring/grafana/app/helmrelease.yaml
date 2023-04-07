@@ -53,10 +53,9 @@ spec:
       GF_DATABASE_USER: app
     envValueFrom:
       GF_DATABASE_PASSWORD:
-          valueFrom:
-            secretKeyRef:
-              name: "postgres-loki-app"
-              key: password
+        secretKeyRef:
+          name: "postgres-loki-app"
+          key: password
     grafana.ini:
       auth.anonymous:
         enabled: true

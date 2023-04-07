@@ -106,7 +106,7 @@ spec:
         ingressClassName: "${INGRESS_CLASS}"
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd"
-          hajimari.io/appName: "Alert Manager"
+          hajimari.io/appName: "Loki"
           hajimari.io/icon: mdi:file-cabinet
         hosts:
           - host: &host "loki.${DOMAIN}"
@@ -148,11 +148,11 @@ spec:
           emptyDir: {}
     monitoring:
       serviceMonitor:
-        enabled: false
+        enabled: true
         metricsInstance:
-          enabled: false
+          enabled: true
       selfMonitoring:
-        enabled: false
+        enabled: true
         grafanaAgent:
           installOperator: false
       lokiCanary:

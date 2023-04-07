@@ -31,8 +31,6 @@ spec:
       pspEnabled: false
     testFramework:
       enabled: false
-    adminUser: admin
-    adminPassword: prom-operator
     env:
       GF_AUTH_GENERIC_OAUTH_API_URL: "https://auth.deangalvin.dev/api/oidc/userinfo"
       GF_AUTH_GENERIC_OAUTH_AUTH_URL: "https://auth.deangalvin.dev/api/oidc/authorization"

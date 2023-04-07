@@ -71,6 +71,12 @@ spec:
             type: prometheus
             access: proxy
             url: http://kube-prometheus-stack-prometheus:9090
+          - name: Loki
+            type: loki
+            access: proxy
+            url: http://loki-gateway
+            jsonData:
+              maxLines: 250
           - name: Alertmanager
             type: alertmanager
             access: proxy

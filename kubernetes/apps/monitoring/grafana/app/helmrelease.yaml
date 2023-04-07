@@ -34,6 +34,10 @@ spec:
     adminUser: admin
     adminPassword: prom-operator
     env:
+      GF_AUTH_GENERIC_OAUTH_API_URL: https://auth.deangalvin.dev/api/oidc/userinfo
+      GF_AUTH_GENERIC_OAUTH_AUTH_URL: https://auth.deangalvin.dev/api/oidc/authorization
+      GF_AUTH_GENERIC_OAUTH_CLIENT_ID: grafana
+      GF_AUTH_GENERIC_OAUTH_TOKEN_URL: https://auth.deangalvin.dev/api/oidc/token
       GF_ANALYTICS_CHECK_FOR_UPDATES: false
       GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
       GF_EXPLORE_ENABLED: true

@@ -99,6 +99,21 @@ spec:
             endpoints: ["authorization", "token", "revocation", "introspection"]
             allowed_origins_from_client_redirect_uris: true
           clients:
+            - id: grafana
+              description: Grafana
+              secret: '$plaintext$grafana_client_secret'
+              public: false
+              authorization_policy: one_factor
+              redirect_uris:
+                - https://grafana.deangalvin.dev/login/generic_oauth
+              scopes:
+                - offline_access
+                - openid
+                - profile
+                - groups
+                - email
+              userinfo_signing_algorithm: none
+              pre_configured_consent_duration: 1y
             - id: gitops
               description: Weave Gitops
               secret: '$plaintext$gitops_client_secret'
@@ -113,6 +128,7 @@ spec:
                 - groups
                 - email
               userinfo_signing_algorithm: none
+              pre_configured_consent_duration: 1y
             - id: proxmox
               description: Proxmox
               secret: '$plaintext$proxmox_client_secret'
@@ -125,6 +141,7 @@ spec:
                 - profile
                 - email
               userinfo_signing_algorithm: none
+              pre_configured_consent_duration: 1y
       telemetry:
         metrics:
           enabled: true

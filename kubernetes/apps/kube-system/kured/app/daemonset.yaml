@@ -45,8 +45,8 @@ spec:
           command:
             - /usr/bin/kured
             - --drain-timeout=120s
-            - --period=24m
-            - --reboot-sentinel-command="echo 'rebooting'"
+            - --period=1m
+            - --reboot-sentinel-command="awk '$1 > (24 * 3600) { print "yes" }' /proc/uptime"
 #            - --force-reboot=false
 #            - --drain-grace-period=-1
 #            - --skip-wait-for-delete-timeout=0

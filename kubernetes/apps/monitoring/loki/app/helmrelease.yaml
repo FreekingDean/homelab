@@ -109,7 +109,7 @@ spec:
           hajimari.io/appName: "Alert Manager"
           hajimari.io/icon: mdi:file-cabinet
         hosts:
-          - &host "loki.${DOMAIN}"
+          - host: &host "loki.${DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix

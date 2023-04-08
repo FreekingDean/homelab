@@ -29,3 +29,6 @@ spec:
     replicas: 2
     serviceMonitor:
       enabled: true
+    tempo:
+      receivers:
+        zipkin: {}

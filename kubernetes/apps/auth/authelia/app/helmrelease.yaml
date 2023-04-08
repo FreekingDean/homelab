@@ -71,6 +71,7 @@ spec:
           - domain: jeffbot.public.deangalvin.com
             policy: bypass
       session:
+        expiration: 24h
         redis:
           host: redis-master.default
       notifier:

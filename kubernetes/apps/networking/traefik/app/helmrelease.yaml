@@ -28,8 +28,10 @@ spec:
   values:
     metrics:
       prometheus:
+        service:
+          enabled: true
         serviceMonitor:
-          interval: 30s
+          enabled: true
     additionalArguments:
       - "--serversTransport.insecureSkipVerify=true"
     ports:

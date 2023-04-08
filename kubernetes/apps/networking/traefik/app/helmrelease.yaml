@@ -30,7 +30,7 @@ spec:
       jaeger:
         localAgentHostPort: tempo.monitoring:6831
         collector:
-          endpoint: tempo.monitoring
+          endpoint: http://tempo.monitoring:14268
     metrics:
       prometheus:
         service:

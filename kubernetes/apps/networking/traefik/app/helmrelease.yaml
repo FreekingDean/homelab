@@ -26,6 +26,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    metrics:
+      prometheus:
+        serviceMonitor:
+          interval: 30s
     additionalArguments:
       - "--serversTransport.insecureSkipVerify=true"
     ports:

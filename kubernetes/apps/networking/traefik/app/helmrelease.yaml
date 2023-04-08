@@ -26,6 +26,11 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    tracing:
+      jaeger:
+        localAgentHostPort: tempo.monitoring:6831
+        collector:
+          endpoint: tempo.monitoring
     metrics:
       prometheus:
         service:

@@ -44,6 +44,10 @@ spec:
       tag: edge
     env:
       TZ: America/New_York
+      RADARR__API_KEY: "${RADARR__API_KEY}"
+      RADARR4K__API_KEY: "${RADARR4K__API_KEY}"
+      SONARR__API_KEY: "${SONARR__API_KEY}"
+      SONARR4K__API_KEY: "${SONARR4K__API_KEY}"
     service:
       main:
         enabled: false

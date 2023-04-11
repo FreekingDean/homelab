@@ -17,3 +17,22 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1beta2.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: cluster-apps-istio-kiali
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cluster-apps-istio-base
+  path: ./kubernetes/apps/istio-system/monitoring/kiali
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m

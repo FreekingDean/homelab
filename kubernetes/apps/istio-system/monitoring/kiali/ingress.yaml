@@ -1,0 +1,27 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kiali
+  namespace: istio-system
+  annotations:
+    hajimari.io/enable: "true"
+    traefik.ingress.kubernetes.io/router.middlewares: networking-traefik-localonly@kubernetescrd
+    hajimari.io/icon: simple-icons:istio
+spec:
+  ingressClassName: "${INGRESS_CLASS}"
+  rules:
+    - host: &host "kiali.deangalvin.dev"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kiali
+                port:
+                  number: 20001
+  tls:
+    - hosts:
+        - *host
+      secretName: deangalvin-dev-production-tls

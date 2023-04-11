@@ -57,7 +57,7 @@ spec:
     deployment:
       kind: DaemonSet
       podAnnotations:
-        sidecar.istio.io/inject: "false"
+        traffic.sidecar.istio.io/excludeInboundPorts: “8443”
     ingressRoute:
       dashboard:
         matchRule: "Host(`traefik.deangalvin.dev`)"

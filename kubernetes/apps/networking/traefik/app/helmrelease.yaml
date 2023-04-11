@@ -56,6 +56,8 @@ spec:
         enabled: true
     deployment:
       kind: DaemonSet
+      podAnnotations:
+        sidecar.istio.io/inject: "false"
     ingressRoute:
       dashboard:
         matchRule: "Host(`traefik.deangalvin.dev`)"

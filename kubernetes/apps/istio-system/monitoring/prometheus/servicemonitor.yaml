@@ -8,22 +8,23 @@ metadata:
 spec:
   namespaceSelector:
     matchNames:
-    - istio-system
+      - istio-system
   selector:
     matchLabels:
       app: prometheus
   endpoints:
-  - interval: 30s
-    scrapeTimeout: 30s
-    params:
-      'match[]':
-      - '{__name__=~"workload:(.*)"}'
-      - '{__name__=~"pilot(.*)"}'
-    path: /federate
-    targetPort: 9090
-    honorLabels: true
-    metricRelabelings:
-    - sourceLabels: ["__name__"]
-      regex: 'workload:(.*)'
-      targetLabel: "__name__"
-      action: replace
+    - interval: 30s
+      scrapeTimeout: 30s
+      params:
+        'match[]':
+          - '{__name__=~"istio(.*)"}'
+          - '{__name__=~"workload:(.*)"}'
+          - '{__name__=~"pilot(.*)"}'
+      path: /federate
+      targetPort: 9090
+      honorLabels: true
+      metricRelabelings:
+        - sourceLabels: ["__name__"]
+          regex: 'workload:(.*)'
+          targetLabel: "__name__"
+          action: replace

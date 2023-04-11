@@ -53,7 +53,7 @@ spec:
       general:
         level: DEBUG
       access:
-        enabled: false
+        enabled: true
     deployment:
       kind: DaemonSet
     ingressRoute:

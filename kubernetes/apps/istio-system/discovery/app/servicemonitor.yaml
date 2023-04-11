@@ -1,0 +1,23 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: istio-monitor
+  namespace: monitoring
+  labels:
+    monitoring: services
+spec:
+  selector:
+    matchExpressions:
+      - {key: istio, operator: In, values: [pilot, mixer]}
+  namespaceSelector:
+    matchNames:
+      - istio-system
+  jobLabel: istio
+  endpoints:
+    - port: prometheus
+      interval: 5s
+    - port: http-monitoring
+      interval: 5s
+    - port: statsd-prom
+      interval: 5s

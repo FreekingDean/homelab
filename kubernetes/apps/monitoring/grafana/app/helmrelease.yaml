@@ -194,22 +194,22 @@ spec:
           url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
           datasource: Prometheus
         istio-mesh:
-          url: https://github.com/istio/istio/raw/master/manifests/addons/dashboards/istio-mesh-dashboard.json
+          url: https://raw.githubusercontent.com/istio/istio/master/manifests/addons/dashboards/istio-mesh-dashboard.json
           datasource: Prometheus
         istio-extension:
-          url: https://github.com/istio/istio/raw/master/manifests/addons/dashboards/istio-extension-dashboard.json
+          url: https://raw.githubusercontent.com/istio/istio/master/manifests/addons/dashboards/istio-extension-dashboard.json
           datasource: Prometheus
         istio-performance:
-          url: https://github.com/istio/istio/raw/master/manifests/addons/dashboards/istio-performance-dashboard.json
+          url: https://raw.githubusercontent.com/istio/istio/master/manifests/addons/dashboards/istio-performance-dashboard.json
           datasource: Prometheus
         istio-service:
-          url: https://github.com/istio/istio/raw/master/manifests/addons/dashboards/istio-service-dashboard.json
+          url: https://raw.githubusercontent.com/istio/istio/master/manifests/addons/dashboards/istio-service-dashboard.json
           datasource: Prometheus
         istio-workload:
-          url: https://github.com/istio/istio/raw/master/manifests/addons/dashboards/istio-workload-dashboard.json
+          url: https://raw.githubusercontent.com/istio/istio/master/manifests/addons/dashboards/istio-workload-dashboard.json
           datasource: Prometheus
         istio-pilot:
-          url: https://github.com/istio/istio/raw/master/manifests/addons/dashboards/pilot-dashboard.json
+          url: https://raw.githubusercontent.com/istio/istio/master/manifests/addons/dashboards/pilot-dashboard.json
           datasource: Prometheus
     sidecar:
       dashboards:

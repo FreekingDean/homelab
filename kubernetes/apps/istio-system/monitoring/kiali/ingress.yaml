@@ -6,7 +6,7 @@ metadata:
   namespace: istio-system
   annotations:
     hajimari.io/enable: "true"
-    traefik.ingress.kubernetes.io/router.middlewares: networking-traefik-localonly@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: networking-localonly@kubernetescrd
     hajimari.io/icon: simple-icons:istio
 spec:
   ingressClassName: "${INGRESS_CLASS}"

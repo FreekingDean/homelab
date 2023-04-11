@@ -16,7 +16,7 @@ spec:
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: istio
+      name: istio-discovery
       namespace: istio-system
   interval: 30m
   retryInterval: 1m

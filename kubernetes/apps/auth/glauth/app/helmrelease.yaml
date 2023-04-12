@@ -29,7 +29,7 @@ spec:
     controller:
       replicas: 2
       strategy: RollingUpdate
-      label:
+      labels:
         app: glauth
         version: v1
       annotations:

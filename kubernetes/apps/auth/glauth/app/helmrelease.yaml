@@ -26,12 +26,12 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    podLabels:
+      app: glauth
+      version: v1
     controller:
       replicas: 2
       strategy: RollingUpdate
-      labels:
-        app: glauth
-        version: v1
       annotations:
         reloader.stakater.com/auto: "true"
     image:

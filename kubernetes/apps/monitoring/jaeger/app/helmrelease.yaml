@@ -51,7 +51,7 @@ spec:
           public.ingress.home.arpa: "true"
           hajimari.io/icon: "simple:jaeger"
         hosts:
-          - &host "{{ .Release.Name }}-query.${DOMAIN}"
+          - &host "jaeger-query.${DOMAIN}"
         tls:
           - secretName: "${PRODUCTION_TLS}"
             hosts:

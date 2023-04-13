@@ -15,6 +15,7 @@ resources:
   - ./grafana.yaml
   - ./hajimari.yaml
   - ./istio.yaml
+  - ./jaeger.yaml
   - ./jetstack.yaml
   - ./kubernetes-dashboard.yaml
   - ./kyverno.yaml

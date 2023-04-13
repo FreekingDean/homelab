@@ -40,6 +40,7 @@ spec:
       cassandra: false
       elasticsearch: false
     query:
+      basePath: "/"
       ingress:
         enabled: true
         ingressClassName: "${INGRESS_CLASS}"

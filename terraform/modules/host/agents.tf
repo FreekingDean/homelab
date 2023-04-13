@@ -4,7 +4,7 @@ module "agents" {
   node    = var.node
   id      = count.index + 1 + 20
   node_id = var.id
-  memory  = 8 * 1024
+  memory  = 32 * 1024
   cpus    = 8
 
 

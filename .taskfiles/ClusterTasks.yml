@@ -2,6 +2,13 @@
 version: "3"
 
 tasks:
+  reboot-all:
+    desc: Reboot all nodes to apply terraform changes
+    cmds:
+      - |
+        for ip in $(kubectl get nodes -o json | jq -r '.items[].status.addresses[0].address'); do
+          ssh -v k3suser@${ip} sudo touch /var/run/reboot-required
+        done
 
   verify:
     desc: Verify flux meets the prerequisites

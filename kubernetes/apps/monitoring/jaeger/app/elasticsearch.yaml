@@ -4,6 +4,7 @@ kind: Elasticsearch
 metadata:
   name: jaeger
 spec:
+  version: 8.7.0
   nodeSets:
     - name: default
       count: 3

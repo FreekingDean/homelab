@@ -43,6 +43,8 @@ spec:
       ingress:
         enabled: true
         ingressClassName: "${INGRESS_CLASS}"
+        labels:
+          app: jaeger
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd,networking-authelia@kubernetescrd"
           public.ingress.home.arpa: "true"

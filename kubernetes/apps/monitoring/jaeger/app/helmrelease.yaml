@@ -42,11 +42,11 @@ spec:
     query:
       ingress:
         enabled: true
-        className: "${INGRESS_CLASS}"
+        ingressClassName: "${INGRESS_CLASS}"
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd,networking-authelia@kubernetescrd"
           public.ingress.home.arpa: "true"
-          hajimari.io/icon: simple:jaeger
+          hajimari.io/icon: "simple:jaeger"
         hosts:
           - &host "{{ .Release.Name }}-query.${DOMAIN}"
         tls:

@@ -16,4 +16,4 @@ spec:
             resources:
               requests:
                 storage: 50Gi
-            storageClass: ceph-rbd
+            storageClassName: ceph-rbd

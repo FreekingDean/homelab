@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - ./elasticsearch.yaml
+  - ./helmrelease.yaml
 labels:
   - pairs:
       app.kubernetes.io/name: jaeger

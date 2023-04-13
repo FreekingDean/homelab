@@ -1,0 +1,54 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: &app "jaeger"
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: jaeger
+      version: 0.69.1
+      sourceRef:
+        kind: HelmRepository
+        name: jaeger
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    storage:
+      type: elasticsearch
+      elasticsearch:
+        host: jaeger-es-http
+        port: 9200
+        scheme: http
+        user: elastic
+        existingSecret: jaeger-es-elastic-user
+        existingSecretKey: elastic
+    provisionDataStore:
+      cassandra: false
+      elasticsearch: false
+    query:
+      ingress:
+        enabled: true
+        className: "${INGRESS_CLASS}"
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd,networking-authelia@kubernetescrd"
+          public.ingress.home.arpa: "true"
+          hajimari.io/icon: simple:jaeger
+        hosts:
+          - &host "{{ .Release.Name }}-query.${DOMAIN}"
+        tls:
+          - secretName: "${PRODUCTION_TLS}"
+            hosts:
+              - *host

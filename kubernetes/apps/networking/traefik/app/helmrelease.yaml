@@ -27,8 +27,9 @@ spec:
     keepHistory: false
   values:
     tracing:
-      zipkin:
-        httpEndpoint: http://tempo.monitoring:9411/api/v2/spans
+      jaeger:
+        samplingServerURL: http://jaeger-agent.monitoring.svc:5778/sampling
+        localAgentHostPort: jaeger-agent.monitoring.svc:6831
     metrics:
       prometheus:
         service:

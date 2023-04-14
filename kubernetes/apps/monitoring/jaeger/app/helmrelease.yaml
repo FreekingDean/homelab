@@ -29,6 +29,8 @@ spec:
   values:
     collector:
       service:
+        grpc:
+          port: 16685
         zipkin:
           port: 9411
     storage:

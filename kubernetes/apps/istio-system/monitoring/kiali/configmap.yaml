@@ -83,7 +83,7 @@ data:
         root_namespace: istio-system
       tracing:
         enabled: true
-        in_cluster_url: http://jaeger-query.monitoring:16685/jaeger
+        in_cluster_url: http://jaeger-query.monitoring:16685/
         url: https://jaeger-query.deangalvin.dev/
     identity:
       cert_file: ""

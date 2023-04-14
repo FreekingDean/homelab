@@ -77,6 +77,10 @@ data:
         enabled: true
       istio:
         root_namespace: istio-system
+      tracing:
+        enabled: true
+        in_cluster_url: http://jaeger-query.monitoring:16685/jaeger
+        url: https://jaeger-query.deangalvin.dev/jaeger
     identity:
       cert_file: ""
       private_key_file: ""

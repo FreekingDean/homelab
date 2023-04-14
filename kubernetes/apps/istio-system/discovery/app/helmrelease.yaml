@@ -28,3 +28,7 @@ spec:
   values:
     sidecarInjectorWebhook:
       enableNamespacesByDefault: true
+    global:
+      tracer:
+        zipkin:
+          address: jaeger-collector.monitoring.svc.cluster.local:9411

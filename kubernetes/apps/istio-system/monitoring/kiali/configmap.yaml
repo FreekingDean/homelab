@@ -75,12 +75,16 @@ data:
     external_services:
       custom_dashboards:
         enabled: true
+      grafana:
+        enabled: true
+        in_cluster_url: http://grafana.monitoring:3000
+        url: https://grafana.deangalvin.dev/
       istio:
         root_namespace: istio-system
       tracing:
         enabled: true
         in_cluster_url: http://jaeger-query.monitoring:16685/jaeger
-        url: https://jaeger-query.deangalvin.dev/jaeger
+        url: https://jaeger-query.deangalvin.dev/
     identity:
       cert_file: ""
       private_key_file: ""

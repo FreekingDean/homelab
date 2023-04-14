@@ -28,6 +28,11 @@ spec:
   values:
     sidecarInjectorWebhook:
       enableNamespacesByDefault: true
+    meshConfig:
+      enableTracing: true
+      defaultConfig:
+        tracing:
+          sampling: 100
     global:
       tracer:
         zipkin:

@@ -33,7 +33,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/onedr0p/sonarr-develop
-      tag: 4.0.0.448
+      tag: 4.0.0.449
     env:
       TZ: America/New_York
       SONARR__INSTANCE_NAME: "Sonarr${NAME_SUFFIX}"

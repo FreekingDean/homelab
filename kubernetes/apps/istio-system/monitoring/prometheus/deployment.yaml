@@ -32,7 +32,7 @@ spec:
       serviceAccountName: prometheus
       containers:
         - name: prometheus-server-configmap-reload
-          image: "jimmidyson/configmap-reload:v0.8.0"
+          image: "jimmidyson/configmap-reload:v0.9.0"
           imagePullPolicy: "IfNotPresent"
           args:
             - --volume-dir=/etc/config

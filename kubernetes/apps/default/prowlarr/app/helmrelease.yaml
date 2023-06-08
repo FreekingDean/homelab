@@ -43,7 +43,7 @@ spec:
       PROWLARR__PORT: &port 80
       PROWLARR__LOG_LEVEL: info
       PROWLARR__AUTHENTICATION_METHOD: External
-      PROWLARR__API_KEY: bad-api-key
+      PROWLARR__API_KEY: this-is-a-bad-api-key
     service:
       main:
         ports:

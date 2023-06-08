@@ -40,6 +40,7 @@ spec:
       SONARR__PORT: &port 80
       SONARR__LOG_LEVEL: info
       SONARR__AUTHENTICATION_METHOD: External
+      SONARR__API_KEY: this-is-a-bad-api-key
     service:
       main:
         ports:

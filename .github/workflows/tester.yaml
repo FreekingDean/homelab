@@ -22,5 +22,6 @@ jobs:
           kubectl apply --kustomize kubernetes/flux/config
       - name: Reconcile
         run: |
+          flux version
           flux reconcile -n flux-system source git home-kubernetes
           flux reconcile -n flux-system kustomization cluster

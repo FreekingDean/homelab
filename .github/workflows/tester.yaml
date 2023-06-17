@@ -14,7 +14,7 @@ jobs:
           kubectl cluster-info
           kubectl get pods -n kube-system
       - name: Setup fluxctl
-        uses: curl -s https://fluxcd.io/install.sh | sudo bash
+        run: curl -s https://fluxcd.io/install.sh | sudo bash
       - name: init
         run: |
           kubectl apply --kustomize kubernetes/bootstrap

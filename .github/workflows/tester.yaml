@@ -1,5 +1,5 @@
 name: "Create cluster using KinD"
-on: [pull_request, push]
+on: [push]
 
 jobs:
   kind:
@@ -13,6 +13,14 @@ jobs:
         run: |
           kubectl cluster-info
           kubectl get pods -n kube-system
+      - name: Setup fluxctl
+        uses: curl -s https://fluxcd.io/install.sh | sudo bash
+      - name: init
+        run: |
           kubectl apply --kustomize kubernetes/bootstrap
           kubectl apply -f kubernetes/flux/vars/cluster-settings.yaml
           kubectl apply --kustomize kubernetes/flux/config
+      - name: Reconcile
+        run: |
+          flux reconcile -n flux-system source git home-kubernetes
+          flux reconcile -n flux-system kustomization cluster

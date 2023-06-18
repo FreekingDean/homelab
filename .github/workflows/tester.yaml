@@ -13,11 +13,14 @@ jobs:
           version: "v0.11.1"
       - name: Install Flux
         run: curl -s https://fluxcd.io/install.sh | sudo bash
+      - name: Make Test Replacements
+        run: |
+          sed -i "s/__BRANCH__/$GITHUB_REF_NAME/" tests/*.yaml
       - name: Initialize Cluster
         run: |
           kubectl apply --kustomize kubernetes/bootstrap
-          kubectl apply -f kubernetes/flux/vars/cluster-settings.yaml
-          kubectl apply --kustomize kubernetes/flux/config
+          kubectl apply -f tests/vars.yaml
+          kubectl apply --kustomize tests/config
       - name: Reconcile
         run: |
           flux version

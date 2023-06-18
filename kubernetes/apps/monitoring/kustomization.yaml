@@ -8,5 +8,4 @@ resources:
   - ./kubernetes-dashboard/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./loki/ks.yaml
-  - ./tempo/ks.yaml
   - ./vector/ks.yaml

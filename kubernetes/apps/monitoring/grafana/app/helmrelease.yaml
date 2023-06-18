@@ -26,6 +26,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    podAnnotations:
+        traffic.sidecar.istio.io/excludeInboundPorts: "80,8443,443,8080"
     replicas: 2
     rbac:
       pspEnabled: false

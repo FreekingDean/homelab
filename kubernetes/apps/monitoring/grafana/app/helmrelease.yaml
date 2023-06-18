@@ -36,7 +36,7 @@ spec:
       enabled: false
     env:
       JAEGER_AGENT_HOST: ""
-      JAEGER_AGNET_PORT: ""
+      JAEGER_AGENT_PORT: ""
       GF_AUTH_GENERIC_OAUTH_API_URL: "https://auth.deangalvin.dev/api/oidc/userinfo"
       GF_AUTH_GENERIC_OAUTH_AUTH_URL: "https://auth.deangalvin.dev/api/oidc/authorization"
       GF_AUTH_GENERIC_OAUTH_CLIENT_ID: "grafana"

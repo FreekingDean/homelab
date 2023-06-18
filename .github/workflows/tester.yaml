@@ -20,6 +20,7 @@ jobs:
         run: |
           kubectl apply --kustomize kubernetes/bootstrap
           kubectl apply -f tests/vars.yaml
+          kubectl apply -f tests/cluster.yaml
           kubectl apply --kustomize tests/config
       - name: Reconcile
         run: |

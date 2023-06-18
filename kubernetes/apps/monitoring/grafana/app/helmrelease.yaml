@@ -26,8 +26,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    podAnnotations:
-        traffic.sidecar.istio.io/excludeInboundPorts: "3000,80,8443,443,8080"
     replicas: 2
     rbac:
       pspEnabled: false
@@ -211,13 +209,13 @@ spec:
           datasource: Prometheus
     sidecar:
       dashboards:
-        enabled: true
+        enabled: false
         searchNamespace: ALL
         # folderAnnotation: grafana_folder
         # provider:
         #   foldersFromFilesStructure: true
       datasources:
-        enabled: true
+        enabled: false
         searchNamespace: ALL
     plugins:
       - grafana-clock-panel

@@ -26,6 +26,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    podLabels:
+      sidecar.istio.io/inject: "false"
     replicas: 2
     rbac:
       pspEnabled: false
@@ -211,7 +213,7 @@ spec:
           datasource: Prometheus
     sidecar:
       dashboards:
-        enabled: false
+        enabled: true
         searchNamespace: ALL
         # folderAnnotation: grafana_folder
         # provider:

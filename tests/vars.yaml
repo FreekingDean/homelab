@@ -16,8 +16,8 @@ metadata:
     namespace: flux-system
 stringData:
     SECRET_EMAIL: fake-email@test.deangalvin.dev
-    GCP_PROJECT: null
-    JWT_TOKEN: null
-    SESSION_ENCRYPTION_KEY: null
-    REPOSITORY_TEMPLATE: null
-    GOOGLE_PROJECT_ID: null
+    GCP_PROJECT: no-value
+    JWT_TOKEN: no-value
+    SESSION_ENCRYPTION_KEY: no-value
+    REPOSITORY_TEMPLATE: no-value
+    GOOGLE_PROJECT_ID: no-value

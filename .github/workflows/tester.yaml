@@ -15,7 +15,7 @@ jobs:
         run: curl -s https://fluxcd.io/install.sh | sudo bash
       - name: Make Test Replacements
         run: |
-          sed -i "s/__BRANCH__/$GITHUB_REF_NAME/" tests/*.yaml
+          sed -i -r "s#__BRANCH__#$GITHUB_REF_NAME#" tests/*.yaml
       - name: Initialize Cluster
         run: |
           kubectl apply --kustomize kubernetes/bootstrap

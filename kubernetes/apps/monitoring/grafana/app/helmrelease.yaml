@@ -26,6 +26,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    downloadDashboards:
+      env:
+        SKIP_TLS_VERIFY: "true"
     replicas: 2
     rbac:
       pspEnabled: false

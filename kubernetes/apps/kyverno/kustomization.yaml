@@ -13,7 +13,7 @@ patches:
         path: /spec/targetNamespace
         value: kyverno
     target:
-      version: v1beta2
+      version: v1
       group: kustomize.toolkit.fluxcd.io
       kind: Kustomization
       labelSelector: setnamespace.flux.home.arpa/disabled notin (true)

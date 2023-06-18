@@ -1,0 +1,23 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-settings
+  namespace: flux-system
+data:
+  DOMAIN: "deangalvin.localtest"
+  TIMEZONE: "America/New_York"
+  PRODUCTION_TLS: "deangalvin-dev-test-tls"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+    name: cluster-secrets
+    namespace: flux-system
+stringData:
+    SECRET_EMAIL: fake-email@test.deangalvin.dev
+    GCP_PROJECT: null
+    JWT_TOKEN: null
+    SESSION_ENCRYPTION_KEY: null
+    REPOSITORY_TEMPLATE: null
+    GOOGLE_PROJECT_ID: null

@@ -31,7 +31,7 @@ jobs:
           flux reconcile -n flux-system kustomization cluster-apps
       - name: Test Apps
         run: |
-          flux reconcile -n flux-system kustomiztion cluster-apps-traefik
+          flux reconcile -n flux-system kustomization cluster-apps-traefik
           flux reconcile -n networking helmrelease traefik
           kubectl port-forward -n networking service/traefik 443:8443 &
           curl -L http://localhost:8443 -H 'Host: auth.deangalvin.localtest'

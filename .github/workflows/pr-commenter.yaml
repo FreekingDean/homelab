@@ -19,7 +19,9 @@ jobs:
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
       - name: Get Output
         id: diff_output
-        run: ruby .github/getoutput.rb
+        run: |
+          ls
+          ruby .github/getoutput.rb
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v3
         with:

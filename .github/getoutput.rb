@@ -36,6 +36,7 @@ changed_files.each do |file|
   prev[:values] = prev_file["spec"]["values"]
   prev[:url] = repo_hash[prev[:repo]]
 
+  `mkdir -p .tmp`
   File.open(".tmp/values_cur.yaml", "w") do |f|
     f << YAML.dump(cur[:values])
   end

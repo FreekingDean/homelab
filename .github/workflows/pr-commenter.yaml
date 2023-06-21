@@ -21,6 +21,8 @@ jobs:
         id: diff_output
         run: |
           ls
+          git status
+          git diff HEAD~1
           ruby .github/getoutput.rb
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v3

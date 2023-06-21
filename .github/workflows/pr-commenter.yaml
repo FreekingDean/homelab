@@ -21,10 +21,9 @@ jobs:
           fetch-depth: 0
       - name: Get Output
         id: diff_output
-        run: ruby .github/getoutput.rb >> "$GITHUB_OUTPUT"
+        run: ruby .github/getoutput.rb >> $GITHUB_ENV
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v3
         with:
           issue-number: ${{ github.event.number }}
-          body: |
-            ${{ join(steps.diff_output.outputs.*, '\n') }}
+          body: $GITHUB_ENV

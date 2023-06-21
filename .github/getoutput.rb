@@ -16,9 +16,9 @@ changed_files = `git diff #{ref} --name-only`.lines.map(&:strip)
 changed_files.each do |file|
   next unless file.end_with?(".yaml")
 
-  cur_file = YAML.load(File.read(file), aliases: true)
+  cur_file = YAML.load(File.read(file))
   next unless cur_file['kind'] == "HelmRelease"
-  prev_file = YAML.load(`git show #{ref}:#{file}`, aliases: true)
+  prev_file = YAML.load(`git show #{ref}:#{file}`)
 
   cur = {}
   cur[:name] = cur_file["metadata"]["name"]
@@ -50,7 +50,7 @@ changed_files.each do |file|
   `mkdir .tmp/cur`
   cur_files = `helm template -f .tmp/values_cur.yaml --version #{cur[:ver]} #{cur[:repo]}/#{cur[:chart]} 2> /dev/null`.split("---")
   cur_files.each do |cur_f|
-    file_data = YAML.load(cur_f, aliases: true)
+    file_data = YAML.load(cur_f)
     next if file_data.nil?
     filename = "#{file_data["kind"]}-#{file_data["metadata"]["name"]}.yaml"
     File.open(".tmp/cur/#{filename}", "w") do |f|
@@ -62,7 +62,7 @@ changed_files.each do |file|
   `mkdir .tmp/prev`
   prev_files = `helm template -f .tmp/values_prev.yaml --version #{prev[:ver]} #{prev[:repo]}/#{prev[:chart]} 2> /dev/null`.split("---")
   prev_files.each do |prev_f|
-    file_data = YAML.load(prev_f, aliases: true)
+    file_data = YAML.load(prev_f)
     next if file_data.nil?
     filename = "#{file_data["kind"]}-#{file_data["metadata"]["name"]}.yaml"
     File.open(".tmp/prev/#{filename}", "w") do |f|

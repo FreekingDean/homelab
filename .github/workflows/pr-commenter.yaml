@@ -1,0 +1,34 @@
+---
+name: "Add PR Comments for Helm"
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  comment:
+    name: Add PR Comment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: azure/setup-helm@v3
+        with:
+           token: ${{ secrets.GITHUB_TOKEN }}
+        id: install
+      - name: Checkout
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+        with:
+          fetch-depth: 0
+      - name: Get Output
+        id: diff_output
+        run: |
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "JSON_RESPONSE<<$EOF" >> "$GITHUB_ENV"
+          ruby .github/getoutput.rb >> $GITHUB_ENV
+          echo "$EOF" >> "$GITHUB_ENV"
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@v3
+        if: env.JSON_RESPONSE != ''
+        with:
+          issue-number: ${{ github.event.number }}
+          body: ${{ env.JSON_RESPONSE }}

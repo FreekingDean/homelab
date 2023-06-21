@@ -53,7 +53,8 @@ changed_files.each do |file|
   cur_files.each do |cur_f|
     file_data = YAML.load(cur_f)
     next if file_data.nil?
-    puts file_data
+    puts `ls .tmp`
+    puts `cat .tmp/values_cur.yaml`
     filename = "#{file_data["kind"]}-#{file_data["metadata"]["name"]}.yaml"
     File.open(".tmp/cur/#{filename}", "w") do |f|
       f << YAML.dump(file_data)

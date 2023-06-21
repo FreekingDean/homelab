@@ -28,6 +28,7 @@ jobs:
           echo "$EOF" >> "$GITHUB_ENV"
       - name: Create comment
         uses: peter-evans/create-or-update-comment@v3
+        if: env.JSON_RESPONSE != ""
         with:
           issue-number: ${{ github.event.number }}
           body: ${{ env.JSON_RESPONSE }}

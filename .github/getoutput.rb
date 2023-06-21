@@ -52,8 +52,7 @@ changed_files.each do |file|
   cur_files = `helm template -f .tmp/values_cur.yaml --version #{cur[:ver]} #{cur[:repo]}/#{cur[:chart]} 2> /dev/null`.split("---")
   cur_files.each do |cur_f|
     file_data = YAML.load(cur_f)
-    next if file_data.nil?
-    puts "'#{cur_files}'"
+    next if file_data.nil? || file_data == false
     filename = "#{file_data["kind"]}-#{file_data["metadata"]["name"]}.yaml"
     File.open(".tmp/cur/#{filename}", "w") do |f|
       f << YAML.dump(file_data)

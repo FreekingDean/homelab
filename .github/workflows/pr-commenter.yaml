@@ -1,12 +1,10 @@
-
 ---
-name: "Meta Sync labels"
+name: "Add PR Comments for Helm"
 
 on:
   workflow_dispatch:
-  push:
+  pull_request:
     branches: ["main"]
-    paths: [".github/labels.yaml"]
 
 jobs:
   comment:

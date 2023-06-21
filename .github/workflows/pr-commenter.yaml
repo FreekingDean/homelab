@@ -26,4 +26,5 @@ jobs:
         uses: peter-evans/create-or-update-comment@v3
         with:
           issue-number: ${{ github.event.number }}
-          body: ${{ steps.diff_output.outputs.* }}
+          body: |
+            ${{ steps.diff_output.outputs.* }}

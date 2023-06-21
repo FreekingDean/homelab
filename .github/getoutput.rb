@@ -1,5 +1,5 @@
 require 'yaml'
-ref = "HEAD~1"
+ref = "HEAD~2"
 repos = Dir["kubernetes/flux/repositories/helm/*.yaml"]
 repo_hash = {}
 

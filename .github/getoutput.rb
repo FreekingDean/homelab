@@ -18,6 +18,7 @@ changed_files.each do |file|
 
   cur_file = YAML.load(File.read(file))
   next unless cur_file['kind'] == "HelmRelease"
+  next unless cur_file['spec']['chart'] != nil
   prev_file = YAML.load(`git show #{ref}:#{file}`)
 
   cur = {}

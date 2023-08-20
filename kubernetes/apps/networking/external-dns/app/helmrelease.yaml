@@ -35,7 +35,7 @@ spec:
       - name: GOOGLE_APPLICATION_CREDENTIALS
         value: /var/lib/gcp/key.json
       - name: EXTERNAL_DNS_DEFAULT_TARGETS
-        value: "173.54.36.19"
+        value: "98.109.181.82"
     policy: sync
     sources: ["ingress", "service"]
     txtPrefix: k8s.

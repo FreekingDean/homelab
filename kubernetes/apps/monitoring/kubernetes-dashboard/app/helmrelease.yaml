@@ -26,6 +26,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    metrics-server:
+      enabled: false
     cert-manager:
       enabled: false
     nginx:

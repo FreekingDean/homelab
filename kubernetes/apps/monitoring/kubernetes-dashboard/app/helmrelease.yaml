@@ -26,6 +26,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    cert-manager:
+      enabled: false
+    nginx:
+      enabled: false
     protocolHttp: true
     service:
       externalPort: 9090

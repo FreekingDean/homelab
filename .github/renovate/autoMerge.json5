@@ -2,6 +2,14 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "packageRules": [
     {
+      "description": "Auto merge kustomization",
+      "matchDatasources": ["kustomization"],
+      "automerge": true,
+      "automergeType": "branch",
+      "ignoreTests": false,
+      "matchUpdateTypes": ["patch", "minor"]
+    },
+    {
       "description": "Auto merge helm",
       "matchDatasources": ["helm"],
       "automerge": true,

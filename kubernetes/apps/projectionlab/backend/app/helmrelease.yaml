@@ -29,7 +29,6 @@ spec:
   values:
     imagePullSecrets:
       - name: dockerconfig
-        namespace: kube-system
     podLabels:
       app: backend
       version: v1

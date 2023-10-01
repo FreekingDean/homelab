@@ -36,6 +36,8 @@ spec:
       type: deployment
       annotations:
         reloader.stakater.com/auto: "true"
+    env:
+      DATA_PATH: /data
     image:
       repository: ghcr.io/projectionlab/backend
       tag: latest@sha256:1f0fdc3d7c102a4af38d6b94626961a4d0869c6cea9436374996fe898b7ebcaf
@@ -67,7 +69,7 @@ spec:
         size: 2Gi
         storageClass: ceph-rbd
       - name: crypto
-        mountPath: /.crypto
+        mountPath: /crypto
         accessMode: ReadWriteOnce
         size: 2Gi
         storageClass: ceph-rbd

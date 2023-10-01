@@ -67,7 +67,7 @@ spec:
         size: 2Gi
         storageClass: ceph-rbd
       - name: crypto
-        mountPath: /crypto
+        mountPath: /.crypto
         accessMode: ReadWriteOnce
         size: 2Gi
         storageClass: ceph-rbd

@@ -34,7 +34,10 @@ spec:
       version: v1
     controller:
       type: deployment
+      labels:
+        sidecar.istio.io/inject: "false"
       annotations:
+        sidecar.istio.io/inject: "false"
         reloader.stakater.com/auto: "true"
     env:
       DATA_PATH: /data

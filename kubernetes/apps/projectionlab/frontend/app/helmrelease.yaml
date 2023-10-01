@@ -40,6 +40,7 @@ spec:
       repository: ghcr.io/projectionlab/frontend
       tag: latest@sha256:bd17a54a79d13b648c39f42f164cdc16d7994096a469f9d75023045a7edaf279
     env:
+      SERVER_NAME: &host "projectionlab.${DOMAIN}"
       BIND_ADDRESS: 0.0.0.0
       NGINX_PORT: 80
     service:
@@ -55,7 +56,7 @@ spec:
           traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd,networking-authelia@kubernetescrd"
           hajimari.io/icon: mdi:finance
         hosts:
-          - host: &host "projectionlab.${DOMAIN}"
+          - host: *host
             paths:
               - path: /
                 pathType: Prefix

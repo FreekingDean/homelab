@@ -17,8 +17,8 @@ spec:
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2beta1
       kind: HelmRelease
-      name: projectionlab-frontend
-      namespace: default
+      name: frontend
+      namespace: projectionlab
   interval: 30m
   retryInterval: 1m
   timeout: 3m

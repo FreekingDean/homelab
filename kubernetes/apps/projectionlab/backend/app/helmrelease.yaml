@@ -61,8 +61,8 @@ spec:
             hosts:
               - *host
     volumeClaimTemplates:
-      - name: config
-        mountPath: /config
+      - name: data
+        mountPath: /data
         accessMode: ReadWriteOnce
         size: 2Gi
         storageClass: ceph-rbd

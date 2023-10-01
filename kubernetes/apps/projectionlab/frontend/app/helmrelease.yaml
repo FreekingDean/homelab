@@ -27,13 +27,12 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    podLabels:
-      sidecar.istio.io/inject: "false"
     podAnnotations:
       sidecar.istio.io/inject: "false"
     imagePullSecrets:
       - name: dockerconfig
     podLabels:
+      sidecar.istio.io/inject: "false"
       app: frontend
       version: v1
     controller:

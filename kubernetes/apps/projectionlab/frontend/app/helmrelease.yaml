@@ -40,6 +40,7 @@ spec:
       repository: ghcr.io/projectionlab/frontend
       tag: latest@sha256:bd17a54a79d13b648c39f42f164cdc16d7994096a469f9d75023045a7edaf279
     env:
+      BIND_ADDRESS: 127.0.0.1
     service:
       main:
         ports:

@@ -27,15 +27,14 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    defaultPodOptions:
-      imagePullSecrets:
-        - name: dockerconfig
-          namespace: kube-system
+    imagePullSecrets:
+      - name: dockerconfig
+        namespace: kube-system
     podLabels:
       app: frontend
       version: v1
     controller:
-      type: statefulset
+      type: deployment
       annotations:
         reloader.stakater.com/auto: "true"
     image:

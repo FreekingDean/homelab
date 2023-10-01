@@ -40,7 +40,7 @@ spec:
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/projectionlab/frontend
-      tag: latest@sha256:1f0fdc3d7c102a4af38d6b94626961a4d0869c6cea9436374996fe898b7ebcaf
+      tag: latest@sha256:bd17a54a79d13b648c39f42f164cdc16d7994096a469f9d75023045a7edaf279
     env:
     service:
       main:

@@ -53,7 +53,7 @@ spec:
           traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd,networking-authelia@kubernetescrd"
           hajimari.io/icon: mdi:finance
         hosts:
-          - host: &host "{{ .Release.Name }}.${DOMAIN}"
+          - host: &host "projectionlab.${DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
@@ -61,11 +61,6 @@ spec:
           - secretName: "${PRODUCTION_TLS}"
             hosts:
               - *host
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: "OnRootMismatch"
     volumeClaimTemplates:
       - name: config
         mountPath: /config

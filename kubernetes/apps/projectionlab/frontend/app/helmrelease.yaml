@@ -27,6 +27,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    podLabels:
+      sidecar.istio.io/inject: "false"
+    podAnnotations:
+      sidecar.istio.io/inject: "false"
     imagePullSecrets:
       - name: dockerconfig
     podLabels:
@@ -34,10 +38,7 @@ spec:
       version: v1
     controller:
       type: deployment
-      labels:
-        sidecar.istio.io/inject: "false"
       annotations:
-        sidecar.istio.io/inject: "false"
         reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/projectionlab/frontend

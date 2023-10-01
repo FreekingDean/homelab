@@ -29,7 +29,7 @@ spec:
   values:
     defaultPodOptions:
       imagePullSecrets:
-        - name: ghcr-registry
+        - name: dockerconfig
           namespace: kube-system
     podLabels:
       app: projectionlab-frontend

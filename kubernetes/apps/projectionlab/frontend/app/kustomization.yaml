@@ -5,7 +5,6 @@ kind: Kustomization
 namespace: projectionlab
 resources:
   - ./helmrelease.yaml
-  - ./volsync.yaml
 labels:
   - pairs:
       app.kubernetes.io/name: frontend

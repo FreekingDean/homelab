@@ -62,13 +62,15 @@ spec:
           - secretName: "${PRODUCTION_TLS}"
             hosts:
               - *host
-    volumeClaimTemplates:
-      - name: data
+    persistence:
+      data:
+        enabled: true
         mountPath: /data
         accessMode: ReadWriteOnce
         size: 2Gi
         storageClass: ceph-rbd
-      - name: crypto
+      crypto:
+        enabled: true
         mountPath: /crypto
         accessMode: ReadWriteOnce
         size: 2Gi

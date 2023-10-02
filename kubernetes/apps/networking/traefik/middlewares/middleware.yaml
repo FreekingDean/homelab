@@ -3,6 +3,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: localonly
+  namaespace: "networking"
 spec:
   ipWhiteList:
     sourceRange:
@@ -14,6 +15,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: traefik-errors
+  namaespace: "networking"
 spec:
   errors:
     status:
@@ -28,6 +30,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: authelia
+  namaespace: "networking"
 spec:
   forwardAuth:
     address: "http://authelia-dev.auth/api/verify?rd=https%3A%2F%2Fauth.deangalvin.dev%2F"

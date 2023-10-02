@@ -2,7 +2,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: volsync-sonarr${NAME_SUFFIX}
+  name: volsync-sonarr-unsued
   namespace: default
 spec:
   dependsOn:
@@ -19,8 +19,8 @@ spec:
   timeout: 3m
   postBuild:
     substitute:
-      NAME: sonarr${NAME_SUFFIX}
-      PVC: config-sonarr${NAME_SUFFIX}-0
+      NAME: sonarr-unused
+      PVC: config-sonarr-unused-0
       NAMESPACE: default
       GOOGLE_PROJECT_ID: "${GOOGLE_PROJECT_ID}"
       REPOSITORY_TEMPLATE: "${REPOSITORY_TEMPLATE}"

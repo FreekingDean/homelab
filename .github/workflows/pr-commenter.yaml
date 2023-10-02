@@ -13,17 +13,11 @@ jobs:
     permissions:
       pull-requests: write
     strategy:
+      fail-fast: false
       matrix:
         path: ["kubernetes"]
         resource: ["helmrelease", "kustomization"]
     steps:
-      - name: Generate Token
-        uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2.1.0
-        id: generate-token
-        with:
-          app_id: "${{ secrets.BOT_APP_ID }}"
-          private_key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
-
       - name: Diff Resources
         uses: allenporter/flux-local/action/diff@efbe055c6dc2a63d1102db582632d2aa03696664 # 3.1.1
         id: diff
@@ -32,14 +26,12 @@ jobs:
           path: "${{ matrix.path }}"
           resource: "${{ matrix.resource }}"
 
-      - if: ${{ steps.diff.outputs.diff != '' }}
-        name: Add comment
-        uses: mshick/add-pr-comment@7c0890544fb33b0bdd2e59467fbacb62e028a096 # v2.8.1
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@c6c9a1a66007646a28c153e2a8580a5bad27bcfa # v3
+        if: env.JSON_RESPONSE != ''
         with:
-          repo-token: "${{ steps.generate-token.outputs.token }}"
-          message-id: "${{ github.event.pull_request.number }}/${{ matrix.path }}/${{ matrix.resource }}"
-          message-failure: Diff was not successful
-          message: |
+          issue-number: ${{ github.event.number }}
+          body: |
             ```diff
-            ${{ steps.diff.outputs.diff }}
+            ${{ steps.diff.outputs.diff}}
             ```

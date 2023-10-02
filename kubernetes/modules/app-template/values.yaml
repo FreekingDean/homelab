@@ -1,0 +1,50 @@
+env:
+
+port:
+
+#if false the local only middleware will be added
+ingress:
+  enabled: true
+  public: false
+  auth: true
+
+resources:
+  requests: 10Mi
+  limits: 128Mi
+
+#mdi:finance
+icon: ""
+
+runAsUser: 1000
+replicas: 2
+
+pods:
+  labels:
+    somelabel: womp
+
+controller:
+  type: "Deployment" # "StatefulSet"
+  annotations:
+    reloader.stakater.com/auto: "true"
+    # annotations:
+    #   annotate: this
+
+image:
+  repository: ghcr.io/onedr0p
+  tag: latest
+
+serviceMonitor: true
+
+persistence:
+  config:
+    secret:
+      name: name
+      items:
+        - key: server.toml
+          path: server.toml
+
+            # podSecurityContext:
+            #   runAsUser: 1000
+            #   runAsGroup: 1000
+            #   fsGroup: 1000
+            #   fsGroupChangePolicy: "OnRootMismatch"

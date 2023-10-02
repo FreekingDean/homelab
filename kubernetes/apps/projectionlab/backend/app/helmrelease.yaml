@@ -49,22 +49,6 @@ spec:
         ports:
           http:
             port: 80
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: "${INGRESS_CLASS}"
-        annotations:
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd"
-          hajimari.io/icon: mdi:finance
-        hosts:
-          - host: &host "pl-{{ .Release.Name }}.${DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - secretName: "${PRODUCTION_TLS}"
-            hosts:
-              - *host
     persistence:
       data:
         enabled: true

@@ -1,34 +1,45 @@
 ---
-name: "Add PR Comments for Helm"
+name: "Flux Diff"
 
 on:
-  workflow_dispatch:
   pull_request:
     branches: ["main"]
+    paths: ["kubernetes/**.yaml"]
 
 jobs:
-  comment:
-    name: Add PR Comment
+  flux-diff:
+    name: Flux Diff
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    strategy:
+      matrix:
+        path: ["kubernetes"]
+        resource: ["helmrelease", "kustomization"]
     steps:
-      - uses: azure/setup-helm@5119fcb9089d432beecbf79bb2c7915207344b78 # v3
+      - name: Generate Token
+        uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2.1.0
+        id: generate-token
         with:
-           token: ${{ secrets.GITHUB_TOKEN }}
-        id: install
-      - name: Checkout
-        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
+          app_id: "${{ secrets.BOT_APP_ID }}"
+          private_key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
+
+      - name: Diff Resources
+        uses: allenporter/flux-local/action/diff@efbe055c6dc2a63d1102db582632d2aa03696664 # 3.1.1
+        id: diff
         with:
-          fetch-depth: 0
-      - name: Get Output
-        id: diff_output
-        run: |
-          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          echo "JSON_RESPONSE<<$EOF" >> "$GITHUB_ENV"
-          ruby .github/getoutput.rb >> $GITHUB_ENV
-          echo "$EOF" >> "$GITHUB_ENV"
-      - name: Create comment
-        uses: peter-evans/create-or-update-comment@c6c9a1a66007646a28c153e2a8580a5bad27bcfa # v3
-        if: env.JSON_RESPONSE != ''
+          sources: home-kubernetes
+          path: "${{ matrix.path }}"
+          resource: "${{ matrix.resource }}"
+
+      - if: ${{ steps.diff.outputs.diff != '' }}
+        name: Add comment
+        uses: mshick/add-pr-comment@7c0890544fb33b0bdd2e59467fbacb62e028a096 # v2.8.1
         with:
-          issue-number: ${{ github.event.number }}
-          body: ${{ env.JSON_RESPONSE }}
+          repo-token: "${{ steps.generate-token.outputs.token }}"
+          message-id: "${{ github.event.pull_request.number }}/${{ matrix.path }}/${{ matrix.resource }}"
+          message-failure: Diff was not successful
+          message: |
+            ```diff
+            ${{ steps.diff.outputs.diff }}
+            ```

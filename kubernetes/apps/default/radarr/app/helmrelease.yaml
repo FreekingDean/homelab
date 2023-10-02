@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: "radarr${NAME_SUFFIX}"
+  name: "radarr-unused"
   namespace: default
 spec:
   interval: 15m
@@ -36,7 +36,7 @@ spec:
       tag: 5.0.2.8103@sha256:45d478025148777fd370e28c7915b5412295ab0794005aa5e283d5510d5cab7d
     env:
       TZ: America/New_York
-      RADARR__INSTANCE_NAME: "Radarr${NAME_SUFFIX}"
+      RADARR__INSTANCE_NAME: "Radarr-unused"
       RADARR__PORT: &port 80
       RADARR__APPLICATION_URL: "https://{{ .Release.Name }}.${DOMAIN}"
       RADARR__LOG_LEVEL: info

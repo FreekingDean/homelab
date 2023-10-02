@@ -24,25 +24,25 @@ spec:
   retryInterval: 1m
   timeout: 3m
   patches:
-    - patch:
-      - op: replace
-        path: /metadata/name
-        value: sonarr
-      - op: replace
-        path: /spec/values/env/SONARR__INSTANCE_NAME
-        value: Sonarr
+    - patch: |
+        - op: replace
+          path: /metadata/name
+          value: sonarr
+        - op: replace
+          path: /spec/values/env/SONARR__INSTANCE_NAME
+          value: Sonarr
       target:
         kind: HelmRelease
-    - patch:
-      - op: replace
-        path: /metadata/name
-        value: volsync-sonarr
-      - op: replace
-        path: /spec/postBuild/substitute/NAME
-        value: sonarr
-      - op: replace
-        path: /spec/postBuild/substitute/PVC
-        value: config-sonarr-0
+    - patch: |
+        - op: replace
+          path: /metadata/name
+          value: volsync-sonarr
+        - op: replace
+          path: /spec/postBuild/substitute/NAME
+          value: sonarr
+        - op: replace
+          path: /spec/postBuild/substitute/PVC
+          value: config-sonarr-0
       target:
         kind: Kustomization
         apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -72,25 +72,25 @@ spec:
   retryInterval: 1m
   timeout: 3m
   patches:
-    - patch:
-      - op: replace
-        path: /metadata/name
-        value: sonarr-4k
-      - op: replace
-        path: /spec/values/env/SONARR__INSTANCE_NAME
-        value: Sonarr-4k
+    - patch: |
+        - op: replace
+          path: /metadata/name
+          value: sonarr-4k
+        - op: replace
+          path: /spec/values/env/SONARR__INSTANCE_NAME
+          value: Sonarr-4k
       target:
         kind: HelmRelease
-    - patch:
-      - op: replace
-        path: /metadata/name
-        value: volsync-sonarr-4k
-      - op: replace
-        path: /spec/postBuild/substitute/NAME
-        value: sonarr-4k
-      - op: replace
-        path: /spec/postBuild/substitute/PVC
-        value: config-sonarr-4k-0
+    - patch: |
+        - op: replace
+          path: /metadata/name
+          value: volsync-sonarr-4k
+        - op: replace
+          path: /spec/postBuild/substitute/NAME
+          value: sonarr-4k
+        - op: replace
+          path: /spec/postBuild/substitute/PVC
+          value: config-sonarr-4k-0
       target:
         kind: Kustomization
         apiVersion: kustomize.toolkit.fluxcd.io/v1

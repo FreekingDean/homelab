@@ -1,0 +1,74 @@
+---
+name: "Flux Diff [apps]"
+
+on:
+  pull_request:
+    branches: ["main"]
+    paths: ["kubernetes/apps/**.yaml"]
+
+jobs:
+  flux-diff:
+    name: Flux Diff
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    strategy:
+      fail-fast: false
+      matrix:
+        path: ["kubernetes/apps"]
+        resource: ["helmrelease", "kustomization"]
+    steps:
+      - name: Diff Resources
+        uses: allenporter/flux-local/action/diff@efbe055c6dc2a63d1102db582632d2aa03696664 # 3.1.1
+        id: diff
+        with:
+          sources: home-kubernetes
+          path: "${{ matrix.path }}"
+          resource: "${{ matrix.resource }}"
+
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@c6c9a1a66007646a28c153e2a8580a5bad27bcfa # v3
+        if: ${{ steps.diff.outputs.diff != '' }}
+        with:
+          issue-number: ${{ github.event.number }}
+          body: |
+            ```diff
+            ${{ steps.diff.outputs.diff}}
+            ```
+---
+name: "Flux Diff [flux/bootstrap]"
+
+on:
+  pull_request:
+    branches: ["main"]
+    paths: ["kubernetes/flux/**.yaml", "kubernetes/bootstrap/**.yaml"]
+
+jobs:
+  flux-diff:
+    name: Flux Diff
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    strategy:
+      fail-fast: false
+      matrix:
+        path: ["kubernetes/bootstrap", "kubernetes/flux"]
+        resource: ["helmrelease", "kustomization"]
+    steps:
+      - name: Diff Resources
+        uses: allenporter/flux-local/action/diff@efbe055c6dc2a63d1102db582632d2aa03696664 # 3.1.1
+        id: diff
+        with:
+          sources: home-kubernetes
+          path: "${{ matrix.path }}"
+          resource: "${{ matrix.resource }}"
+
+      - name: Create comment
+        uses: peter-evans/create-or-update-comment@c6c9a1a66007646a28c153e2a8580a5bad27bcfa # v3
+        if: ${{ steps.diff.outputs.diff != '' }}
+        with:
+          issue-number: ${{ github.event.number }}
+          body: |
+            ```diff
+            ${{ steps.diff.outputs.diff}}
+            ```

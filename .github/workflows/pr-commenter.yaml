@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        path: ["kubernetes"]
+        path: ["kubernetes/apps", "kubernetes/bootstrap", "kubernetes/flux"]
         resource: ["helmrelease", "kustomization"]
     steps:
       - name: Diff Resources

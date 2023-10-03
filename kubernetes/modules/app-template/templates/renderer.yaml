@@ -8,37 +8,38 @@ global:
   nameOverride: "{{ .Release.Name }}"
 {{ end }}
 
+{{ with .Values.myvalues }}
 defaultPodOptions:
-{{ if .Values.resources }}
+{{ if .resources }}
   resources:
     requests:
-      memory: {{ .Values.resources.requests }}
+      memory: {{ .resources.requests }}
     limits:
-      memory: {{ .Values.resources.limits }}
+      memory: {{ .resources.limits }}
 {{ end }}
-{{ with .Values.pod.labels}}
+{{ with .pod.labels}}
   labels:
     {{- toYaml . | nindent 4 }}
 {{ end }}
-{{ if .Values.runAsUser }}
+{{ if .runAsUser }}
   podSecurityContext:
-    runAsUser: {{ .Values.runAsUser }}
-    runAsGroup: {{ .Values.runAsUser }}
-    fsGroup: {{ .Values.runAsUser }}
+    runAsUser: {{ .runAsUser }}
+    runAsGroup: {{ .runAsUser }}
+    fsGroup: {{ .runAsUser }}
     fsGroupChangePolicy: "OnRootMismatch"
 {{ end }}
 controllers:
   main:
-    replicas: {{ .Values.replicas }}
+    replicas: {{ .replicas }}
     strategy: RollingUpdate
     annotations:
-      {{ with .Values.annotations }}
+      {{ with .annotations }}
       {{- toYaml . | nindent 6 }}
       {{ end }}
       reloader.stakater.com/auto: "true"
-    {{ if .values.labels }}
+    {{ if .labels }}
     labels:
-      {{ with .Values.labels }}
+      {{ with .labels }}
       {{- toYaml . | nindent 6 }}
       {{ end }}
     {{ end }}
@@ -46,21 +47,30 @@ controllers:
       main:
         image:
           # https://github.com/glauth/glauth/issues/298
-          repository: {{ .Values.image.repository }}
-          tag: {{ .Values.image.tag }}
-        command: {{ .Values.command }}
+          repository: {{ .image.repository }}
+          tag: {{ .image.tag }}
+        command: {{ .command }}
+        {{ with .ports }}
+        ports:
+          {{ range $name, $port := . }}
+            - containerPort: {{ $port }}
+              name: {{ $name }}
+              protocol: TCP
+          {{ end }}
+        {{ end }}
 
-{{ if .Values.ports }}
+{{ if .ports }}
 service:
   main:
     ports:
-      {{ range $name, $port := .Values.ports }}
+      {{ range $name, $port := .ports }}
       {{ $name }}:
         enabled: true
         port: {{ $port }}
+      {{ end }}
 {{ end }}
 
-{{ if .Values.serviceMonitor }}
+{{ if .serviceMonitor }}
 serviceMonitor:
   main:
     enabled: true
@@ -72,9 +82,9 @@ serviceMonitor:
         scrapeTimeout: 10s
 {{ end }}
 
-{{ if .Values.persistence }}
+{{ if .persistence }}
 persistence:
-  {{ range $name, $config := persistence }}
+  {{ range $name, $config := .persistence }}
     {{ $name }}:
       enabled: true
       type: {{ $config.type }}
@@ -90,10 +100,20 @@ persistence:
     {{ end }}
   {{ end }}
 {{ end }}
+{{ if .ingress.enabled }}
+ingress:
+  main:
+    enabled: true
+{{ else }}
+ingress:
+  main:
+    enabled: false
+{{ end }}
+{{ end }}
 {{- end -}}
+
 
 {{- $_ := mergeOverwrite .Values (include "app-template.hardcodedValues" . | fromYaml) -}}
 
 {{/* Render the templates */}}
 {{ include "bjw-s.common.loader.generate" . }}
-

@@ -1,50 +1,54 @@
-env:
+global:
+  nameOverride: false
 
-port:
+myvalues:
+  env:
 
-#if false the local only middleware will be added
-ingress:
-  enabled: true
-  public: false
-  auth: true
+  port:
 
-resources:
-  requests: 10Mi
-  limits: 128Mi
+  #if false the local only middleware will be added
+  ingress:
+    enabled: true
+    public: false
+    auth: true
 
-#mdi:finance
-icon: ""
+  resources:
+    requests: 10Mi
+    limits: 128Mi
 
-runAsUser: 1000
-replicas: 2
+  #mdi:finance
+  icon: ""
 
-pods:
-  labels:
-    somelabel: womp
+  runAsUser: 1000
+  replicas: 2
 
-controller:
-  type: "Deployment" # "StatefulSet"
-  annotations:
-    reloader.stakater.com/auto: "true"
-    # annotations:
-    #   annotate: this
+  pods:
+    labels:
+      somelabel: womp
 
-image:
-  repository: ghcr.io/onedr0p
-  tag: latest
+  controller:
+    type: "Deployment" # "StatefulSet"
+    annotations:
+      reloader.stakater.com/auto: "true"
+      # annotations:
+      #   annotate: this
 
-serviceMonitor: true
+  image:
+    repository: ghcr.io/onedr0p
+    tag: latest
 
-persistence:
-  config:
-    secret:
-      name: name
-      items:
-        - key: server.toml
-          path: server.toml
+  serviceMonitor: true
 
-            # podSecurityContext:
-            #   runAsUser: 1000
-            #   runAsGroup: 1000
-            #   fsGroup: 1000
-            #   fsGroupChangePolicy: "OnRootMismatch"
+  persistence:
+    config:
+      secret:
+        name: name
+        items:
+          - key: server.toml
+            path: server.toml
+
+              # podSecurityContext:
+              #   runAsUser: 1000
+              #   runAsGroup: 1000
+              #   fsGroup: 1000
+              #   fsGroupChangePolicy: "OnRootMismatch"

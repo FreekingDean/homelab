@@ -27,63 +27,37 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    podLabels:
-      app: glauth
-      version: v1
-    controller:
+    myvalues:
+      pod:
+        labels:
+          app: glauth
+          version: v1
+
       replicas: 2
-      strategy: RollingUpdate
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      # https://github.com/glauth/glauth/issues/298
-      repository: ghcr.io/onedr0p/glauth
-      tag: v2.2.0-rc1
-    command: ["/app/glauth", "-c", "/config"]
-    service:
-      main:
-        ports:
-          http:
-            port: 5555
-          ldap:
-            enabled: true
-            port: 389
-    serviceMonitor:
-      main:
-        enabled: true
-        endpoints:
-          - port: metrics
-            scheme: http
-            path: /metrics
-            interval: 1m
-            scrapeTimeout: 10s
-    podSecurityContext:
+
+      image:
+        repository: ghcr.io/onedr0p/glauth
+        tag: v2.2.0-rc1
+
+      command: ["/app/glauth", "-c", "/config"]
+
+      ports:
+        http: 5555
+        ldap: 389
+      serviceMonitor: true
       runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
-      fsGroupChangePolicy: "OnRootMismatch"
-    persistence:
-      config:
-        enabled: true
-        type: secret
-        name: glauth-secret
-        items:
-          - key: server.toml
-            path: server.toml
-          - key: groups.toml
-            path: groups.toml
-          - key: users.toml
-            path: users.toml
-    topologySpreadConstraints:
-      - maxSkew: 1
-        topologyKey: kubernetes.io/hostname
-        whenUnsatisfiable: DoNotSchedule
-        labelSelector:
-          matchLabels:
-            app.kubernetes.io/name: *app
-    resources:
-      requests:
-        cpu: 5m
-        memory: 10Mi
-      limits:
-        memory: 50Mi
+
+      persistence:
+        config:
+          type: secret
+          name: glauth-secret
+          items:
+            server.toml: server.toml
+            groups.toml: groups.toml
+            users.toml: users.toml
+      resources:
+        requests: 10Mi
+        limits: 50Mi
+
+      ingress:
+        enabled: false

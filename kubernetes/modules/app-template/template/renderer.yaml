@@ -16,36 +16,51 @@ defaultPodOptions:
     limits:
       memory: {{ .Values.resources.limits }}
 {{ end }}
-{{ if .Values.labels }}
+{{ with .Values.pod.labels}}
   labels:
-    app: {{{
-    version: v1
+    {{- toYaml . | nindent 4 }}
+{{ end }}
+{{ if .Values.runAsUser }}
   podSecurityContext:
-    runAsUser: 1000
-    runAsGroup: 1000
-    fsGroup: 1000
+    runAsUser: {{ .Values.runAsUser }}
+    runAsGroup: {{ .Values.runAsUser }}
+    fsGroup: {{ .Values.runAsUser }}
     fsGroupChangePolicy: "OnRootMismatch"
+{{ end }}
 controllers:
   main:
-    replicas: 2
+    replicas: {{ .Values.replicas }}
     strategy: RollingUpdate
     annotations:
+      {{ with .Values.annotations }}
+      {{- toYaml . | nindent 6 }}
+      {{ end }}
       reloader.stakater.com/auto: "true"
+    {{ if .values.labels }}
+    labels:
+      {{ with .Values.labels }}
+      {{- toYaml . | nindent 6 }}
+      {{ end }}
+    {{ end }}
     containers:
       main:
         image:
           # https://github.com/glauth/glauth/issues/298
-          repository: ghcr.io/onedr0p/glauth
-          tag: v2.2.0-rc1
-        command: ["/app/glauth", "-c", "/config"]
+          repository: {{ .Values.image.repository }}
+          tag: {{ .Values.image.tag }}
+        command: {{ .Values.command }}
+
+{{ if .Values.ports }}
 service:
   main:
     ports:
-      http:
-        port: 5555
-      ldap:
+      {{ range $name, $port := .Values.ports }}
+      {{ $name }}:
         enabled: true
-        port: 389
+        port: {{ $port }}
+{{ end }}
+
+{{ if .Values.serviceMonitor }}
 serviceMonitor:
   main:
     enabled: true
@@ -55,19 +70,28 @@ serviceMonitor:
         path: /metrics
         interval: 1m
         scrapeTimeout: 10s
+{{ end }}
+
+{{ if .Values.persistence }}
 persistence:
-  config:
-    enabled: true
-    type: secret
-    name: glauth-secret
-    items:
-      - key: server.toml
-        path: server.toml
-      - key: groups.toml
-        path: groups.toml
-      - key: users.toml
-        path: users.toml
+  {{ range $name, $config := persistence }}
+    {{ $name }}:
+      enabled: true
+      type: {{ $config.type }}
+      {{ if eq $config.type "secret" }}
+      name: {{ $config.name }}
+      {{ if $config.items }}
+      items:
+        {{ range $key, $path := $config.items }}
+        - key: {{ $key }}
+          path: {{ $path }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
 {{- end -}}
+
 {{- $_ := mergeOverwrite .Values (include "app-template.hardcodedValues" . | fromYaml) -}}
 
 {{/* Render the templates */}}

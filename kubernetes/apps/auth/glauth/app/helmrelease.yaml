@@ -9,7 +9,7 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: ./modules/app-template
+      chart: ./kubernetes/modules/app-template
       sourceRef:
         kind: GitRepository
         name: home-kubernetes

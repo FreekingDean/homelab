@@ -28,7 +28,7 @@ jobs:
 
       - name: Create comment
         uses: peter-evans/create-or-update-comment@23ff15729ef2fc348714a3bb66d2f655ca9066f2 # v3
-        if: env.JSON_RESPONSE != ''
+        if: ${{ steps.diff.outputs.diff != '' }}
         with:
           issue-number: ${{ github.event.number }}
           body: |

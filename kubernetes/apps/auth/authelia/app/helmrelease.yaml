@@ -67,6 +67,8 @@ spec:
             policy: bypass
       session:
         expiration: 24h
+        inactivity: 24h
+        remember_me_duration: 24h
         redis:
           host: redis-master.default
       notifier:

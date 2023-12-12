@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        path: ["kubernetes/apps", "kubernetes/bootstrap", "kubernetes/flux"]
+        path: ["kubernetes"]
         resource: ["helmrelease", "kustomization"]
     steps:
       - name: Setup Flux

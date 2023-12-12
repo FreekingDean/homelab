@@ -40,11 +40,11 @@ spec:
               repository: ghcr.io/onedr0p/glauth
               tag: v2.2.0-rc1
             command: ["/app/glauth", "-c", "/config"]
-        securityContext:
-          runAsUser: 1000
-          runAsGroup: 1000
-          fsGroup: 1000
-          fsGroupChangePolicy: "OnRootMismatch"
+            securityContext:
+              runAsUser: 1000
+              runAsGroup: 1000
+              fsGroup: 1000
+              fsGroupChangePolicy: "OnRootMismatch"
     defaultPodOptions:
       labels:
         app: glauth

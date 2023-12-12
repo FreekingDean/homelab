@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: default
 resources:
   - ./externalsecret.yaml
+  - ./helmrelease.yaml
 labels:
   - pairs:
       app.kubernetes.io/name: glauth

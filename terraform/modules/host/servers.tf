@@ -29,4 +29,6 @@ module "servers" {
   ]
 
   primary_storage = var.primary_storage
+
+  private_key_path = var.private_key_path
 }

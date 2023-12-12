@@ -12,6 +12,8 @@ module "enterprise" {
 
   servers = 0
   agents  = 0
+
+  private_key_path = var.private_key_path
 }
 
 module "voyager" {
@@ -28,6 +30,8 @@ module "voyager" {
 
   servers = 0
   agents  = 0
+
+  private_key_path = var.private_key_path
 }
 
 module "ds9" {
@@ -43,6 +47,8 @@ module "ds9" {
 
   servers = 3
   agents  = 0
+
+  private_key_path = var.private_key_path
 }
 
 module "defiant" {
@@ -62,6 +68,8 @@ module "defiant" {
 
   primary_storage = "local"
   server_storage  = "local"
+
+  private_key_path = var.private_key_path
 }
 
 module "discovery" {
@@ -81,6 +89,8 @@ module "discovery" {
 
   primary_storage = "local"
   server_storage  = "local"
+
+  private_key_path = var.private_key_path
 }
 
 module "cerritos" {
@@ -100,31 +110,39 @@ module "cerritos" {
 
   primary_storage = "local"
   server_storage  = "local"
+
+  private_key_path = var.private_key_path
 }
 
-module "protostar" {
-  source = "./modules/host"
-
-  node = "protostar"
-  id   = 7
-
-  coreos_version = local.coreos.version
-  k3s_version    = local.k3s.version
-  k3s_subversion = local.k3s.subversion
-
-  cluster_server = module.ds9.cluster_server_ip
-
-  servers = 1
-  agents  = 3
-
-  primary_storage = "local"
-  server_storage  = "local"
-}
+#module "protostar" {
+#  source = "./modules/host"
+#
+#  node = "protostar"
+#  id   = 7
+#
+#  coreos_version = local.coreos.version
+#  k3s_version    = local.k3s.version
+#  k3s_subversion = local.k3s.subversion
+#
+#  cluster_server = module.ds9.cluster_server_ip
+#
+#  servers = 1
+#  agents  = 3
+#
+#  primary_storage = "local"
+#  server_storage  = "local"
+#
+#  private_key_path = var.private_key_path
+#}
 
 locals {
   hosts = [
     module.enterprise,
     module.voyager,
     module.ds9,
+    module.defiant,
+    module.discovery,
+    module.cerritos,
+    #module.protostar,
   ]
 }

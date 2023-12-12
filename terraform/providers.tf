@@ -9,7 +9,8 @@ terraform {
 
   required_providers {
     proxmox = {
-      source = "FreekingDean/proxmox"
+      source  = "FreekingDean/proxmox"
+      version = "0.0.9"
     }
     null = {
       source = "hashicorp/null"
@@ -22,7 +23,7 @@ terraform {
 
 provider "proxmox" {
   #pm_debug    = true
-  #pm_api_url  = "https://10.0.0.103:8006/api2/json"
-  #pm_user     = "root@pam"
+  host     = "https://10.0.0.103:8006/api2/json"
+  username = "root@pam"
   #pm_password = local.root_password
 }

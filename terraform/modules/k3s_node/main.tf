@@ -21,7 +21,6 @@ resource "proxmox_node_virtual_machine" "guest" {
   node        = var.node
   memory      = var.memory
   cpus        = var.cpus
-  cpu         = "host"
   guest_agent = true
   serials = [
     "socket"
@@ -72,7 +71,7 @@ resource "null_resource" "reboot_if_update" {
   connection {
     type        = "ssh"
     user        = "k3suser"
-    private_key = file("~/.ssh/id_ed25519")
+    private_key = file(var.private_key_path)
     host        = var.ip
   }
 

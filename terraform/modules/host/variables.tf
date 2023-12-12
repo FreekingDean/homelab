@@ -42,3 +42,8 @@ variable "server_storage" {
   type    = string
   default = "etcd-storage"
 }
+
+variable "private_key_path" {
+  type    = string
+  default = "~/.ssh/id_ed25519"
+}

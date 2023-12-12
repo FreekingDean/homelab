@@ -104,3 +104,7 @@ variable "primary_storage" {
   type    = string
   default = "local-thin"
 }
+
+variable "private_key_path" {
+  type = string
+}

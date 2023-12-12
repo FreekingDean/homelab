@@ -28,8 +28,8 @@ resource "null_resource" "prep_gpg_keys" {
   connection {
     type        = "ssh"
     user        = "root"
-    private_key = file("~/.ssh/id_ed25519")
-    host        = data.proxmox_node.node.ip_address
+    private_key = file(var.private_key_path)
+    host        = "10.0.0.10${var.id}"
   }
   provisioner "remote-exec" {
     inline = [
@@ -49,8 +49,8 @@ resource "null_resource" "download_qcow" {
   connection {
     type        = "ssh"
     user        = "root"
-    private_key = file("~/.ssh/id_ed25519")
-    host        = data.proxmox_node.node.ip_address
+    private_key = file(var.private_key_path)
+    host        = "10.0.0.10${var.id}"
   }
   provisioner "file" {
     content     = data.template_file.script.rendered

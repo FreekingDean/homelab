@@ -40,22 +40,22 @@ spec:
               repository: ghcr.io/onedr0p/glauth
               tag: v2.2.0-rc1
             command: ["/app/glauth", "-c", "/config"]
-            securityContext:
-              runAsUser: 1000
-              runAsGroup: 1000
-              fsGroup: 1000
-              fsGroupChangePolicy: "OnRootMismatch"
-    defaultPodOptions:
-      labels:
-        app: glauth
-        version: v1
-      topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-            matchLabels:
-              app.kubernetes.io/name: *app
+      pod:
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+          fsGroup: 1000
+          fsGroupChangePolicy: "OnRootMismatch"
+        labels:
+          app: glauth
+          version: v1
+        topologySpreadConstraints:
+          - maxSkew: 1
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: DoNotSchedule
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: *app
     service:
       main:
         ports:

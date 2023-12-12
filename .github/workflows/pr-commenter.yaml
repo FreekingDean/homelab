@@ -1,5 +1,5 @@
 ---
-name: "Flux Diff"
+name: "Flux Diff [flux/bootstrap]"
 
 on:
   pull_request:
@@ -18,8 +18,12 @@ jobs:
         path: ["kubernetes"]
         resource: ["helmrelease", "kustomization"]
     steps:
+      - name: Setup Flux
+        uses: fluxcd/flux2/action@a18d4f345021182d6516bf3e8e00210567f46ab5 # v2.1.2
+
       - name: Diff Resources
-        uses: allenporter/flux-local/action/diff@19bfc6920e8964a479363bc230e6c329120ead02 # 3.2.0
+        # uses: allenporter/flux-local/action/diff@19bfc6920e8964a479363bc230e6c329120ead02 # 3.2.0
+        uses: allenporter/flux-local/action/diff@flux-build
         id: diff
         with:
           sources: home-kubernetes
@@ -27,8 +31,8 @@ jobs:
           resource: "${{ matrix.resource }}"
 
       - name: Create comment
-        uses: peter-evans/create-or-update-comment@23ff15729ef2fc348714a3bb66d2f655ca9066f2 # v3
-        if: env.JSON_RESPONSE != ''
+        uses: peter-evans/create-or-update-comment@c6c9a1a66007646a28c153e2a8580a5bad27bcfa # v3
+        if: ${{ steps.diff.outputs.diff != '' }}
         with:
           issue-number: ${{ github.event.number }}
           body: |

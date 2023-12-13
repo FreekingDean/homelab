@@ -63,7 +63,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "${INGRESS_CLASS}"
+        className: "${INGRESS_CLASS}"
         annotations:
           hajimari.io/icon: video-input-antenna
         hosts:

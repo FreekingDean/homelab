@@ -16,6 +16,7 @@ includes:
   precommit: .taskfiles/PrecommitTasks.yml
   terraform: .taskfiles/TerraformTasks.yml
   vs: .taskfiles/VolSync/Tasks.yml
+  repo: .taskfiles/RepoTasks.yml
 
 tasks:
 

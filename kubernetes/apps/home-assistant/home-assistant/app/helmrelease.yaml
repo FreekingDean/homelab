@@ -29,8 +29,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    pod:
-      enableServiceLinks: false
     podDefaultOptions:
       securityContext:
         runAsUser: 568
@@ -42,6 +40,8 @@ spec:
         type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
+        pod:
+          enableServiceLinks: false
         statefulset:
           volumeClaimTemplates:
             - name: config

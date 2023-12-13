@@ -29,20 +29,48 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    podDefaultOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
     controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/onedr0p/home-assistant
-      tag: 2023.12.1
-    env:
-      TZ: America/New_York
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+      containers:
+        main:
+          image:
+            repository: ghcr.io/onedr0p/home-assistant
+            tag: 2023.12.1
+          env:
+            TZ: America/New_York
+          probes:
+            liveness:
+              enabled: false
+            readiness:
+              enabled: false
+            startup:
+              enabled: false
+          volumeClaimTemplates:
+            - name: config
+              mountPath: /config
+              accessMode: ReadWriteOnce
+              size: 128Gi
+              storageClass: ceph-rbd
+          resources:
+            requests:
+              cpu: 10m
+              memory: 100Mi
+            limits:
+              memory: 750Mi
     service:
       main:
         ports:
           http:
-            port: 8123
+            port: *port 8123
     ingress:
       main:
         enabled: true
@@ -54,31 +82,9 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                port: &port
+                service: main
         tls:
           - secretName: "${PRODUCTION_TLS}"
             hosts:
               - *host
-    probes:
-      liveness:
-        enabled: false
-      readiness:
-        enabled: false
-      startup:
-        enabled: false
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: OnRootMismatch
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 128Gi
-        storageClass: ceph-rbd
-    resources:
-      requests:
-        cpu: 10m
-        memory: 100Mi
-      limits:
-        memory: 750Mi

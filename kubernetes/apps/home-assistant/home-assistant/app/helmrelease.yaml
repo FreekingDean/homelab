@@ -35,37 +35,37 @@ spec:
         runAsGroup: 568
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
-    controller:
+    controllers:
       main:
         type: statefulset
         annotations:
           reloader.stakater.com/auto: "true"
-      containers:
-        main:
-          image:
-            repository: ghcr.io/onedr0p/home-assistant
-            tag: 2023.12.1
-          env:
-            TZ: America/New_York
-          probes:
-            liveness:
-              enabled: false
-            readiness:
-              enabled: false
-            startup:
-              enabled: false
-          volumeClaimTemplates:
-            - name: config
-              mountPath: /config
-              accessMode: ReadWriteOnce
-              size: 128Gi
-              storageClass: ceph-rbd
-          resources:
-            requests:
-              cpu: 10m
-              memory: 100Mi
-            limits:
-              memory: 750Mi
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/home-assistant
+              tag: 2023.12.1
+            env:
+              TZ: America/New_York
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+            volumeClaimTemplates:
+              - name: config
+                mountPath: /config
+                accessMode: ReadWriteOnce
+                size: 128Gi
+                storageClass: ceph-rbd
+            resources:
+              requests:
+                cpu: 10m
+                memory: 100Mi
+              limits:
+                memory: 750Mi
     service:
       main:
         ports:

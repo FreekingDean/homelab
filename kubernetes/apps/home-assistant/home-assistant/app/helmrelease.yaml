@@ -70,7 +70,7 @@ spec:
       main:
         ports:
           http:
-            port: *port 8123
+            port: &port 8123
     ingress:
       main:
         enabled: true
@@ -82,7 +82,7 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
-                port: &port
+                port: *port
                 service: main
         tls:
           - secretName: "${PRODUCTION_TLS}"

@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.4.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -29,24 +29,76 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/onedr0p/home-assistant
-      tag: 2023.12.1
-    env:
-      TZ: America/New_York
+    podDefaultOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          enableServiceLinks: false
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 128Gi
+              storageClass: ceph-rbd
+              globalMounts:
+                - path: /config
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/home-assistant
+              tag: 2023.12.1
+            env:
+              TZ: America/New_York
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+            resources:
+              requests:
+                cpu: 10m
+                memory: 100Mi
+              limits:
+                memory: 750Mi
+          code:
+            dependsOn: main
+            image:
+              repository: ghcr.io/coder/code-server
+              tag: 4.19.0
+            args:
+              - --auth
+              - "none"
+              - --user-data-dir
+              - "/config/.vscode"
+              - --extensions-dir
+              - "/config/.vscode"
+              - --port
+              - "8081"
+              - "/config"
     service:
       main:
         ports:
           http:
-            port: 8123
+            port: &port 8123
+      code:
+        controller: main
+        ports:
+          http:
+            port: &codeport 8081
     ingress:
       main:
         enabled: true
-        ingressClassName: "${INGRESS_CLASS}"
+        className: "${INGRESS_CLASS}"
         annotations:
           hajimari.io/icon: mdi:home-assistant
         hosts:
@@ -54,31 +106,27 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  port: *port
+                  name: main
         tls:
           - secretName: "${PRODUCTION_TLS}"
             hosts:
               - *host
-    probes:
-      liveness:
-        enabled: false
-      readiness:
-        enabled: false
-      startup:
-        enabled: false
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: OnRootMismatch
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 128Gi
-        storageClass: ceph-rbd
-    resources:
-      requests:
-        cpu: 10m
-        memory: 100Mi
-      limits:
-        memory: 750Mi
+      code:
+        enabled: true
+        className: "${INGRESS_CLASS}"
+        annotations:
+          hajimari.io/icon: mdi:home-assistant
+        hosts:
+          - host: &codehost "hass-config.${DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  port: *codeport
+                  name: code
+        tls:
+          - secretName: "${PRODUCTION_TLS}"
+            hosts:
+              - *codehost

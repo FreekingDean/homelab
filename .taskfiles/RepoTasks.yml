@@ -3,10 +3,21 @@ version: "3"
 
 tasks:
   archive:
-    desc: Archive a file from the kubernetes folder
+    desc: Archive a file
     cmds:
       - mkdir -p .archive/{{.DIRECTORY}}
       - mv {{.CLI_ARGS}} .archive/{{.CLI_ARGS}}
     vars:
       DIRECTORY:
         sh: dirname {{.CLI_ARGS}}
+
+  unarchive:
+    desc: Unarchive a file
+    cmds:
+      - mkdir -p {{.DIRECTORY}}
+      - mv {{.CLI_ARGS}} {{.NON_ARCHIVE}}
+    vars:
+      NON_ARCHIVE:
+        sh: archivedir={{.CLI_ARGS}} && echo "${archivedir#.archive/}"
+      DIRECTORY:
+        sh: dirname {{.NON_ARCHIVE}}

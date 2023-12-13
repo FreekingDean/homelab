@@ -6,7 +6,7 @@ tasks:
     desc: Archive a file from the kubernetes folder
     cmds:
       - mkdir -p .archive/{{.DIRECTORY}}
-      - mv kubernetes/{{.CLI_ARGS}} .archive/{{.CLI_ARGS}}
+      - mv {{.CLI_ARGS}} .archive/{{.CLI_ARGS}}
     vars:
       DIRECTORY:
         sh: dirname {{.CLI_ARGS}}

@@ -70,21 +70,21 @@ spec:
                 memory: 100Mi
               limits:
                 memory: 750Mi
-					code:
-						dependsOn: main
-						image:
-							repository: ghcr.io/coder/code-server
-							tag: 4.19.0
-						args:
-							- --auth
-							- "none"
-							- --user-data-dir
-							- "/config/.vscode"
-							- --extensions-dir
-							- "/config/.vscode"
-							- --port
-							- "8081"
-							- "/config"
+          code:
+            dependsOn: main
+            image:
+              repository: ghcr.io/coder/code-server
+              tag: 4.19.0
+            args:
+              - --auth
+              - "none"
+              - --user-data-dir
+              - "/config/.vscode"
+              - --extensions-dir
+              - "/config/.vscode"
+              - --port
+              - "8081"
+              - "/config"
     service:
       main:
         ports:

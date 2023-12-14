@@ -24,7 +24,14 @@ data "template_file" "script" {
   }
 }
 
+data "http" "gpg_keys" {
+  url = "https://getfedora.org/static/fedora.gpg"
+}
+
 resource "null_resource" "prep_gpg_keys" {
+  triggers = {
+    content_hash = sha256(data.http.gpg_keys.response_body)
+  }
   connection {
     type        = "ssh"
     user        = "root"
@@ -33,10 +40,13 @@ resource "null_resource" "prep_gpg_keys" {
   }
   provisioner "remote-exec" {
     inline = [
-      "mkdir -p .gpg",
-      "curl https://getfedora.org/static/fedora.gpg > .gpg/fedora.gpg",
+      "mkdir -p .gpg"
     ]
     on_failure = fail
+  }
+  provisioner "file" {
+    content     = data.http.gpg_keys.response_body
+    destination = ".gpg/fedora.gpg"
   }
 }
 

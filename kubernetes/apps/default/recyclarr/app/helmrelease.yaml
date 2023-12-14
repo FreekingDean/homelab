@@ -46,16 +46,6 @@ spec:
               storageClass: ceph-block
               globalMounts:
                 - path: /config
-        initContainers:
-          01-init-config:
-            image: 
-              repository: public.ecr.aws/docker/library/busybox
-              tag: latest
-              pullPolicy: IfNotPresent
-            command: ["/bin/sh", "-c", "cp /tmp/config/recyclarr.yml /config/recyclarr.yml"]
-            volumeMounts:
-              - { name: config-file, mountPath: /tmp/config }
-              - { name: config, mountPath: /config }
         containers:
           main:
             image:
@@ -82,4 +72,5 @@ spec:
         type: configMap
         name: recyclarr-configmap
         globalMounts:
-          - path: "-"
+          - path: "/config/recyclarr.yml"
+            subPath: recyclarr.yml

@@ -72,7 +72,7 @@ spec:
         globalMounts:
           - subPath: vector.yaml
             path: /etc/vector/vector.yaml
-        readOnly: true
+            readOnly: true
       data:
         enabled: true
         type: emptyDir
@@ -84,8 +84,8 @@ spec:
         hostPath: /var/log
         hostPathType: Directory
         globalMounts:
-          path: /var/log
-        readOnly: true
+          - path: /var/log
+            readOnly: true
       var-lib:
         enabled: true
         type: hostPath
@@ -93,7 +93,7 @@ spec:
         hostPathType: Directory
         globalMounts:
           - path: /var/lib
-        readOnly: true
+            readOnly: true
       procfs:
         enabled: true
         type: hostPath
@@ -101,7 +101,7 @@ spec:
         hostPathType: Directory
         globalMounts:
           - path: /host/proc
-        readOnly: true
+            readOnly: true
       sysfs:
         enabled: true
         type: hostPath
@@ -109,4 +109,4 @@ spec:
         hostPathType: Directory
         globalMounts:
           - path: /host/sys
-        readOnly: true
+            readOnly: true

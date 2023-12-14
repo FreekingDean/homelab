@@ -91,7 +91,7 @@ spec:
     persistence:
       media:
         enabled: true
-        type: pvc
+        type: persistentVolumeClaim
         existingClaim: media
         globalMounts:
           - path: /media

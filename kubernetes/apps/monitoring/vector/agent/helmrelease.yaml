@@ -27,14 +27,14 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controller:
+    controllers:
       main:
         type: daemonset
         strategy: RollingUpdate
         containers:
-          securityContext:
-            privileged: true
           main:
+            securityContext:
+              privileged: true
             image:
               # https://github.com/vectordotdev/vector/issues/6715
               repository: ghcr.io/onedr0p/vector

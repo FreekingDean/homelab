@@ -72,7 +72,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "${INGRESS_CLASS}"
+        className: "${INGRESS_CLASS}"
         annotations:
           public.ingress.home.arpa: "true"
           hajimari.io/icon: mdi:plex

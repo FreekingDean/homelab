@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.4.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -27,27 +27,52 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    podLabels:
-      app: plex
-      version: v1
-    controller:
-      type: statefulset
-    image:
-      repository: ghcr.io/onedr0p/plex
-      tag: 1.32.8.7639-fb6452ebf
-    env:
-      TZ: America/New_York
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: "OnRootMismatch"
+        supplementalGroups: [44, 109, 10000]
+    controllers:
+      main:
+        type: statefulset
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              globalMounts:
+                - path: /config
+              accessMode: ReadWriteOnce
+              size: 150Gi
+              storageClass: ceph-rbd
+        pod:
+          labels:
+            app: plex
+            version: v1
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/plex
+              tag: 1.32.8.7639-fb6452ebf
+            env:
+              TZ: America/New_York
+            resources:
+              requests:
+                cpu: 100m
+                memory: 2000Mi
+              limits:
+                memory: 10000Mi
     service:
       main:
         type: LoadBalancer
         externalTrafficPolicy: Local
         ports:
           http:
-            port: 32400
+            port: &port 32400
     ingress:
       main:
         enabled: true
-        ingressClassName: "${INGRESS_CLASS}"
+        className: "${INGRESS_CLASS}"
         annotations:
           public.ingress.home.arpa: "true"
           hajimari.io/icon: mdi:plex
@@ -56,34 +81,20 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: *port
         tls:
           - secretName: "${PRODUCTION_TLS}"
             hosts:
               - *host
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: "OnRootMismatch"
-      supplementalGroups: [44, 109, 10000]
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 150Gi
-        storageClass: ceph-rbd
     persistence:
       media:
         enabled: true
-        type: pvc
+        type: persistentVolumeClaim
         existingClaim: media
-        mountPath: /media
+        globalMounts:
+          - path: /media
       transcode:
         enabled: true
         type: emptyDir
-    resources:
-      requests:
-        cpu: 100m
-        memory: 2000Mi
-      limits:
-        memory: 10000Mi

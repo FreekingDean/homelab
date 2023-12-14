@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.4.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -28,76 +28,85 @@ spec:
     keepHistory: false
   values:
     controller:
-      type: daemonset
-      strategy: RollingUpdate
-    image:
-      # https://github.com/vectordotdev/vector/issues/6715
-      repository: ghcr.io/onedr0p/vector
-      tag: 0.34.1-debian
-    args: ["--config", "/etc/vector/vector.yaml"]
-    env:
-      PROCFS_ROOT: /host/proc
-      SYSFS_ROOT: /host/sys
-      VECTOR_SELF_NODE_NAME:
-        valueFrom:
-          fieldRef:
-            apiVersion: v1
-            fieldPath: spec.nodeName
-      VECTOR_SELF_POD_NAME:
-        valueFrom:
-          fieldRef:
-            apiVersion: v1
-            fieldPath: metadata.name
-      VECTOR_SELF_POD_NAMESPACE:
-        valueFrom:
-          fieldRef:
-            apiVersion: v1
-            fieldPath: metadata.namespace
+      main:
+        type: daemonset
+        strategy: RollingUpdate
+        containers:
+          securityContext:
+            privileged: true
+          main:
+            image:
+              # https://github.com/vectordotdev/vector/issues/6715
+              repository: ghcr.io/onedr0p/vector
+              tag: 0.34.1-debian
+              args: ["--config", "/etc/vector/vector.yaml"]
+            env:
+              PROCFS_ROOT: /host/proc
+              SYSFS_ROOT: /host/sys
+              VECTOR_SELF_NODE_NAME:
+                valueFrom:
+                  fieldRef:
+                    apiVersion: v1
+                    fieldPath: spec.nodeName
+              VECTOR_SELF_POD_NAME:
+                valueFrom:
+                  fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.name
+              VECTOR_SELF_POD_NAMESPACE:
+                valueFrom:
+                  fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
     service:
       main:
         enabled: false
     serviceAccount:
       create: true
       name: vector-agent
-    securityContext:
-      privileged: true
     persistence:
       config:
         enabled: true
         type: configMap
         name: vector-agent-configmap # overriden by kustomizeconfig
-        subPath: vector.yaml
-        mountPath: /etc/vector/vector.yaml
+        globalMounts:
+          - subPath: vector.yaml
+            path: /etc/vector/vector.yaml
         readOnly: true
       data:
         enabled: true
         type: emptyDir
-        mountPath: /vector-data-dir
+        globalMounts:
+          - path: /vector-data-dir
       var-log:
         enabled: true
         type: hostPath
         hostPath: /var/log
         hostPathType: Directory
-        mountPath: /var/log
+        globalMounts:
+          path: /var/log
         readOnly: true
       var-lib:
         enabled: true
         type: hostPath
         hostPath: /var/lib
         hostPathType: Directory
-        mountPath: /var/lib
+        globalMounts:
+          - path: /var/lib
         readOnly: true
       procfs:
         enabled: true
         type: hostPath
         hostPath: /proc
         hostPathType: Directory
-        mountPath: /host/proc
+        globalMounts:
+          - path: /host/proc
         readOnly: true
       sysfs:
         enabled: true
         type: hostPath
         hostPath: /sys
         hostPathType: Directory
-        mountPath: /host/sys
+        globalMounts:
+          - path: /host/sys
         readOnly: true

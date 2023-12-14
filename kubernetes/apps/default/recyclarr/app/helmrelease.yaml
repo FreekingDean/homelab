@@ -57,21 +57,22 @@ spec:
               - { name: config-file, mountPath: /tmp/config }
               - { name: config, mountPath: /config }
         containers:
-          image:
-            repository: ghcr.io/recyclarr/recyclarr
-            tag: edge
-          env:
-            TZ: America/New_York
-            RADARR__API_KEY: "${RADARR__API_KEY}"
-            RADARR4K__API_KEY: "${RADARR4K__API_KEY}"
-            SONARR__API_KEY: "${SONARR__API_KEY}"
-            SONARR4K__API_KEY: "${SONARR4K__API_KEY}"
-          resources:
-            requests:
-              cpu: 10m
-              memory: 50Mi
-            limits:
-              memory: 200Mi
+          main:
+            image:
+              repository: ghcr.io/recyclarr/recyclarr
+              tag: edge
+            env:
+              TZ: America/New_York
+              RADARR__API_KEY: "${RADARR__API_KEY}"
+              RADARR4K__API_KEY: "${RADARR4K__API_KEY}"
+              SONARR__API_KEY: "${SONARR__API_KEY}"
+              SONARR4K__API_KEY: "${SONARR4K__API_KEY}"
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50Mi
+              limits:
+                memory: 200Mi
     service:
       main:
         enabled: false

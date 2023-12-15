@@ -113,7 +113,7 @@ spec:
     persistence:
       media:
         enabled: true
-        type: persistentvolumeclaim
+        type: persistentVolumeClaim
         existingClaim: media
       incomplete:
         enabled: true

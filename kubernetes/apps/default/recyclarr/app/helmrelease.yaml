@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.4.0
       sourceRef:
         kind: HelmRepository
         name: bjw-s
@@ -27,50 +27,50 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    initContainers:
-      01-init-config:
-        image: public.ecr.aws/docker/library/busybox:latest
-        imagePullPolicy: IfNotPresent
-        command: ["/bin/sh", "-c", "cp /tmp/config/recyclarr.yml /config/recyclarr.yml"]
-        volumeMounts:
-          - { name: config-file, mountPath: /tmp/config }
-          - { name: config, mountPath: /config }
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-    image:
-      repository: ghcr.io/recyclarr/recyclarr
-      tag: edge
-    env:
-      TZ: America/New_York
-      RADARR__API_KEY: "${RADARR__API_KEY}"
-      RADARR4K__API_KEY: "${RADARR4K__API_KEY}"
-      SONARR__API_KEY: "${SONARR__API_KEY}"
-      SONARR4K__API_KEY: "${SONARR4K__API_KEY}"
+    podDefaultOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+    controllers:
+      main:
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        statefulset:
+          volumeClaimTemplates:
+            - name: config
+              accessMode: ReadWriteOnce
+              size: 1Gi
+              storageClass: ceph-block
+              globalMounts:
+                - path: /config
+        containers:
+          main:
+            image:
+              repository: ghcr.io/recyclarr/recyclarr
+              tag: edge
+            env:
+              TZ: America/New_York
+              RADARR__API_KEY: "${RADARR__API_KEY}"
+              RADARR4K__API_KEY: "${RADARR4K__API_KEY}"
+              SONARR__API_KEY: "${SONARR__API_KEY}"
+              SONARR4K__API_KEY: "${SONARR4K__API_KEY}"
+            resources:
+              requests:
+                cpu: 10m
+                memory: 50Mi
+              limits:
+                memory: 200Mi
     service:
       main:
         enabled: false
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: OnRootMismatch
-    volumeClaimTemplates:
-      - name: config
-        mountPath: /config
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: ceph-block
     persistence:
       config-file:
         enabled: true
         type: configMap
         name: recyclarr-configmap
-        mountPath: "-"
-    resources:
-      requests:
-        cpu: 10m
-        memory: 50Mi
-      limits:
-        memory: 200Mi
+        globalMounts:
+          - path: "/config/recyclarr.yml"
+            subPath: recyclarr.yml

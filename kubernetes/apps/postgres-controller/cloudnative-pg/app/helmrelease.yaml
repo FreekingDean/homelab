@@ -31,3 +31,6 @@ spec:
       create: true
     podLabels:
       sidecar.istio.io/inject: "false"
+    config:
+      data:
+        INHERITED_LABELS: sidecar.istio.io/inject

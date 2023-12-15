@@ -90,20 +90,21 @@ spec:
                   secretKeyRef:
                     name: onepassword-connect-secret
                     key: 1password-credentials.json
-            readinessProbe:
-              enabled: true
-              httpGet:
-                path: /health
-                port: 8081
-              initialDelaySeconds: 15
-            livenessProbe:
-              enabled: true
-              httpGet:
-                path: /heartbeat
-                port: 8081
-              failureThreshold: 3
-              periodSeconds: 30
-              initialDelaySeconds: 15
+            probes:
+              readiness:
+                enabled: true
+                httpGet:
+                  path: /health
+                  port: 8081
+                initialDelaySeconds: 15
+              liveness:
+                enabled: true
+                httpGet:
+                  path: /heartbeat
+                  port: 8081
+                failureThreshold: 3
+                periodSeconds: 30
+                initialDelaySeconds: 15
     service:
       main:
         ports:

@@ -75,7 +75,7 @@ spec:
                 pathType: Prefix
                 service:
                   name: main
-                  port *port
+                  port: *port
         tls:
           - secretName: "${PRODUCTION_TLS}"
             hosts:

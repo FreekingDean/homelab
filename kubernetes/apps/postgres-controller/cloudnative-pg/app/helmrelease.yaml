@@ -29,3 +29,5 @@ spec:
   values:
     crds:
       create: true
+    podLabels:
+        sidecar.istio.io/inject: "false"

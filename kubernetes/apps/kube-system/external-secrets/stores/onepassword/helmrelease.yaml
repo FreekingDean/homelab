@@ -91,6 +91,8 @@ spec:
                     name: onepassword-connect-secret
                     key: 1password-credentials.json
             probes:
+              startup:
+                enabled: false
               readiness:
                 enabled: true
                 custom: true

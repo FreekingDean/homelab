@@ -34,7 +34,10 @@ spec:
       defaultConfig:
         tracing:
           sampling: 100
+        holdApplicationUntilProxyStarts: true
     global:
       tracer:
         zipkin:
           address: jaeger-collector.monitoring.svc.cluster.local:9411
+      proxy:
+        holdApplicationUntilProxyStarts: true

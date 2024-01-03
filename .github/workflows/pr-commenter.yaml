@@ -43,7 +43,8 @@ jobs:
       matrix:
         paths: ${{ fromJSON(needs.changed-files.outputs.matrix) }}
         resource: ["helmrelease", "kustomization"]
-        max-parallel: 4
+      max-parallel: 4
+      fail-fast: false
     steps:
       - name: Setup Flux
         uses: fluxcd/flux2/action@5c5c15ea212b8f029a110f9975851d25c8272695 # v2.2.2

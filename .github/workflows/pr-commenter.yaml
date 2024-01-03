@@ -69,7 +69,6 @@ jobs:
             --limit-bytes 10000
             --all-namespaces
             --sources "home-kubernetes"
-            --kube-version "v1.27.0"
             --output-file diff.patch
 
       - name: Generate Diff

@@ -49,7 +49,7 @@ jobs:
         uses: fluxcd/flux2/action@5c5c15ea212b8f029a110f9975851d25c8272695 # v2.2.2
 
       - name: Diff Resources
-        uses: allenporter/flux-local/action/diff:main
+        uses: docker://ghcr.io/allenporter/flux-local:main
         id: diff
         with:
           args: >-

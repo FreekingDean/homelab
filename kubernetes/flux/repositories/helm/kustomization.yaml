@@ -22,6 +22,7 @@ resources:
   - ./metallb.yaml
   - ./piraeus.yaml
   - ./prometheus-community.yaml
+  - ./rancher.yaml
   - ./rook.yaml
   - ./stakater.yaml
   - ./traefik.yaml

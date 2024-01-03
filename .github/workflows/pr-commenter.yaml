@@ -48,6 +48,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          path: pull
 
       - name: Checkout Default Branch
         uses: actions/checkout@v4

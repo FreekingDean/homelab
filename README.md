@@ -68,7 +68,7 @@ The Git repository contains the following directories under `kubernetes` and are
 
 📍 Install the **most recent version** of the CLI tools below. If you are **having trouble with future steps**, it is very likely you don't have the most recent version of these CLI tools, **!especially sops AND yq!**.
 
-1. Install the following CLI tools on your workstation, [yay](https://aur.archlinux.org/packages/yay) and [go-task](https://aur.archlinux.org/packages/go-task)
+1. Install the following CLI tools on your workstation, and [go-task](https://taskfile.dev/installation/)
 
 Below will be automatically installed as part of the further steps.
 

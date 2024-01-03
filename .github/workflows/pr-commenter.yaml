@@ -63,12 +63,21 @@ jobs:
             --sources "home-kubernetes"
             --output-file diff.patch
 
-      - name: Create comment
-        uses: peter-evans/create-or-update-comment@23ff15729ef2fc348714a3bb66d2f655ca9066f2 # v3
-        if: ${{ steps.diff.outputs.diff != '' }}
+      - name: Generate Diff
+        id: diff
+        run: |
+          cat diff.patch
+          echo "diff<<EOF" >> $GITHUB_OUTPUT
+          cat diff.patch >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - if: ${{ steps.diff.outputs.diff != '' }}
+        name: Add comment
+        uses: mshick/add-pr-comment@v2
         with:
-          issue-number: ${{ github.event.number }}
-          body: |
+          message-id: "${{ github.event.pull_request.number }}/${{ matrix.paths }}/${{ matrix.resources }}"
+          message-failure: Diff was not successful
+          message: |
             ```diff
-            ${{ steps.diff.outputs.diff}}
+            ${{ steps.diff.outputs.diff }}
             ```

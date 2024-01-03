@@ -50,7 +50,6 @@ jobs:
 
       - name: Diff Resources
         uses: docker://ghcr.io/allenporter/flux-local:main
-        id: diff
         with:
           args: >-
             diff ${{ matrix.resources }}

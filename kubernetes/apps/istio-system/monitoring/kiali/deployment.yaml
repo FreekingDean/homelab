@@ -46,7 +46,7 @@ spec:
     spec:
       serviceAccountName: kiali
       containers:
-      - image: "quay.io/kiali/kiali:v1.78"
+      - image: "quay.io/kiali/kiali:v1.79"
         imagePullPolicy: Always
         name: kiali
         command:

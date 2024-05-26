@@ -38,7 +38,7 @@ spec:
             image:
               # https://github.com/glauth/glauth/issues/298
               repository: ghcr.io/onedr0p/glauth
-              tag: v2.2.0-rc1
+              tag: v2.2.0-rc2
             command: ["/app/glauth", "-c", "/config"]
         pod:
           securityContext:

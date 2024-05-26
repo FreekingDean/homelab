@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: traefik
-      version: 26.0.0
+      version: 28.1.0
       sourceRef:
         kind: HelmRepository
         name: traefik
@@ -32,6 +32,7 @@ spec:
         localAgentHostPort: jaeger-agent.monitoring.svc:6831
     metrics:
       prometheus:
+        disableAPICheck: true
         service:
           enabled: true
         serviceMonitor:

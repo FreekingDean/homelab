@@ -23,7 +23,7 @@ terraform {
 
 provider "proxmox" {
   #pm_debug    = true
-  host     = "https://10.0.0.103:8006/api2/json"
+  host     = "https://10.0.0.101:8006/api2/json"
   username = "root@pam"
   #pm_password = local.root_password
 }

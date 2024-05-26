@@ -24,32 +24,6 @@ data "template_file" "script" {
   }
 }
 
-data "http" "gpg_keys" {
-  url = "https://getfedora.org/static/fedora.gpg"
-}
-
-resource "null_resource" "prep_gpg_keys" {
-  triggers = {
-    content_hash = sha256(data.http.gpg_keys.response_body)
-  }
-  connection {
-    type        = "ssh"
-    user        = "root"
-    private_key = file(var.private_key_path)
-    host        = "10.0.0.10${var.id}"
-  }
-  provisioner "remote-exec" {
-    inline = [
-      "mkdir -p .gpg"
-    ]
-    on_failure = fail
-  }
-  provisioner "file" {
-    content     = data.http.gpg_keys.response_body
-    destination = ".gpg/fedora.gpg"
-  }
-}
-
 resource "null_resource" "download_qcow" {
   triggers = {
     gpg          = local.gpg_url
@@ -72,7 +46,4 @@ resource "null_resource" "download_qcow" {
     ]
     on_failure = fail
   }
-  depends_on = [
-    null_resource.prep_gpg_keys
-  ]
 }

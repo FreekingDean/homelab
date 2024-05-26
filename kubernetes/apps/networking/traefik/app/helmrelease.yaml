@@ -32,6 +32,7 @@ spec:
         localAgentHostPort: jaeger-agent.monitoring.svc:6831
     metrics:
       prometheus:
+        disableAPICheck: true
         service:
           enabled: true
         serviceMonitor:

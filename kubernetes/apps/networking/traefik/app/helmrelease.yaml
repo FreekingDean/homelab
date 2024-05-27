@@ -43,9 +43,10 @@ spec:
       web:
         expose: false
     providers:
+      kubernetesCRD:
+        allowCrossNamespace: true
       kubernetesIngress:
         allowExternalNameServices: true
-        allowCrossNamespace: true
         publishedService:
           enabled: true
     service:

@@ -45,6 +45,7 @@ spec:
     providers:
       kubernetesIngress:
         allowExternalNameServices: true
+        allowCrossNamespace: true
         publishedService:
           enabled: true
     service:

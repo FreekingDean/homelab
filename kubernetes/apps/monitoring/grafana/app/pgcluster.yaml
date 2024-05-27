@@ -6,7 +6,7 @@ metadata:
   name: "postgres-loki"
   namespace: "monitoring"
 spec:
-  instances: 3
+  instances: 2
   imageName: ghcr.io/cloudnative-pg/postgresql:14.7
   primaryUpdateStrategy: unsupervised
   storage:

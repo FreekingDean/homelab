@@ -7,7 +7,6 @@ metadata:
   annotations:
     hajimari.io/enable: "false"
     traefik.ingress.kubernetes.io/router.priority: "10"
-    traefik.ingress.kubernetes.io/router.middlewares: networking-traefik-errors@kubernetescrd
 spec:
   ingressClassName: "${INGRESS_CLASS}"
   rules:

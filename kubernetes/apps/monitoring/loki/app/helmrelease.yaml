@@ -58,7 +58,7 @@ spec:
         s3:
           s3ForcePathStyle: true
           insecure: true
-      schema_config:
+      schemaConfig:
         configs:
           - from: "2021-08-01"
             store: boltdb-shipper

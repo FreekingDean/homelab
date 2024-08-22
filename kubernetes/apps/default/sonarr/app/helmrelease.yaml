@@ -44,7 +44,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/sonarr-develop
-              tag: 4.0.8.2208
+              tag: 4.0.8.2223
             env:
               TZ: America/New_York
               SONARR__INSTANCE_NAME: "Sonarr-unused"

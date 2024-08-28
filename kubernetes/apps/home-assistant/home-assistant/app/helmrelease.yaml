@@ -97,7 +97,7 @@ spec:
             scrapeTimeout: 15s
             path: /api/prometheus
             bearerTokenSecret:
-              name: hass
+              name: hass-bearer-token
               key: token
     service:
       main:

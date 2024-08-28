@@ -86,6 +86,20 @@ spec:
               - --port
               - "8081"
               - "/config"
+    serviceMonitor:
+      main:
+        enabled: true
+        serviceName: main
+        endpoints:
+          - port: http
+            scheme: https
+            interval: 30s
+            scrapeTimeout: 15s
+            path: /api/prometheus
+            bearerTokenSecret:
+              name: hass
+              key: {{ .Values.monitoring.serviceMonitor.bearerTokenSecret.key }}
+
     service:
       main:
         ports:

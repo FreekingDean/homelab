@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: default
 resources:
   - ./helmrelease.yaml
+  - ./externalsecret.yaml
 patchesStrategicMerge:
   - ./patches/addons.yaml
 labels:

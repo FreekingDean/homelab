@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
@@ -6,9 +5,9 @@ namespace: default
 resources:
   - ./helmrelease.yaml
   - ./externalsecret.yaml
-patchesStrategicMerge:
-  - ./patches/addons.yaml
 labels:
   - pairs:
-      app.kubernetes.io/name: home-assistant
       app.kubernetes.io/instance: home-assistant
+      app.kubernetes.io/name: home-assistant
+patches:
+  - path: ./patches/addons.yaml

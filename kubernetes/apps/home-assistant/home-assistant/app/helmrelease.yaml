@@ -89,7 +89,7 @@ spec:
     serviceMonitor:
       main:
         enabled: true
-        serviceName: main
+        serviceName: home-assistant
         endpoints:
           - port: http
             scheme: https

@@ -25,4 +25,3 @@ resources:
   - ./rook.yaml
   - ./stakater.yaml
   - ./traefik.yaml
-  - ./weave-gitops.yaml

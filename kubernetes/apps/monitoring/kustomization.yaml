@@ -7,4 +7,3 @@ resources:
   - ./jaeger/ks.yaml
   - ./kubernetes-dashboard/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
-  - ./vector/ks.yaml

@@ -41,3 +41,10 @@ spec:
           mon:
             disabled: false
             interval: 45s
+    cephObjectStores:
+      - name:
+        spec:
+          gateway:
+            port: 8080
+            externalRgwEndpoints:
+              - ip: 10.0.0.102

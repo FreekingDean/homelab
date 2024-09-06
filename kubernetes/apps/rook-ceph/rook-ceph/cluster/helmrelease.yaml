@@ -42,7 +42,7 @@ spec:
             disabled: false
             interval: 45s
     cephObjectStores:
-      - name:
+      - name: external-objectstore
         spec:
           gateway:
             port: 8080

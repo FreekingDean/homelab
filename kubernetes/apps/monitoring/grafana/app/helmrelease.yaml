@@ -29,7 +29,7 @@ spec:
     assertNoLeakedSecrets: false
     podLabels:
       sidecar.istio.io/inject: "false"
-    replicas: 2
+    replicas: 1
     rbac:
       pspEnabled: false
     testFramework:

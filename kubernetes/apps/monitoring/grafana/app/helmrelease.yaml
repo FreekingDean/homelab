@@ -52,15 +52,6 @@ spec:
       GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
       GF_SECURITY_ALLOW_EMBEDDING: true
       GF_SERVER_ROOT_URL: "https://grafana.${DOMAIN}"
-      GF_DATABASE_TYPE: postgres
-      GF_DATABASE_HOST: postgres-loki-rw:5432
-      GF_DATABASE_NAME: app
-      GF_DATABASE_USER: app
-    envValueFrom:
-      GF_DATABASE_PASSWORD:
-        secretKeyRef:
-          name: "postgres-loki-app"
-          key: password
     grafana.ini:
       auth.anonymous:
         enabled: true
@@ -111,12 +102,6 @@ spec:
             type: prometheus
             access: proxy
             url: http://kube-prometheus-stack-prometheus:9090
-          - name: Loki
-            type: loki
-            access: proxy
-            url: http://loki-gateway
-            jsonData:
-              maxLines: 250
           - name: Alertmanager
             type: alertmanager
             access: proxy

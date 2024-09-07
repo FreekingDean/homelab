@@ -45,10 +45,17 @@ spec:
       - name: external-objectstore
         spec:
           gateway:
-            port: 8080
+            port: 7480
             externalRgwEndpoints:
               - ip: 10.0.0.102
         storageClass:
-          enabled: false
+          enabled: true
+          name: ceph-bucket
+          reclaimPolicy: Delete
+          volumeBindingMode: "Immediate"
+          annotations: {}
+          labels: {}
+          parameters:
+            region: us-east-1
         ingress:
           enabled: false

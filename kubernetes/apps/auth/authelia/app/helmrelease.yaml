@@ -110,22 +110,7 @@ spec:
                 - profile
                 - groups
                 - email
-              userinfo_signing_algorithm: none
-              pre_configured_consent_duration: 1y
-            - id: gitops
-              description: Weave Gitops
-              secret: '$plaintext$gitops_client_secret'
-              public: false
-              authorization_policy: one_factor
-              redirect_uris:
-                - https://gitops.deangalvin.dev/oauth2/callback
-              scopes:
-                - offline_access
-                - openid
-                - profile
-                - groups
-                - email
-              userinfo_signing_algorithm: none
+              userinfo_signed_response_alg: none
               pre_configured_consent_duration: 1y
             - id: proxmox
               description: Proxmox
@@ -138,7 +123,7 @@ spec:
                 - openid
                 - profile
                 - email
-              userinfo_signing_algorithm: none
+              userinfo_signed_response_alg: none
               pre_configured_consent_duration: 1y
       telemetry:
         metrics:

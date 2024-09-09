@@ -102,6 +102,12 @@ spec:
           cors:
             endpoints: ["authorization", "token", "revocation", "introspection"]
             allowed_origins_from_client_redirect_uris: true
+            hmac_secret:
+              secret_name: authelia-external
+              path: OIDC_HMAC_SECRET
+            jwks:
+              - key:
+                  path: '/secrets/authelia-external/OIDC_PRIVATE_KEY'
           clients:
             - client_id: grafana
               client_name: Grafana

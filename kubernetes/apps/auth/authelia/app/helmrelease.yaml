@@ -45,8 +45,9 @@ spec:
       tls:
         enabled: true
         secret: "${PRODUCTION_TLS}"
-    additionalSecrets:
-      postgres-dev-rw: {}
+    secret:
+      additionalSecrets:
+        postgres-dev-rw: {}
     configMap:
       storage:
         postgres:

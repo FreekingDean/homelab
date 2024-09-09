@@ -47,7 +47,7 @@ spec:
         secret: "${PRODUCTION_TLS}"
     secret:
       additionalSecrets:
-        postgres-dev-rw: {}
+        postgres-${NAME_SUFFIX}-rw: {}
     configMap:
       storage:
         postgres:

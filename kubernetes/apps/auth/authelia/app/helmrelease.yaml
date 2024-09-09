@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: authelia
-      version: 0.8.58
+      version: 0.9.5
       sourceRef:
         kind: HelmRepository
         name: authelia
@@ -30,20 +30,6 @@ spec:
     pod:
       kind: Deployment
       replicas: 3
-      env:
-        - name: AUTHELIA_STORAGE_POSTGRES_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: "postgres-${NAME_SUFFIX}-app"
-              key: password
-
-    domain: "${AUTH_DOMAIN}"
-    secret:
-      existingSecret: authelia-external
-      ldap:
-        key: LDAP_PASSWORD
-      jwt:
-        key: JWT_KEY
     ingress:
       enabled: true
       className: "${INGRESS_CLASS}"
@@ -53,6 +39,15 @@ spec:
       tls:
         enabled: true
         secret: "${PRODUCTION_TLS}"
+    secret:
+      additionalSecrets:
+        postgres-dev-app:
+          items:
+            - key: password
+        authelia-external:
+          items:
+            - key: LDAP_PASSWORD
+            - key: JWT_KEY
     configMap:
       storage:
         postgres:
@@ -60,6 +55,9 @@ spec:
           database: "app"
           host: "postgres-${NAME_SUFFIX}-rw"
           username: app
+          password:
+            secret_name: "postgres-${NAME_SUFFIX}-app"
+            path: password
       access_control:
         default_policy: one_factor
         rules:
@@ -68,9 +66,13 @@ spec:
       session:
         expiration: 24h
         inactivity: 24h
-        remember_me_duration: 24h
+        remember_me: 24h
         redis:
+          enabled: true
           host: redis-master.default
+        cookies:
+          - domain: "${AUTH_DOMAIN}"
+            subdomain: auth
       notifier:
         filesystem:
           enabled: true
@@ -79,6 +81,7 @@ spec:
           enabled: false
       authentication_backend:
         ldap:
+          enabled: true
           username_attribute: uid
           display_name_attribute: givenName
           additional_users_dn: ou=people
@@ -90,6 +93,9 @@ spec:
           url: ldap://glauth
           base_dn: DC=home,DC=lab
           user: CN=search_user,DC=home,DC=lab
+          password:
+            secret_name: "authelia-external"
+            path: LDAP_PASSWORD
       identity_providers:
         oidc:
           enabled: true
@@ -97,9 +103,9 @@ spec:
             endpoints: ["authorization", "token", "revocation", "introspection"]
             allowed_origins_from_client_redirect_uris: true
           clients:
-            - id: grafana
+            - feid: grafana
               description: Grafana
-              secret: '$plaintext$grafana_client_secret'
+              client_secret: '$plaintext$grafana_client_secret'
               public: false
               authorization_policy: one_factor
               redirect_uris:
@@ -110,26 +116,11 @@ spec:
                 - profile
                 - groups
                 - email
-              userinfo_signing_algorithm: none
-              pre_configured_consent_duration: 1y
-            - id: gitops
-              description: Weave Gitops
-              secret: '$plaintext$gitops_client_secret'
-              public: false
-              authorization_policy: one_factor
-              redirect_uris:
-                - https://gitops.deangalvin.dev/oauth2/callback
-              scopes:
-                - offline_access
-                - openid
-                - profile
-                - groups
-                - email
-              userinfo_signing_algorithm: none
+              userinfo_signed_response_alg: none
               pre_configured_consent_duration: 1y
             - id: proxmox
               description: Proxmox
-              secret: '$plaintext$proxmox_client_secret'
+              client_secret: '$plaintext$proxmox_client_secret'
               public: false
               authorization_policy: one_factor
               redirect_uris:
@@ -138,30 +129,10 @@ spec:
                 - openid
                 - profile
                 - email
-              userinfo_signing_algorithm: none
+              userinfo_signed_response_alg: none
               pre_configured_consent_duration: 1y
       telemetry:
         metrics:
           enabled: true
           serviceMonitor:
             enabled: true
-  postRenderers:
-    - kustomize:
-        patches:
-          - patch: |-
-              apiVersion: apps/v1
-              kind: Deployment
-              metadata:
-                name: authelia-.*
-              spec:
-                template:
-                  spec:
-                    containers:
-                      - name: authelia
-                        env:
-                          - name: AUTHELIA_STORAGE_POSTGRES_PASSWORD_FILE
-                            $patch: delete
-            target:
-              group: apps
-              version: v1
-              kind: Deployment

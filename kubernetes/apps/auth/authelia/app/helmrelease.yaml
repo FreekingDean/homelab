@@ -30,14 +30,6 @@ spec:
     pod:
       kind: Deployment
       replicas: 3
-      env:
-        - name: AUTHELIA_STORAGE_POSTGRES_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: "postgres-${NAME_SUFFIX}-app"
-              key: password
-
-    domain: "${AUTH_DOMAIN}"
     secret:
       existingSecret: authelia-external
       ldap:
@@ -60,6 +52,9 @@ spec:
           database: "app"
           host: "postgres-${NAME_SUFFIX}-rw"
           username: app
+          password:
+            secret_name: "postgres-${NAME_SUFFIX}-app"
+            path: password
       access_control:
         default_policy: one_factor
         rules:
@@ -68,9 +63,13 @@ spec:
       session:
         expiration: 24h
         inactivity: 24h
-        remember_me_duration: 24h
+        remember_me: 24h
         redis:
+          enabled: true
           host: redis-master.default
+        cookies:
+          - domain: "${AUTH_DOMAIN}"
+            subdomain: auth
       notifier:
         filesystem:
           enabled: true
@@ -79,6 +78,7 @@ spec:
           enabled: false
       authentication_backend:
         ldap:
+          enabled: true
           username_attribute: uid
           display_name_attribute: givenName
           additional_users_dn: ou=people
@@ -130,23 +130,3 @@ spec:
           enabled: true
           serviceMonitor:
             enabled: true
-  postRenderers:
-    - kustomize:
-        patches:
-          - patch: |-
-              apiVersion: apps/v1
-              kind: Deployment
-              metadata:
-                name: authelia-.*
-              spec:
-                template:
-                  spec:
-                    containers:
-                      - name: authelia
-                        env:
-                          - name: AUTHELIA_STORAGE_POSTGRES_PASSWORD_FILE
-                            $patch: delete
-            target:
-              group: apps
-              version: v1
-              kind: Deployment

@@ -103,7 +103,8 @@ spec:
             endpoints: ["authorization", "token", "revocation", "introspection"]
             allowed_origins_from_client_redirect_uris: true
           clients:
-            - feid: grafana
+            - client_id: grafana
+              client_name: Grafana
               description: Grafana
               client_secret: '$plaintext$grafana_client_secret'
               public: false
@@ -118,7 +119,8 @@ spec:
                 - email
               userinfo_signed_response_alg: none
               pre_configured_consent_duration: 1y
-            - id: proxmox
+            - client_id: proxmox
+              client_name: Proxmox
               description: Proxmox
               client_secret: '$plaintext$proxmox_client_secret'
               public: false

@@ -99,7 +99,7 @@ spec:
           clients:
             - id: grafana
               description: Grafana
-              secret: '$plaintext$grafana_client_secret'
+              client_secret: '$plaintext$grafana_client_secret'
               public: false
               authorization_policy: one_factor
               redirect_uris:
@@ -114,7 +114,7 @@ spec:
               pre_configured_consent_duration: 1y
             - id: proxmox
               description: Proxmox
-              secret: '$plaintext$proxmox_client_secret'
+              client_secret: '$plaintext$proxmox_client_secret'
               public: false
               authorization_policy: one_factor
               redirect_uris:

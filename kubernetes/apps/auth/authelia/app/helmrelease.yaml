@@ -30,12 +30,6 @@ spec:
     pod:
       kind: Deployment
       replicas: 3
-    secret:
-      existingSecret: authelia-external
-      ldap:
-        key: LDAP_PASSWORD
-      jwt:
-        key: JWT_KEY
     ingress:
       enabled: true
       className: "${INGRESS_CLASS}"
@@ -47,7 +41,13 @@ spec:
         secret: "${PRODUCTION_TLS}"
     secret:
       additionalSecrets:
-        postgres-dev-rw: {}
+        postgres-dev-app:
+          items:
+            - key: password
+        authelia-external:
+          items:
+            - key: LDAP_PASSWORD
+            - key: JWT_KEY
     configMap:
       storage:
         postgres:
@@ -93,6 +93,9 @@ spec:
           url: ldap://glauth
           base_dn: DC=home,DC=lab
           user: CN=search_user,DC=home,DC=lab
+          password:
+            secret_name: "authelia-external"
+            path: LDAP_PASSWORD
       identity_providers:
         oidc:
           enabled: true
@@ -100,7 +103,7 @@ spec:
             endpoints: ["authorization", "token", "revocation", "introspection"]
             allowed_origins_from_client_redirect_uris: true
           clients:
-            - id: grafana
+            - feid: grafana
               description: Grafana
               client_secret: '$plaintext$grafana_client_secret'
               public: false

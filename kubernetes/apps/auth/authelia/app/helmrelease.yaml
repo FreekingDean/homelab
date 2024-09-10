@@ -87,6 +87,7 @@ spec:
           enabled: false
       authentication_backend:
         ldap:
+          implementation: custom
           enabled: true
           username_attribute: uid
           display_name_attribute: givenName

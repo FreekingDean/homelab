@@ -30,10 +30,12 @@ spec:
     connect:
       serviceType: ClusterIP
       credentialsName: onepassword-connect-secret
+      host: &host "{{ .Release.Name }}.${DOMAIN}"
       ingress:
         enabled: true
-        host: &host "{{ .Release.Name }}.${DOMAIN}"
         ingressClassName: "${INGRESS_CLASS}"
+        hosts:
+          - host: *host
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: |
             networking-localonly@kubernetescrd

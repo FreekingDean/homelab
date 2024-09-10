@@ -52,6 +52,8 @@ spec:
             - key: OIDC_PRIVATE_KEY
     configMap:
       storage:
+        encryption_key:
+          disabled: true
         postgres:
           enabled: true
           database: "app"

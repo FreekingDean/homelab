@@ -48,6 +48,8 @@ spec:
           items:
             - key: LDAP_PASSWORD
             - key: JWT_KEY
+            - key: OIDC_HMAC_SECRET
+            - key: OIDC_PRIVATE_KEY
     configMap:
       storage:
         postgres:

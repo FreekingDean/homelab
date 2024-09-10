@@ -92,7 +92,7 @@ spec:
           group_name_attribute: cn
           additional_groups_dn: ou=users
           mail_attribute: mail
-          url: ldap://glauth
+          address: ldap://glauth
           base_dn: DC=home,DC=lab
           user: CN=search_user,DC=home,DC=lab
           password:

@@ -20,7 +20,7 @@ resources:
   - ./kubernetes-dashboard.yaml
   - ./kyverno.yaml
   - ./metallb.yaml
-  - ./onepassword-connect
+  - ./onepassword-connect.yaml
   - ./piraeus.yaml
   - ./prometheus-community.yaml
   - ./rook.yaml

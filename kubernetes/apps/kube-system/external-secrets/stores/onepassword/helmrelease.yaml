@@ -27,18 +27,17 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controllers:
-      main:
-        connect:
-          credentialsName: onepassword-connect-secret
-          ingress:
-            host: &host "{{ .Release.Name }}.${DOMAIN}"
-            ingressClassName: "${INGRESS_CLASS}"
-            annotations:
-              traefik.ingress.kubernetes.io/router.middlewares: |
-                networking-localonly@kubernetescrd
-              hajimari.io/icon: onepassword
-            tls:
-              - secretName: "${PRODUCTION_TLS}"
-                hosts:
-                  - *host
+    connect:
+      serviceType: ClusterIP
+      credentialsName: onepassword-connect-secret
+      ingress:
+        host: &host "{{ .Release.Name }}.${DOMAIN}"
+        ingressClassName: "${INGRESS_CLASS}"
+        annotations:
+          traefik.ingress.kubernetes.io/router.middlewares: |
+            networking-localonly@kubernetescrd
+          hajimari.io/icon: onepassword
+        tls:
+          - secretName: "${PRODUCTION_TLS}"
+            hosts:
+              - *host

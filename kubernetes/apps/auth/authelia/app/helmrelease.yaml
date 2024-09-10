@@ -50,10 +50,12 @@ spec:
             - key: JWT_KEY
             - key: OIDC_HMAC_SECRET
             - key: OIDC_PRIVATE_KEY
+            - key: STORAGE_ENCRYPTION_KEY
     configMap:
       storage:
         encryption_key:
-          disabled: true
+          name: authelia-external
+          path: STORAGE_ENCRYPTION_KEY
         postgres:
           enabled: true
           database: "app"

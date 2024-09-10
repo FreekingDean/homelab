@@ -54,7 +54,7 @@ spec:
     configMap:
       storage:
         encryption_key:
-          name: authelia-external
+          secret_name: authelia-external
           path: STORAGE_ENCRYPTION_KEY
         postgres:
           enabled: true

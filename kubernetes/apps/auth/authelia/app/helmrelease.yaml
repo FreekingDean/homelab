@@ -55,7 +55,7 @@ spec:
         postgres:
           enabled: true
           database: "app"
-          host: "postgres-${NAME_SUFFIX}-rw"
+          address: "postgres-${NAME_SUFFIX}-rw"
           username: app
           password:
             secret_name: "postgres-${NAME_SUFFIX}-app"

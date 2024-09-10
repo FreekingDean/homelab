@@ -9,11 +9,11 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: app-template
-      version: 2.6.0
+      chart: connect
+      version: 1.16.0
       sourceRef:
         kind: HelmRepository
-        name: bjw-s
+        name: onepassword-connect
         namespace: flux-system
   maxHistory: 3
   install:
@@ -27,122 +27,20 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controllers:
-      main:
-        annotations:
-          reloader.stakater.com/auto: "true"
-        containers:
-          main:
-            image:
-              # https://github.com/1Password/connect/issues/56
-              repository: docker.io/1password/connect-api
-              tag: 1.7.3
-            env:
-              OP_BUS_PORT: "11220"
-              OP_BUS_PEERS: "localhost:11221"
-              OP_HTTP_PORT: &port 8080
-              OP_SESSION:
-                valueFrom:
-                  secretKeyRef:
-                    name: onepassword-connect-secret
-                    key: 1password-credentials.json
-            probes:
-              liveness:
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /heartbeat
-                    port: *port
-                  initialDelaySeconds: 15
-                  periodSeconds: 30
-                  failureThreshold: 3
-              readiness:
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /health
-                    port: *port
-                  initialDelaySeconds: 15
-              startup:
-                enabled: false
-            resources:
-              requests:
-                cpu: 5m
-                memory: 10Mi
-              limits:
-                memory: 100Mi
-          sync:
-            image:
-              repository: docker.io/1password/connect-sync
-              tag: 1.7.3
-              pullPolicy: IfNotPresent
-            env:
-              - name: OP_HTTP_PORT
-                value: 8081
-              - name: OP_BUS_PORT
-                value: "11221"
-              - name: OP_BUS_PEERS
-                value: "localhost:11220"
-              - name: OP_SESSION
-                valueFrom:
-                  secretKeyRef:
-                    name: onepassword-connect-secret
-                    key: 1password-credentials.json
-            probes:
-              startup:
-                enabled: false
-              readiness:
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /health
-                    port: 8081
-                  initialDelaySeconds: 15
-              liveness:
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /heartbeat
-                    port: 8081
-                  failureThreshold: 3
-                  periodSeconds: 30
-                  initialDelaySeconds: 15
-    service:
-      main:
-        ports:
-          http:
-            port: *port
-    ingress:
-      main:
+    connect:
+      serviceType: ClusterIP
+      credentialsName: onepassword-connect-secret
+      host: &host "{{ .Release.Name }}.${DOMAIN}"
+      ingress:
         enabled: true
-        className: "${INGRESS_CLASS}"
+        ingressClassName: "${INGRESS_CLASS}"
+        hosts:
+          - host: *host
         annotations:
           traefik.ingress.kubernetes.io/router.middlewares: |
             networking-localonly@kubernetescrd
           hajimari.io/icon: onepassword
-        hosts:
-          - host: &host "{{ .Release.Name }}.${DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  name: main
-                  port: *port
         tls:
           - secretName: "${PRODUCTION_TLS}"
             hosts:
               - *host
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 999
-        runAsGroup: 999
-    persistence:
-      shared:
-        enabled: true
-        type: emptyDir
-        globalMounts:
-          - path: /home/opuser/.op/data

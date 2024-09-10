@@ -32,14 +32,13 @@ spec:
         pod:
           annotations:
             sidecar.istio.io/inject: "false"
+            reloader.stakater.com/auto: "true"
           imagePullSecrets:
             - name: dockerconfig
           labels:
             sidecar.istio.io/inject: "false"
             app: backend
             version: v1
-          annotations:
-            reloader.stakater.com/auto: "true"
         containers:
           app:
             env:

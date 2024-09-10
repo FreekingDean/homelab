@@ -33,7 +33,7 @@ metadata:
   namespace: "networking"
 spec:
   forwardAuth:
-    address: "http://authelia-dev.auth/api/verify?rd=https%3A%2F%2Fauth.deangalvin.dev%2F"
+    address: "https://auth.deangalvin.dev/api/authz/forward-auth"
     authResponseHeaders:
       - Remote-User
       - Remote-Groups

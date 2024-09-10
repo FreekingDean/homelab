@@ -30,7 +30,7 @@ spec:
     connect:
       serviceType: ClusterIP
       credentialsName: onepassword-connect-secret
-      host: &host "{{ .Release.Name }}.${DOMAIN}"
+      host: &host "onepassword-connect.${DOMAIN}"
       ingress:
         enabled: true
         ingressClassName: "${INGRESS_CLASS}"

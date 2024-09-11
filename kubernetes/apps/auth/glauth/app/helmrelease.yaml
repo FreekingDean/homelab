@@ -9,7 +9,8 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: app-template
+      chart: ./kubernetes/charts/app-template
+      reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
         name: home-kubernetes

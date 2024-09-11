@@ -9,11 +9,11 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: ./kubernetes/charts/app-template
-      reconcileStrategy: Revision
+      chart: app-template
+      version: 2.6.0
       sourceRef:
-        kind: GitRepository
-        name: home-kubernetes
+        kind: HelmRepository
+        name: bjw-s
         namespace: flux-system
   maxHistory: 3
   install:
@@ -27,22 +27,60 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    replicas: 2
-    image:
-      repository: ghcr.io/onedr0p/glauth
-      tag: v2.2.0-rc1
-    command: ["/app/glauth", "-c", "/config"]
-    ports:
-      http: 5555
-      ldap: 389
+    controllers:
+      main:
+        replicas: 2
+        strategy: RollingUpdate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              # https://github.com/glauth/glauth/issues/298
+              repository: ghcr.io/onedr0p/glauth
+              tag: v2.2.0-rc1
+            command: ["/app/glauth", "-c", "/config"]
+        pod:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+            fsGroupChangePolicy: "OnRootMismatch"
+          labels:
+            app: glauth
+            version: v1
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/name: *app
+    service:
+      main:
+        ports:
+          http:
+            port: 5555
+          ldap:
+            port: 389
     serviceMonitor:
-      port: http
-      path: /metrics
+      main:
+        enabled: true
+        endpoints:
+          - port: metrics
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 10s
     persistence:
-      secrets:
-        config:
-          name: glauth-secret
-          items:
-            - server.toml
-            - users.toml
-            - groups.toml
+      config:
+        enabled: true
+        type: secret
+        name: glauth-secret
+        items:
+          - key: server.toml
+            path: server.toml
+          - key: groups.toml
+            path: groups.toml
+          - key: users.toml
+            path: users.toml

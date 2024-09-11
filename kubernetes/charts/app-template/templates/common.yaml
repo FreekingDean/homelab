@@ -31,6 +31,17 @@ controllers:
           repository: {{ .Values.newTemplate.image.repository }}
           tag: {{ .Values.newTemplate.image.tag }}
         command: {{ .Values.newTemplate.command }}
+        probes:
+          liveness:
+            enabled: true
+          readiness:
+            enabled: true
+          startup:
+            enabled: true
+            spec:
+              failureThreshold: 30
+              periodSeconds: 5
+
 service:
   app:
     controller: {{ .Release.Name }}

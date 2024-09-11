@@ -27,20 +27,22 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions:
+      annotations:
+        sidecar.istio.io/inject: "false"
+      imagePullSecrets:
+        - name: dockerconfig
+      labels:
+        sidecar.istio.io/inject: "false"
+        app: backend
+        version: v1
     controllers:
-      projectionlab-backend:
-        pod:
-          annotations:
-            sidecar.istio.io/inject: "false"
-            reloader.stakater.com/auto: "true"
-          imagePullSecrets:
-            - name: dockerconfig
-          labels:
-            sidecar.istio.io/inject: "false"
-            app: backend
-            version: v1
+      main:
+        type: deployment
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
-          app:
+          main:
             env:
               DATA_PATH: /data
             image:
@@ -53,8 +55,7 @@ spec:
               limits:
                 memory: 500Mi
     service:
-      app:
-        controller: projectionlab-backend
+      main:
         ports:
           http:
             port: 80

@@ -1,3 +1,5 @@
+replicas: 2
+
 image:
   repository: busybox
   tag: latest
@@ -9,17 +11,16 @@ ports:
 
 ingress:
   enabled: true
-  host: {{ .Release.Name }}.deangalvin.dev
+  host: deangalvin.dev
 
 serviceMonitor:
   port: http
   path: /metrics
-  #interval: 1m
-  #scrapeTimeout: 10s
-
 persistence:
   secrets:
     config:
       name: myapp-secret
       items:
         - server.toml
+
+newTemplate: {}

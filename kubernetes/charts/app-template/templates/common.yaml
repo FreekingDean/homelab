@@ -1,40 +1,55 @@
 ---
+{{ $_ := set .Values.newTemplate "replicas" .Values.replicas }}
+{{ $_ := set .Values.newTemplate "image" .Values.image }}
+{{ $_ := set .Values.newTemplate "command" .Values.command }}
+{{ $_ := set .Values.newTemplate "ports" .Values.ports }}
+{{ $_ := set .Values.newTemplate "ingress" .Values.ingress }}
+{{ $_ := set .Values.newTemplate "serviceMonitor" .Values.serviceMonitor }}
+{{ $_ := set .Values.newTemplate "persistence" .Values.persistence }}
+
+{{ $_ := unset .Values "replicas" }}
+{{ $_ := unset .Values "image" }}
+{{ $_ := unset .Values "command" }}
+{{ $_ := unset .Values "ports" }}
+{{ $_ := unset .Values "ingress" }}
+{{ $_ := unset .Values "serviceMonitor" }}
+{{ $_ := unset .Values "persistence" }}
+
 {{- include "bjw-s.common.loader.init" . }}
 
 {{- define "app-template.hardcodedValues" -}}
-# Set the nameOverride based on the release name if no override has been set
-{{ if not .Values.global.nameOverride }}
+
 global:
   nameOverride: "{{ .Release.Name }}"
+
 controllers:
   {{ .Release.Name }}:
-    replicas: {{ .Values.replicas }}
+    replicas: {{ .Values.newTemplate.replicas }}
     containers:
       {{ .Release.Name }}:
         image:
-          repository: {{ .Values.image.repository }}
-          tag: {{ .Values.image.tag }}
-        command: {{ .Values.command }}
+          repository: {{ .Values.newTemplate.image.repository }}
+          tag: {{ .Values.newTemplate.image.tag }}
+        command: {{ .Values.newTemplate.command }}
 service:
   app:
     controller: {{ .Release.Name }}
     ports:
-    {{- range $name, $port := .Values.ports}}
+    {{- range $name, $port := .Values.newTemplate.ports}}
       {{ $name }}:
         port: {{ $port }}
     {{- end }}
 serviceMonitor:
-  app:
-    controller: {{ .Release.Name }}
-    enabled: true
+  app-test:
+    serviceName: {{ .Release.Name }}
     endpoints:
-      - port: {{ .Values.serviceMonitor.port }}
+      - port: {{ .Values.newTemplate.serviceMonitor.port }}
         scheme: http
-        path: {{ .Values.serviceMonitor.path }}
+        path: {{ .Values.newTemplate.serviceMonitor.path }}
         interval: 1m
         scrapeTimeout: 10s
 persistence:
-  {{- range $name, $config := .Values.persistence.secrets }}
+  {{- range $name, $config := .Values.newTemplate.persistence.secrets }}
     {{ $name }}:
       enabled: true
       type: secret
@@ -42,12 +57,12 @@ persistence:
       items:
       {{- range $key := $config.items }}
         - key: {{ $key }}
-          path: {{ $path }}
+          path: {{ $key }}
       {{- end }}
   {{- end }}
-{{ end }}
 {{- end -}}
+
+
 {{- $_ := mergeOverwrite .Values (include "app-template.hardcodedValues" . | fromYaml) -}}
 
-{{/* Render the templates */}}
-{{ include "bjw-s.common.loader.generate" . }}
+{{- include "bjw-s.common.loader.generate" . -}}

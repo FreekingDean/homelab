@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 0.0.1
+      version: 0.0.2
       sourceRef:
         kind: HelmRepository
         name: freekingdean
@@ -40,10 +40,11 @@ spec:
         name: hass-secret
         key: token
     ports:
-      http: 8123
+      http: &port 8123
     ingress:
       subdomain: hass
-      port: http
+      port: *port
+      icon: mdi:home-assistant
     persistence:
       config:
         existingClaim: home-assistant-0

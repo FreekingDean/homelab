@@ -1,0 +1,26 @@
+replicas: 2
+
+image:
+  repository: busybox
+  tag: latest
+
+command: []
+
+ports:
+  http: 8080
+
+ingress:
+  enabled: true
+  host: deangalvin.dev
+
+serviceMonitor:
+  port: http
+  path: /metrics
+persistence:
+  secrets:
+    config:
+      name: myapp-secret
+      items:
+        - server.toml
+
+newTemplate: {}

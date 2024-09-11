@@ -60,26 +60,28 @@ jobs:
       - name: Diff Resources
         uses: docker://ghcr.io/allenporter/flux-local:v5.5.1
         with:
+          entrypoint: "sh"
           args: >-
+            -c "cd pull && /usr/local/bin/flux-local
             diff ${{ matrix.resources }}
             --unified 6
-            --path /github/workspace/pull/${{ matrix.paths }}/flux
-            --path-orig /github/workspace/default/${{ matrix.paths }}/flux
-            --strip-attrs "helm.sh/chart,checksum/config,app.kubernetes.io/version,chart"
+            --path ./${{ matrix.paths }}/flux
+            --path-orig ../default/${{ matrix.paths }}/flux
+            --strip-attrs 'helm.sh/chart,checksum/config,app.kubernetes.io/version,chart'
             --limit-bytes 10000
             --all-namespaces
-            --sources "home-kubernetes"
-            --output-file diff.patch
+            --sources 'home-kubernetes'
+            --output-file diff.patch"
 
       - name: Generate Diff
         id: diff
         run: |
           echo "diff<<EOF" >> $GITHUB_OUTPUT
-          cat diff.patch >> $GITHUB_OUTPUT
+          cat pull/diff.patch >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
           echo "### Diff" >> $GITHUB_STEP_SUMMARY
           echo '```diff' >> $GITHUB_STEP_SUMMARY
-          cat diff.patch >> $GITHUB_STEP_SUMMARY
+          cat pull/diff.patch >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY
 
       - if: ${{ steps.diff.outputs.diff != '' }}

@@ -60,10 +60,9 @@ jobs:
       - name: Diff Resources
         uses: docker://ghcr.io/allenporter/flux-local:v5.5.1
         with:
-          entrypoint: "sh -c"
+          entrypoint: "sh"
           args: >-
-            cd pull &&
-            /usr/local/bin/flux-local"
+            -c cd pull && /usr/local/bin/flux-local
             diff ${{ matrix.resources }}
             --unified 6
             --path ./${{ matrix.paths }}/flux

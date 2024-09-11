@@ -62,16 +62,16 @@ jobs:
         with:
           entrypoint: "sh"
           args: >-
-            -c cd pull && /usr/local/bin/flux-local
+            -c "cd pull && /usr/local/bin/flux-local
             diff ${{ matrix.resources }}
             --unified 6
             --path ./${{ matrix.paths }}/flux
             --path-orig ../default/${{ matrix.paths }}/flux
-            --strip-attrs "helm.sh/chart,checksum/config,app.kubernetes.io/version,chart"
+            --strip-attrs 'helm.sh/chart,checksum/config,app.kubernetes.io/version,chart'
             --limit-bytes 10000
             --all-namespaces
-            --sources "home-kubernetes"
-            --output-file diff.patch
+            --sources 'home-kubernetes'
+            --output-file diff.patch"
 
       - name: Generate Diff
         id: diff

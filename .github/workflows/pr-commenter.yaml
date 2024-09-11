@@ -51,14 +51,38 @@ jobs:
         with:
           path: pull
 
-      - name: Setup Flux CLI
-        uses: fluxcd/flux2/action@v2.3.0
-      - uses: allenporter/flux-local/action/diff@5.5.1
-        id: diff
+      - name: Checkout Default Branch
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4
         with:
-          live-branch: main
-          path: ${{matrix.paths}}/flux
-          resource: ${{ matrix.resources }}
+          ref: "${{ github.event.repository.default_branch }}"
+          path: default
+
+      - name: Diff Resources
+        uses: docker://ghcr.io/allenporter/flux-local:v5.5.1
+        working-directory: ./pull
+        with:
+          args: >-
+            diff ${{ matrix.resources }}
+            --unified 6
+            --path ./${{ matrix.paths }}/flux
+            --path-orig ../default/${{ matrix.paths }}/flux
+            --strip-attrs "helm.sh/chart,checksum/config,app.kubernetes.io/version,chart"
+            --limit-bytes 10000
+            --all-namespaces
+            --sources "home-kubernetes"
+            --output-file diff.patch
+
+      - name: Generate Diff
+        id: diff
+        run: |
+          echo "diff<<EOF" >> $GITHUB_OUTPUT
+          cat diff.patch >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          echo "### Diff" >> $GITHUB_STEP_SUMMARY
+          echo '```diff' >> $GITHUB_STEP_SUMMARY
+          cat diff.patch >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
       - if: ${{ steps.diff.outputs.diff != '' }}
         name: Add comment
         uses: mshick/add-pr-comment@b8f338c590a895d50bcbfa6c5859251edc8952fc # v2

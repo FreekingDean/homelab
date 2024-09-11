@@ -59,16 +59,17 @@ jobs:
 
       - name: Diff Resources
         uses: docker://ghcr.io/allenporter/flux-local:v5.5.1
-        run: |
-          cd pull
-          flux-local diff ${{ matrix.resources }} \
-            --unified 6 \
-            --path ./${{ matrix.paths }}/flux \
-            --path-orig ../default/${{ matrix.paths }}/flux \
-            --strip-attrs "helm.sh/chart,checksum/config,app.kubernetes.io/version,chart" \
-            --limit-bytes 10000 \
-            --all-namespaces \
-            --sources "home-kubernetes" \
+        with:
+          entrypoint: "cd pull && /usr/local/bin/flux-local"
+          args: >-
+            diff ${{ matrix.resources }}
+            --unified 6
+            --path ./${{ matrix.paths }}/flux
+            --path-orig ../default/${{ matrix.paths }}/flux
+            --strip-attrs "helm.sh/chart,checksum/config,app.kubernetes.io/version,chart"
+            --limit-bytes 10000
+            --all-namespaces
+            --sources "home-kubernetes"
             --output-file diff.patch
 
       - name: Generate Diff

@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 0.0.3
+      version: 0.0.5
       sourceRef:
         kind: HelmRepository
         name: freekingdean
@@ -36,7 +36,6 @@ spec:
       http: 5555
       ldap: 389
     serviceMonitor:
-      port: http
       path: /metrics
     ingress:
       enabled: false

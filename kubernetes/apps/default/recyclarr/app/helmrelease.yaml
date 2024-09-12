@@ -10,10 +10,10 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 0.0.5
       sourceRef:
         kind: HelmRepository
-        name: bjw-s
+        name: freekingdean
         namespace: flux-system
   maxHistory: 3
   install:
@@ -27,46 +27,16 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    podDefaultOptions:
-      securityContext:
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
-    controllers:
-      main:
-        type: statefulset
-        annotations:
-          reloader.stakater.com/auto: "true"
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 1Gi
-              storageClass: ceph-block
-              globalMounts:
-                - path: /config
-        containers:
-          main:
-            image:
-              repository: ghcr.io/recyclarr/recyclarr
-              tag: edge
-            env:
-              TZ: America/New_York
-              RADARR__API_KEY: "${RADARR__API_KEY}"
-              RADARR4K__API_KEY: "${RADARR4K__API_KEY}"
-              SONARR__API_KEY: "${SONARR__API_KEY}"
-              SONARR4K__API_KEY: "${SONARR4K__API_KEY}"
-            resources:
-              requests:
-                cpu: 10m
-                memory: 50Mi
-              limits:
-                memory: 200Mi
-    service:
-      main:
-        enabled: false
+    stateful: true
+    ingress:
+      enabled: false
+    serviceMonitor:
+      enabled: false
     persistence:
+      config:
+        existingClaim: recyclarr-0
+        globalMounts:
+          - path: /config
       config-file:
         enabled: true
         type: configMap
@@ -74,3 +44,12 @@ spec:
         globalMounts:
           - path: "/config/recyclarr.yml"
             subPath: recyclarr.yml
+    image:
+      repository: ghcr.io/recyclarr/recyclarr
+      tag: edge
+    env:
+      TZ: America/New_York
+      RADARR__API_KEY: "${RADARR__API_KEY}"
+      RADARR4K__API_KEY: "${RADARR4K__API_KEY}"
+      SONARR__API_KEY: "${SONARR__API_KEY}"
+      SONARR4K__API_KEY: "${SONARR4K__API_KEY}"

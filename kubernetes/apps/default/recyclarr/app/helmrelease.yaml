@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 0.0.5
+      version: 0.0.7
       sourceRef:
         kind: HelmRepository
         name: freekingdean
@@ -34,11 +34,9 @@ spec:
       enabled: false
     persistence:
       config:
+        type: persistentVolumeClaim
         existingClaim: recyclarr-0
-        globalMounts:
-          - path: /config
       config-file:
-        enabled: true
         type: configMap
         name: recyclarr-configmap
         globalMounts:

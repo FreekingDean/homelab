@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 0.0.5
+      version: 0.0.7
       sourceRef:
         kind: HelmRepository
         name: freekingdean
@@ -41,13 +41,13 @@ spec:
     ports:
       http: 8123
     ingress:
+      localonly: false
       subdomain: hass
       icon: mdi:home-assistant
     persistence:
       config:
+        type: persistentVolumeClaim
         existingClaim: home-assistant-0
-        globalMounts:
-          - path: /config
       logs:
         type: emptyDir
         globalMounts:

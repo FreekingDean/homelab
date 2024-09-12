@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 0.0.5
+      version: 0.0.7
       sourceRef:
         kind: HelmRepository
         name: freekingdean
@@ -33,8 +33,10 @@ spec:
       tag: 4.3.3@sha256:4ad73733ae11eb03852ba99d6e49bff93f8087f9f77b9b193a1063c3f6f31482
     persistence:
       config:
+        type: persistentVolumeClaim
         existingClaim: sabnzbd-0
       media:
+        type: persistentVolumeClaim
         existingClaim: media
       incomplete:
         type: emptyDir

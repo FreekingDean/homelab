@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 0.0.1
+      version: 0.0.3
       sourceRef:
         kind: HelmRepository
         name: freekingdean
@@ -38,11 +38,16 @@ spec:
     serviceMonitor:
       port: http
       path: /metrics
+    ingress:
+      enabled: false
     persistence:
-      secrets:
-        config:
-          name: glauth-secret
-          items:
-            - server.toml
-            - users.toml
-            - groups.toml
+      config:
+        type: secret
+        name: glauth-secret
+        items:
+          - key: server.toml
+            name: server.toml
+          - key: users.toml
+            name: users.toml
+          - key: groups.toml
+            name: groups.toml

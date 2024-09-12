@@ -46,8 +46,8 @@ spec:
         name: glauth-secret
         items:
           - key: server.toml
-            name: server.toml
+            path: server.toml
           - key: users.toml
-            name: users.toml
+            path: users.toml
           - key: groups.toml
-            name: groups.toml
+            path: groups.toml

@@ -74,23 +74,12 @@ spec:
             scrapeTimeout: 10s
     persistence:
       config:
-<<<<<<< HEAD
-        enabled: true
-=======
->>>>>>> 63dbc4e6 (Add ingress)
         type: secret
         name: glauth-secret
         items:
           - key: server.toml
             path: server.toml
-<<<<<<< HEAD
-          - key: groups.toml
-            path: groups.toml
-          - key: users.toml
-            path: users.toml
-=======
           - key: users.toml
             path: users.toml
           - key: groups.toml
             path: groups.toml
->>>>>>> 63dbc4e6 (Add ingress)

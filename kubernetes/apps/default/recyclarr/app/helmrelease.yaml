@@ -28,6 +28,7 @@ spec:
     keepHistory: false
   values:
     stateful: true
+    ports: []
     ingress:
       enabled: false
     serviceMonitor:

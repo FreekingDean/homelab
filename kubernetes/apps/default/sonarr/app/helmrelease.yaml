@@ -42,3 +42,10 @@ spec:
       http: *port
     ingress:
       icon: "mdi:television-classic"
+    persistence:
+      config:
+        type: persistentVolumeClaim
+        existingClaim: unused-0
+      media:
+        type: persistentVolumeClaim
+        existingClaim: media

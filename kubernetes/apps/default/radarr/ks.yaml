@@ -28,6 +28,12 @@ spec:
         - op: replace
           path: /metadata/name
           value: radarr
+        - op: replace
+          path: /env/RADARR__INSTANCE_NAME
+          value: Radarr
+        - op: replace
+          path: /persistence/config/existingClaim
+          value: radarr-0
       target:
         kind: HelmRelease
 
@@ -61,5 +67,11 @@ spec:
         - op: replace
           path: /metadata/name
           value: radarr-4k
+        - op: replace
+          path: /env/RADARR__INSTANCE_NAME
+          value: Radarr 4K
+        - op: replace
+          path: /persistence/config/existingClaim
+          value: radarr-4k-0
       target:
         kind: HelmRelease

@@ -42,10 +42,3 @@ spec:
       http: *port
     ingress:
       icon: "mdi:filmstrip"
-    persistence:
-      config:
-        type: persistentVolumeClaim
-        existingClaim: {{ .Release.Name }}-0
-      media:
-        type: persistentVolumeClaim
-        existingClaim: media

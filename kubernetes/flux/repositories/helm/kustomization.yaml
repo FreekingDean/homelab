@@ -11,6 +11,7 @@ resources:
   - ./emberstack.yaml
   - ./external-dns.yaml
   - ./external-secrets.yaml
+  - ./freekingdean.yaml
   - ./glauth.yaml
   - ./grafana.yaml
   - ./hajimari.yaml

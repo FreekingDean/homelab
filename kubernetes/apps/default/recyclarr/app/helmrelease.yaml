@@ -10,7 +10,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 0.0.7
+      version: 0.0.8
       sourceRef:
         kind: HelmRepository
         name: freekingdean
@@ -27,7 +27,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    replicas: 1
     stateful: true
     ports: []
     ingress:

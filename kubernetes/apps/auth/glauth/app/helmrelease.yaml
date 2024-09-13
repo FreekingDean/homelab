@@ -31,7 +31,10 @@ spec:
     image:
       repository: ghcr.io/onedr0p/glauth
       tag: v2.2.0-rc1
-    command: ["/app/glauth", "-c", "/config"]
+    command:
+      - "/app/glauth"
+      - "-c"
+      - "/config"
     ports:
       http: 5555
       ldap: 389

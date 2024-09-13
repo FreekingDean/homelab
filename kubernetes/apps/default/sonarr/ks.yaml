@@ -29,10 +29,10 @@ spec:
           path: /metadata/name
           value: sonarr
         - op: replace
-          path: /env/SONARR__INSTANCE_NAME
+          path: /spec/values/env/SONARR__INSTANCE_NAME
           value: Sonarr
         - op: replace
-          path: /persistence/config/existingClaim
+          path: /spec/values/persistence/config/existingClaim
           value: sonarr-0
       target:
         kind: HelmRelease
@@ -67,10 +67,10 @@ spec:
           path: /metadata/name
           value: sonarr-4k
         - op: replace
-          path: /env/SONARR__INSTANCE_NAME
+          path: /spec/values/env/SONARR__INSTANCE_NAME
           value: Sonarr 4K
         - op: replace
-          path: /persistence/config/existingClaim
+          path: /spec/values/persistence/config/existingClaim
           value: sonarr-4k-0
       target:
         kind: HelmRelease

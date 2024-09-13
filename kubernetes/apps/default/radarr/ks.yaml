@@ -28,15 +28,9 @@ spec:
         - op: replace
           path: /metadata/name
           value: radarr
-        - op: replace
-          path: /spec/values/controllers/main/containers/main/env/RADARR__INSTANCE_NAME
-          value: Radarr
       target:
         kind: HelmRelease
     - patch: |
-        - op: replace
-          path: /metadata/name
-          value: volsync-radarr
         - op: replace
           path: /spec/postBuild/substitute/NAME
           value: radarr
@@ -76,15 +70,9 @@ spec:
         - op: replace
           path: /metadata/name
           value: radarr-4k
-        - op: replace
-          path: /spec/values/controllers/main/containers/main/env/RADARR__INSTANCE_NAME
-          value: Radarr-4k
       target:
         kind: HelmRelease
     - patch: |
-        - op: replace
-          path: /metadata/name
-          value: volsync-radarr-4k
         - op: replace
           path: /spec/postBuild/substitute/NAME
           value: radarr-4k

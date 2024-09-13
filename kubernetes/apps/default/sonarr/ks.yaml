@@ -28,9 +28,6 @@ spec:
         - op: replace
           path: /metadata/name
           value: sonarr
-        - op: replace
-          path: /spec/values/controllers/main/containers/main/env/SONARR__INSTANCE_NAME
-          value: Sonarr
       target:
         kind: HelmRelease
     - patch: |
@@ -75,9 +72,6 @@ spec:
         - op: replace
           path: /metadata/name
           value: sonarr-4k
-        - op: replace
-          path: /spec/values/controllers/main/containers/main/env/SONARR__INSTANCE_NAME
-          value: Sonarr-4k
       target:
         kind: HelmRelease
     - patch: |

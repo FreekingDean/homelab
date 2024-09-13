@@ -30,15 +30,6 @@ spec:
           value: radarr
       target:
         kind: HelmRelease
-    - patch: |
-        - op: replace
-          path: /spec/postBuild/substitute/NAME
-          value: radarr
-        - op: replace
-          path: /spec/postBuild/substitute/PVC
-          value: config-radarr-0
-      target:
-        kind: Kustomization
 
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1beta2.json
@@ -72,12 +63,3 @@ spec:
           value: radarr-4k
       target:
         kind: HelmRelease
-    - patch: |
-        - op: replace
-          path: /spec/postBuild/substitute/NAME
-          value: radarr-4k
-        - op: replace
-          path: /spec/postBuild/substitute/PVC
-          value: config-radarr-4k-0
-      target:
-        kind: Kustomization

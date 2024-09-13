@@ -49,4 +49,4 @@ spec:
       http: 32400
     localonly: false
     ingress:
-      icon: mdi:plex
+      icon: "mdi:plex"

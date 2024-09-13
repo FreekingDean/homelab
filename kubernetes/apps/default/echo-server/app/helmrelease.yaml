@@ -32,4 +32,4 @@ spec:
     ports:
       http: 8080
     ingress:
-      icon: video-input-antenna
+      icon: "video-input-antenna"

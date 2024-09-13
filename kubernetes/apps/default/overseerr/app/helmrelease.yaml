@@ -42,4 +42,4 @@ spec:
     ports:
       http: *port
     ingress:
-      icon: mdi:eye-circle
+      icon: "mdi:eye-circle"

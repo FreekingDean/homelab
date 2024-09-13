@@ -43,7 +43,7 @@ spec:
     ingress:
       localonly: false
       subdomain: hass
-      icon: mdi:home-assistant
+      icon: "mdi:home-assistant"
     persistence:
       config:
         type: persistentVolumeClaim

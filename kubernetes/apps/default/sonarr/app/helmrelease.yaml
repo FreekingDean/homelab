@@ -48,4 +48,4 @@ spec:
     ports:
       http: *port
     ingress:
-      icon: mdi:television-classic
+      icon: "mdi:television-classic"

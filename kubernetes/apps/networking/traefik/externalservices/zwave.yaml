@@ -23,7 +23,7 @@ metadata:
   namespace: networking
   annotations:
     traefik.ingress.kubernetes.io/router.middlewares: networking-localonly@kubernetescrd,networking-authelia@kubernetescrd
-    hajimari.io/icon: mdi:server
+    hajimari.io/icon: "mdi:server"
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app

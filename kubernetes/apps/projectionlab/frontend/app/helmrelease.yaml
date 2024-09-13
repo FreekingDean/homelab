@@ -37,4 +37,4 @@ spec:
     ports:
       http: *port
     ingress:
-     icon: mdi:finance
+     icon: "mdi:finance"

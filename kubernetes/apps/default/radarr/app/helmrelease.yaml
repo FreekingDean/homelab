@@ -41,7 +41,7 @@ spec:
     ports:
       http: *port
     ingress:
-      icon: mdi:filmstrip
+      icon: "mdi:filmstrip"
     persistence:
       config:
         type: persistentVolumeClaim

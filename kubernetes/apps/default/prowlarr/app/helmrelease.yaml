@@ -45,4 +45,4 @@ spec:
     ports:
       http: *port
     ingress:
-      icon: mdi:movie-search
+      icon: "mdi:movie-search"

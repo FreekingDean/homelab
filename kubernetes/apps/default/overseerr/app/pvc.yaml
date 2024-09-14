@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: config-overseerr-0
+  namespace: default
+  labels:
+    app.kubernetes.io/instance: overseerr
+    app.kubernetes.io/name: overseerr
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: ceph-rbd

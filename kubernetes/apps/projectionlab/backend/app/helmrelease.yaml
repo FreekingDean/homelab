@@ -38,6 +38,8 @@ spec:
       tag: latest@sha256:1f0fdc3d7c102a4af38d6b94626961a4d0869c6cea9436374996fe898b7ebcaf
     ports:
       http: 80
+    ingress:
+      enabled: false
     persistence:
       data:
         type: persistentVolumeClaim

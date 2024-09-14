@@ -27,6 +27,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    stateful: true
     defaultPodOptions:
       imagePullSecrets:
         - name: dockerconfig

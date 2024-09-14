@@ -55,3 +55,5 @@ spec:
       http: *port
     ingress:
       subdomain: sabnzbd
+    serviceMonitor:
+      enabled: false

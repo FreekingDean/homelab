@@ -5,6 +5,7 @@ kind: Kustomization
 namespace: projectionlab
 resources:
   - ./helmrelease.yaml
+  - ./pvc.yaml
 labels:
   - pairs:
       app.kubernetes.io/name: backend

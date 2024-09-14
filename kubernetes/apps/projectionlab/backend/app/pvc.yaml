@@ -1,0 +1,33 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: backend-data
+  namespace: projectionlab
+  labels:
+    app.kubernetes.io/instance: projectionlab-backend
+    app.kubernetes.io/name: backend-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: ceph-rbd
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: backend-crypto
+  namespace: projectionlab
+  labels:
+    app.kubernetes.io/instance: projectionlab-backend
+    app.kubernetes.io/name: backend-crypto
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: ceph-rbd
+---

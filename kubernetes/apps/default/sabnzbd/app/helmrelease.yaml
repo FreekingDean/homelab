@@ -27,6 +27,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    stateful: true
     defaultPodOptions:
       securityContext:
         runAsUser: 0

@@ -53,3 +53,5 @@ spec:
       localonly: false
       subdomain: overseerr
       icon: mdi:eye-circle
+    serviceMonitor:
+      enabled: false

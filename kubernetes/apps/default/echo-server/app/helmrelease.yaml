@@ -32,4 +32,5 @@ spec:
     ports:
       http: 8080
     ingress:
+      subdomain: echo
       icon: video-input-antenna

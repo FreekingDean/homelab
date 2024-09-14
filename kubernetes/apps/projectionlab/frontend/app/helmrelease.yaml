@@ -40,4 +40,5 @@ spec:
     ports:
       http: *port
     ingress:
+      subdomain: projectionlab
       icon: mdi:finance

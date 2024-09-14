@@ -10,10 +10,10 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 0.0.11
       sourceRef:
         kind: HelmRepository
-        name: bjw-s
+        name: freekingdean
         namespace: flux-system
   maxHistory: 3
   install:
@@ -27,59 +27,29 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    stateful: true
     defaultPodOptions:
       securityContext:
         runAsUser: 568
         runAsGroup: 568
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
-    controllers:
-      main:
-        type: statefulset
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              globalMounts:
-                - path: /app/config
-              accessMode: ReadWriteOnce
-              size: 1Gi
-              storageClass: ceph-rbd
-        containers:
-          main:
-            image:
-              repository: ghcr.io/sct/overseerr
-              tag: 1.33.2
-            env:
-              TZ: America/New_York
-              LOG_LEVEL: "info"
-              PORT: &port 80
-            resources:
-              requests:
-                cpu: 10m
-                memory: 250Mi
-              limits:
-                memory: 1500Mi
-    service:
-      main:
-        ports:
-          http:
-            port: *port
+    persistence:
+      config:
+        type: persistentVolumeClaim
+        claimName: config-overseerr-0
+        globalMounts:
+          - path: /app/config
+    image:
+      repository: ghcr.io/sct/overseerr
+      tag: 1.33.2
+    env:
+      TZ: America/New_York
+      LOG_LEVEL: "info"
+      PORT: &port 80
+    ports:
+      http: *port
     ingress:
-      main:
-        enabled: true
-        className: "${INGRESS_CLASS}"
-        annotations:
-          public.ingress.home.arpa: "true"
-          hajimari.io/icon: mdi:eye-circle
-        hosts:
-          - host: &host "{{ .Release.Name }}.${DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  name: main
-                  port: *port
-        tls:
-          - secretName: "${PRODUCTION_TLS}"
-            hosts:
-              - *host
+      localonly: false
+      subdomain: overseerr
+      icon: mdi:eye-circle

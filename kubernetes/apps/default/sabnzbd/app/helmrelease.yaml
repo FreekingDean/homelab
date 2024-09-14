@@ -10,10 +10,10 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 0.0.11
       sourceRef:
         kind: HelmRepository
-        name: bjw-s
+        name: freekingdean
         namespace: flux-system
   maxHistory: 3
   install:
@@ -27,94 +27,31 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    controllers:
-      main:
-        type: statefulset
-        annotations:
-          reloader.stakater.com/auto: "true"
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              accessMode: ReadWriteOnce
-              size: 1Gi
-              storageClass: ceph-rbd
-              globalMounts:
-                - path: /config
-        containers:
-          main:
-            image:
-              repository: ghcr.io/onedr0p/sabnzbd
-              tag: 4.3.3@sha256:4ad73733ae11eb03852ba99d6e49bff93f8087f9f77b9b193a1063c3f6f31482
-            env:
-              TZ: America/New_York
-              SABNZBD__PORT: &port 80
-              SABNZBD__API_KEY: bad-key
-              SABNZBD__NZB_KEY: bad-key
-              SABNZBD__HOST_WHITELIST_ENTRIES: >-
-                sabnzbd,
-                sabnzbd.default,
-                sabnzbd.default.svc,
-                sabnzbd.default.svc.cluster,
-                sabnzbd.default.svc.cluster.local,
-                {{ .Release.Name }}.${DOMAIN}
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /api?mode=version
-                    port: *port
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
-              startup:
-                enabled: false
-            resources:
-              requests:
-                cpu: 10m
-                memory: 250Mi
-              limits:
-                memory: 8000Mi
-    service:
-      main:
-        ports:
-          http:
-            port: *port
-    ingress:
-      main:
-        enabled: true
-        className: "${INGRESS_CLASS}"
-        annotations:
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd"
-          hajimari.io/enable: "true"
-        hosts:
-          - host: &host "{{ .Release.Name }}.${DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  name: main
-                  port: *port
-        tls:
-          - secretName: "${PRODUCTION_TLS}"
-            hosts:
-              - *host
-    defaultPodOptions:
-      securityContext:
-        runAsUser: 0
-        runAsGroup: 0
-        fsGroup: 0
-        fsGroupChangePolicy: "OnRootMismatch"
-        supplementalGroups: [10000]
-    # Note: If downloading very large nzbs it might be worth using NFS for your download directory.
     persistence:
-      media:
-        enabled: true
+      config:
+        existingClaim: config-sabnzbd-0
         type: persistentVolumeClaim
+      media:
         existingClaim: media
+        type: persistentVolumeClaim
       incomplete:
-        enabled: true
         type: emptyDir
+    image:
+      repository: ghcr.io/onedr0p/sabnzbd
+      tag: 4.3.3@sha256:4ad73733ae11eb03852ba99d6e49bff93f8087f9f77b9b193a1063c3f6f31482
+    env:
+      TZ: America/New_York
+      SABNZBD__PORT: &port 80
+      SABNZBD__API_KEY: bad-key
+      SABNZBD__NZB_KEY: bad-key
+      SABNZBD__HOST_WHITELIST_ENTRIES: >-
+        sabnzbd,
+        sabnzbd.default,
+        sabnzbd.default.svc,
+        sabnzbd.default.svc.cluster,
+        sabnzbd.default.svc.cluster.local,
+        {{ .Release.Name }}.${DOMAIN}
+    ports:
+      http: *port
+    ingress:
+      subdomain: sabnzbd

@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: "radarr-unused"
+  name: ${instance_name}
   namespace: default
 spec:
   interval: 15m
@@ -33,19 +33,20 @@ spec:
       tag: 5.10.2.9164@sha256:ba1f5bc94ef52ff57528fae56abce325841343b069d19aebbb420c20214a52e1
     env:
       TZ: America/New_York
-      RADARR__INSTANCE_NAME: unused
+      RADARR__INSTANCE_NAME: ${instance_name}
       RADARR__PORT: &port 80
-      RADARR__APPLICATION_URL: "https://{{ .Release.Name }}.${DOMAIN}"
+      RADARR__APPLICATION_URL: "https://${instance_name}.${DOMAIN}"
       RADARR__LOG_LEVEL: info
       RADARR__API_KEY: this-is-a-bad-api-key
     ports:
       http: *port
     ingress:
+      subdomain: ${instance_name}
       icon: "mdi:filmstrip"
     persistence:
       config:
         type: persistentVolumeClaim
-        existingClaim: unused-0
+        existingClaim: ${instance_name}
       media:
         type: persistentVolumeClaim
         existingClaim: media

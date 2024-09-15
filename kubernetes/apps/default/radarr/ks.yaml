@@ -23,32 +23,9 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
-  patches:
-    - patch: |
-        - op: replace
-          path: /metadata/name
-          value: radarr
-        - op: replace
-          path: /spec/values/env/RADARR__INSTANCE_NAME
-          value: Radarr
-        - op: replace
-          path: /spec/values/persistence/config/existingClaim
-          value: radarr-0
-      target:
-        kind: HelmRelease
-    - patch: |
-        - op: replace
-          path: /metadata/name
-          value: config-radarr-0
-        - op: replace
-          path: /metadata/labels/app.kubernetes.io~1instance
-          value: radarr
-        - op: replace
-          path: /metadata/labels/app.kubernetes.io~1name
-          value: radarr
-      target:
-        kind: PersistentVolumeClaim
-
+  postBuild:
+    substitute:
+      instance_name: radarr
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1beta2.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -74,28 +51,6 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
-  patches:
-    - patch: |
-        - op: replace
-          path: /metadata/name
-          value: radarr-4k
-        - op: replace
-          path: /spec/values/env/RADARR__INSTANCE_NAME
-          value: Radarr 4K
-        - op: replace
-          path: /spec/values/persistence/config/existingClaim
-          value: radarr-4k-0
-      target:
-        kind: HelmRelease
-    - patch: |
-        - op: replace
-          path: /metadata/name
-          value: config-radarr-4k-0
-        - op: replace
-          path: /metadata/labels/app.kubernetes.io~1instance
-          value: radarr-4k
-        - op: replace
-          path: /metadata/labels/app.kubernetes.io~1name
-          value: radarr-4k
-      target:
-        kind: PersistentVolumeClaim
+  postBuild:
+    substitute:
+      instance_name: radarr-4k

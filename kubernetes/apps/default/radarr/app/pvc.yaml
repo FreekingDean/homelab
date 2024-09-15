@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: config-radarr-0
+  name: config-${instance_name}-0
   namespace: default
   labels:
-    app.kubernetes.io/instance: radarr
-    app.kubernetes.io/name: radarr
+    app.kubernetes.io/instance: ${instance_name}
+    app.kubernetes.io/name: ${instance_name}
 spec:
   accessModes:
   - ReadWriteOnce

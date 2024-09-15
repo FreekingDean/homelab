@@ -51,6 +51,7 @@ spec:
       TZ: America/New_York
     serviceMonitor:
       scheme: https
+      path: /api/prometheus
       bearerTokenSecret:
         name: hass-secret
         key: token

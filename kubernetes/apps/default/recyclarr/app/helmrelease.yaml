@@ -27,6 +27,12 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    podDefaultOptions:
+      securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
     stateful: true
     ports: []
     ingress:

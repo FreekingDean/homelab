@@ -63,3 +63,5 @@ spec:
     ingress:
       subdomain: plex
       icon: mdi:plex
+    serviceMonitor:
+      enabled: false

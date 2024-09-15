@@ -42,7 +42,7 @@ spec:
       tmp:
         type: emptyDir
       config:
-        type: persistentVolumeCLaim
+        type: persistentVolumeClaim
         existingClaim: config-home-assistant-0
     image:
       repository: ghcr.io/onedr0p/home-assistant

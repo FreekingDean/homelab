@@ -10,10 +10,10 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 0.0.12
       sourceRef:
         kind: HelmRepository
-        name: bjw-s
+        name: freekingdean
         namespace: flux-system
   maxHistory: 3
   install:
@@ -27,6 +27,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    stateful: true
     defaultPodOptions:
       securityContext:
         runAsUser: 568
@@ -34,69 +35,33 @@ spec:
         fsGroup: 568
         fsGroupChangePolicy: "OnRootMismatch"
         supplementalGroups: [44, 109, 10000]
-    controllers:
-      main:
-        type: statefulset
-        statefulset:
-          volumeClaimTemplates:
-            - name: config
-              globalMounts:
-                - path: /config
-              accessMode: ReadWriteOnce
-              size: 150Gi
-              storageClass: ceph-rbd
-        pod:
-          labels:
-            app: plex
-            version: v1
-        containers:
-          main:
-            image:
-              repository: ghcr.io/onedr0p/plex
-              tag: 1.41.0.8992-8463ad060
-            env:
-              TZ: America/New_York
-              PLEX_ADVERTISE_URL: https://plex.deangalvin.dev:443
-              PLEX_NO_AUTH_NETWORKS: 192.168.2.0/24
-            resources:
-              requests:
-                cpu: 100m
-                memory: 2000Mi
-              limits:
-                memory: 10000Mi
-    service:
-      main:
-        type: LoadBalancer
-        externalTrafficPolicy: Local
-        ports:
-          http:
-            port: &port 32400
-    ingress:
-      main:
-        enabled: true
-        className: "${INGRESS_CLASS}"
-        annotations:
-          public.ingress.home.arpa: "true"
-          hajimari.io/icon: mdi:plex
-        hosts:
-          - host: &host "{{ .Release.Name }}.${DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-                service:
-                  name: main
-                  port: *port
-        tls:
-          - secretName: "${PRODUCTION_TLS}"
-            hosts:
-              - *host
     persistence:
+      config:
+        type: persistentVolumeClaim
+        existingClaim: config-plex-0
       media:
-        enabled: true
         type: persistentVolumeClaim
         existingClaim: media
-        globalMounts:
-          - path: /media
       transcode:
-        enabled: true
         type: emptyDir
+    image:
+      repository: ghcr.io/onedr0p/plex
+      tag: 1.41.0.8992-8463ad060
+    env:
+      TZ: America/New_York
+      PLEX_ADVERTISE_URL: https://plex.deangalvin.dev:443
+      PLEX_NO_AUTH_NETWORKS: 192.168.2.0/24
+    resources:
+      requests:
+        cpu: 100m
+        memory: 2000Mi
+      limits:
+        memory: 10000Mi
+    loadbalanced: true
+    ports:
+      http: 32400
+    ingress:
+      subdomain: plex
+      icon: mdi:plex
+    serviceMonitor:
+      enabled: false

@@ -27,6 +27,13 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        fsGroup: 0
+        fsGroupChangePolicy: "OnRootMismatch"
+        supplementalGroups: [10000]
     stateful: true
     image:
       repository: ghcr.io/onedr0p/sonarr-develop

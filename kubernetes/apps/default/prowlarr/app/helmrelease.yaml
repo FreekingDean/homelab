@@ -53,3 +53,5 @@ spec:
     ingress:
       subdomain: prowlarr
       icon: mdi:movie-search
+    serviceMonitor:
+      enabled: false

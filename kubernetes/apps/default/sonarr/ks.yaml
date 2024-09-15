@@ -41,10 +41,10 @@ spec:
           path: /metadata/name
           value: config-sonarr-0
         - op: replace
-          path: /metadata/labels/app.kubernetes.io/instance
+          path: /metadata/labels/app.kubernetes.io~1instance
           value: sonarr
         - op: replace
-          path: /metadata/labels/app.kubernetes.io/name
+          path: /metadata/labels/app.kubernetes.io~1name
           value: sonarr
       target:
         kind: PersistentVolumeClaim
@@ -91,10 +91,10 @@ spec:
           path: /metadata/name
           value: config-sonarr-4k-0
         - op: replace
-          path: /metadata/labels/app.kubernetes.io/instance
+          path: /metadata/labels/app.kubernetes.io~1instance
           value: sonarr-4k
         - op: replace
-          path: /metadata/labels/app.kubernetes.io/name
+          path: /metadata/labels/app.kubernetes.io~1name
           value: sonarr-4k
       target:
         kind: PersistentVolumeClaim

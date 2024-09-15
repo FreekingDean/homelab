@@ -41,10 +41,10 @@ spec:
           path: /metadata/name
           value: config-radarr-0
         - op: replace
-          path: /metadata/labels/app.kubernetes.io/instance
+          path: /metadata/labels/app.kubernetes.io~1instance
           value: radarr
         - op: replace
-          path: /metadata/labels/app.kubernetes.io/name
+          path: /metadata/labels/app.kubernetes.io~1name
           value: radarr
       target:
         kind: PersistentVolumeClaim
@@ -92,10 +92,10 @@ spec:
           path: /metadata/name
           value: config-radarr-4k-0
         - op: replace
-          path: /metadata/labels/app.kubernetes.io/instance
+          path: /metadata/labels/app.kubernetes.io~1instance
           value: radarr-4k
         - op: replace
-          path: /metadata/labels/app.kubernetes.io/name
+          path: /metadata/labels/app.kubernetes.io~1name
           value: radarr-4k
       target:
         kind: PersistentVolumeClaim

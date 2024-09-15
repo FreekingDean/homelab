@@ -29,22 +29,25 @@ spec:
           path: /metadata/name
           value: sonarr
         - op: replace
-          path: /spec/values/controllers/main/containers/main/env/SONARR__INSTANCE_NAME
+          path: /spec/values/env/SONARR__INSTANCE_NAME
           value: Sonarr
+        - op: replace
+          path: /spec/values/persistence/config/existingClaim
+          value: sonarr-0
       target:
         kind: HelmRelease
     - patch: |
         - op: replace
           path: /metadata/name
-          value: volsync-sonarr
+          value: config-sonarr-0
         - op: replace
-          path: /spec/postBuild/substitute/NAME
+          path: /metadata/labels/app.kubernetes.io/instance
           value: sonarr
         - op: replace
-          path: /spec/postBuild/substitute/PVC
-          value: config-sonarr-0
+          path: /metadata/labels/app.kubernetes.io/name
+          value: sonarr
       target:
-        kind: Kustomization
+        kind: PersistentVolumeClaim
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1beta2.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -76,19 +79,22 @@ spec:
           path: /metadata/name
           value: sonarr-4k
         - op: replace
-          path: /spec/values/controllers/main/containers/main/env/SONARR__INSTANCE_NAME
-          value: Sonarr-4k
+          path: /spec/values/env/SONARR__INSTANCE_NAME
+          value: Sonarr 4K
+        - op: replace
+          path: /spec/values/persistence/config/existingClaim
+          value: sonarr-4k-0
       target:
         kind: HelmRelease
     - patch: |
         - op: replace
           path: /metadata/name
-          value: volsync-sonarr-4k
+          value: config-sonarr-4k-0
         - op: replace
-          path: /spec/postBuild/substitute/NAME
+          path: /metadata/labels/app.kubernetes.io/instance
           value: sonarr-4k
         - op: replace
-          path: /spec/postBuild/substitute/PVC
-          value: config-sonarr-4k-0
+          path: /metadata/labels/app.kubernetes.io/name
+          value: sonarr-4k
       target:
-        kind: Kustomization
+        kind: PersistentVolumeClaim

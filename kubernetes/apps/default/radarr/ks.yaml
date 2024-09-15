@@ -29,22 +29,25 @@ spec:
           path: /metadata/name
           value: radarr
         - op: replace
-          path: /spec/values/controllers/main/containers/main/env/RADARR__INSTANCE_NAME
+          path: /spec/values/env/RADARR__INSTANCE_NAME
           value: Radarr
+        - op: replace
+          path: /spec/values/persistence/config/existingClaim
+          value: radarr-0
       target:
         kind: HelmRelease
     - patch: |
         - op: replace
           path: /metadata/name
-          value: volsync-radarr
+          value: config-radarr-0
         - op: replace
-          path: /spec/postBuild/substitute/NAME
+          path: /metadata/labels/app.kubernetes.io/instance
           value: radarr
         - op: replace
-          path: /spec/postBuild/substitute/PVC
-          value: config-radarr-0
+          path: /metadata/labels/app.kubernetes.io/name
+          value: radarr
       target:
-        kind: Kustomization
+        kind: PersistentVolumeClaim
 
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1beta2.json
@@ -77,19 +80,22 @@ spec:
           path: /metadata/name
           value: radarr-4k
         - op: replace
-          path: /spec/values/controllers/main/containers/main/env/RADARR__INSTANCE_NAME
-          value: Radarr-4k
+          path: /spec/values/env/RADARR__INSTANCE_NAME
+          value: Radarr 4K
+        - op: replace
+          path: /spec/values/persistence/config/existingClaim
+          value: radarr-4k-0
       target:
         kind: HelmRelease
     - patch: |
         - op: replace
           path: /metadata/name
-          value: volsync-radarr-4k
+          value: config-radarr-4k-0
         - op: replace
-          path: /spec/postBuild/substitute/NAME
+          path: /metadata/labels/app.kubernetes.io/instance
           value: radarr-4k
         - op: replace
-          path: /spec/postBuild/substitute/PVC
-          value: config-radarr-4k-0
+          path: /metadata/labels/app.kubernetes.io/name
+          value: radarr-4k
       target:
-        kind: Kustomization
+        kind: PersistentVolumeClaim

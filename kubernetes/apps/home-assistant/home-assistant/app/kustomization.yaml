@@ -5,9 +5,8 @@ namespace: default
 resources:
   - ./helmrelease.yaml
   - ./externalsecret.yaml
+  - ./pvc.yaml
 labels:
   - pairs:
       app.kubernetes.io/instance: home-assistant
       app.kubernetes.io/name: home-assistant
-patches:
-  - path: ./patches/addons.yaml

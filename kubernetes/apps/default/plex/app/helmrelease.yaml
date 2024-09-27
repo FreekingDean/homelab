@@ -46,7 +46,7 @@ spec:
         type: emptyDir
     image:
       repository: ghcr.io/onedr0p/plex
-      tag: 1.41.0.8992-8463ad060
+      tag: 1.41.0.8994-f2c27da23
     env:
       TZ: America/New_York
       PLEX_ADVERTISE_URL: https://plex.deangalvin.dev:443

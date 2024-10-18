@@ -40,7 +40,7 @@ spec:
         existingClaim: config-prowlarr-0
     image:
       repository: ghcr.io/onedr0p/prowlarr-nightly
-      tag: 1.25.3.4801@sha256:6421b50ace13583ae568b21cb43da55d90537c6190793d72482c2e415eb05958
+      tag: 1.25.3.4805@sha256:25459809ef6c2f50fcbdffb4e37c39e795010de5d3c5f2ad364e6a277e6a4cf9
     env:
       TZ: America/New_York
       PROWLARR__INSTANCE_NAME: Prowlarr

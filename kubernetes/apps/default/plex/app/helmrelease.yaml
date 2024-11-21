@@ -61,6 +61,7 @@ spec:
     ports:
       http: 32400
     ingress:
+      localonly: false
       subdomain: plex
       icon: mdi:plex
     serviceMonitor:

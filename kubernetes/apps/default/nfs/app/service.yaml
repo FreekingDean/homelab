@@ -4,6 +4,7 @@ metadata:
   name: nfs
   namespace: storage
 spec:
+  type: LoadBalancer
   ports:
   - name: nfs
     port: 2049

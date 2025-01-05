@@ -44,7 +44,7 @@ spec:
     ports:
       http: 80
     ingress:
-      localonly: true
+      localonly: false
       subdomain: filebrowser
     persistence:
       config:

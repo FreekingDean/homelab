@@ -48,7 +48,7 @@ spec:
       SMB: "true"
     loadbalanced: true
     ports:
-      smb: 445
+      http: 445
     ingress:
       enabled: false
     serviceMonitor:

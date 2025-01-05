@@ -1,0 +1,55 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: filebrowser
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 0.0.12
+      sourceRef:
+        kind: HelmRepository
+        name: freekingdean
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    stateful: true
+    controllers:
+      filebrowser:
+        annotations:
+          reloader.stakater.com/auto: "true"
+    image:
+      repository: docker.io/filebrowser/filebrowser
+      tag: v2.31.2@sha256:a4da9ca8364b0a1fc5dd36f7add92582bf673c0ae0bda8dd9bd13062c41d1715
+    env:
+      TZ: America/New_York
+      FB_DATABASE: /config/filebrowser.db
+      FB_ROOT: /media
+      FB_LOG: stdout
+    resources:
+      requests:
+        cpu: 100m
+      limits:
+        memory: 2Gi
+    ports:
+      http: 80
+    ingress:
+      localonly: true
+      subdomain: filebrowser
+    persistence:
+      config:
+        type: persistentVolumeClaim
+        existingClaim: filebrowser
+      media:
+        type: persistentVolumeClaim
+        existingClaim: media

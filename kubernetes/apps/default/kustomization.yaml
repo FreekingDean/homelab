@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./echo-server/ks.yaml
+  - ./filebrowser/ks.yaml
   - ./hajimari/ks.yaml
   - ./media/ks.yaml
   - ./overseerr/ks.yaml

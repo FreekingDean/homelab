@@ -15,6 +15,9 @@ spec:
       containers:
       - name: nfs
         image: erichough/nfs-server:latest
+        env:
+        - name:  NFS_EXPORT_1
+          value: '/mnt/media  *(rw,sync,no_subtree_check,fsid=100)'
         ports:
         - name: nfs
           containerPort: 2049
@@ -22,7 +25,7 @@ spec:
           privileged: true
         volumeMounts:
         - name: storage
-          mountPath: /etc/exports
+          mountPath: /media
       volumes:
       - name: storage
         persistentVolumeClaim:

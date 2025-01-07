@@ -11,10 +11,10 @@ metadata:
 data:
   config.yaml: |
     auth:
-      - user: samba
-        group: samba
-        uid: 501
-        gid: 501
+      - user: smbuser
+        group: smbuser
+        uid: 101
+        gid: 101
         password: sambapass
 
     global:
@@ -27,6 +27,6 @@ data:
         browsable: yes
         readonly: no
         guestok: yes
-        validusers: samba
-        writelist: samba
+        validusers: smbuser
+        writelist: smbuser
         veto: no

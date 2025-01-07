@@ -45,6 +45,7 @@ spec:
     env:
       SAMBA_HOSTS_ALLOW: 0.0.0.0/0
       SAMBA_HOSTS_DENY: ""
+      SAMBA_LOG_LEVEL: 3
     loadbalanced: true
     ports:
       http: 445

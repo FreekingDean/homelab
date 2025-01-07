@@ -40,7 +40,7 @@ spec:
         existingClaim: media
         type: persistentVolumeClaim
       data:
-        type: configmap
+        type: configMap
         name: samba-config
         globalMounts:
           - path: /data/config.yml

@@ -26,7 +26,7 @@ data:
         path: /media
         browsable: yes
         readonly: no
-        guestok: no
+        guestok: yes
         validusers: samba
         writelist: samba
         veto: no

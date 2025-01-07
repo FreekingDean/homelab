@@ -45,7 +45,7 @@ spec:
         globalMounts:
           - path: /data/config.yml
             readOnly: true
-            subPath: config.yml
+            subPath: config.yaml
     image:
       repository: ghcr.io/crazy-max/samba
       tag: 4.19.9

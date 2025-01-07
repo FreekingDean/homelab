@@ -44,6 +44,7 @@ spec:
       tag: 4.19.9
     env:
       SAMBA_HOSTS_ALLOW: 0.0.0.0/0
+      SAMBA_HOSTS_DENY: ""
     loadbalanced: true
     ports:
       http: 445

@@ -15,7 +15,7 @@ data:
         group: samba
         uid: 501
         gid: 501
-        password: samba
+        password: sambapass
 
     global:
       - "force user = root"

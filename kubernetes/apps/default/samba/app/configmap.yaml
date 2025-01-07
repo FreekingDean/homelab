@@ -1,0 +1,32 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: samba-config
+  namespace: default
+  labels:
+    app: samba
+    app.kubernetes.io/name: samba
+    app.kubernetes.io/instance: samba
+data:
+  config.yaml: |
+    auth:
+      - user: samba
+        group: samba
+        uid: 501
+        gid: 501
+        password: samba
+
+    global:
+      - "force user = root"
+      - "force group = root"
+
+    share:
+      - name: media
+        path: /media
+        browsable: yes
+        readonly: no
+        guestok: no
+        validusers: samba
+        writelist: samba
+        veto: no

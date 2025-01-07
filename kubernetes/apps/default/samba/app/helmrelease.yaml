@@ -39,13 +39,18 @@ spec:
       media:
         existingClaim: media
         type: persistentVolumeClaim
+      data:
+        type: configmap
+        name: samba-config
+        globalMounts:
+          - path: /data/config.yml
+            readOnly: true
+            subPath: config.yml
     image:
-      repository: dperson/samba
-      tag: latest
+      repository: ghcr.io/crazy-max/samba
+      tag: 4.19.9
     env:
-      TZ: America/New_York
-      SHARE: media;/media
-      SMB: "true"
+      SAMBA_HOSTS_ALLOW: 0.0.0.0/0
     loadbalanced: true
     ports:
       http: 445

@@ -40,6 +40,8 @@ spec:
       tag: latest
     env:
       TZ: America/New_York
+      PUID: 0
+      PGID: 0
     ports:
       http: 8686
     ingress:

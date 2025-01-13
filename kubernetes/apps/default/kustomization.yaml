@@ -6,6 +6,7 @@ resources:
   - ./echo-server/ks.yaml
   - ./filebrowser/ks.yaml
   - ./hajimari/ks.yaml
+  - ./lidarr/ks.yaml
   - ./media/ks.yaml
   - ./overseerr/ks.yaml
   - ./plex/ks.yaml

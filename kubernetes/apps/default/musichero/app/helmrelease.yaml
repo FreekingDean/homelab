@@ -37,11 +37,10 @@ spec:
     stateful: true
     image:
       repository: ghcr.io/freekingdean/musichero
-      tag: 0.0.3
+      tag: 0.0.4
     env:
+      SECRET_KEY_BASE: "${SESSION_ENCRYPTION_KEY}"
       TZ: America/New_York
-      PUID: 0
-      PGID: 0
     ports:
       http: 3000
     ingress:

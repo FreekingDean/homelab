@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: config-musichero-0
+  namespace: default
+  labels:
+    app.kubernetes.io/instance: musichero
+    app.kubernetes.io/name: musichero
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 15Gi
+  storageClassName: ceph-rbd

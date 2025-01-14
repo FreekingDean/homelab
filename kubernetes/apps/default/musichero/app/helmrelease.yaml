@@ -39,6 +39,7 @@ spec:
       repository: ghcr.io/freekingdean/musichero
       tag: 0.0.4
     env:
+      RAILS_ENV: production
       SECRET_KEY_BASE: "${SESSION_ENCRYPTION_KEY}"
       TZ: America/New_York
     ports:

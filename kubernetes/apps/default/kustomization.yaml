@@ -8,6 +8,7 @@ resources:
   - ./hajimari/ks.yaml
   - ./lidarr/ks.yaml
   - ./media/ks.yaml
+  - ./musichero/ks.yaml
   - ./overseerr/ks.yaml
   - ./plex/ks.yaml
   - ./prowlarr/ks.yaml

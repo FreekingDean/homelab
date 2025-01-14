@@ -37,7 +37,7 @@ spec:
     stateful: true
     image:
       repository: ghcr.io/freekingdean/musichero
-      tag: 0.0.4
+      tag: 0.0.5
     env:
       RAILS_ENV: production
       SECRET_KEY_BASE: "${SESSION_ENCRYPTION_KEY}"

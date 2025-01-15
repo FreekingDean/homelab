@@ -33,7 +33,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: kured
-          image: ghcr.io/kubereboot/kured:1.16.2
+          image: ghcr.io/kubereboot/kured:1.17.0
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true # Give permission to nsenter /proc/1/ns/mnt

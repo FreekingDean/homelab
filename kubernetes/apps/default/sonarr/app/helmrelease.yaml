@@ -37,7 +37,7 @@ spec:
     stateful: true
     image:
       repository: ghcr.io/onedr0p/sonarr-develop
-      tag: 4.0.12.2866
+      tag: 4.0.12.2892
     env:
       TZ: America/New_York
       SONARR__INSTANCE_NAME: ${instance_name}

@@ -136,8 +136,8 @@ spec:
               - *host
       prometheusSpec:
         replicas: 2
-        retention: 2d
-        retentionSize: 6GB
+        retention: 7d
+        retentionSize: 18GB
         enableAdminAPI: true
         walCompression: true
         ruleSelectorNilUsesHelmValues: false

@@ -30,6 +30,8 @@ spec:
     host:
       host: ${host}
     env:
+      - name: REDFISH_EXPORTER_HOST.ENDPOINT
+        value: ${host}
       - name: REDFISH_EXPORTER_HOST.USERNAME
         valueFrom:
           secretKeyRef:

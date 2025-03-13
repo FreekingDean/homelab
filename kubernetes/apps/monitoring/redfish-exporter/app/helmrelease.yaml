@@ -44,3 +44,5 @@ spec:
             key: password
     podLabels:
       chassis: ${chassis}
+    livenessProbe: {}
+    readinessProbe: {}

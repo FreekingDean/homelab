@@ -24,6 +24,7 @@ resources:
   - ./onepassword-connect.yaml
   - ./piraeus.yaml
   - ./prometheus-community.yaml
+  - ./redfish-exporter.yaml
   - ./rook.yaml
   - ./stakater.yaml
   - ./traefik.yaml

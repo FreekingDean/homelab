@@ -1,0 +1,44 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: redfish-exporter-${chassis}
+  namespace: monitoring
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: redfish-exporter
+      version: 0.0.5
+      sourceRef:
+        kind: HelmRepository
+        name: redfish-exporter
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    host:
+      host: ${host}
+    env:
+      - name: REDFISH_EXPORTER_HOST.USERNAME
+        valueFrom:
+          secretKeyRef:
+            name: redfish-exporter
+            key: username
+      - name: REDFISH_EXPORTER_HOST.PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: redfish-exporter
+            key: password
+    podLabels:
+      chassis: ${chassis}

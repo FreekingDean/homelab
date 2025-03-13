@@ -6,4 +6,4 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1h
-  url: https://freekingdean.github.io/redfish-exporter/
+  url: https://freekingdean.github.io/redfish_exporter/

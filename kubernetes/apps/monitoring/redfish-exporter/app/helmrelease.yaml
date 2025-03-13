@@ -27,6 +27,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    image:
+      repository: ghcr.io/freekingdean/redfish_exporter
+      tag: 0.1.2
     host:
       host: ${host}
     env:
@@ -44,5 +47,3 @@ spec:
             key: password
     podLabels:
       chassis: ${chassis}
-    livenessProbe: {}
-    readinessProbe: {}

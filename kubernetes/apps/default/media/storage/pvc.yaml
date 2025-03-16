@@ -10,4 +10,4 @@ spec:
   storageClassName: cephfs
   resources:
     requests:
-      storage: "70Ti"
+      storage: "85Ti"

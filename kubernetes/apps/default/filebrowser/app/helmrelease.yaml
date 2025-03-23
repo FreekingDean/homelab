@@ -23,6 +23,8 @@ spec:
       strategy: rollback
       retries: 3
   values:
+    serviceMonitor:
+      enabled: false
     stateful: true
     controllers:
       filebrowser:

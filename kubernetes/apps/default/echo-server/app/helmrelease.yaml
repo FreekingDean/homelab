@@ -34,3 +34,5 @@ spec:
     ingress:
       subdomain: echo
       icon: video-input-antenna
+    serviceMonitor:
+      enabled: false

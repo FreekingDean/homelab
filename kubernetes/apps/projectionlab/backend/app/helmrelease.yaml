@@ -27,6 +27,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    serviceMonitor:
+      enabled: false
     stateful: true
     defaultPodOptions:
       imagePullSecrets:

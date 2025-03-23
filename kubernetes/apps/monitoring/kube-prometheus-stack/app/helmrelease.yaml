@@ -34,31 +34,10 @@ spec:
   values:
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
-      config:
-        global:
-          resolve_timeout: 5m
-        receivers:
-          - name: "null"
-          - name: deadmansnitch
-            webhook_configs:
-              - url: 'https://nosnch.in/e115e735ac'
-          - name: pagerduty
-            pagerduty_configs:
-              - service_key:
-                  name: 'alertmanager-secrets'
-                  key: SERVICE_KEY
-                send_resolved: true
-        route:
-          group_by: ['alertname', 'priority', 'job']
-          group_wait: 10s
-          group_interval: 10s
-          repeat_interval: 1h
-          receiver: pagerduty
-          routes:
-            - receiver: deadmansnitch
-              matchers:
-                - alertname = "Watchdog"
-        inhibit_rules: []
+      alertmanagerSpec:
+        useExistingSecret: true
+        secrets:
+          - alertmanager-kube-prometheus-stack
       ingress:
         enabled: true
         pathType: Prefix

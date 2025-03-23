@@ -32,20 +32,15 @@ spec:
       enabled: false
       sentinel: false
     master:
+      resourcesPreset: "small"
       persistence:
         enabled: false
-      resources: &resources
-        limits:
-          cpu: 300m
-          memory: 1Gi
-        requests:
-          cpu: 150m
-          memory: 512Mi
     replica:
+      resourcesPreset: "small"
       persistence:
         enabled: false
-      resources: *resources
     metrics:
+      resourcesPreset: "small"
       enabled: true
       serviceMonitor:
         enabled: true

@@ -38,7 +38,7 @@ spec:
         global:
           resolve_timeout: 5m
         receivers:
-          - name: null
+          - name: "null"
           - name: deadmansnitch
             webhook_configs:
               - url: 'https://nosnch.in/e115e735ac'

@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - ./authelia.yaml
   - ./backube.yaml
-  - ./bitnami.yaml
   - ./bjw-s.yaml
   - ./cloudnative-pg.yaml
   - ./elastic.yaml

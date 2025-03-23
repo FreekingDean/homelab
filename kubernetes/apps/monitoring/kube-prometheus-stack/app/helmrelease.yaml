@@ -57,9 +57,7 @@ spec:
           routes:
             - receiver: deadmansnitch
               matchers:
-                - name: alertname
-                  value: Watchdog
-                  matchType: "="
+                - alertname = "Watchdog"
         inhibit_rules: []
       ingress:
         enabled: true

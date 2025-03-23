@@ -44,7 +44,7 @@ spec:
               - url: 'https://nosnch.in/e115e735ac'
           - name: pagerduty
             pagerduty_configs:
-                service_key:
+              - service_key:
                   name: 'alertmanager-secrets'
                   key: SERVICE_KEY
                 send_resolved: true

@@ -55,9 +55,11 @@ spec:
           repeat_interval: 1h
           receiver: pagerduty
           routes:
-            - match:
-                alertname: Watchdog
-              receiver: deadmansnitch
+            - receiver: deadmansnitch
+              matchers:
+                - name: alertname
+                  value: Watchdog
+                  matchType: "="
         inhibit_rules: []
       ingress:
         enabled: true

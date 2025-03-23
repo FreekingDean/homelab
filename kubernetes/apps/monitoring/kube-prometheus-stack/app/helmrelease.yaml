@@ -34,10 +34,6 @@ spec:
   values:
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
-      alertmanagerSpec:
-        useExistingSecret: true
-        secrets:
-          - alertmanager-kube-prometheus-stack
       ingress:
         enabled: true
         pathType: Prefix
@@ -53,6 +49,9 @@ spec:
             hosts:
               - *host
       alertmanagerSpec:
+        useExistingSecret: true
+        secrets:
+          - alertmanager-kube-prometheus-stack
         replicas: 3
         podAntiAffinity: hard
         storage:

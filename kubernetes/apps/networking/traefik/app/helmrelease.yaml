@@ -26,10 +26,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    tracing:
-      jaeger:
-        samplingServerURL: http://jaeger-agent.monitoring.svc:5778/sampling
-        localAgentHostPort: jaeger-agent.monitoring.svc:6831
     metrics:
       prometheus:
         disableAPICheck: true
@@ -41,7 +37,8 @@ spec:
       - "--serversTransport.insecureSkipVerify=true"
     ports:
       web:
-        expose: false
+        expose:
+          default: false
     providers:
       kubernetesCRD:
         allowCrossNamespace: true

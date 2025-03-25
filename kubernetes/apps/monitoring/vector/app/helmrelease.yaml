@@ -55,3 +55,6 @@ spec:
           endpoint: "http://loki-gateway.monitoring.svc.cluster.local:80"
           encoding:
             codec: json
+          labels:
+            "pod_labels_*": "{{ kubernetes.pod_labels }}"
+            "*": "{{ metadata }}"

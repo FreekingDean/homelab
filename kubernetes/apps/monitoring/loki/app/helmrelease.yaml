@@ -26,8 +26,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    lokiCanary:
-      enabled: false
     loki:
       auth_enabled: false # Disable multi-tenancy
       storage:

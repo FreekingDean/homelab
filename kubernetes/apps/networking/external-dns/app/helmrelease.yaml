@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: external-dns
-      version: 1.15.2
+      version: 1.16.0
       sourceRef:
         kind: HelmRepository
         name: external-dns
@@ -27,8 +27,8 @@ spec:
     keepHistory: false
   values:
     interval: 2m
-    # logLevel: debug
-    provider: google
+    provider:
+      name: google
     env:
       - name: EXTERNAL_DNS_GOOGLE_PROJECT
         value: "${GCP_PROJECT}"

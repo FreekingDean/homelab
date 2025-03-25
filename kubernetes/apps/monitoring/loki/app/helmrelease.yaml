@@ -67,34 +67,34 @@ spec:
         - name: S3_LOKI_PORT
           valueFrom:
             configMapKeyRef:
-              name: loki-bucket-v1
+              name: loki-s3-bucket
               key: BUCKET_PORT
         - name: S3_LOKI_HOST
           valueFrom:
             configMapKeyRef:
-              name: loki-bucket-v1
+              name: loki-s3-bucket
               key: BUCKET_HOST
         - name: S3_LOKI_ENDPOINT
           value: "http://$(S3_LOKI_HOST):$(S3_LOKI_PORT)"
         - name: S3_LOKI_REGION
           valueFrom:
             configMapKeyRef:
-              name: loki-bucket-v1
+              name: loki-s3-bucket
               key: BUCKET_REGION
         - name: S3_LOKI_BUCKET
           valueFrom:
             configMapKeyRef:
-              name: loki-bucket-v1
+              name: loki-s3-bucket
               key: BUCKET_NAME
         - name: S3_LOKI_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
-              name: loki-bucket-v1
+              name: loki-s3-bucket
               key: AWS_ACCESS_KEY_ID
         - name: S3_LOKI_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
-              name: loki-bucket-v1
+              name: loki-s3-bucket
               key: AWS_SECRET_ACCESS_KEY
     read:
       replicas: 2

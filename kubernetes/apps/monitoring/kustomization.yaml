@@ -6,4 +6,5 @@ resources:
   - ./grafana/ks.yaml
   - ./jaeger/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
+  - ./loki/ks.yaml
   - ./redfish-exporter/ks.yaml

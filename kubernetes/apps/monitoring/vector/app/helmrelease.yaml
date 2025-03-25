@@ -57,4 +57,3 @@ spec:
             codec: json
           labels:
             pod_labels_*: "{{ kubernetes.pod_labels }}"
-            *: "{{ metadata }}"

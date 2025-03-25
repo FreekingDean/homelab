@@ -34,7 +34,9 @@ spec:
           secretAccessKey: ${S3_LOKI_SECRET_ACCESS_KEY}
           endpoint: ${S3_LOKI_ENDPOINT}
           region: ${S3_LOKI_REGION}
-          bucketnames: ${S3_LOKI_BUCKET}
+          bucketNames:
+            chunks: ${S3_LOKI_BUCKET}
+            ruler: ${S3_LOKI_BUCKET}
       schemaConfig:
         configs:
           - from: "2024-04-01"

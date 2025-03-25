@@ -1,0 +1,9 @@
+---
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: loki-s3-bucket
+  namespace: monitoring
+spec:
+  bucketName: monitoring-loki
+  storageClassName: ceph-bucket

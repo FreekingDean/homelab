@@ -27,6 +27,7 @@ spec:
     keepHistory: false
   values:
     loki:
+      auth_enabled: false # Disable multi-tenancy
       storage:
         bucketNames:
           chunks: $${S3_LOKI_BUCKET}

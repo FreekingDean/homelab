@@ -28,15 +28,15 @@ spec:
   values:
     loki:
       storage:
+        bucketNames:
+          chunks: ${S3_LOKI_BUCKET}
+          ruler: ${S3_LOKI_BUCKET}
         type: s3
         s3:
           accessKeyId: ${S3_LOKI_ACCESS_KEY_ID}
           secretAccessKey: ${S3_LOKI_SECRET_ACCESS_KEY}
           endpoint: ${S3_LOKI_ENDPOINT}
           region: ${S3_LOKI_REGION}
-          bucketNames:
-            chunks: ${S3_LOKI_BUCKET}
-            ruler: ${S3_LOKI_BUCKET}
       schemaConfig:
         configs:
           - from: "2024-04-01"

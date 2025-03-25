@@ -61,7 +61,7 @@ spec:
       replicas: 2
       extraArgs:
         - '-config.expand-env=true'
-      extraEnv:
+      extraEnv: &s3_args
         - name: S3_LOKI_PORT
           valueFrom:
             configMapKeyRef:
@@ -98,76 +98,13 @@ spec:
       replicas: 2
       extraArgs:
         - '-config.expand-env=true'
-      extraEnv:
-        - name: S3_LOKI_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: loki-s3-bucket
-              key: BUCKET_PORT
-        - name: S3_LOKI_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: loki-s3-bucket
-              key: BUCKET_HOST
-        - name: S3_LOKI_ENDPOINT
-          value: "http://$(S3_LOKI_HOST):$(S3_LOKI_PORT)"
-        - name: S3_LOKI_REGION
-          valueFrom:
-            configMapKeyRef:
-              name: loki-s3-bucket
-              key: BUCKET_REGION
-        - name: S3_LOKI_BUCKET
-          valueFrom:
-            configMapKeyRef:
-              name: loki-s3-bucket
-              key: BUCKET_NAME
-        - name: S3_LOKI_ACCESS_KEY_ID
-          valueFrom:
-            secretKeyRef:
-              name: loki-s3-bucket
-              key: AWS_ACCESS_KEY_ID
-        - name: S3_LOKI_SECRET_ACCESS_KEY
-          valueFrom:
-            secretKeyRef:
-              name: loki-s3-bucket
-              key: AWS_SECRET_ACCESS_KEY
+      extraEnv: *s3_args
     write:
       replicas: 3 # To ensure data durability with replication
       extraArgs:
         - '-config.expand-env=true'
-      extraEnv:
-        - name: S3_LOKI_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: loki-s3-bucket
-              key: BUCKET_PORT
-        - name: S3_LOKI_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: loki-s3-bucket
-              key: BUCKET_HOST
-        - name: S3_LOKI_ENDPOINT
-          value: "http://$(S3_LOKI_HOST):$(S3_LOKI_PORT)"
-        - name: S3_LOKI_REGION
-          valueFrom:
-            configMapKeyRef:
-              name: loki-s3-bucket
-              key: BUCKET_REGION
-        - name: S3_LOKI_BUCKET
-          valueFrom:
-            configMapKeyRef:
-              name: loki-s3-bucket
-              key: BUCKET_NAME
-        - name: S3_LOKI_ACCESS_KEY_ID
-          valueFrom:
-            secretKeyRef:
-              name: loki-s3-bucket
-              key: AWS_ACCESS_KEY_ID
-        - name: S3_LOKI_SECRET_ACCESS_KEY
-          valueFrom:
-            secretKeyRef:
-              name: loki-s3-bucket
-              key: AWS_SECRET_ACCESS_KEY
+      extraEnv: *s3_args
+
     gateway:
       service:
         type: LoadBalancer

@@ -27,8 +27,8 @@ spec:
     keepHistory: false
   values:
     interval: 2m
-    # logLevel: debug
-    provider: google
+    provider:
+      name: google
     env:
       - name: EXTERNAL_DNS_GOOGLE_PROJECT
         value: "${GCP_PROJECT}"

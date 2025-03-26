@@ -6,6 +6,8 @@ source: |
   if err == null {
     if exists(kvfmt.msg) {
       .message = del(kvfmt.msg)
+    } else {
+      .message = "data only log"
     }
 
     if exists(kvfmt.ts) {

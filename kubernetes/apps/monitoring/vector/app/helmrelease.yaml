@@ -50,6 +50,16 @@ spec:
       - name: api
         containerPort: 8686
         protocol: TCP
+    service:
+      ports:
+        - name: metrics
+          port: 9001
+          targetPort: metrics
+          protocol: TCP
+        - name: api
+          port: 8686
+          targetPort: api
+          protocol: TCP
     podMonitor:
       enabled: true
       namespaceSelector:

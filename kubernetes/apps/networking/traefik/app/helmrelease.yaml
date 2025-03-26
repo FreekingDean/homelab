@@ -59,6 +59,7 @@ spec:
         level: INFO
       access:
         enabled: true
+        format: json
     deployment:
       kind: DaemonSet
       podAnnotations:

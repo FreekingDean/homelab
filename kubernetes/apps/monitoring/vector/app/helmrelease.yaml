@@ -43,3 +43,24 @@ spec:
       - --config-dir
       - "/etc/vector/"
       - --watch-config
+    containerPorts:
+      - name: metrics
+        containerPort: 9001
+        protocol: TCP
+      - name: api
+        containerPort: 8686
+        protocol: TCP
+    podMonitor:
+      enabled: true
+      namespaceSelector:
+        matchNames:
+          - monitoring
+      port: metrics
+    livenessProbe:
+      httpGet:
+        path: /health
+        port: api
+    readinessProbe:
+      httpGet:
+        path: /health
+        port: api

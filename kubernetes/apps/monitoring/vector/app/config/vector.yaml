@@ -1,0 +1,32 @@
+api:
+  address: 0.0.0.0:8686
+  enabled: true
+  playground: true
+data_dir: /vector-data-dir
+sources:
+  internal_metrics:
+    type: internal_metrics
+  kubernetes:
+    type: kubernetes_logs
+sinks:
+  prometheus:
+    type: prometheus_exporter
+    inputs:
+      - internal_metrics
+      address: "0.0.0.0:9001"
+  stdout:
+    inputs:
+      - final
+    type: console
+    encoding:
+      codec: json
+  loki:
+    remove_label_fields: true
+    encoding:
+      codec: json
+    endpoint: "http://loki-gateway.monitoring.svc.cluster.local:80"
+    inputs:
+      - final
+    labels:
+      label_*: "{{ labels }}"
+    type: loki

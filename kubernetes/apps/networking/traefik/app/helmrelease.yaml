@@ -54,7 +54,9 @@ spec:
         externalTrafficPolicy: Local
     logs:
       general:
-        level: DEBUG
+        format: json
+        noColor: true
+        level: INFO
       access:
         enabled: true
     deployment:

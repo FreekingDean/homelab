@@ -9,3 +9,7 @@ routes:
         .labels.kubernetes_component == "gateway" &&
         .labels.kubernetes_container_name == "nginx"
     name: loki_gateway
+  - condition: |
+      .labels.kubernetes_name == "loki" &&
+        .labels.kubernetes_container_name == "loki"
+    name: loki_loki

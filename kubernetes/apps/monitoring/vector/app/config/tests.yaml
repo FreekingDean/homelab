@@ -22,3 +22,27 @@ tests:
         conditions:
           - .level == "error"
           - .labels.service_name == "loki"
+  - name: loki_log
+    inputs:
+      - insert_at: kubernetes_source_remapper
+        type: log
+        log_fields:
+          message: "ts=2025-03-26T14:01:03.428285248Z caller=spanlogger.go:111 table-name=loki_index_20173 user-id=fake user=fake caller=log.go:168 level=error msg=\"failed to init user index set\" err=\"RequestError: send request failed\\ncaused by: Get \\\"http://monitoring-loki.10.0.0.102:7480/?delimiter=%2F&list-type=2&prefix=index%2Floki_index_20173%2Ffake%2F\\\": dial tcp: lookup monitoring-loki.10.0.0.102 on 10.43.0.10:53: no such host\""
+          kubernetes:
+            container_image: "grafana/loki:2.5.0"
+            container_name: "loki"
+            pod_name: "loki-0"
+            pod_namespace: "monitoring"
+            pod_node_name: "node-1"
+            node_labels:
+              "topology.rook.io/chassis": "rack-1"
+            pod_labels:
+              "app.kubernetes.io/name": "loki"
+              "app.kubernetes.io/component": "backend"
+              "app.kubernetes.io/instance": "loki"
+    outputs:
+      - extract_from: final
+        conditions:
+          - .level == "error"
+          - .data.loki."user-id" == "fake"
+          - .labels.service_name == "loki"

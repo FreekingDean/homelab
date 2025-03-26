@@ -1,0 +1,21 @@
+type: remap
+inputs:
+  - kubernetes_router.loki_loki
+source: |
+  kvfmt, err = parse_key_value(.message)
+  if err == null {
+    if exists(kvfmt.msg) {
+      .message = del(kvfmt.msg)
+    }
+
+    if exists(kvfmt.ts) {
+      .timestamp = del(kvfmt.ts)
+    }
+
+    if exists(kvfmt.level) {
+      .level = del(kvfmt.level)
+    }
+
+    .data = .data || {}
+    .data.loki = kvfmt
+  }

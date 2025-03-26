@@ -15,6 +15,7 @@ configMapGenerator:
 
       - ./config/transforms/arr_remapped.yaml
       - ./config/transforms/loki_gateway_remapped.yaml
+      - ./config/transforms/loki_loki_remapped.yaml
 
       - ./config/transforms/final.yaml
 generatorOptions:

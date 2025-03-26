@@ -39,3 +39,7 @@ spec:
     dataDir: /vector-data-dir
     existingConfigMaps:
       - vector-config
+    args:
+      - --config-dir
+      - "/etc/vector/"
+      - --watch-config

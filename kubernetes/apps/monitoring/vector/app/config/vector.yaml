@@ -14,12 +14,6 @@ sinks:
     inputs:
       - internal_metrics
     address: "0.0.0.0:9001"
-  stdout:
-    inputs:
-      - final
-    type: console
-    encoding:
-      codec: json
   loki:
     remove_label_fields: true
     encoding:

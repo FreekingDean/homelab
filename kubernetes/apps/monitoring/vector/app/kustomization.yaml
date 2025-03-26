@@ -4,3 +4,14 @@ kind: Kustomization
 namespace: monitoring
 resources:
   - ./helmrelease.yaml
+configMapGenerator:
+  - name: vector-config
+    files:
+      - ./config/base.yaml
+      - ./config/transforms/arr_remapped.yaml
+      - ./config/transforms/final.yaml
+      - ./config/transforms/router.yaml
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled

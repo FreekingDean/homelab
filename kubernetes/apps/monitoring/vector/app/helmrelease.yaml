@@ -36,25 +36,6 @@ spec:
     keepHistory: false
   values:
     role: Agent
-    customConfig:
-      data_dir: /vector-data-dir
-      api:
-        enabled: true
-        address: 0.0.0.0:8686
-        playground: false
-      sources:
-        kubernetes:
-          type: kubernetes_logs
-        internal_metrics:
-          type: internal_metrics
-      sinks:
-        loki:
-          type: loki
-          inputs:
-            - kubernetes
-          endpoint: "http://loki-gateway.monitoring.svc.cluster.local:80"
-          encoding:
-            codec: json
-          labels:
-            "pod_labels_*": "{{ `{{kubernetes.pod_labels}}` }}"
-            "*": "{{ `{{metadata }}` }}"
+    dataDir: /vector-data-dir
+    existingConfigMaps:
+      - vector-config

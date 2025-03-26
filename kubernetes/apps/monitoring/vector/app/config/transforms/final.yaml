@@ -11,3 +11,11 @@ source: |
 
   .data = tmp.data || {}
   .labels = tmp.labels || {}
+
+  if exists(.data.request) && exists(.data.request.status) && .level == "unknown" {
+    .level = "info"
+    status, err = to_int(.data.request.status)
+    if err == null && status >= 500 {
+      .level = "error"
+    }
+  }

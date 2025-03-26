@@ -10,9 +10,13 @@ configMapGenerator:
       - ./config/vector.yaml
   - name: vector-transforms-config
     files:
+      - ./config/transforms/kubernetes_source_remapper.yaml
+      - ./config/transforms/kubernetes_router.yaml
+
       - ./config/transforms/arr_remapped.yaml
+      - ./config/transforms/loki_gateway_remapped.yaml
+
       - ./config/transforms/final.yaml
-      - ./config/transforms/router.yaml
 generatorOptions:
   disableNameSuffixHash: true
   annotations:

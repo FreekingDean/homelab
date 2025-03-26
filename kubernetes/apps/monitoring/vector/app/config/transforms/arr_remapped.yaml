@@ -1,6 +1,6 @@
 type: remap
 inputs:
-  - router.arr
+  - kubernetes_router.arr
 source: |
   lgfmt, _ = parse_regex(.message, r'(?i)\[(?<level>fatal|error|warn|info|debug|trace)\] (?<message>.*)')
   .level = lgfmt.level || "unknown"

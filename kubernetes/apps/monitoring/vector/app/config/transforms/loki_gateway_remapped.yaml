@@ -1,0 +1,9 @@
+type: remap
+inputs:
+  - kubernetes_router.loki_gateway
+source: |
+  nginxlog, err = parse_nginx_log(.message)
+  if err == null {
+    .message = nginxlog.request
+    .data.request = nginxlog
+  }

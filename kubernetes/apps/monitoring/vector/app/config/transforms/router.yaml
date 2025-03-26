@@ -1,6 +1,0 @@
-type: exclusive_route
-inputs:
-  - kubernetes
-routes:
-  - condition: '.kubernetes.container_name == "radarr"'
-    name: arr

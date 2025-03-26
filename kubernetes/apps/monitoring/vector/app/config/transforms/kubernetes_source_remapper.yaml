@@ -1,0 +1,31 @@
+type: remap
+inputs:
+  - kubernetes
+source: |
+  .data = .data || {}
+  .data.source = "kubernetes"
+  .data.source_file = .file
+
+  .labels = .labels || {}
+  .labels.vector_config_version = "1"
+  .labels.kubernetes_container_image = .kubernetes.container_image
+  .labels.kubernetes_container_name = .kubernetes.container_name
+  .labels.kubernetes_pod = .kubernetes.pod_name
+  .labels.kubernetes_namespace = .kubernetes.pod_namespace
+  .labels.kubernetes_node = .kubernetes.pod_node_name
+
+  if exists(.kubernetes.node_labels."topology.rook.io/chassis") {
+    .labels.kubernetes_chassis = .kubernetes.node_labels."topology.rook.io/chassis"
+  }
+
+  if exists(.kubernetes.pod_labels."app.kubernetes.io/name") {
+    .labels.kubernetes_name = .kubernetes.pod_labels."app.kubernetes.io/name"
+  }
+
+  if exists(.kubernetes.pod_labels."app.kubernetes.io/component") {
+    .labels.kubernetes_component = .kubernetes.pod_labels."app.kubernetes.io/component"
+  }
+
+  if exists(.kubernetes.pod_labels."app.kubernetes.io/instance") {
+    .labels.kubernetes_instance = .kubernetes.pod_labels."app.kubernetes.io/instance"
+  }

@@ -1,0 +1,11 @@
+type: exclusive_route
+inputs:
+  - kubernetes_source_remapper
+routes:
+  - condition: '.labels.kubernetes_container_name == "radarr"'
+    name: arr
+  - condition: |
+      .labels.kubernetes_name = "loki" &&
+        .labels.kubernetes_component = "gateway" &&
+        .labels.kubernetes_container_name = "nginx"
+    name: loki_gateway

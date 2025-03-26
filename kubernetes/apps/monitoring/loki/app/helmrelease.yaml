@@ -112,3 +112,5 @@ spec:
     gateway:
       service:
         type: LoadBalancer
+      nginxConfig:
+        logFormat: main

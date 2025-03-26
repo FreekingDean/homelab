@@ -21,3 +21,4 @@ tests:
       - extract_from: final
         conditions:
           - .level == "error"
+          - .labels.service_name == "loki"

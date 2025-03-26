@@ -11,7 +11,6 @@ source: |
 
   .data = tmp.data || {}
   .labels = tmp.labels || {}
-  .service_name = tmp.service_name || "unknown_service"
 
   if exists(.data.request) && exists(.data.request.status) && .level == "unknown" {
     .level = "info"

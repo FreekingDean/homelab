@@ -13,7 +13,7 @@ sinks:
     type: prometheus_exporter
     inputs:
       - internal_metrics
-      address: "0.0.0.0:9001"
+    address: "0.0.0.0:9001"
   stdout:
     inputs:
       - final
@@ -28,5 +28,5 @@ sinks:
     inputs:
       - final
     labels:
-      label_*: "{{ labels }}"
+      "*": "{{ labels }}"
     type: loki

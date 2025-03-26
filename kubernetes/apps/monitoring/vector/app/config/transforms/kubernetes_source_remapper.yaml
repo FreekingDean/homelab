@@ -29,3 +29,5 @@ source: |
   if exists(.kubernetes.pod_labels."app.kubernetes.io/instance") {
     .labels.kubernetes_instance = .kubernetes.pod_labels."app.kubernetes.io/instance"
   }
+
+  .service_name = .labels.kuberneted_name || .labels.kubernetes_instance || "unknown_service"

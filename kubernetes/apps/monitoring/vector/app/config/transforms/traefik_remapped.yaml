@@ -1,0 +1,20 @@
+type: remap
+inputs:
+  - kubernetes_router.traefik
+source: |
+  message, err = to_string(.message)
+  if err == null {
+    jsonlog, err = parse_json(message)
+    if err == null {
+      .data = .data || {}
+      .level = del(jsonlog.level)
+      del(jsonlog.time)
+
+      if exists(jsonlog.entryPointName) {
+        .message = del(jsonlog.msg)
+        .data.request = jsonlog
+      } else {
+        .message = del(jsonlog.message)
+      }
+    }
+  }

@@ -35,8 +35,16 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    rollWorkload: false
     role: Agent
     dataDir: /vector-data-dir
+    extraVolumes:
+      - name: vector-transforms-config
+        configMap:
+          name: vector-transforms-config
+    extraVolumeMounts:
+      - name: vector-transforms-config
+        mountPath: /etc/vector/transforms
     existingConfigMaps:
       - vector-config
     args:

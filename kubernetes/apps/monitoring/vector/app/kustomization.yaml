@@ -8,6 +8,8 @@ configMapGenerator:
   - name: vector-config
     files:
       - ./config/vector.yaml
+  - name: vector-transforms-config
+    files:
       - ./config/transforms/arr_remapped.yaml
       - ./config/transforms/final.yaml
       - ./config/transforms/router.yaml

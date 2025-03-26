@@ -3,10 +3,10 @@ inputs:
   - kubernetes
 source: |
   .data = .data || {}
-  .data.source = "kubernetes"
   .data.source_file = .file
 
   .labels = .labels || {}
+  .labels.source = "kubernetes"
   .labels.vector_config_version = "1"
   .labels.kubernetes_container_image = .kubernetes.container_image
   .labels.kubernetes_container_name = .kubernetes.container_name

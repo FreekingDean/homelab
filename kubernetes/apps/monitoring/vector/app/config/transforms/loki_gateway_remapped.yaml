@@ -2,8 +2,11 @@ type: remap
 inputs:
   - kubernetes_router.loki_gateway
 source: |
-  nginxlog, err = parse_nginx_log(.message)
+  message, err = to_string(.message)
   if err == null {
-    .message = nginxlog.request
-    .data.request = nginxlog
+    nginxlog, err = parse_nginx_log(message + " \"-\"", "main")
+    if err == null {
+      .message = nginxlog.request
+      .data.request = nginxlog
+    }
   }

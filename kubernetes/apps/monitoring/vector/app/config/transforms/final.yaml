@@ -17,6 +17,19 @@ source: |
   .labels.kubernetes_pod = tmp.kubernetes.pod_name
   .labels.kubernetes_namespace = tmp.kubernetes.pod_namespace
   .labels.kubernetes_node = tmp.kubernetes.pod_node_name
-  .labels.kubernetes_chassis = tmp.kubernetes.node_labels."topology.rook.io/chassis"
-  .labels.kubernetes_component = tmp.kubernetes.pod_labels."app.kubernetes.io/component"
-  .labels.kubernetes_instance = tmp.kubernetes.pod_labels."app.kubernetes.io/instance"
+
+  if exists(tmp.kubernetes.node_labels."topology.rook.io/chassis") {
+    .labels.kubernetes_chassis = tmp.kubernetes.node_labels."topology.rook.io/chassis"
+  }
+
+  if exists(tmp.kubernetes.pod_labels."app.kubernetes.io/name") {
+    .labels.kubernetes_name = tmp.kubernetes.pod_labels."app.kubernetes.io/name"
+  }
+
+  if exists(tmp.kubernetes.pod_labels."app.kubernetes.io/component") {
+    .labels.kubernetes_component = tmp.kubernetes.pod_labels."app.kubernetes.io/component"
+  }
+
+  if exists(tmp.kubernetes.pod_labels."app.kubernetes.io/instance") {
+    .labels.kubernetes_instance = tmp.kubernetes.pod_labels."app.kubernetes.io/instance"
+  }

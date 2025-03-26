@@ -1,0 +1,10 @@
+type: remap
+inputs:
+  - router.arr
+source: |
+  lgfmt, _ = parse_regex(.message, r'(?i)\[(?<level>fatal|error|warn|info|debug|trace)\] (?<message>.*)')
+  .level = lgfmt.level || "unknown"
+  .level = downcase(to_string(.level))
+  if .level != "unknown" {
+    .message = lgfmt.message
+  }

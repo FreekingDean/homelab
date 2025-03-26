@@ -37,24 +37,66 @@ spec:
   values:
     role: Agent
     customConfig:
-      data_dir: /vector-data-dir
       api:
-        enabled: true
         address: 0.0.0.0:8686
+        enabled: true
         playground: false
+      data_dir: /vector-data-dir
       sources:
-        kubernetes:
-          type: kubernetes_logs
         internal_metrics:
           type: internal_metrics
-      sinks:
-        loki:
-          type: loki
+        kubernetes:
+          type: kubernetes_logs
+      transforms:
+        router:
+          type: exclusive_route
           inputs:
             - kubernetes
-          endpoint: "http://loki-gateway.monitoring.svc.cluster.local:80"
+          routes:
+            - condition: '.kubernetes.container_name == "radarr"'
+              name: arr
+        arr_remapped:
+          type: remap
+          inputs:
+            - router.arr
+          source: |
+            lgfmt, _ = parse_regex(.message, r'(?i)\[(?<level>fatal|error|warn|info|debug|trace)\] (?<message>.*)')
+            .level = lgfmt.level || "unknown"
+            .level = downcase(to_string(.level))
+            if .level != "unknown" {
+              .message = lgfmt.message
+            }
+        final_remapper:
+          type: remap
+          inputs:
+            - "*_remapped"
+            - router._unmatched
+          source: |
+            tmp = del(.)
+
+            .timestamp = tmp.timestamp
+            .message = tmp.message
+            .level = tmp.level || "debug"
+
+            .labels = tmp.labels || {}
+            .labels.vector_config_version = "1"
+            .labels.source_file = tmp.file
+            .labels.kubernetes_container_image = tmp.kubernetes.container_image
+            .labels.kubernetes_container_name = tmp.kubernetes.container_name
+            .labels.kubernetes_pod = tmp.kubernetes.pod_name
+            .labels.kubernetes_namespace = tmp.kubernetes.pod_namespace
+            .labels.kubernetes_node = tmp.kubernetes.pod_node_name
+            .labels.kubernetes_chassis = tmp.kubernetes.node_labels."topology.rook.io/chassis"
+            .labels.kubernetes_component = tmp.kubernetes.pod_labels."app.kubernetes.io/component"
+            .labels.kubernetes_instance = tmp.kubernetes.pod_labels."app.kubernetes.io/instance"
+      sinks:
+        loki:
+          remove_label_fields: true
           encoding:
             codec: json
+          endpoint: http://loki-gateway.monitoring.svc.cluster.local:80
+          inputs:
+          - final_remapper
           labels:
-            "pod_labels_*": "{{ `{{kubernetes.pod_labels}}` }}"
-            "*": "{{ `{{metadata }}` }}"
+            '*': '{{ labels }}'
+          type: loki

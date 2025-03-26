@@ -1,0 +1,23 @@
+tests:
+  - name: nginx_log
+    inputs:
+      - insert_at: kubernetes_source_remapper
+        type: log
+        log_fields:
+          message: '10.42.2.170 - - [26/Mar/2025:12:43:34 +0000] "POST /loki/api/v1/push HTTP/1.1" 500 0 "-" "canary-push/3.4.2"'
+          kubernetes:
+            container_image: "grafana/loki:2.5.0"
+            container_name: "nginx"
+            pod_name: "loki-0"
+            pod_namespace: "monitoring"
+            pod_node_name: "node-1"
+            node_labels:
+              "topology.rook.io/chassis": "rack-1"
+            pod_labels:
+              "app.kubernetes.io/name": "loki"
+              "app.kubernetes.io/component": "gateway"
+              "app.kubernetes.io/instance": "loki"
+    outputs:
+      - extract_from: final
+        conditions:
+          - .level == "error"

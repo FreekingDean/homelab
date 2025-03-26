@@ -17,3 +17,6 @@ routes:
       .labels.kubernetes_name == "loki" &&
         .labels.kubernetes_container_name == "loki"
     name: loki_loki
+  - condition: |
+      .labels.kubernetes_name == "traefik"
+    name: traefik

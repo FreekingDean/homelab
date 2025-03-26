@@ -46,3 +46,26 @@ tests:
           - .level == "error"
           - .data.loki."user-id" == "fake"
           - .labels.service_name == "loki"
+  - name: arr_log
+    inputs:
+      - insert_at: kubernetes_source_remapper
+        type: log
+        log_fields:
+          message: "[Error] DownloadedMovieImportService: Import failed, path does not exist or is not accessible by Radarr: /media/downloads/completed/Spider-Man.Across.The.Spider-Verse.2023.REAL.HDR.2160p.WEB.h265-ETHEL/. Ensure the path exists and the user running Radarr has the correct permissions to access this file/folder"
+          kubernetes:
+            container_image: "radarr:0.0.1"
+            container_name: "radarr"
+            pod_name: "radarr-0"
+            pod_namespace: "default"
+            pod_node_name: "node-1"
+            node_labels:
+              "topology.rook.io/chassis": "rack-1"
+            pod_labels:
+              "app.kubernetes.io/name": "radarr"
+              "app.kubernetes.io/instance": "radarr"
+    outputs:
+      - extract_from: final
+        conditions:
+          - .level == "error"
+          - .labels.service_name == "radarr"
+          - contains(string!(.message), "not accessible by Radarr")

@@ -2,7 +2,11 @@ type: exclusive_route
 inputs:
   - kubernetes_source_remapper
 routes:
-  - condition: '.labels.kubernetes_container_name == "radarr"'
+  - condition: |
+      .labels.kubernetes_instance == "radarr" ||
+      .labels.kubernetes_instance == "radarr-4k" ||
+      .labels.kubernetes_instance == "sonarr" ||
+      .labels.kubernetes_instance == "sonarr-4k"
     name: arr
   - condition: |
       .labels.kubernetes_name == "loki" &&

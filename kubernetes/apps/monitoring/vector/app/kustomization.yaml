@@ -7,8 +7,10 @@ resources:
 configMapGenerator:
   - name: vector-config
     files:
-      - ./config/*.yaml
-      - ./config/transforms/*.yaml
+      - ./config/base.yaml
+      - ./config/transforms/arr_remapped.yaml
+      - ./config/transforms/final.yaml
+      - ./config/transforms/router.yaml
 generatorOptions:
   disableNameSuffixHash: true
   annotations:

@@ -26,6 +26,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    test:
+      enabled: false
+    lokiCanary:
+      enabled: false
     global:
       extraArgs:
         - '-log.level=warn'

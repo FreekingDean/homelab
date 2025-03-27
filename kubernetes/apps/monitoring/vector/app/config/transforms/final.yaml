@@ -5,17 +5,18 @@ inputs:
 source: |
   tmp = del(.)
 
-  .timestamp = tmp.timestamp
   .message = tmp.message
-  .level = tmp.level || "unknown"
 
   .data = tmp.data || {}
   .labels = tmp.labels || {}
 
-  if exists(.data.request) && exists(.data.request.status) && .level == "unknown" {
-    .level = "info"
+  .labels.timestamp = tmp.timestamp
+  .labels.level = tmp.level || "unknown"
+
+  if exists(.data.request) && exists(.data.request.status) && .labels.level == "unknown" {
+    .labels.level = "info"
     status, err = to_int(.data.request.status)
     if err == null && status >= 500 {
-      .level = "error"
+      .labels.level = "error"
     }
   }

@@ -2,21 +2,22 @@ type: exclusive_route
 inputs:
   - kubernetes_source_remapper
 routes:
-  - condition: |
+  - name: arr
+    condition: |
       .labels.kubernetes_instance == "radarr" ||
       .labels.kubernetes_instance == "radarr-4k" ||
       .labels.kubernetes_instance == "sonarr" ||
       .labels.kubernetes_instance == "sonarr-4k"
-    name: arr
-  - condition: |
+  - name: loki_gateway
+    condition: |
       .labels.kubernetes_name == "loki" &&
         .labels.kubernetes_component == "gateway" &&
         .labels.kubernetes_container_name == "nginx"
-    name: loki_gateway
-  - condition: |
+  - name: loki_loki
+    condition: |
       .labels.kubernetes_name == "loki" &&
-        .labels.kubernetes_container_name == "loki"
-    name: loki_loki
-  - condition: |
+        .labels.kubernetes_container_name == "loki" ||
+        .labels.kubernetes_name == "grafana"
+  - name: traefik
+    condition: |
       .labels.kubernetes_name == "traefik"
-    name: traefik

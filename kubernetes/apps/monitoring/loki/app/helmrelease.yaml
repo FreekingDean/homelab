@@ -26,6 +26,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    global:
+      extraArgs:
+        - '-log.level=warn'
     loki:
       auth_enabled: false # Disable multi-tenancy
       storage:

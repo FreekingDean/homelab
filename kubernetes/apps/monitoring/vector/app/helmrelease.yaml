@@ -35,6 +35,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    podLabels: []
     rollWorkload: false
     role: Agent
     dataDir: /vector-data-dir

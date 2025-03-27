@@ -19,5 +19,5 @@ source: |
     }
 
     .data = .data || {}
-    .data.loki = kvfmt
+    .data, _ = set(.data, [.labels.kubernetes_name], kvfmt)
   }

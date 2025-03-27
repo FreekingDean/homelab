@@ -10,7 +10,7 @@ source: |
   .data = tmp.data || {}
   .labels = tmp.labels || {}
 
-  .labels.timestamp = tmp.timestamp
+  .timestamp = tmp.timestamp
   .labels.level = tmp.level || "unknown"
 
   if exists(.data.request) && exists(.data.request.status) && .labels.level == "unknown" {

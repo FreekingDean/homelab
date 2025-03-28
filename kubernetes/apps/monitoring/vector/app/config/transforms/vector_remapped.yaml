@@ -8,7 +8,10 @@ source: |
 
     if err == null {
       .data = .data || {}
-      .level = downcase(del(to_string(jsonlog.level)))
+      level, err = to_string(jsonlog.level)
+      if err == null {
+        .level = downcase(level)
+      }
       .timestamp = del(jsonlog.timestamp)
       .message = del(jsonlog.message)
       .data.vector = jsonlog

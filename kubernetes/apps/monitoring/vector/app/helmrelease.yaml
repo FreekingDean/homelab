@@ -54,6 +54,8 @@ spec:
       - --watch-config
       - --log_format
       - json
+      - --color
+      - never
     containerPorts:
       - name: metrics
         containerPort: 9001

@@ -20,8 +20,8 @@ tests:
     outputs:
       - extract_from: final
         conditions:
-          - .labels.level == "error"
-          - .labels.service_name == "loki"
+          - assert_eq!(.labels.level, "error")
+          - assert_eq!(.labels.service_name, "loki")
   - name: loki_log
     inputs:
       - insert_at: kubernetes_source_remapper
@@ -43,9 +43,9 @@ tests:
     outputs:
       - extract_from: final
         conditions:
-          - .labels.level == "error"
-          - .data.loki."user-id" == "fake"
-          - .labels.service_name == "loki"
+          - assert_eq!(.labels.level, "error")
+          - assert_eq!(.data.loki."user-id", "fake")
+          - assert_eq!(.labels.service_name, "loki")
   - name: arr_log
     inputs:
       - insert_at: kubernetes_source_remapper
@@ -66,6 +66,28 @@ tests:
     outputs:
       - extract_from: final
         conditions:
-          - .labels.level == "error"
-          - .labels.service_name == "radarr"
+          - assert_eq!(.labels.level, "error")
+          - assert_eq!(.labels.service_name, "radarr")
           - contains(string!(.message), "not accessible by Radarr")
+  - name: metallb
+    inputs:
+      - insert_at: kubernetes_source_remapper
+        type: log
+        log_fields:
+          message: '{"caller":"config_controller.go:58","controller":"ConfigReconciler","level":"info","start reconcile":"/flux-system","ts":"2025-03-28T12:54:17Z"}'
+          kubernetes:
+            container_image: "metallb:0.0.1"
+            container_name: "metallb"
+            pod_name: "metallb-0"
+            pod_namespace: "metallb"
+            pod_node_name: "node-1"
+            node_labels:
+              "topology.rook.io/chassis": "rack-1"
+            pod_labels:
+              "app.kubernetes.io/name": "metallb"
+              "app.kubernetes.io/instance": "metallb"
+    outputs:
+      - extract_from: final
+        conditions:
+          - assert_eq!(.labels.level, "info")
+          - assert_eq!(.labels.service_name, "metallb")

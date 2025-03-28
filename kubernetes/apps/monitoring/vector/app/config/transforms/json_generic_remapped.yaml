@@ -4,25 +4,27 @@ inputs:
   - kubernetes_router.metallb
 source: |
   message = to_string!(.message)
-  jsondata = parse_json!(message)
-  if exists(jsondata.level) {
-    .level = downcase!(del(jsondata.level))
-  }
+  jsondata, err = parse_json(message)
+  if err == null {
+    if exists(jsondata.level) {
+      .level = downcase!(del(jsondata.level))
+    }
 
-  if exists(jsondata.timestamp) {
-    .timestamp = del(jsondata.timestamp)
-  } else if exists(jsondata.time) {
-    .timestamp = del(jsondata.time)
-  } else if exists(jsondata.ts) {
-    .timestamp = del(jsondata.ts)
-  }
+    if exists(jsondata.timestamp) {
+      .timestamp = del(jsondata.timestamp)
+    } else if exists(jsondata.time) {
+      .timestamp = del(jsondata.time)
+    } else if exists(jsondata.ts) {
+      .timestamp = del(jsondata.ts)
+    }
 
-  if exists(jsondata.message) {
-    .message = del(jsondata.message)
-  } else if exists(jsondata.msg) {
-    .message = del(jsondata.msg)
-  } else {
-    .message = "data only log"
-  }
+    if exists(jsondata.message) {
+      .message = del(jsondata.message)
+    } else if exists(jsondata.msg) {
+      .message = del(jsondata.msg)
+    } else {
+      .message = "data only log"
+    }
 
-  .data, _ = set(.data, [.labels.kubernetes_name], jsondata)
+    .data, _ = set(.data, [.labels.kubernetes_name], jsondata)
+  }

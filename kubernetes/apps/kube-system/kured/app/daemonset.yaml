@@ -7,12 +7,14 @@ metadata:
 spec:
   selector:
     matchLabels:
+      app: kured
       name: kured
   updateStrategy:
     type: RollingUpdate
   template:
     metadata:
       labels:
+        app: kured
         name: kured
     spec:
       serviceAccountName: kured

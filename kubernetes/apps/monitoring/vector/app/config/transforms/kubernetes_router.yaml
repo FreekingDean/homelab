@@ -21,3 +21,6 @@ routes:
   - name: traefik
     condition: |
       .labels.kubernetes_name == "traefik"
+  - name: vector
+    condition: |
+      .labels.kubernetes_name == "vector"

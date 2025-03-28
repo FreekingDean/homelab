@@ -52,6 +52,8 @@ spec:
       - --config-dir
       - "/etc/vector/"
       - --watch-config
+      - --log_format
+      - json
     containerPorts:
       - name: metrics
         containerPort: 9001

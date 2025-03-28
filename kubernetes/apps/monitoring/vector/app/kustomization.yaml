@@ -17,6 +17,7 @@ configMapGenerator:
       - ./config/transforms/loki_gateway_remapped.yaml
       - ./config/transforms/loki_loki_remapped.yaml
       - ./config/transforms/traefik_remapped.yaml
+      - ./config/transforms/vector_remapped.yaml
 
       - ./config/transforms/final.yaml
 generatorOptions:

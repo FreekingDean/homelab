@@ -1,0 +1,16 @@
+type: remap
+inputs:
+  - kubernetes_router.vector
+source: |
+  message, err = to_string(.message)
+  if err == null {
+    jsonlog, err = parse_json(message)
+
+    if err == null {
+      .data = .data || {}
+      .level = downcase(del(to_string(jsonlog.level)))
+      .timestamp = del(jsonlog.timestamp)
+      .message = del(jsonlog.message)
+      .data.vector = jsonlog
+    }
+  }

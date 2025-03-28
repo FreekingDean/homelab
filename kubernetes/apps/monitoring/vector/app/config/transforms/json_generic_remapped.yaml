@@ -36,5 +36,5 @@ source: |
       .message = "data only log"
     }
 
-    .data, _ = set(.data, [.service_name], jsondata)
+    .data, _ = set(.data, [.labels.service_name], jsondata)
   }

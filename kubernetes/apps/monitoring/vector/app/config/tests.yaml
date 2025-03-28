@@ -90,3 +90,25 @@ tests:
         conditions:
           - assert_eq!(.labels.level, "info")
           - assert_eq!(.labels.service_name, "metallb")
+  - name: onepassword
+    inputs:
+      - insert_at: kubernetes_source_remapper
+        type: log
+        log_fields:
+          message: '{"log_message":"(I) GET /heartbeat completed (200: OK) in 0ms","timestamp":"2025-03-28T13:19:42.015874185Z","level":3,"scope":{"request_id":"f4caf95f-164b-4569-a41e-4a753ab485d3"}}'
+          kubernetes:
+            container_image: "onepassword-connect:0.0.1"
+            container_name: "onepassword-connect"
+            pod_name: "onepassword-connect-0"
+            pod_namespace: "onepassword-connect"
+            pod_node_name: "node-1"
+            node_labels:
+              "topology.rook.io/chassis": "rack-1"
+            pod_labels:
+              "app": "onepassword-connect"
+    outputs:
+      - extract_from: final
+        conditions:
+          - assert_eq!(.labels.level, "info")
+          - assert_eq!(.labels.service_name, "onepassword-connect")
+          - assert_eq!(.data."onepassword-connect".scope.request_id, "f4caf95f-164b-4569-a41e-4a753ab485d3")

@@ -11,6 +11,7 @@ source: |
       level, err = to_string(jsonlog.level)
       if err == null {
         .level = downcase(level)
+        del(jsonlog.level)
       }
       .timestamp = del(jsonlog.timestamp)
       .message = del(jsonlog.message)

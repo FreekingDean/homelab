@@ -10,7 +10,7 @@ source: |
   jsondata, err = parse_json(message)
   if err == null {
     if exists(jsondata.level) {
-      level_number, err = to_int(jsondata.level)
+      _, err = to_int(jsondata.level)
       if err == null {
         .level = "info"
       } else {
@@ -36,5 +36,5 @@ source: |
       .message = "data only log"
     }
 
-    .data, _ = set(.data, [.labels.kubernetes_name], jsondata)
+    .data, _ = set(.data, [.service_name], jsondata)
   }

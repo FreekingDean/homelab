@@ -7,7 +7,6 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: kured
       name: kured
   updateStrategy:
     type: RollingUpdate

@@ -14,6 +14,7 @@ configMapGenerator:
       - ./config/transforms/kubernetes_router.yaml
 
       - ./config/transforms/arr_remapped.yaml
+      - ./config/transforms/json_generic_remapped.yaml
       - ./config/transforms/loki_gateway_remapped.yaml
       - ./config/transforms/loki_loki_remapped.yaml
       - ./config/transforms/traefik_remapped.yaml

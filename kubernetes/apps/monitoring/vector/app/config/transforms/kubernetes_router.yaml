@@ -24,3 +24,9 @@ routes:
   - name: vector
     condition: |
       .labels.kubernetes_name == "vector"
+  - name: istiod
+    condition: |
+      .labels.kubernetes_name == "istiod"
+  - name: metallb
+    condition: |
+      .labels.kubernetes_name == "metallb"

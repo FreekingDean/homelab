@@ -30,4 +30,8 @@ source: |
     .labels.kubernetes_instance = .kubernetes.pod_labels."app.kubernetes.io/instance"
   }
 
-  .labels.service_name = .labels.kuberneted_name || .labels.kubernetes_instance || "unknown_service"
+  if exists(.kubernetes.pod_labels.app) {
+    .labels.kubernetes_app = .kubernetes.pod_labels.app
+  }
+
+  .labels.service_name = .labels.kubernetes_name || .labels.kubernetes_instance || .labels.kubernetes_app || "unknown_service"

@@ -85,7 +85,6 @@ tests:
               "topology.rook.io/chassis": "rack-1"
             pod_labels:
               "app.kubernetes.io/name": "metallb"
-              "app.kubernetes.io/instance": "metallb"
     outputs:
       - extract_from: final
         conditions:

@@ -52,7 +52,7 @@ spec:
       - --config-dir
       - "/etc/vector/"
       - --watch-config
-      - --log_format
+      - --log-format
       - json
       - --color
       - never

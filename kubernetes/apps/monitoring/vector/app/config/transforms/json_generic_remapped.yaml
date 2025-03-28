@@ -2,12 +2,19 @@ type: remap
 inputs:
   - kubernetes_router.istiod
   - kubernetes_router.metallb
+  - kubernetes_router.redfish_exporter
+  - kubernetes_router.onepassword_connect
 source: |
   message = to_string!(.message)
   jsondata, err = parse_json(message)
   if err == null {
     if exists(jsondata.level) {
-      .level = downcase!(del(jsondata.level))
+      level_number, err = to_int(jsondata.level)
+      if err == null {
+        .level = "info"
+      } else {
+        .level = downcase!(del(jsondata.level))
+      }
     }
 
     if exists(jsondata.timestamp) {
@@ -22,6 +29,8 @@ source: |
       .message = del(jsondata.message)
     } else if exists(jsondata.msg) {
       .message = del(jsondata.msg)
+    } else if exists(jsondata.log_message) {
+      .message = del(jsondata.log_message)
     } else {
       .message = "data only log"
     }

@@ -19,14 +19,14 @@ routes:
         .labels.kubernetes_container_name == "loki" ||
         .labels.kubernetes_name == "grafana"
   - name: traefik
-    condition: |
-      .labels.kubernetes_name == "traefik"
+    condition: .labels.kubernetes_name == "traefik"
   - name: vector
-    condition: |
-      .labels.kubernetes_name == "vector"
+    condition: .labels.kubernetes_name == "vector"
   - name: istiod
-    condition: |
-      .labels.kubernetes_name == "istiod"
+    condition: .labels.kubernetes_name == "istiod"
   - name: metallb
-    condition: |
-      .labels.kubernetes_name == "metallb"
+    condition: .labels.kubernetes_name == "metallb"
+  - name: redfish_exporter
+    condition: .labels.kubernetes_name == "redfish-exporter"
+  - name: onepassword_connect
+    condition: .labels.kubernetes_app == "onepassword-connect"

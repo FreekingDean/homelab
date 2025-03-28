@@ -4,6 +4,7 @@ inputs:
   - kubernetes_router.metallb
   - kubernetes_router.redfish_exporter
   - kubernetes_router.onepassword_connect
+  - kubernetes_router.kustomize_controller
 source: |
   message = to_string!(.message)
   jsondata, err = parse_json(message)

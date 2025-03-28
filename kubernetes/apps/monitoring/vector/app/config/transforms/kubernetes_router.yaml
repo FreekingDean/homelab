@@ -30,3 +30,5 @@ routes:
     condition: .labels.kubernetes_name == "redfish-exporter"
   - name: onepassword_connect
     condition: .labels.kubernetes_app == "onepassword-connect"
+  - name: kustomize_controller
+    condition: .labels.kubernetes_app == "kustomize-controller"

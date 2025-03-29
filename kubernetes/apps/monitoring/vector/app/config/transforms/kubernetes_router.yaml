@@ -32,3 +32,7 @@ routes:
     condition: .labels.kubernetes_app == "onepassword-connect"
   - name: kustomize_controller
     condition: .labels.kubernetes_app == "kustomize-controller"
+  - name: helm-controller
+    condition: .labels.kubernetes_app == "helm-controller"
+  - name: notification-controller
+    condition: .labels.kubernetes_app == "notification-controller"

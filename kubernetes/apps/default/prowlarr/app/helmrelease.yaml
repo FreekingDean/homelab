@@ -40,7 +40,7 @@ spec:
         existingClaim: config-prowlarr-0
     image:
       repository: ghcr.io/home-operations/prowlarr
-      tag: 1.33.1.4997
+      tag: 1.33.2.5002
     env:
       TZ: America/New_York
       PROWLARR__INSTANCE_NAME: Prowlarr

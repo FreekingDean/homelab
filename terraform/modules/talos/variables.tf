@@ -1,0 +1,61 @@
+variable "node" {
+  description = "The name of the node"
+  type        = string
+}
+
+variable "index" {
+  description = "The index of the node"
+  type        = number
+}
+
+variable "network_id" {
+  description = "The network id to use for the node"
+  type        = string
+}
+
+variable "servers" {
+  description = "The number of servers to create"
+  type        = number
+}
+
+variable "workers" {
+  description = "The number of workers to create"
+  type        = number
+}
+
+variable "vlan_tag" {
+  description = "The VLAN tag to use for the network"
+  type        = number
+}
+
+output "control_node_ip" {
+  description = "The IP address of the control node"
+  value       = module.talos_servers[0].vm_ip
+}
+
+variable "talos_version" {
+  description = "Talos version to use eg. v1.9.5"
+  type        = string
+  default     = "v1.9.5"
+}
+
+variable "talos_cluster_name" {
+  description = "The name of the talos cluster"
+  type        = string
+}
+
+variable "talos_cluster_endpoint" {
+  description = "The talos cluster endpoint"
+  type        = string
+  default     = ""
+}
+
+variable "talos_machine_secrets" {
+  description = "The talos machine secrets"
+  type        = any
+}
+
+variable "talos_client_configuration" {
+  description = "The talos client configuration"
+  type        = any
+}

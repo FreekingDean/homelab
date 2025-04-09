@@ -8,8 +8,16 @@ terraform {
   }
 
   required_providers {
+    talos = {
+      source  = "siderolabs/talos"
+      version = "0.7.1"
+    }
+    unifi = {
+      source  = "paultyng/unifi"
+      version = "0.41.0"
+    }
     proxmox = {
-      source  = "FreekingDean/proxmox"
+      source  = "freekingdean/proxmox"
       version = "0.0.9"
     }
     null = {
@@ -26,5 +34,9 @@ provider "proxmox" {
   #pm_debug    = true
   host     = "https://10.0.0.101:8006/api2/json"
   username = "root@pam"
-  #pm_password = local.root_password
+}
+
+provider "unifi" {
+  api_url        = "https://192.168.2.1"
+  allow_insecure = true
 }

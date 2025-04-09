@@ -1,9 +1,0 @@
-#! /bin/bash
-
-set -e
-
-/usr/bin/rpm-ostree install \
-  --apply-live --assumeyes \
-  qemu-guest-agent
-
-systemctl --now enable qemu-guest-agent

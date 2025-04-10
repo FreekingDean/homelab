@@ -31,6 +31,7 @@ spec:
       createPrometheusRules: true
     toolbox:
       enabled: true
+    cephFileSystems: []
     cephClusterSpec:
       external:
         enable: true

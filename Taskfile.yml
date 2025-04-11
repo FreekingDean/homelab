@@ -66,3 +66,14 @@ tasks:
     desc: Configure repository from env settings
     cmds:
       - ./configure
+
+  decrypt:
+    desc: Decrypt secrets
+    cmds:
+      - sops --decrypt kubernetes/flux/vars/cluster-secrets.sops.yaml
+    preconditions:
+      - sh: test -f {{.SOPS_AGE_KEY_FILE}}
+        msg: |
+          Age key file is not found. Did you forget to create it?
+    vars:
+      SOPS_AGE_KEY_FILE: $HOME/.config/sops/age/keys.txt

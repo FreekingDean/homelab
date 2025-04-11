@@ -22,3 +22,8 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+  components:
+    - ../../../../components/volsync
+  postBuild:
+    substitute:
+      PVC_NAME: config-plex-0

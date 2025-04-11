@@ -29,4 +29,3 @@ spec:
   postBuild:
     substitute:
       PVC_NAME: config-lidarr-0
-      NAMESPACE: default

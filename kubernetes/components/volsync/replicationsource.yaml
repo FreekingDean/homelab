@@ -9,6 +9,8 @@ spec:
   trigger:
     schedule: "30 0 * * *"
   restic:
+    moverPodLabels:
+      sidecar.istio.io/inject: "false"
     copyMethod: "Snapshot"
     pruneIntervalDays: 14
     repository: "${PVC_NAME}-volsync-r2-secret"

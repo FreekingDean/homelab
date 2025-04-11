@@ -23,7 +23,7 @@ tasks:
     desc: Fix snapshots taken by restic for a given ReplicationSource (ex. task vs:list rsrc=plex [namespace=default])
     silent: true
     cmds:
-      - envsubst < <(cat {{.checkJobTemplate}}) | kubectl apply -f -
+      - echo $(envsubst < <(cat {{.checkJobTemplate}}) | kubectl apply -f -
       - bash {{.waitForJobScript}} check-fix-{{.rsrc}}-{{.ts}} {{.namespace}}
       - kubectl -n {{.namespace}} wait job/check-fix-{{.rsrc}}-{{.ts}} --for condition=complete --timeout=1m
       - kubectl -n {{.namespace}} logs job/check-fix-{{.rsrc}}-{{.ts}} --container list

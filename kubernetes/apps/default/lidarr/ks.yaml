@@ -6,6 +6,9 @@ metadata:
   name: cluster-apps-lidarr
   namespace: flux-system
 spec:
+  targetNamespace: default
+  components:
+    - ../../../../components/volsync
   dependsOn:
     - name: cluster-apps-external-secrets-stores
     - name: cluster-apps-rook-ceph-cluster
@@ -23,3 +26,6 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+  postBuild:
+    substitute:
+      PVC_NAME: config-lidarr-0

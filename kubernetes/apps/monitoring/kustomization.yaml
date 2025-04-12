@@ -9,3 +9,13 @@ resources:
   - ./loki/ks.yaml
   - ./vector/ks.yaml
   - ./redfish-exporter/ks.yaml
+patches:
+  - patch: |-
+      - op: add
+        path: /spec/targetNamespace
+        value: monitoring
+    target:
+      version: v1
+      group: kustomize.toolkit.fluxcd.io
+      kind: Kustomization
+      labelSelector: setnamespace.flux.home.arpa/disabled notin (true)

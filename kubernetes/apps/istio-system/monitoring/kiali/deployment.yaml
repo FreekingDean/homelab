@@ -4,7 +4,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kiali
-  namespace: istio-system
   labels:
     helm.sh/chart: kiali-server-1.63.1
     app: kiali

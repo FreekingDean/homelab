@@ -6,7 +6,6 @@ metadata:
   name: cluster-apps-projectionlab-backend
   namespace: flux-system
 spec:
-  targetNamespace: projectionlab
   dependsOn:
     - name: cluster-apps-rook-ceph-cluster
     - name: cluster-apps-volsync

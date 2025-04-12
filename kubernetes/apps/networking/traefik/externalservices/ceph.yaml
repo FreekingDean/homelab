@@ -3,7 +3,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: &app ceph
-  namespace: networking
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
@@ -24,7 +23,6 @@ apiVersion: v1
 kind: Endpoints
 metadata:
   name: &app ceph
-  namespace: networking
   labels:
     app.kubernetes.io/name: *app
     app.kubernetes.io/instance: *app
@@ -43,7 +41,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: &app ceph
-  namespace: networking
   annotations:
     traefik.ingress.kubernetes.io/router.middlewares: networking-localonly@kubernetescrd,networking-authelia@kubernetescrd
     hajimari.io/icon: mdi:server
@@ -72,7 +69,6 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: ceph
-  namespace: networking
 spec:
   endpoints:
     - interval: 30s

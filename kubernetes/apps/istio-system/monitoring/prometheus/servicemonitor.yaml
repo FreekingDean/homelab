@@ -5,7 +5,6 @@ metadata:
   name: istio-federation
   labels:
     app.kubernetes.io/name: istio-prometheus
-  namespace: "istio-system"
 spec:
   namespaceSelector:
     matchNames:

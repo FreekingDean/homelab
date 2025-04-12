@@ -6,3 +6,13 @@ resources:
   - ./metallb/ks.yaml
   - ./traefik/ks.yaml
   - ./external-dns/ks.yaml
+patches:
+  - patch: |-
+      - op: add
+        path: /spec/targetNamespace
+        value: networking
+    target:
+      version: v1
+      group: kustomize.toolkit.fluxcd.io
+      kind: Kustomization
+      labelSelector: setnamespace.flux.home.arpa/disabled notin (true)

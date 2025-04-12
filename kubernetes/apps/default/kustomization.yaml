@@ -16,5 +16,4 @@ resources:
   - ./redis/ks.yaml
   - ./radarr/ks.yaml
   - ./sabnzbd/ks.yaml
-  - ./samba/ks.yaml
   - ./sonarr/ks.yaml

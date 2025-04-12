@@ -10,7 +10,6 @@ spec:
     - name: cluster-apps-rook-ceph-cluster
     - name: cluster-apps-volsync
   path: ./kubernetes/apps/default/overseerr/app
-  targetNamespace: default
   components:
     - ../../../../components/volsync
   prune: true

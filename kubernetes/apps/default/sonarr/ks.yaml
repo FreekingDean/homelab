@@ -11,7 +11,6 @@ spec:
     - name: cluster-apps-rook-ceph-cluster
     - name: cluster-apps-volsync
   path: ./kubernetes/apps/default/sonarr/app
-  targetNamespace: default
   components:
     - ../../../../components/volsync
   prune: true
@@ -43,7 +42,6 @@ spec:
     - name: cluster-apps-rook-ceph-cluster
     - name: cluster-apps-volsync
   path: ./kubernetes/apps/default/sonarr/app
-  targetNamespace: default
   components:
     - ../../../../components/volsync
   prune: true

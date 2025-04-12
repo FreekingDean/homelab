@@ -40,6 +40,19 @@ jobs:
               failure=1
             fi
 
+            ksfiles=$(find ./kubernetes/apps/$dir/*/ks.yaml)
+
+            for ks in $ksfiles; do
+              found=$(cat $ks | yq '.spec.targetNamespace | select(. != null and . != "")')
+              if [ ! -z "$found" ]; then
+                for found in $found; do
+                  echo "❌ Do not specify targetNamespace in '$ks'"
+                  failure=1
+                  continue
+                done
+              fi
+            done
+
             manifests=$(find ./kubernetes/apps/$dir -type f -name "*.yaml")
 
             for file in $manifests; do

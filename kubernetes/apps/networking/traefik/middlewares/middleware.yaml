@@ -3,7 +3,6 @@ apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: localonly
-  namespace: "networking"
 spec:
   ipWhiteList:
     sourceRange:
@@ -15,7 +14,6 @@ apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: traefik-errors
-  namespace: "networking"
 spec:
   errors:
     status:
@@ -30,7 +28,6 @@ apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
   name: authelia
-  namespace: "networking"
 spec:
   forwardAuth:
     address: "http://authelia-dev.auth/api/authz/forward-auth"

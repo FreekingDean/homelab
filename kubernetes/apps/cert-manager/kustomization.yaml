@@ -4,3 +4,13 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./cert-manager/ks.yaml
+patches:
+  - patch: |-
+      - op: add
+        path: /spec/targetNamespace
+        value: cert-manager
+    target:
+      version: v1
+      group: kustomize.toolkit.fluxcd.io
+      kind: Kustomization
+      labelSelector: setnamespace.flux.home.arpa/disabled notin (true)

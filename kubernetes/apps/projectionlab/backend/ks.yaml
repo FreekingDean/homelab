@@ -6,10 +6,13 @@ metadata:
   name: cluster-apps-projectionlab-backend
   namespace: flux-system
 spec:
+  targetNamespace: projectionlab
   dependsOn:
     - name: cluster-apps-rook-ceph-cluster
     - name: cluster-apps-volsync
   path: ./kubernetes/apps/projectionlab/backend/app
+  components:
+    - ../../../../components/volsync
   prune: true
   sourceRef:
     kind: GitRepository
@@ -22,3 +25,6 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+  postBuild:
+    substitute:
+      PVC_NAME: backend-data

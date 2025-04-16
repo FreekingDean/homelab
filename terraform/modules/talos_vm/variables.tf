@@ -39,32 +39,7 @@ variable "node_index" {
   type        = number
 }
 
-variable "talos_client_configuration" {
-  description = "The talos client configuration"
-}
-
-variable "talos_machine_secrets" {
-  description = "The talos machine secrets"
-  type        = any
-}
-
-variable "talos_machine_type" {
-  description = "The talos machine type (worker or control-plane)"
-  type        = string
-}
-
-variable "talos_cluster_name" {
-  description = "The name of the talos cluster"
-  type        = string
-}
-
-variable "talos_cluster_endpoint" {
-  description = "The talos cluster endpoint"
-  type        = string
-  default     = ""
-}
-
-variable "talos_version" {
-  description = "Talos version to use eg. v1.9.5"
+variable "iso" {
+  description = "The ISO file to use for the node"
   type        = string
 }

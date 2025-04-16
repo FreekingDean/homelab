@@ -17,8 +17,8 @@ terraform {
       version = "0.41.0"
     }
     proxmox = {
-      source  = "freekingdean/proxmox"
-      version = "0.0.9"
+      source  = "bpg/proxmox"
+      version = "0.75.0"
     }
     null = {
       source = "hashicorp/null"
@@ -32,8 +32,9 @@ terraform {
 
 provider "proxmox" {
   #pm_debug    = true
-  host     = "https://10.0.0.101:8006/api2/json"
+  endpoint = "https://10.0.0.101:8006/api2/json"
   username = "root@pam"
+  insecure = true
 }
 
 provider "unifi" {

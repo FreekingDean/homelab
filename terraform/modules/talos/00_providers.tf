@@ -4,7 +4,10 @@ terraform {
       source = "paultyng/unifi"
     }
     proxmox = {
-      source = "freekingdean/proxmox"
+      source = "bpg/proxmox"
+    }
+    talos = {
+      source = "siderolabs/talos"
     }
   }
 }

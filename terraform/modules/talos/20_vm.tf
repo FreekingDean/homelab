@@ -35,7 +35,7 @@ module "talos_workers" {
   node_index = var.index + 1
   index      = count.index + 2
 
-  memory     = 4096
+  memory     = 32 * 1024
   cpus       = 12
   disk_size  = 64
   vlan_tag   = var.vlan_tag

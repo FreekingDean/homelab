@@ -80,8 +80,6 @@ tasks:
     cmds:
       - task: restore-suspend-app
         vars: *task-vars
-      - task: restore-wipe-job
-        vars: *task-vars
       - task: restore-volsync-job
         vars: *task-vars
       - task: restore-resume-app

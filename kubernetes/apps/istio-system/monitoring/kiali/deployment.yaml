@@ -4,7 +4,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kiali
-  namespace: istio-system
   labels:
     helm.sh/chart: kiali-server-1.63.1
     app: kiali
@@ -46,7 +45,7 @@ spec:
     spec:
       serviceAccountName: kiali
       containers:
-      - image: "quay.io/kiali/kiali:v2.7"
+      - image: "quay.io/kiali/kiali:v2.8"
         imagePullPolicy: Always
         name: kiali
         command:

@@ -3,7 +3,6 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: "deangalvin-dev-production"
-  namespace: networking
 spec:
   secretName: "${PRODUCTION_TLS}"
   secretTemplate:
@@ -20,7 +19,6 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: "deangalvin-com-production"
-  namespace: networking
 spec:
   secretName: "deangalvin-com-production-tls"
   secretTemplate:

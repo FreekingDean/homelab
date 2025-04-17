@@ -7,3 +7,13 @@ resources:
   - ./operator
   - ./repositories
   - ./vars
+patches:
+  - patch: |-
+      - op: add
+        path: /spec/targetNamespace
+        value: flux-system
+    target:
+      version: v1
+      group: kustomize.toolkit.fluxcd.io
+      kind: Kustomization
+      labelSelector: setnamespace.flux.home.arpa/disabled notin (true)

@@ -10,7 +10,6 @@ metadata:
     chart: prometheus-15.9.0
     heritage: Helm
   name: prometheus
-  namespace: istio-system
 spec:
   selector:
     matchLabels:
@@ -45,7 +44,7 @@ spec:
               readOnly: true
 
         - name: prometheus-server
-          image: "prom/prometheus:v3.2.1"
+          image: "prom/prometheus:v3.3.0"
           imagePullPolicy: "IfNotPresent"
           args:
             - --storage.tsdb.retention.time=15d

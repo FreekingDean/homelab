@@ -11,6 +11,8 @@ spec:
     - name: cluster-apps-rook-ceph-cluster
     - name: cluster-apps-volsync
   path: ./kubernetes/apps/default/sonarr/app
+  components:
+    - ../../../../components/volsync
   prune: true
   sourceRef:
     kind: GitRepository
@@ -26,6 +28,7 @@ spec:
   postBuild:
     substitute:
       instance_name: sonarr
+      PVC_NAME: config-sonarr-0
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1beta2.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
@@ -39,6 +42,8 @@ spec:
     - name: cluster-apps-rook-ceph-cluster
     - name: cluster-apps-volsync
   path: ./kubernetes/apps/default/sonarr/app
+  components:
+    - ../../../../components/volsync
   prune: true
   sourceRef:
     kind: GitRepository
@@ -54,3 +59,4 @@ spec:
   postBuild:
     substitute:
       instance_name: sonarr-4k
+      PVC_NAME: config-sonarr-4k-0

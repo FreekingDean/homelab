@@ -3,7 +3,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: rook-ceph-cluster
-  namespace: rook-ceph
 spec:
   interval: 15m
   chart:
@@ -31,6 +30,7 @@ spec:
       createPrometheusRules: true
     toolbox:
       enabled: true
+    cephFileSystems: []
     cephClusterSpec:
       external:
         enable: true

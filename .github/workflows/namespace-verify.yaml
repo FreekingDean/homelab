@@ -1,0 +1,71 @@
+---
+name: "Verify Target Namespace"
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  verify-target-namespace:
+    name: Verify Target Namespace
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: Verify Target Namespace
+        run: |
+          failure=0
+
+          for dir in $(ls ./kubernetes/apps); do
+            namespaceFile="./kubernetes/apps/$dir/namespace.yaml"
+            if [ ! -f $namespaceFile ]; then
+              echo "❌ Namespace file '$namespaceFile' does not exist"
+              failure=1
+              continue
+            fi
+
+            namespace=$(cat $namespaceFile | yq .metadata.name)
+            patch=$(cat ./kubernetes/apps/$dir/kustomization.yaml | yq '.patches.[].patch')
+            patch=$(echo $patch | sed 's/\s+//g')
+            expectedPatch="- op: add path: /spec/targetNamespace value: $namespace"
+            if [ "$patch" != "$expectedPatch" ]; then
+              echo "❌ Patch '$patch' in '$namespaceFile' does not match expected '$expectedPatch'"
+              failure=1
+            fi
+
+            if [ $namespace != $dir ]; then
+              echo "❌ Namespace '$namespace' does not match directory '$dir'"
+              failure=1
+            fi
+
+            ksfiles=$(find ./kubernetes/apps/$dir/*/ks.yaml)
+
+            for ks in $ksfiles; do
+              found=$(cat $ks | yq '.spec.targetNamespace | select(. != null and . != "")')
+              if [ ! -z "$found" ]; then
+                for found in $found; do
+                  echo "❌ Do not specify targetNamespace in '$ks'"
+                  failure=1
+                  continue
+                done
+              fi
+            done
+
+            manifests=$(find ./kubernetes/apps/$dir -type f -name "*.yaml")
+
+            for file in $manifests; do
+              found=$(cat $file | yq 'select((.metadata.namespace != null and .metadata.namespace != "") and (.kind != "Kustomization" and .metadata.namespace != "flux-system")).metadata.namespace')
+              if [ ! -z "$found" ]; then
+                for found in $found; do
+                  if [ "$found" == "---" ]; then
+                    continue
+                  fi
+                  echo "❌ Found '$found' in '$file'"
+                  failure=1
+                done
+              fi
+            done
+          done
+          exit $failure

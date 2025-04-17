@@ -4,7 +4,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ${instance_name}
-  namespace: default
 spec:
   interval: 15m
   chart:
@@ -37,7 +36,7 @@ spec:
     stateful: true
     image:
       repository: ghcr.io/home-operations/radarr
-      tag: 5.21.1.9799
+      tag: 5.22.2.9862
     env:
       TZ: America/New_York
       RADARR__INSTANCE_NAME: ${instance_name}

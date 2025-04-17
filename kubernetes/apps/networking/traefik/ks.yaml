@@ -6,7 +6,6 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cluster-apps-authelia
     - name: cluster-apps-cert-manager-issuers
   path: ./kubernetes/apps/networking/traefik/certificates
   prune: true

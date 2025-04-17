@@ -4,6 +4,9 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./addons/ks.yaml
+  - ./operator
+  - ./repositories
+  - ./vars
 patches:
   - patch: |-
       - op: add

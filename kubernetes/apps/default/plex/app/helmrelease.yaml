@@ -56,7 +56,6 @@ spec:
         memory: 2000Mi
       limits:
         memory: 10000Mi
-    loadbalanced: true
     ports:
       http: 32400
     ingress:

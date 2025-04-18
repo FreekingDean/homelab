@@ -46,29 +46,6 @@ provider "registry.terraform.io/community-terraform-providers/ignition" {
   ]
 }
 
-provider "registry.terraform.io/freekingdean/proxmox" {
-  version     = "0.0.9"
-  constraints = "0.0.9"
-  hashes = [
-    "h1:FHebdfKHka5OkXznlpIucITdvOKPyvuqv2Zz1W87YNQ=",
-    "zh:05547090886a0af2444abf02e6c0befcdc891dd00c21cbbae33c1e14f5d5375b",
-    "zh:0f0e36b40fe9255fff33c53450680a686e1da17581de740916d88154fbf1c2cb",
-    "zh:0f146b97d0d1505afb85bcf03efd5243df1e132baf3ca6f3640b04f8f4cd2fce",
-    "zh:2a39f15b0f9d6767e602484c9d7b5ffce09150c9f5ad28a41630b8d9a7595782",
-    "zh:2d5ce22e18d6ba22964c1692e6e3e2c71fbe59659d803b8ec2cdf205dd78184e",
-    "zh:4f7ddcdf7aa7b6a26f5d2970715c19b9a1312c8ff184a108b3213363add5128e",
-    "zh:527ae3df6a2baaa4541609f3b917445e00f63034ab2bfb48ae19f77ae09f74b3",
-    "zh:86a2dd352ca83badf08679aa19d8fbbe7a976c472f793445ad54bf484a5764d4",
-    "zh:874865c74888b68475af91551e0ffbcce4d7f723783cba9e19331cae2ffd309e",
-    "zh:890df766e9b839623b1f0437355032a3c006226a6c200cd911e15ee1a9014e9f",
-    "zh:aac560661d34e5434983c0785f7b4a4cd730b8d87c4b17417129379ea29fe217",
-    "zh:b0bd1cdb78c56072ff774ae43ae9f48722b6b67b9ed14df7139a20fc49866322",
-    "zh:ca25f61d6d4c5dd4c69bb38ad1f84de59e3c86abac58bb1ccc0ea72ccf290bca",
-    "zh:f14ada6a431d00d8659474518d571dc11a38cc708507611f8300ea2952af3d20",
-    "zh:f18a5beef8cad5c62bcd7593683314013761b278e698a288d6ed62d2f5a77184",
-  ]
-}
-
 provider "registry.terraform.io/hashicorp/null" {
   version = "3.2.3"
   hashes = [

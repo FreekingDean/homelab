@@ -37,7 +37,7 @@ module "talos_workers" {
 
   memory     = 32 * 1024
   cpus       = 12
-  disk_size  = 64
+  disk_size  = 128
   vlan_tag   = var.vlan_tag
   network_id = var.network_id
   iso        = "local:iso/talos-${var.talos_version}-amd64.iso"

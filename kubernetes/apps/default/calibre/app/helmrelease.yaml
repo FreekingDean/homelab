@@ -28,7 +28,7 @@ spec:
   values:
     stateful: true
     ports:
-      http: 8080
+      http: 8081
     ingress:
       subdomain: calibre
       icon: "mdi:bookshelf"

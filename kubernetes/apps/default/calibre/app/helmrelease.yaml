@@ -28,7 +28,7 @@ spec:
   values:
     stateful: true
     ports:
-      http: 8083
+      http: 8081
     ingress:
       subdomain: calibre
       icon: "mdi:bookshelf"
@@ -42,5 +42,8 @@ spec:
         existingClaim: media
         type: persistentVolumeClaim
     image:
-      repository: ghcr.io/linuxserver/calibre-web
+      repository: ghcr.io/linuxserver/calibre
       tag: latest
+    env:
+      PUID: 0
+      PGID: 0

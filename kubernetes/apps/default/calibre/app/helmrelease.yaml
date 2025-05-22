@@ -42,5 +42,5 @@ spec:
         existingClaim: media
         type: persistentVolumeClaim
     image:
-      repository: ghcr.io/linuxserver/calibre
-      tag: "8.4.0"
+      repository: ghcr.io/linuxserver/calibre-web
+      tag: latest

@@ -31,7 +31,6 @@ spec:
       securityContext:
         runAsUser: 0
         runAsGroup: 0
-        supplementalGroups: [44, 109, 10000]
     persistence:
       config:
         type: persistentVolumeClaim

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: config-readarr-0
+  labels:
+    app.kubernetes.io/instance: readarr
+    app.kubernetes.io/name: readarr
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 15Gi
+  storageClassName: ceph-rbd

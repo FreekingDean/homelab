@@ -36,7 +36,7 @@ spec:
     stateful: true
     image:
       repository: lscr.io/linuxserver/readarr
-      tag: latest
+      tag: nightly
     env:
       TZ: America/New_York
       PUID: 0

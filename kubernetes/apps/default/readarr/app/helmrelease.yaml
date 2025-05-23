@@ -42,7 +42,7 @@ spec:
       PUID: 0
       PGID: 0
     ports:
-      http: 8686
+      http: 8787
     ingress:
       subdomain: readarr
       icon: "mdi:book"

@@ -31,7 +31,6 @@ variable "vlan_tag" {
 variable "talos_version" {
   description = "Talos version to use eg. v1.9.5"
   type        = string
-  default     = "v1.9.5"
 }
 
 variable "talos_cluster_name" {

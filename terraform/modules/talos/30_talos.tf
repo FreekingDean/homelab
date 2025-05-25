@@ -19,6 +19,13 @@ locals {
   }
   common_patch = {
     machine = {
+      kernel = {
+        modules = [
+          { name = "ceph" },
+          { name = "nbd" },
+          { name = "rbd" },
+        ]
+      }
       install = {
         image = "factory.talos.dev/installer/${local.talos_build_id}:${var.talos_version}"
       }

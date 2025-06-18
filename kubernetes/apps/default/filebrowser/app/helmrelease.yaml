@@ -32,7 +32,7 @@ spec:
           reloader.stakater.com/auto: "true"
     image:
       repository: docker.io/filebrowser/filebrowser
-      tag: v2.32.0@sha256:593478e3c24c5ea9f5d7478dc549965b7bc7030707291006ce8d0b6162d3454b
+      tag: v2.33.0@sha256:766a2a52a769156ee1fd33853213b4ce3d29d724c7af88c94ff8680474fd41d1
     env:
       TZ: America/New_York
       FB_DATABASE: /config/filebrowser.db

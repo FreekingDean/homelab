@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: error-pages
-        image: ghcr.io/tarampampam/error-pages:3.3.2
+        image: ghcr.io/tarampampam/error-pages:3.3.3
         env:
           - name: TEMPLATE_NAME
             value: ghost

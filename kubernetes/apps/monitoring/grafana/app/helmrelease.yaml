@@ -229,13 +229,6 @@ spec:
         - hosts:
             - *host
           secretName: "${PRODUCTION_TLS}"
-    imageRenderer:
-      enabled: true
-      replicas: 2
-      networkPolicy:
-        limitIngress: false
-      serviceMonitor:
-        enabled: true
     persistence:
       enabled: false
     affinity:

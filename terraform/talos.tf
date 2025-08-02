@@ -1,5 +1,5 @@
 locals {
-  talos_version      = "v1.10.2"
+  talos_version      = "v1.10.4"
   talos_cluster_name = "main-cluster"
 
   talos_control_plane_virtual_ip = "10.1.21.253"

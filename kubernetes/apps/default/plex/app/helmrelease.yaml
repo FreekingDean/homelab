@@ -45,14 +45,14 @@ spec:
       tag: 1.41.9.9961
     env:
       TZ: America/New_York
-      PLEX_ADVERTISE_URL: "https://plex.deangalvin.dev"
-      PLEX_NO_AUTH_NETWORKS: 192.168.2.0/24
+      PLEX_ADVERTISE_URL: "https://plex.deangalvin.dev:443"
+      PLEX_NO_AUTH_NETWORKS: 192.168.2.0/24,10.0.0.0/8
     resources:
       requests:
-        cpu: 100m
-        memory: 2000Mi
+        cpu: 2000m
+        memory: 6000Mi
       limits:
-        memory: 10000Mi
+        memory: 12000Mi
     ports:
       http: 32400
     ingress:

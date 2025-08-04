@@ -27,7 +27,6 @@ The following components will be installed in your [k3s](https://k3s.io/) cluste
 - [external-dns](https://github.com/kubernetes-sigs/external-dns) - Operator to publish DNS records to your DNS providers based on Kubernetes ingresses
 - [traefik](https://traefik.io/) - Kubernetes ingress controller used for a HTTP reverse proxy of Kubernetes ingresses
 
-_Additional applications include [hajimari](https://github.com/toboshii/hajimari), [error-pages](https://github.com/tarampampam/error-pages), [echo-server](https://github.com/Ealenn/Echo-Server), [system-upgrade-controller](https://github.com/rancher/system-upgrade-controller), [reloader](https://github.com/stakater/Reloader), and [kured](https://github.com/weaveworks/kured)_
 
 For provisioning the following tools will be used:
 

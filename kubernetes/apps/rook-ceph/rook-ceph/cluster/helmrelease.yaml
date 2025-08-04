@@ -32,6 +32,8 @@ spec:
       enabled: true
     cephFileSystems: []
     cephClusterSpec:
+      cephVersion:
+        image: "quay.io/ceph/ceph:v17.2.7"
       external:
         enable: true
       crashCollector:

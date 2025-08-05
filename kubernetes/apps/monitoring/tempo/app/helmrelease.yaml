@@ -26,6 +26,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    tempo:
+      metricsGenerator: enabled
     persistence:
       enabled: true
       size: 100Gi

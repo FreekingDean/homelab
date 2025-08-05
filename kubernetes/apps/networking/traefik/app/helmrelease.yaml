@@ -25,6 +25,13 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    tracing:
+      addInternals: true
+      otlp:
+        enabled: true
+        grpc:
+          endpoint: "tempo.deangalvin.dev:4317"
+          insecure: true
     metrics:
       prometheus:
         disableAPICheck: true

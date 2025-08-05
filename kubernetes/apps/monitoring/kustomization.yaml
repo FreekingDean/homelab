@@ -4,11 +4,11 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./grafana/ks.yaml
-  - ./jaeger/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./loki/ks.yaml
-  - ./vector/ks.yaml
   - ./redfish-exporter/ks.yaml
+  - ./tempo/ks.yaml
+  - ./vector/ks.yaml
 patches:
   - patch: |-
       - op: add

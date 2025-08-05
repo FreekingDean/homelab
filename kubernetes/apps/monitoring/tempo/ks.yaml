@@ -1,15 +1,15 @@
+
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1beta2.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-jaeger
+  name: cluster-apps-tempo
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cluster-apps-eck-operator
     - name: cluster-apps-rook-ceph-cluster
-  path: ./kubernetes/apps/monitoring/jaeger/app
+  path: ./kubernetes/apps/monitoring/tempo/app
   prune: true
   sourceRef:
     kind: GitRepository

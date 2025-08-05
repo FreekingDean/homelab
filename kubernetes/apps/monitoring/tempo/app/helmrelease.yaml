@@ -30,6 +30,7 @@ spec:
       enabled: true
       size: 100Gi
     tempoQuery:
+      enabled: true
       ingress:
         enabled: true
         ingressClassName: "${INGRESS_CLASS}"

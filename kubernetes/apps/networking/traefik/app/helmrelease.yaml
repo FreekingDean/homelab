@@ -29,9 +29,8 @@ spec:
       addInternals: true
       otlp:
         enabled: true
-        grpc:
-          endpoint: "tempo.deangalvin.dev:4317"
-          insecure: true
+        http:
+          endpoint: "http://tempo.monitoring:4318/v1/metrics"
     metrics:
       prometheus:
         disableAPICheck: true

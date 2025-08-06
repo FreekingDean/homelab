@@ -7,8 +7,8 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./base/ks.yaml
-  #- ./discovery/ks.yaml
-  #- ./monitoring/ks.yaml
+  - ./discovery/ks.yaml
+  - ./monitoring/ks.yaml
 patches:
   - patch: |-
       - op: add

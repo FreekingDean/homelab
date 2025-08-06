@@ -32,12 +32,19 @@ spec:
       enableTracing: true
       defaultConfig:
         tracing:
-          sampling: 100
+          sampling: 10
         holdApplicationUntilProxyStarts: true
+      defaultProviders:
+        tracing:
+          - "opentelemetry"
+      extensionProviders:
+        - name: "opentelemetry"
+          opentelemetry:
+            service: tempo.monitoring.svc.cluster.local
+            port: 4318
+            http:
+              path: "/"
     global:
       logAsJson: true
-      tracer:
-        zipkin:
-          address: jaeger-collector.monitoring.svc.cluster.local:9411
       proxy:
         holdApplicationUntilProxyStarts: true

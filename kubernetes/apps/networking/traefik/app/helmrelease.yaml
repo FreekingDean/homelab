@@ -25,6 +25,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    env:
+      - name: "USER"
+        value: "traefik"
     tracing:
       addInternals: true
       otlp:

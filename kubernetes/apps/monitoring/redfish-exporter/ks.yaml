@@ -17,7 +17,7 @@ spec:
   timeout: 5m
   postBuild:
     substitute:
-      host: 192.168.2.24
+      host: 192.168.2.25
       chassis: discovery
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1beta2.json
@@ -38,7 +38,7 @@ spec:
   timeout: 5m
   postBuild:
     substitute:
-      host: 192.168.2.69
+      host: 192.168.2.70
       chassis: cerritos
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1beta2.json
@@ -59,7 +59,7 @@ spec:
   timeout: 5m
   postBuild:
     substitute:
-      host: 192.168.2.63
+      host: 192.168.2.64
       chassis: protostar
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1beta2.json
@@ -80,7 +80,7 @@ spec:
   timeout: 5m
   postBuild:
     substitute:
-      host: 192.168.2.9
+      host: 192.168.2.10
       chassis: enterprise
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1beta2.json

@@ -27,8 +27,6 @@ spec:
     keepHistory: false
   values:
     stateful: true
-    env:
-      DATA_PATH: /data
     image:
       repository: ghcr.io/wolveix/satisfactory-server
       tag: latest
@@ -43,6 +41,6 @@ spec:
       enabled: false
     loadbalanced: true
     persistence:
-      data:
+      config:
         type: persistentVolumeClaim
         existingClaim: satisfactory-config

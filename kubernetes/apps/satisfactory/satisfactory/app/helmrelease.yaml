@@ -37,6 +37,8 @@ spec:
       server: 7777
     ingress:
       enabled: true
+      subdomain: plex
+      icon: mdi:gamepad-variant
     serviceMonitor:
       enabled: false
     loadbalanced: true

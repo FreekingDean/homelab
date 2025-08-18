@@ -42,6 +42,7 @@ spec:
       RADARR__INSTANCE_NAME: ${instance_name}
       RADARR__PORT: &port 80
       RADARR__APPLICATION_URL: "https://${instance_name}.${DOMAIN}"
+      RADARR__AUTHENTICATION_METHOD: External
       RADARR__LOG_LEVEL: info
       RADARR__API_KEY: this-is-a-bad-api-key
     ports:

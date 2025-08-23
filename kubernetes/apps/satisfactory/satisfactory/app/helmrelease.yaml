@@ -36,10 +36,6 @@ spec:
             image:
               repository: sleavely/satisfactory-savegame-prometheus-exporter
               tag: latest
-            volumeMounts:
-              - name: config
-                mountPath: /serverconfig
-                readOnly: true
     stateful: true
     image:
       repository: ghcr.io/wolveix/satisfactory-server

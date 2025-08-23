@@ -32,7 +32,7 @@ spec:
           exporter:
             env:
               - name: SAVEGAME_LOCATION
-                value: /serverconfig/saved/server/savegames
+                value: /config/saved/server
             image:
               repository: sleavely/satisfactory-savegame-prometheus-exporter
               tag: latest

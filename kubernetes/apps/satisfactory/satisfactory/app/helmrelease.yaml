@@ -26,6 +26,11 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    controllers:
+      satisfactory:
+        containers:
+          exporter:
+            image: "sleavely/satisfactory-savegame-prometheus-exporter:latest"
     stateful: true
     image:
       repository: ghcr.io/wolveix/satisfactory-server

@@ -30,7 +30,9 @@ spec:
       satisfactory:
         containers:
           exporter:
-            image: "sleavely/satisfactory-savegame-prometheus-exporter:latest"
+            image:
+              repository: sleavely/satisfactory-savegame-prometheus-exporter
+              tag: latest
     stateful: true
     image:
       repository: ghcr.io/wolveix/satisfactory-server

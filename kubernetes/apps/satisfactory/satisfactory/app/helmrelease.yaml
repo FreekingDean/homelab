@@ -32,7 +32,7 @@ spec:
           exporter:
             image:
               repository: ghcr.io/freekingdean/satisfactory-buddy
-              tag: latest
+              tag: v0.0.5
     stateful: true
     image:
       repository: ghcr.io/wolveix/satisfactory-server

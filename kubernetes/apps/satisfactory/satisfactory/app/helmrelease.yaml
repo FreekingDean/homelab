@@ -26,6 +26,13 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    controllers:
+      satisfactory:
+        containers:
+          exporter:
+            image:
+              repository: ghcr.io/freekingdean/satisfactory-buddy
+              tag: v0.0.5
     stateful: true
     image:
       repository: ghcr.io/wolveix/satisfactory-server
@@ -33,14 +40,14 @@ spec:
     ports:
       http: 7777
       messaging: 8888
+      metrics: 8081
+      web: 3000
     udpPorts:
       server: 7777
     ingress:
       enabled: true
       subdomain: plex
       icon: mdi:gamepad-variant
-    serviceMonitor:
-      enabled: false
     loadbalanced: true
     persistence:
       config:

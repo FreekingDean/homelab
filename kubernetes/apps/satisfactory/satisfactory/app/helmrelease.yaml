@@ -48,8 +48,6 @@ spec:
       enabled: true
       subdomain: plex
       icon: mdi:gamepad-variant
-    serviceMonitor:
-      enabled: false
     loadbalanced: true
     persistence:
       config:

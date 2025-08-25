@@ -40,6 +40,8 @@ spec:
     ports:
       http: 7777
       messaging: 8888
+      metrics: 8081
+      web: 3000
     udpPorts:
       server: 7777
     ingress:

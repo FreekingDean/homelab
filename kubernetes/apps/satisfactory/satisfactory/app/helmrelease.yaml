@@ -30,13 +30,8 @@ spec:
       satisfactory:
         containers:
           exporter:
-            env:
-              - name: LOG_LEVEL
-                value: debug
-              - name: SAVEGAME_LOCATION
-                value: /config/saved/server
             image:
-              repository: sleavely/satisfactory-savegame-prometheus-exporter
+              repository: ghcr.io/freekingdean/satisfactory-buddy
               tag: latest
     stateful: true
     image:

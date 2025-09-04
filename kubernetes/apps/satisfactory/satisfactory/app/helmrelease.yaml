@@ -46,7 +46,7 @@ spec:
       server: 7777
     ingress:
       enabled: true
-      subdomain: plex
+      subdomain: satisfactory
       icon: mdi:gamepad-variant
     loadbalanced: true
     persistence:

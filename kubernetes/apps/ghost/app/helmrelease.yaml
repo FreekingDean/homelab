@@ -55,6 +55,7 @@ spec:
       http: 2368
     ingress:
       subdomain: ghost
+      localonly: false
       icon: "mdi:television-classic"
     persistence:
       config:

@@ -50,7 +50,7 @@ spec:
       mail__options__port: "25"
       TZ: America/New_York
       url: "https://ghost.deangalvin.dev"
-      admin__url: "https://ghostadmin.deangalvin.dev"
+      admin__url: "https://ghost.deangalvin.dev"
     ports:
       http: 2368
     ingress:

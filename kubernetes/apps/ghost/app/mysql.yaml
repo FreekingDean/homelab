@@ -1,4 +1,19 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1beta2.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: ghost
+  namespace: ghost
+spec:
+  interval: 1h
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 22.0.7
+  url: oci://registry-1.docker.io/bitnamicharts/redis
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -22,15 +37,9 @@ metadata:
   namespace: ghost
 spec:
   interval: 30m
-  chart:
-    spec:
-      chart: mariadb
-      version: 22.0.0
-      sourceRef:
-        kind: HelmRepository
-        name: bitnami
-        namespace: flux-system
-      interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: ghost
   values:
     auth:
       existingSecret: ghost-secret

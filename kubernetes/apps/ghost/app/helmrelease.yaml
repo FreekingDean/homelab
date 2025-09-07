@@ -50,8 +50,8 @@ spec:
       mail__options__port: "587"
       mail__options__auth__user: dean@glimmerlabs.io
       TZ: America/New_York
-      url: "https://ghost.deangalvin.dev"
-      admin__url: "https://ghost.deangalvin.dev"
+      url: "https://blog.glimmerlabs.io"
+      admin__url: "https://blog.glimmerlabs.io"
     ports:
       http: 2368
     ingress:

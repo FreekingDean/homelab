@@ -37,6 +37,9 @@ spec:
       config:
         type: persistentVolumeClaim
         existingClaim: config-qbittorrent-0
+      media:
+        type: persistentVolumeClaim
+        existingClaim: media
     image:
       repository: ghcr.io/home-operations/qbittorrent
       tag: 5.1.2

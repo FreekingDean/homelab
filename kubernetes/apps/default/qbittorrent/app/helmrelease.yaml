@@ -54,3 +54,10 @@ spec:
       icon: mdi:movie-search
     serviceMonitor:
       enabled: false
+    service:
+      torrent:
+        type: LoadBalancer
+        controller: qbittorrent
+        ports:
+          torrent:
+            port: *torrentPort

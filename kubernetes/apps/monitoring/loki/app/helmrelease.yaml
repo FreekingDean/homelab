@@ -119,6 +119,6 @@ spec:
 
     gateway:
       service:
-        type: LoadBalancer
+        type: ClusterIP
       nginxConfig:
         logFormat: main

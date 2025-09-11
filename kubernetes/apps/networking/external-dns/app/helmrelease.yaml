@@ -25,6 +25,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    extraArgs:
+      - --force-default-targets
     interval: 2m
     provider:
       name: cloudflare

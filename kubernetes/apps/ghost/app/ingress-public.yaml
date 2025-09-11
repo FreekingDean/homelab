@@ -9,6 +9,16 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
+  - host: blog.glimmerlabs.io
+    http:
+      paths:
+      - backend:
+          service:
+            name: ghost
+            port:
+              number: 2368
+        path: /
+        pathType: Prefix
   - host: www.glimmerlabs.io
     http:
       paths:
@@ -31,9 +41,5 @@ spec:
         pathType: Prefix
   tls:
   - hosts:
-    - ghost.deangalvin.dev
-    secretName: deangalvin-dev-production-tls
-status:
-  loadBalancer:
-    ingress:
-    - ip: 10.1.21.2
+    - glimmerlabs.io
+    secretName: glimmerlabs-io-production-tls

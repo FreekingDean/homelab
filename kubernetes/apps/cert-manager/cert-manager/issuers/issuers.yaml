@@ -11,10 +11,10 @@ spec:
       name: letsencrypt-production
     solvers:
       - dns01:
-        cloudflare:
-          apiTokenSecretRef:
-            name: cloudflare-external
-            key: apiKey
+          cloudflare:
+            apiTokenSecretRef:
+              name: cloudflare-external
+              key: apiKey
         selector:
           dnsZones:
             - "deangalvin.com"
@@ -34,10 +34,10 @@ spec:
       name: letsencrypt-staging
     solvers:
       - dns01:
-        cloudflare:
-          apiTokenSecretRef:
-            name: cloudflare-external
-            key: apiKey
+          cloudflare:
+            apiTokenSecretRef:
+              name: cloudflare-external
+              key: apiKey
         selector:
           dnsZones:
             - "${DOMAIN}"

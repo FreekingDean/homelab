@@ -8,3 +8,5 @@ data:
   DOMAIN: "deangalvin.dev"
   TIMEZONE: "America/New_York"
   PRODUCTION_TLS: "deangalvin-dev-production-tls"
+  DEANGALVIN_DEV_PRODUCTION_TLS: "deangalvin-dev-production-tls"
+  GLIMMERLABS_IO_PRODUCTION_TLS: "glimmerlabs-io-production-tls"

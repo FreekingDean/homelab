@@ -11,15 +11,16 @@ spec:
       name: letsencrypt-production
     solvers:
       - dns01:
-          cloudDNS:
-            project: "${GCP_PROJECT}"
-            serviceAccountSecretRef:
-              name: google-service-account
-              key: key.json
+        cloudflare:
+          apiTokenSecretRef:
+            name: cloudflare-external
+            key: apiKey
         selector:
           dnsZones:
             - "deangalvin.com"
             - "deangalvin.dev"
+            - "bananaboydean.com"
+            - "glimmerlabs.io"
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
@@ -33,11 +34,10 @@ spec:
       name: letsencrypt-staging
     solvers:
       - dns01:
-          cloudDNS:
-            project: "${GCP_PROJECT}"
-            serviceAccountSecretRef:
-              name: google-service-account
-              key: key.json
+        cloudflare:
+          apiTokenSecretRef:
+            name: cloudflare-external
+            key: apiKey
         selector:
           dnsZones:
             - "${DOMAIN}"

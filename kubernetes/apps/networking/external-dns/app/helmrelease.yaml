@@ -29,17 +29,18 @@ spec:
     provider:
       name: google
     env:
-      - name: EXTERNAL_DNS_GOOGLE_PROJECT
-        value: "${GCP_PROJECT}"
-      - name: GOOGLE_APPLICATION_CREDENTIALS
-        value: /var/lib/gcp/key.json
+      - name: CF_API_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: cloudflare-external
+            key: apiKey
       - name: EXTERNAL_DNS_DEFAULT_TARGETS
         value: "96.234.119.68"
     policy: sync
     sources: ["ingress", "service"]
     txtPrefix: k8s.
     txtOwnerId: default
-    domainFilters: ["deangalvin.com", "deangalvin.dev", "bananaboydean.com", "bananaboydean.dev"]
+    domainFilters: ["deangalvin.com", "deangalvin.dev", "bananaboydean.com", "bananaboydean.dev", "glimmerlabs.io"]
     serviceMonitor:
       enabled: false
     podAnnotations:

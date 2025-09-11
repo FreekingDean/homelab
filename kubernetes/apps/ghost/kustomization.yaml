@@ -5,6 +5,7 @@ resources:
   - ./namespace.yaml
   - ./app/externalsecret.yaml
   - ./app/helmrelease.yaml
+  - ./app/ingress-public.yaml
   - ./app/mysql.yaml
   - ./app/pvc.yaml
 patches:

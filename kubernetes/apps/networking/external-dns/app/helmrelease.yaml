@@ -27,28 +27,21 @@ spec:
   values:
     interval: 2m
     provider:
-      name: google
+      name: cloudflare
     env:
-      - name: EXTERNAL_DNS_GOOGLE_PROJECT
-        value: "${GCP_PROJECT}"
-      - name: GOOGLE_APPLICATION_CREDENTIALS
-        value: /var/lib/gcp/key.json
+      - name: CF_API_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: cloudflare-external
+            key: apiKey
       - name: EXTERNAL_DNS_DEFAULT_TARGETS
         value: "96.234.119.68"
     policy: sync
     sources: ["ingress", "service"]
     txtPrefix: k8s.
     txtOwnerId: default
-    domainFilters: ["deangalvin.com", "deangalvin.dev", "bananaboydean.com", "bananaboydean.dev"]
+    domainFilters: ["deangalvin.com", "deangalvin.dev", "bananaboydean.com", "bananaboydean.dev", "glimmerlabs.io"]
     serviceMonitor:
       enabled: false
     podAnnotations:
       secret.reloader.stakater.com/reload: external-dns-secret
-    extraVolumeMounts:
-      - name: gcp-credentials
-        mountPath: "/var/lib/gcp"
-        readOnly: true
-    extraVolumes:
-      - name: gcp-credentials
-        secret:
-          secretName: google-service-account

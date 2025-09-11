@@ -2,6 +2,22 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
+  name: "glimmerlabs-io-production"
+spec:
+  secretName: "${GLIMMERLABS_IO_PRODUCTION_TLS}"
+  secretTemplate:
+    annotations: []
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: "glimmerlabs.io"
+  dnsNames:
+    - "glimmerlabs.io"
+    - "*.glimmerlabs.io"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
   name: "deangalvin-dev-production"
 spec:
   secretName: "${PRODUCTION_TLS}"

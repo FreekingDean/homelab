@@ -7,6 +7,7 @@ resources:
   - ./echo-server/ks.yaml
   - ./filebrowser/ks.yaml
   - ./hajimari/ks.yaml
+  - ./jellyfin/ks.yaml
   - ./lidarr/ks.yaml
   - ./media/ks.yaml
   - ./musichero/ks.yaml

@@ -21,6 +21,7 @@ resources:
   - ./readarr/ks.yaml
   - ./sabnzbd/ks.yaml
   - ./sonarr/ks.yaml
+  - ./wizarr/ks.yaml
 patches:
   - patch: |-
       - op: add

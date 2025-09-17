@@ -1,0 +1,48 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: wizarr
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 0.0.14
+      sourceRef:
+        kind: HelmRepository
+        name: freekingdean
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    stateful: true
+    persistence:
+      config:
+        existingClaim: config-wizarr-0
+        type: persistentVolumeClaim
+      media:
+        existingClaim: media
+        type: persistentVolumeClaim
+    image:
+      repository: ghcr.io/wizarr/wizarr
+      tag: v2025.9.4
+    env:
+      DISABLE_BUILTIN_AUTH: "false"
+      TZ: America/New_York
+    ports:
+      http: 5690
+    ingress:
+      subdomain: wizarr
+    serviceMonitor:
+      enabled: false

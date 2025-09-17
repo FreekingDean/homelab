@@ -43,6 +43,7 @@ spec:
     ports:
       http: 5690
     ingress:
+      localonly: false
       subdomain: wizarr
     serviceMonitor:
       enabled: false

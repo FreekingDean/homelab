@@ -5,6 +5,7 @@ resources:
   - ./namespace.yaml
   - ./calibre/ks.yaml
   - ./echo-server/ks.yaml
+  - ./ersatztv/ks.yaml
   - ./filebrowser/ks.yaml
   - ./hajimari/ks.yaml
   - ./jellyfin/ks.yaml

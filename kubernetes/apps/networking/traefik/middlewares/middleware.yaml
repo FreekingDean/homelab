@@ -7,7 +7,7 @@ spec:
   ipAllowList:
     sourceRange:
       - 192.168.2.0/24
-      - 24.218.153.86/32
+      - 72.235.227.218/32
       - 10.0.0.0/8
 ---
 apiVersion: traefik.io/v1alpha1

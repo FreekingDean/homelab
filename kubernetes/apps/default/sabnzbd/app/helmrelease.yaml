@@ -45,7 +45,7 @@ spec:
         type: emptyDir
     image:
       repository: ghcr.io/home-operations/sabnzbd
-      tag: 4.5.3
+      tag: 4.5.5
     env:
       TZ: America/New_York
       SABNZBD__PORT: &port 80

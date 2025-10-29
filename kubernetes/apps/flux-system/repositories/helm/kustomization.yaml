@@ -6,6 +6,7 @@ resources:
   - ./backube.yaml
   - ./bjw-s.yaml
   - ./cloudnative-pg.yaml
+  - ./crossplane.yaml
   - ./elastic.yaml
   - ./emberstack.yaml
   - ./external-dns.yaml

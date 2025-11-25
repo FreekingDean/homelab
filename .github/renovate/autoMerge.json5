@@ -3,7 +3,7 @@
   "packageRules": [
     {
       "description": "Auto merge",
-      "matchManagers": ["github-actions", "docker", "kustomization", "helm", "asdf", "flux", "helm-values", "renovate-config-presets", "pre-commit"],
+      "matchManagers": ["github-actions", "docker", "kustomization", "helm", "asdf", "flux", "helm-values", "renovate-config-presets", "pre-commit", "terraform"],
       "automerge": true,
       "automergeType": "branch",
       "ignoreTests": false,

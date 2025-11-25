@@ -1,0 +1,119 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: grafana-operator
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: grafana-operator
+  interval: 1h
+  values:
+    dashboard:
+      enabled: true
+    serviceMonitor:
+      enabled: true
+#      datasources.yaml:
+#        apiVersion: 1
+#        datasources:
+#          - name: Loki
+#            type: loki
+#            uid: loki
+#            url: http://loki-gateway.monitoring.svc.cluster.local:80
+#            jsonData:
+#              maxLines: 250
+#          - name: Prometheus
+#            type: prometheus
+#            access: proxy
+#            url: http://kube-prometheus-stack-prometheus:9090
+#          - name: Alertmanager
+#            type: alertmanager
+#            access: proxy
+#            url: http://kube-prometheus-stack-alertmanager.monitoring.svc.cluster.local:9093
+#            jsonData:
+#              implementation: prometheus
+#    dashboards:
+#      default:
+#        flux:
+#          gnetId: 16714
+#          revision: 1
+#          datasource: Prometheus
+#        # Ref: https://grafana.com/grafana/dashboards/7845-zfs/
+#        zfs:
+#          gnetId: 7845
+#          revision: 4
+#          datasource: Prometheus
+#        # Ref: https://grafana.com/grafana/dashboards/13502-minio-dashboard/
+#        minio:
+#          gnetId: 13502
+#          revision: 10
+#          datasource: Prometheus
+#        # Ref: https://grafana.com/grafana/dashboards/1860-node-exporter-full/
+#        node-exporter-full:
+#          gnetId: 1860
+#          revision: 29
+#          datasource: Prometheus
+#        # Ref: https://grafana.com/grafana/dashboards/763-redis-dashboard-for-prometheus-redis-exporter-1-x/
+#        redis:
+#          gnetId: 763
+#          revision: 4
+#          datasource: Prometheus
+#        # Ref: https://grafana.com/grafana/dashboards/5342-ceph-pools/
+#        ceph-pools:
+#          gnetId: 5342
+#          revision: 9
+#          datasource: Prometheus
+#        # Ref: https://grafana.com/grafana/dashboards/5336-ceph-osd-single/
+#        ceph-osd:
+#          gnetId: 5336
+#          revision: 9
+#          datasource: Prometheus
+#        # Ref: https://grafana.com/grafana/dashboards/2842-ceph-cluster/
+#        ceph-cluster:
+#          gnetId: 2842
+#          revision: 16
+#          datasource: Prometheus
+#        traefik:
+#          gnetId: 4475
+#          revision: 5
+#          datasource: Prometheus
+#        cert-manager:
+#          url: https://raw.githubusercontent.com/monitoring-mixins/website/master/assets/cert-manager/dashboards/cert-manager.json
+#          datasource: Prometheus
+#        kubernetes-api-server:
+#          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-api-server.json
+#          datasource: Prometheus
+#        kubernetes-coredns:
+#          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-system-coredns.json
+#          datasource: Prometheus
+#        kubernetes-global:
+#          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-global.json
+#          datasource: Prometheus
+#        kubernetes-namespaces:
+#          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-namespaces.json
+#          datasource: Prometheus
+#        kubernetes-nodes:
+#          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-nodes.json
+#          datasource: Prometheus
+#        kubernetes-pods:
+#          url: https://raw.githubusercontent.com/dotdc/grafana-dashboards-kubernetes/master/dashboards/k8s-views-pods.json
+#          datasource: Prometheus
+#        istio-mesh:
+#          url: https://raw.githubusercontent.com/istio/istio/master/manifests/addons/dashboards/istio-mesh-dashboard.json
+#          datasource: Prometheus
+#        istio-extension:
+#          url: https://raw.githubusercontent.com/istio/istio/master/manifests/addons/dashboards/istio-extension-dashboard.json
+#          datasource: Prometheus
+#        istio-performance:
+#          url: https://raw.githubusercontent.com/istio/istio/master/manifests/addons/dashboards/istio-performance-dashboard.json
+#          datasource: Prometheus
+#        istio-service:
+#          url: https://raw.githubusercontent.com/istio/istio/master/manifests/addons/dashboards/istio-service-dashboard.json
+#          datasource: Prometheus
+#        istio-workload:
+#          url: https://raw.githubusercontent.com/istio/istio/master/manifests/addons/dashboards/istio-workload-dashboard.json
+#          datasource: Prometheus
+#        istio-pilot:
+#          url: https://raw.githubusercontent.com/istio/istio/master/manifests/addons/dashboards/pilot-dashboard.json
+#          datasource: Prometheus

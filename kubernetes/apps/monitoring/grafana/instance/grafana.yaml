@@ -17,7 +17,7 @@ spec:
       oauth_auto_login: "false"
       signout_redirect_url: https://auth.deangalvin.dev/logout
     auth.anonymous:
-      enabled: "true"
+      enabled: "false"
     auth.generic_oauth:
       api_url: https://auth.deangalvin.dev/api/oidc/userinfo
       auth_url: https://auth.deangalvin.dev/api/oidc/authorization

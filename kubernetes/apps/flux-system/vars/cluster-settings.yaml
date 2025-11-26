@@ -5,6 +5,7 @@ metadata:
   name: cluster-settings
   namespace: flux-system
 data:
+  INGRESS_CLASS: traefik
   DOMAIN: "deangalvin.dev"
   TIMEZONE: "America/New_York"
   PRODUCTION_TLS: "deangalvin-dev-production-tls"

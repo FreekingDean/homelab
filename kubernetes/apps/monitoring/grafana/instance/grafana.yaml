@@ -51,7 +51,6 @@ spec:
       root_url: https://grafana.deangalvin.dev
   deployment:
     spec:
-      replicas: 2
       template:
         spec:
           containers:

@@ -14,7 +14,9 @@ spec:
     deschedulerPolicyAPIVersion: descheduler/v1alpha2
     deschedulerPolicy:
       metricsProviders:
-        - source: KubernetesMetrics
+        - source: Prometheus
+          prometheus:
+            url: http://prometheus-operated.monitoring.svc.cluster.local:9090
       profiles:
         - name: Default
           pluginConfig:

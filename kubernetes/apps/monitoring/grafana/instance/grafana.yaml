@@ -51,10 +51,16 @@ spec:
       root_url: https://grafana.deangalvin.dev
   deployment:
     spec:
+      strategy:
+        type: Recreate
       template:
         spec:
           containers:
           - name: grafana
+            volumes:
+              - name: grafana-data
+                persistentVolumeClaim:
+                  claimName: grafana-data
             env:
             - name: GF_SECURITY_ADMIN_USER
               valueFrom:

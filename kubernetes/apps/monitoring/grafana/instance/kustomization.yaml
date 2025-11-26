@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ./datasource.yaml
   - ./grafana.yaml
+  - ./pvc.yaml

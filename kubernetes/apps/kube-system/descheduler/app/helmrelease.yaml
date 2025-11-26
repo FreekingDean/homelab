@@ -29,8 +29,6 @@ spec:
                     - SystemCriticalPods
             - name: LowNodeUtilization
               args:
-                metricsUtilization:
-                  source: KubernetesMetrics
                 thresholds:
                   cpu: 20
                   memory: 20

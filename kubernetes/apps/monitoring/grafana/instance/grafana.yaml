@@ -115,8 +115,8 @@ spec:
         hajimari.io/icon: simple-icons:grafana
     spec:
       ingressClassName: "${INGRESS_CLASS}"
-      hosts:
-        - &host "grafana.${DOMAIN}"
+      rules:
+        - host: &host "grafana.${DOMAIN}"
       tls:
         - hosts:
             - *host

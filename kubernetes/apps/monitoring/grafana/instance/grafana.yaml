@@ -55,12 +55,12 @@ spec:
         type: Recreate
       template:
         spec:
+          volumes:
+            - name: grafana-data
+              persistentVolumeClaim:
+                claimName: grafana-data
           containers:
           - name: grafana
-            volumes:
-              - name: grafana-data
-                persistentVolumeClaim:
-                  claimName: grafana-data
             env:
             - name: GF_SECURITY_ADMIN_USER
               valueFrom:

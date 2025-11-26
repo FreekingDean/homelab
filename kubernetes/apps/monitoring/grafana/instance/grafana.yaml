@@ -63,40 +63,40 @@ spec:
           containers:
             - name: grafana
               env:
-								- name: JAEGER_AGENT_HOST
-									value: ""
-								- name: JAEGER_AGENT_PORT
-									value: ""
-								- name: GF_AUTH_GENERIC_OAUTH_API_URL
-									value: "https://auth.deangalvin.dev/api/oidc/userinfo"
-								- name: GF_AUTH_GENERIC_OAUTH_AUTH_URL
-									value: "https://auth.deangalvin.dev/api/oidc/authorization"
-								- name: GF_AUTH_GENERIC_OAUTH_CLIENT_ID
-									value: "grafana"
-								- name: GF_AUTH_GENERIC_OAUTH_TOKEN_URL
-									value: "https://auth.deangalvin.dev/api/oidc/token"
-								- name: GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
-									value: "grafana_client_secret"
-								- name: GF_ANALYTICS_CHECK_FOR_UPDATES
-									value: "false"
-								- name: GF_DATE_FORMATS_USE_BROWSER_LOCALE
-									value: "true"
-								- name: GF_EXPLORE_ENABLED
-									value: "true"
-								- name: GF_GRAFANA_NET_URL
-									value: https://grafana.net
-								- name: GF_LOG_FILTERS
-									value: rendering:debug
-								- name: GF_LOG_MODE
-									value: console
-								- name: GF_PANELS_DISABLE_SANITIZE_HTML
-									value: "true"
-								- name: GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS
-									value: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
-								- name: GF_SECURITY_ALLOW_EMBEDDING
-									value: "true"
-								- name: GF_SERVER_ROOT_URL
-									value: "https://grafana.${DOMAIN}"
+                - name: JAEGER_AGENT_HOST
+                  value: ""
+                - name: JAEGER_AGENT_PORT
+                  value: ""
+                - name: GF_AUTH_GENERIC_OAUTH_API_URL
+                  value: "https://auth.deangalvin.dev/api/oidc/userinfo"
+                - name: GF_AUTH_GENERIC_OAUTH_AUTH_URL
+                  value: "https://auth.deangalvin.dev/api/oidc/authorization"
+                - name: GF_AUTH_GENERIC_OAUTH_CLIENT_ID
+                  value: "grafana"
+                - name: GF_AUTH_GENERIC_OAUTH_TOKEN_URL
+                  value: "https://auth.deangalvin.dev/api/oidc/token"
+                - name: GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
+                  value: "grafana_client_secret"
+                - name: GF_ANALYTICS_CHECK_FOR_UPDATES
+                  value: "false"
+                - name: GF_DATE_FORMATS_USE_BROWSER_LOCALE
+                  value: "true"
+                - name: GF_EXPLORE_ENABLED
+                  value: "true"
+                - name: GF_GRAFANA_NET_URL
+                  value: https://grafana.net
+                - name: GF_LOG_FILTERS
+                  value: rendering:debug
+                - name: GF_LOG_MODE
+                  value: console
+                - name: GF_PANELS_DISABLE_SANITIZE_HTML
+                  value: "true"
+                - name: GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS
+                  value: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
+                - name: GF_SECURITY_ALLOW_EMBEDDING
+                  value: "true"
+                - name: GF_SERVER_ROOT_URL
+                  value: "https://grafana.${DOMAIN}"
               securityContext:
                 allowPrivilegeEscalation: false
                 readOnlyRootFilesystem: true

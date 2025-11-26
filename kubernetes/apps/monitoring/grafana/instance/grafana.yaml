@@ -117,6 +117,15 @@ spec:
       ingressClassName: "${INGRESS_CLASS}"
       rules:
         - host: &host "grafana.${DOMAIN}"
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: grafana-service
+                    port:
+                      number: 3000
+                path: /
+                pathType: Prefix
       tls:
         - hosts:
             - *host

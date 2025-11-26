@@ -60,12 +60,12 @@ spec:
             - name: GF_SECURITY_ADMIN_USER
               valueFrom:
                 secretKeyRef:
-                  key: ADMIN_USER
+                  key: GF_SECURITY_ADMIN_USER
                   name: grafana-admin-credentials
             - name: GF_SECURITY_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  key: ADMIN_PASSWORD
+                  key: GF_SECURITY_ADMIN_PASSWORD
                   name: grafana-admin-credentials
             securityContext:
               allowPrivilegeEscalation: false

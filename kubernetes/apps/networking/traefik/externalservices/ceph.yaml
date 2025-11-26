@@ -68,7 +68,7 @@ spec:
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: ceph
+  name: &app ceph
 spec:
   endpoints:
     - interval: 30s

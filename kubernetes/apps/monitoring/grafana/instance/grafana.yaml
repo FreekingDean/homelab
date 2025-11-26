@@ -9,38 +9,35 @@ metadata:
 spec:
   config:
     analytics:
-      check_for_updates: "false"
       check_for_plugin_updates: "false"
+      check_for_updates: "false"
       feedback_links_enabled: "false"
       reporting_enabled: "false"
     auth:
-      signout_redirect_url: https://auth.deangalvin.dev/logout
       oauth_auto_login: "false"
-    auth.anonymous:
-      enabled: "true"
-      org_name: HomeOps
-      org_id: "1"
-      org_role: Viewer
+      signout_redirect_url: https://auth.deangalvin.dev/logout
     auth.basic:
       enabled: "false"
-    auth.generic_oauth:
+    auth.anonymous:
       enabled: "true"
-      name: Authelia
-      client_id: "" # Set by env vars
-      client_secret: "" # Set by env vars secret
-      auth_url: "" # Set by env vars
-      token_url: "" # Set by env vars
-      api_url: "" # Set by env vars
-      scopes: "openid profile email groups"
+    auth.generic_oauth:
+      api_url: https://auth.deangalvin.dev/api/oidc/userinfo
+      auth_url: https://auth.deangalvin.dev/api/oidc/authorization
+      client_id: grafana
+      client_secret: grafana_client_secret
       empty_scopes: "false"
-      login_attribute_path: preferred_username
+      enabled: "true"
       groups_attribute_path: groups
+      login_attribute_path: preferred_username
+      name: Authelia
       name_attribute_path: name
+      scopes: openid profile email groups
+      token_url: https://auth.deangalvin.dev/api/oidc/token
       use_pkce: "true"
     auth.generic_oauth.group_mapping:
+      org_id: "1"
       role_attribute_path: |
         contains(groups[*], 'admins') && 'Admin' || contains(groups[*], 'people') && 'Viewer'
-      org_id: "1"
     log:
       mode: console
     metrics:
@@ -61,74 +58,40 @@ spec:
       template:
         spec:
           containers:
-            - name: grafana
-              env:
-                - name: JAEGER_AGENT_HOST
-                  value: ""
-                - name: JAEGER_AGENT_PORT
-                  value: ""
-                - name: GF_AUTH_GENERIC_OAUTH_API_URL
-                  value: "https://auth.deangalvin.dev/api/oidc/userinfo"
-                - name: GF_AUTH_GENERIC_OAUTH_AUTH_URL
-                  value: "https://auth.deangalvin.dev/api/oidc/authorization"
-                - name: GF_AUTH_GENERIC_OAUTH_CLIENT_ID
-                  value: "grafana"
-                - name: GF_AUTH_GENERIC_OAUTH_TOKEN_URL
-                  value: "https://auth.deangalvin.dev/api/oidc/token"
-                - name: GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
-                  value: "grafana_client_secret"
-                - name: GF_ANALYTICS_CHECK_FOR_UPDATES
-                  value: "false"
-                - name: GF_DATE_FORMATS_USE_BROWSER_LOCALE
-                  value: "true"
-                - name: GF_EXPLORE_ENABLED
-                  value: "true"
-                - name: GF_GRAFANA_NET_URL
-                  value: https://grafana.net
-                - name: GF_LOG_FILTERS
-                  value: rendering:debug
-                - name: GF_LOG_MODE
-                  value: console
-                - name: GF_PANELS_DISABLE_SANITIZE_HTML
-                  value: "true"
-                - name: GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS
-                  value: natel-discrete-panel,pr0ps-trackmap-panel,panodata-map-panel
-                - name: GF_SECURITY_ALLOW_EMBEDDING
-                  value: "true"
-                - name: GF_SERVER_ROOT_URL
-                  value: "https://grafana.${DOMAIN}"
-              securityContext:
-                allowPrivilegeEscalation: false
-                readOnlyRootFilesystem: true
-                capabilities: {drop: ["ALL"]}
+          - name: grafana
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+              readOnlyRootFilesystem: true
           securityContext:
-            runAsNonRoot: true
-            runAsUser: 1000
-            runAsGroup: 1000
             fsGroup: 1000
             fsGroupChangePolicy: OnRootMismatch
+            runAsGroup: 1000
+            runAsNonRoot: true
+            runAsUser: 1000
+  disableDefaultSecurityContext: All
   ingress:
     metadata:
       annotations:
-        traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd"
-        hajimari.io/appName: "Grafana"
+        hajimari.io/appName: Grafana
         hajimari.io/icon: simple-icons:grafana
+        traefik.ingress.kubernetes.io/router.middlewares: networking-localonly@kubernetescrd
     spec:
-      ingressClassName: "${INGRESS_CLASS}"
+      ingressClassName: traefik
       rules:
-        - host: &host "grafana.${DOMAIN}"
-          http:
-            paths:
-              - backend:
-                  service:
-                    name: grafana-service
-                    port:
-                      number: 3000
-                path: /
-                pathType: Prefix
+      - host: grafana.deangalvin.dev
+        http:
+          paths:
+          - backend:
+              service:
+                name: grafana-service
+                port:
+                  number: 3000
+            path: /
+            pathType: Prefix
       tls:
-        - hosts:
-            - *host
-          secretName: "${PRODUCTION_TLS}"
-
-  disableDefaultSecurityContext: All
+      - hosts:
+        - grafana.deangalvin.dev
+        secretName: deangalvin-dev-production-tls

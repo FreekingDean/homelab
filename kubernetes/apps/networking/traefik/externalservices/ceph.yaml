@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/instance: *app
 spec:
   type: ExternalName
-  externalName: 10.0.0.105
+  externalName: 10.0.0.107
   ports:
     - name: http
       port: &port 8080
@@ -28,7 +28,7 @@ metadata:
     app.kubernetes.io/instance: *app
 subsets:
   - addresses:
-      - ip: 10.0.0.105
+      - ip: 10.0.0.107
     ports:
       - name: http
         port: 8080

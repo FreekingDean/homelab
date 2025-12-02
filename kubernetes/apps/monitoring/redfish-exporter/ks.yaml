@@ -129,7 +129,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-redfish-exporter-galaxy
+  name: cluster-apps-redfish-exporter-yamato
   namespace: flux-system
 spec:
   path: ./kubernetes/apps/monitoring/redfish-exporter/app

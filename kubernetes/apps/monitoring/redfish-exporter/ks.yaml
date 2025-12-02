@@ -143,5 +143,5 @@ spec:
   timeout: 5m
   postBuild:
     substitute:
-      host: 192.168.2.109
+      host: 192.168.2.66
       chassis: yamoato

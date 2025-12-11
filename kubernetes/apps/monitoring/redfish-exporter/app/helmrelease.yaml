@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: redfish-exporter
-      version: 0.1.12
+      version: 0.1.13
       sourceRef:
         kind: HelmRepository
         name: redfish-exporter

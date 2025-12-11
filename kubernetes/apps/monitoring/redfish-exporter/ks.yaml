@@ -3,6 +3,27 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
+  name: cluster-apps-redfish-exporter-defiant
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/monitoring/redfish-exporter/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  healthChecks: []
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+  postBuild:
+    substitute:
+      host: 192.168.2.31
+      chassis: defiant
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1beta2.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
   name: cluster-apps-redfish-exporter-discovery
   namespace: flux-system
 spec:
@@ -66,48 +87,6 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-redfish-exporter-enterprise
-  namespace: flux-system
-spec:
-  path: ./kubernetes/apps/monitoring/redfish-exporter/app
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: home-kubernetes
-  healthChecks: []
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
-  postBuild:
-    substitute:
-      host: 192.168.2.10
-      chassis: enterprise
----
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1beta2.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: cluster-apps-redfish-exporter-voyager
-  namespace: flux-system
-spec:
-  path: ./kubernetes/apps/monitoring/redfish-exporter/app
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: home-kubernetes
-  healthChecks: []
-  interval: 30m
-  retryInterval: 1m
-  timeout: 5m
-  postBuild:
-    substitute:
-      host: 192.168.2.4
-      chassis: voyager
----
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1beta2.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
   name: cluster-apps-redfish-exporter-galaxy
   namespace: flux-system
 spec:
@@ -144,4 +123,25 @@ spec:
   postBuild:
     substitute:
       host: 192.168.2.66
-      chassis: yamoato
+      chassis: yamato
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1beta2.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-redfish-exporter-challenger
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/monitoring/redfish-exporter/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  healthChecks: []
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
+  postBuild:
+    substitute:
+      host: 192.168.2.32
+      chassis: challenger

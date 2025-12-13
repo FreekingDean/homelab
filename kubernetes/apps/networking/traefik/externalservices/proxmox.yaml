@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/instance: *app
 spec:
   type: ExternalName
-  externalName: 10.0.0.101
+  externalName: 10.0.0.107
   ports:
     - name: https
       port: &port 8006

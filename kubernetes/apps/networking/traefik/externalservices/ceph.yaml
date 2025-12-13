@@ -27,7 +27,10 @@ metadata:
     app.kubernetes.io/instance: *app
 subsets:
   - addresses:
+      - ip: 10.0.0.104
+      - ip: 10.0.0.105
       - ip: 10.0.0.106
+      - ip: 10.0.0.107
     ports:
       - name: http
         port: 8080

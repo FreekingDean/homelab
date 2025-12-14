@@ -34,6 +34,9 @@ spec:
       media:
         type: persistentVolumeClaim
         existingClaim: media
+      media:
+        type: persistentVolumeClaim
+        existingClaim: ec-media
     image:
       repository: ghcr.io/jellyfin/jellyfin
       tag: 10.11.4@sha256:37f2625f5d5d70c5b1ceb57f4d8f2a7ff666ea723fb96b468275bbafbde2c06c

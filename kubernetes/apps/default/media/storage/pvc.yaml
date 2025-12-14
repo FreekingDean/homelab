@@ -10,3 +10,15 @@ spec:
   resources:
     requests:
       storage: "100Ti"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ec-media
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ec-cephfs
+  resources:
+    requests:
+      storage: "10Ti"

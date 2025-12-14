@@ -4,4 +4,5 @@ kind: Namespace
 metadata:
   name: ceph-csi-cephfs
   labels:
+    pod-security.kubernetes.io/enforce: privileged
     kustomize.toolkit.fluxcd.io/prune: disabled

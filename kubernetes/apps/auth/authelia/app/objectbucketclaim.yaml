@@ -1,8 +1,8 @@
----
-apiVersion: objectbucket.io/v1alpha1
-kind: ObjectBucketClaim
-metadata:
-  name: "authelia-pg-${NAME_SUFFIX}"
-spec:
-  bucketName: "authelia-pg-${NAME_SUFFIX}"
-  storageClassName: ceph-bucket
+#---
+#apiVersion: objectbucket.io/v1alpha1
+#kind: ObjectBucketClaim
+#metadata:
+#  name: "authelia-pg-${NAME_SUFFIX}"
+#spec:
+#  bucketName: "authelia-pg-${NAME_SUFFIX}"
+#  storageClassName: ceph-bucket

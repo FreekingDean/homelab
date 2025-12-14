@@ -86,7 +86,7 @@ spec:
     persistence:
       config:
         type: persistentVolumeClaim
-        existingClaim: config-calibre-web-0
+        existingClaim: calibre-web
       media:
         existingClaim: media
         type: persistentVolumeClaim

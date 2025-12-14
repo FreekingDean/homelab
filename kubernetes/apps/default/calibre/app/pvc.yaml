@@ -27,3 +27,21 @@ spec:
     requests:
       storage: 10Gi
   storageClassName: ceph-block
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: calibre-web
+  labels:
+    app.kubernetes.io/instance: calibre-web
+    app.kubernetes.io/name: calibre-web
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: replica-block
+  dataSource:
+    kind: PersistentVolumeClaim
+    name: config-calibre-web-0

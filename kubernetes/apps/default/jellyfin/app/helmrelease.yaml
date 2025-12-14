@@ -34,7 +34,7 @@ spec:
       media:
         type: persistentVolumeClaim
         existingClaim: media
-      media:
+      ec-media:
         type: persistentVolumeClaim
         existingClaim: ec-media
     image:

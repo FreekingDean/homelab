@@ -26,7 +26,7 @@ metadata:
   name: ec-cephfs
 provisioner: cephfs.csi.ceph.com
 parameters:
-  clusterID: ceph
+  clusterID: ceph_ec
   pool: cephfs_data_ec
   fsName: cephfs
   csi.storage.k8s.io/controller-expand-secret-name: &secretName csi-cephfs-credentials

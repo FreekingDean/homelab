@@ -34,6 +34,13 @@ spec:
         image: "quay.io/ceph/ceph:v19.2.3"
       external:
         enable: true
+      crashCollector:
+        disable: true
+      healthCheck:
+        daemonHealth:
+          mon:
+            disabled: false
+            interval: 45s
     cephObjectStores:
       - name: external-objectstore
         spec:

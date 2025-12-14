@@ -38,6 +38,9 @@ spec:
       config:
         existingClaim: config-sabnzbd-0
         type: persistentVolumeClaim
+      ec-media:
+        type: persistentVolumeClaim
+        existingClaim: ec-media
       media:
         existingClaim: media
         type: persistentVolumeClaim

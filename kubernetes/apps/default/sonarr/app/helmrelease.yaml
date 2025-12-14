@@ -53,6 +53,9 @@ spec:
       config:
         type: persistentVolumeClaim
         existingClaim: config-${instance_name}-0
+      ec-media:
+        type: persistentVolumeClaim
+        existingClaim: ec-media
       media:
         type: persistentVolumeClaim
         existingClaim: media

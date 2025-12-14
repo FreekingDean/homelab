@@ -57,5 +57,8 @@ spec:
       media:
         type: persistentVolumeClaim
         existingClaim: media
+      ec-media:
+        type: persistentVolumeClaim
+        existingClaim: ec-media
     serviceMonitor:
       enabled: false

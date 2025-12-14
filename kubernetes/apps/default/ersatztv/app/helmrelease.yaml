@@ -34,6 +34,9 @@ spec:
       media:
         existingClaim: media
         type: persistentVolumeClaim
+      ec-media:
+        existingClaim: ec-media
+        type: persistentVolumeClaim
     image:
       repository: ghcr.io/ersatztv/ersatztv
       tag: v25.9.0

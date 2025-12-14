@@ -40,6 +40,9 @@ spec:
       media:
         type: persistentVolumeClaim
         existingClaim: media
+      ec-media:
+        type: persistentVolumeClaim
+        existingClaim: ec-media
     image:
       repository: ghcr.io/home-operations/qbittorrent
       tag: 5.1.4

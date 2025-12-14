@@ -38,6 +38,9 @@ spec:
       media:
         type: persistentVolumeClaim
         existingClaim: media
+      media-ec:
+        type: persistentVolumeClaim
+        existingClaim: media-ec
       transcode:
         type: emptyDir
     image:

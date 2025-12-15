@@ -6,7 +6,7 @@ metadata:
 provisioner: rbd.csi.ceph.com
 parameters:
   clusterID: ceph
-  pool: data-pool
+  pool: kubernetes-replica-pool
   imageFormat: "2"
   imageFeatures: layering
   csi.storage.k8s.io/fstype: ext4
@@ -20,4 +20,4 @@ parameters:
   csi.storage.k8s.io/provisioner-secret-namespace: *secretNamespace
 reclaimPolicy: Retain
 allowVolumeExpansion: true
-volumeBindingMode: WaitForFirstConsumer
+volumeBindingMode: Immediate

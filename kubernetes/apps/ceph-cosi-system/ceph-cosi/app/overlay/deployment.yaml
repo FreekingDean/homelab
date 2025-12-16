@@ -11,5 +11,7 @@ spec:
   template:
     spec:
       containers:
+        - name: objectstorage-provisioner-sidecar
+          args: []
         - name: ceph-cosi-driver
           image: "quay.io/ceph/cosi:v0.1.2"

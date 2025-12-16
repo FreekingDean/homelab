@@ -63,7 +63,7 @@ spec:
       pattern_ingester:
         enabled: true
       limits_config:
-        max_global_streams_per_user: 1000000
+        max_global_streams_per_user: 10000000
         allow_structured_metadata: true
         volume_enabled: true
 
@@ -132,13 +132,13 @@ spec:
               optional: false
     backend:
       <<: *deployment_template
-      replicas: 2
+      replicas: 4
     read:
       <<: *deployment_template
-      replicas: 2
+      replicas: 4
     write:
       <<: *deployment_template
-      replicas: 3 # To ensure data durability with replication
+      replicas: 5 # To ensure data durability with replication
 
     gateway:
       service:

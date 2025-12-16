@@ -70,7 +70,7 @@ spec:
 
     deploymentMode: SimpleScalable
 
-    _template: &template
+    _deployment_template: &deployment_template
       extraVolumes:
         - name: credential-fetcher
           emptyDir: {}
@@ -138,13 +138,13 @@ spec:
               key: LOKI_S3_SECRET_ACCESS_KEY
               optional: false
     backend:
-      <<: *template
+      <<: *deployment_template
       replicas: 2
     read:
-      <<: *template
+      <<: *deployment_template
       replicas: 2
     write:
-      <<: *template
+      <<: *deployment_template
       replicas: 3 # To ensure data durability with replication
 
     gateway:

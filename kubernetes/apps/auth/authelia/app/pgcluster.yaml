@@ -24,7 +24,7 @@ spec:
         compression: bzip2
         maxParallel: 8
       destinationPath: "s3://authelia-pg-${NAME_SUFFIX}/"
-      endpointURL: http://10.0.0.102:7480
+      endpointURL: "http://10.0.0.104:7480"
       serverName: "authelia-pg-${NAME_SUFFIX}"
       s3Credentials:
         accessKeyId:

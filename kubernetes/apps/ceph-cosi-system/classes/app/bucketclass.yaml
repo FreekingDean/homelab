@@ -1,0 +1,9 @@
+kind: BucketClass
+apiVersion: objectstorage.k8s.io/v1alpha1
+metadata:
+  name: ceph
+driverName: cosi.ceph.objectstorage.k8s.io
+deletionPolicy: Delete
+parameters:
+  objectStoreUserSecretName: bucket-access-admin-credentials
+  objectStoreUserSecretNamespace: ceph-cosi-system

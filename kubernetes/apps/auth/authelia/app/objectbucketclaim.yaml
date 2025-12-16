@@ -6,3 +6,22 @@
 #spec:
 #  bucketName: "authelia-pg-${NAME_SUFFIX}"
 #  storageClassName: ceph-bucket
+---
+apiVersion: objectstorage.k8s.io/v1alpha1
+kind: BucketClaim
+metadata:
+  name: authelia-pg-${NAME_SUFFIX}
+spec:
+  bucketClassName: ceph
+  protocols:
+    - s3
+---
+apiVersion: cosi.storage.k8s.io/v1alpha1
+kind: BucketAccess
+metadata:
+  name: authelia-pg-${NAME_SUFFIX}
+spec:
+  bucketClaimName: authelia-pg-${NAME_SUFFIX}
+  bucketAccessClassName: ceph
+  credentialsSecretName: authelia-pg-${NAME_SUFFIX}
+  protocol: s3

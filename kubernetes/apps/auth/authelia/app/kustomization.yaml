@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./pgcluster.yaml
-  #- ./objectbucketclaim.yaml
+  - ./objectbucketclaim.yaml

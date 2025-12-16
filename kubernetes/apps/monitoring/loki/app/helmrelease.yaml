@@ -71,6 +71,9 @@ spec:
     deploymentMode: SimpleScalable
 
     _deployment_template: &deployment_template
+      extraVolumeMounts:
+        - name: credential-fetcher
+          mountPath: /s3-credentials
       extraVolumes:
         - name: credential-fetcher
           emptyDir: {}
@@ -81,7 +84,7 @@ spec:
         - name: credential_fetcher
           image: ghcr.io/jqlang/jq
           volumeMounts:
-            - name: credential-fetcher-volume
+            - name: credential-fetcher
               mountPath: /s3
             - name: s3-credentials
               mountPath: /s3-secret

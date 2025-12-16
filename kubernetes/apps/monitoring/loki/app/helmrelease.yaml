@@ -39,6 +39,7 @@ spec:
         bucketNames:
           chunks: $${S3_LOKI_BUCKET}
           ruler: $${S3_LOKI_BUCKET}
+          admin: $${S3_LOKI_BUCKET}
         type: s3
         s3:
           accessKeyId: $${S3_LOKI_ACCESS_KEY_ID}
@@ -69,53 +70,82 @@ spec:
 
     deploymentMode: SimpleScalable
 
-    backend:
-      replicas: 2
+    _deployment_template: &deployment_template
+      extraVolumes:
+        - name: credential-fetcher
+          emptyDir: {}
+        - name: s3-credentials
+          secret:
+            secretName: loki-bucket-credentials
+      initContainers:
+        - name: credential_fetcher
+          image: ghcr.io/jqlang/jq
+          volumeMounts:
+            - name: credential-fetcher-volume
+              mountPath: /s3
+            - name: s3-credentials
+              mountPath: /s3-secret
+              readOnly: true
+          command:
+            - sh
+            - -c
+            - |
+              set -eu
+              jq -r '                                                                                                                                                                                                                                                                                                  [14:31:10]
+                "export LOKI_S3_BUCKET=\(.spec.bucketName)",
+                "export LOKI_S3_ENDPOINT=\(.spec.secretS3.endpoint)",
+                "export LOKI_S3_ACCESS_KEY_ID=\(.spec.secretS3.accessKeyID)",
+                "export LOKI_S3_REGION=\(.spec.secretS3.region)",
+                "export LOKI_S3_SECRET_ACCESS_KEY=\(.spec.secretS3.accessSecretKey)"
+              ' /s3-secret/BucketInfo > /s3/config.env
+              chmod 0400 /s3/config.env
       extraArgs:
         - '-config.expand-env=true'
-      extraEnv: &s3_args
-        - name: S3_LOKI_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: loki-s3-bucket
-              key: BUCKET_PORT
-        - name: S3_LOKI_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: loki-s3-bucket
-              key: BUCKET_HOST
+      extraEnv:
         - name: S3_LOKI_ENDPOINT
-          value: "http://$(S3_LOKI_HOST):$(S3_LOKI_PORT)"
+          valueFrom:
+            fileKeyRef:
+              path: config.env
+              volumeName: credential-fetcher
+              key: LOKI_S3_ENDPOINT
+              optional: false
         - name: S3_LOKI_REGION
           valueFrom:
-            configMapKeyRef:
-              name: loki-s3-bucket
-              key: BUCKET_REGION
+            fileKeyRef:
+              path: config.env
+              volumeName: credential-fetcher
+              key: LOKI_S3_REGION
+              optional: false
         - name: S3_LOKI_BUCKET
           valueFrom:
-            configMapKeyRef:
-              name: loki-s3-bucket
-              key: BUCKET_NAME
+            fileKeyRef:
+              path: config.env
+              volumeName: credential-fetcher
+              key: LOKI_S3_BUCKET
+              optional: false
         - name: S3_LOKI_ACCESS_KEY_ID
           valueFrom:
-            secretKeyRef:
-              name: loki-s3-bucket
-              key: AWS_ACCESS_KEY_ID
+            fileKeyRef:
+              path: config.env
+              volumeName: credential-fetcher
+              key: LOKI_S3_ACCESS_KEY_ID
+              optional: false
         - name: S3_LOKI_SECRET_ACCESS_KEY
           valueFrom:
-            secretKeyRef:
-              name: loki-s3-bucket
-              key: AWS_SECRET_ACCESS_KEY
-    read:
+            fileKeyRef:
+              path: config.env
+              volumeName: credential-fetcher
+              key: LOKI_S3_SECRET_ACCESS_KEY
+              optional: false
+    backend:
+      <<: *deployment_template
       replicas: 2
-      extraArgs:
-        - '-config.expand-env=true'
-      extraEnv: *s3_args
+    read:
+      <<: *deployment_template
+      replicas: 2
     write:
+      <<: *deployment_template
       replicas: 3 # To ensure data durability with replication
-      extraArgs:
-        - '-config.expand-env=true'
-      extraEnv: *s3_args
 
     gateway:
       service:

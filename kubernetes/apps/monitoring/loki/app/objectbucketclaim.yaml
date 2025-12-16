@@ -6,3 +6,23 @@
 #spec:
 #  bucketName: monitoring-loki
 #  storageClassName: ceph-bucket
+
+---
+apiVersion: objectstorage.k8s.io/v1alpha1
+kind: BucketClaim
+metadata:
+  name: loki
+spec:
+  bucketClassName: ceph
+  protocols:
+    - s3
+---
+apiVersion: objectstorage.k8s.io/v1alpha1
+kind: BucketAccess
+metadata:
+  name: loki
+spec:
+  bucketClaimName: loki
+  bucketAccessClassName: ceph
+  credentialsSecretName: loki-bucket-credentials
+  protocol: s3

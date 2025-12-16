@@ -19,6 +19,11 @@ locals {
   }
   common_patch = {
     machine = {
+      kubelet = {
+        extraArgs = {
+          "feature-gates" = "EnvFiles=true"
+        }
+      }
       kernel = {
         modules = [
           { name = "ceph" },
@@ -31,6 +36,26 @@ locals {
       }
     }
     cluster = {
+      controllerManager = {
+        extraArgs = {
+          "feature-gates" = "EnvFiles=true"
+        }
+      }
+      proxy = {
+        extraArgs = {
+          "feature-gates" = "EnvFiles=true"
+        }
+      }
+      scheduler = {
+        extraArgs = {
+          "feature-gates" = "EnvFiles=true"
+        }
+      }
+      apiServer = {
+        extraArgs = {
+          "feature-gates" = "EnvFiles=true"
+        }
+      }
       network = {
         podSubnets = [
           var.kubernetes_pod_cidr

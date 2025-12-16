@@ -46,8 +46,6 @@ resource "proxmox_virtual_environment_vm" "vm" {
     file_id   = var.iso
     interface = "ide2"
   }
-
-  reboot = true
 }
 
 resource "unifi_user" "vm_ip" {

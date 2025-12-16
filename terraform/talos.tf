@@ -1,5 +1,5 @@
 locals {
-  talos_version      = "v1.10.4"
+  talos_version      = "v1.11.5"
   talos_cluster_name = "main-cluster"
 
   talos_control_plane_virtual_ip = "10.1.21.253"
@@ -14,7 +14,7 @@ module "discovery" {
   index  = 3
 
   servers = 1
-  workers = 3
+  workers = 1
 
 
   network_id = unifi_network.talos_network.id
@@ -73,23 +73,26 @@ module "protostar" {
 }
 
 
-##module "defiant" {
-##  source = "./modules/talos"
-##  node  = "defiant"
-##  index = count.index
-##
-##  servers = 1
-##  workers = 3
-##
-##  talos_version = local.talos_version
-##  arch          = "amd64"
-##
-##  network_id = unifi_network.talos_network.id
-##  talos_version              = local.talos_version
-##  talos_machine_secrets      = talos_machine_secrets.this.machine_secrets
-##  talos_client_configuration = talos_machine_secrets.this.client_configuration
-##  talos_cluster_name         = local.talos_cluster_name
-##}
+module "defiant" {
+  source = "./modules/talos"
+  node   = "defiant"
+  index  = 4
+
+  servers = 0
+  workers = 1
+
+  network_id = unifi_network.talos_network.id
+  vlan_tag   = unifi_network.talos_network.vlan_id
+
+  talos_version                  = local.talos_version
+  talos_machine_secrets          = talos_machine_secrets.this.machine_secrets
+  talos_client_configuration     = talos_machine_secrets.this.client_configuration
+  talos_cluster_name             = local.talos_cluster_name
+  talos_control_plane_virtual_ip = local.talos_control_plane_virtual_ip
+
+  kubernetes_pod_cidr     = local.kubernetes_pod_cidr
+  kubernetes_service_cidr = local.kubernetes_service_cidr
+}
 
 resource "talos_machine_secrets" "this" {}
 

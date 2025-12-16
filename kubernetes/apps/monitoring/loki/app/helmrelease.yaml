@@ -45,7 +45,7 @@ spec:
           accessKeyId: $${S3_LOKI_ACCESS_KEY_ID}
           secretAccessKey: $${S3_LOKI_SECRET_ACCESS_KEY}
           endpoint: $${S3_LOKI_ENDPOINT}
-          region: $${S3_LOKI_REGION}
+          region: ""
           s3ForcePathStyle: true
       schemaConfig:
         configs:
@@ -98,7 +98,6 @@ spec:
                 "LOKI_S3_BUCKET=\(.spec.bucketName)",
                 "LOKI_S3_ENDPOINT=\(.spec.secretS3.endpoint)",
                 "LOKI_S3_ACCESS_KEY_ID=\(.spec.secretS3.accessKeyID)",
-                "LOKI_S3_REGION=\(.spec.secretS3.region)",
                 "LOKI_S3_SECRET_ACCESS_KEY=\(.spec.secretS3.accessSecretKey)"
               ' /s3-secret/BucketInfo > /s3/config.env
       extraArgs:
@@ -110,13 +109,6 @@ spec:
               path: config.env
               volumeName: credential-fetcher
               key: LOKI_S3_ENDPOINT
-              optional: false
-        - name: S3_LOKI_REGION
-          valueFrom:
-            fileKeyRef:
-              path: config.env
-              volumeName: credential-fetcher
-              key: LOKI_S3_REGION
               optional: false
         - name: S3_LOKI_BUCKET
           valueFrom:

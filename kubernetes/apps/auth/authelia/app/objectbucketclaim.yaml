@@ -16,7 +16,7 @@ spec:
   protocols:
     - s3
 ---
-apiVersion: cosi.storage.k8s.io/v1alpha1
+apiVersion: objectstorage.k8s.io/v1alpha1
 kind: BucketAccess
 metadata:
   name: authelia-pg-${NAME_SUFFIX}

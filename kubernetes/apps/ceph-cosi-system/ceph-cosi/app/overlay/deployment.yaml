@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: objectstorage-provisioner
+  labels:
+    app.kubernetes.io/part-of: container-object-storage-interface
+    app.kubernetes.io/component: driver-ceph
+    app.kubernetes.io/version: main
+    app.kubernetes.io/name: cosi-driver-ceph
+spec:
+  template:
+    spec:
+      containers:
+        - name: ceph-cosi-driver
+          image: "quay.io/ceph/ceph-cosi:v0.1.2"

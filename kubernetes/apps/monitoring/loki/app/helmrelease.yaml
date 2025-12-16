@@ -81,7 +81,7 @@ spec:
           secret:
             secretName: loki-bucket-credentials
       initContainers:
-        - name: credential_fetcher
+        - name: credential-fetcher
           image: ghcr.io/jqlang/jq
           volumeMounts:
             - name: credential-fetcher

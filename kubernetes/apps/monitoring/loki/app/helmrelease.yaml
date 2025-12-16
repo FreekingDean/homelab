@@ -94,7 +94,7 @@ spec:
           args:
             - |
               set -eu
-              jq -r '                                                                                                                                                                                                                                                                                                  [14:31:10]
+              jq -r '
                 "export LOKI_S3_BUCKET=\(.spec.bucketName)",
                 "export LOKI_S3_ENDPOINT=\(.spec.secretS3.endpoint)",
                 "export LOKI_S3_ACCESS_KEY_ID=\(.spec.secretS3.accessKeyID)",

@@ -89,7 +89,7 @@ spec:
             - name: s3-credentials
               mountPath: /s3-secret
               readOnly: true
-          command:
+          args:
             - -r
             - |
               '                                                                                                                                                                                                                                                                                                  [14:31:10]
@@ -98,7 +98,10 @@ spec:
                 "export LOKI_S3_ACCESS_KEY_ID=\(.spec.secretS3.accessKeyID)",
                 "export LOKI_S3_REGION=\(.spec.secretS3.region)",
                 "export LOKI_S3_SECRET_ACCESS_KEY=\(.spec.secretS3.accessSecretKey)"
-              ' /s3-secret/BucketInfo > /s3/config.env
+              '
+            - "/s3-secret/BucketInfo"
+            - ">"
+            - "/s3/config.env"
       extraArgs:
         - '-config.expand-env=true'
       extraEnv:

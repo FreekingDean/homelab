@@ -14,3 +14,18 @@ spec:
     access: proxy
     isDefault: true
     url: http://kube-prometheus-stack-prometheus:9090
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadatasource_v1beta1.json
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: loki
+spec:
+  instanceSelector:
+    matchLabels:
+      grafana.internal/instance: grafana
+  datasource:
+    type: loki
+    name: loki
+    access: proxy
+    url: http://loki-gateway:80/

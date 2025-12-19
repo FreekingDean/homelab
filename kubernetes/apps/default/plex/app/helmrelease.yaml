@@ -52,10 +52,10 @@ spec:
       PLEX_NO_AUTH_NETWORKS: 192.168.2.0/24
     resources:
       requests:
-        cpu: 2000m
-        memory: 6000Mi
+        cpu: 8
+        memory: 16Gi
       limits:
-        memory: 12000Mi
+        memory: 32Gi
     ports:
       http: 32400
     ingress:

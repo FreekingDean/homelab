@@ -36,7 +36,7 @@ module "cerritos" {
   index  = 1
 
   servers = 1
-  workers = 3
+  workers = 1
 
   network_id = unifi_network.talos_network.id
   vlan_tag   = unifi_network.talos_network.vlan_id
@@ -57,7 +57,7 @@ module "protostar" {
   index  = 2
 
   servers = 1
-  workers = 3
+  workers = 1
 
   network_id = unifi_network.talos_network.id
   vlan_tag   = unifi_network.talos_network.vlan_id

@@ -32,12 +32,12 @@ terraform {
 
 provider "proxmox" {
   #pm_debug    = true
-  endpoint = "https://10.0.0.108:8006/api2/json"
+  endpoint = "https://proxmox.deangalvin.dev/api2/json"
   username = "root@pam"
   insecure = true
 }
 
 provider "unifi" {
-  api_url        = "https://192.168.2.1"
+  api_url        = "https://unifi.deangalvin.dev"
   allow_insecure = true
 }

@@ -20,7 +20,7 @@ kind: Ingress
 metadata:
   name: &app proxmox
   annotations:
-    traefik.ingress.kubernetes.io/router.middlewares: networking-localonly@kubernetescrd,authelia@kubernetescrd
+    traefik.ingress.kubernetes.io/router.middlewares: networking-localonly@kubernetescrd,networking-authelia@kubernetescrd
     hajimari.io/icon: mdi:server
   labels:
     app.kubernetes.io/name: *app

@@ -46,10 +46,10 @@ spec:
       TZ: America/New_York
     resources:
       requests:
-        cpu: 2000m
-        memory: 12000Mi
+        cpu: 8
+        memory: 32Gi
       limits:
-        memory: 12000Mi
+        memory: 64Gi
     ports:
       http: 8096
     ingress:

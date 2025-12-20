@@ -132,13 +132,13 @@ spec:
               optional: false
     backend:
       <<: *deployment_template
-      replicas: 4
+      replicas: 3
     read:
       <<: *deployment_template
-      replicas: 4
+      replicas: 3
     write:
       <<: *deployment_template
-      replicas: 5 # To ensure data durability with replication
+      replicas: 3 # To ensure data durability with replication
 
     gateway:
       service:

@@ -24,7 +24,7 @@ terraform {
       source = "hashicorp/null"
     }
     ignition = {
-      version = "~>2.4.0"
+      version = "~> 2.6.0"
       source  = "community-terraform-providers/ignition"
     }
   }

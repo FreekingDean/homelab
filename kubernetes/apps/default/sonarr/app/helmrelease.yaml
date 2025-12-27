@@ -36,7 +36,7 @@ spec:
     stateful: true
     image:
       repository: ghcr.io/home-operations/sonarr
-      tag: 4.0.16.2943
+      tag: 4.0.16.2946
     env:
       TZ: America/New_York
       SONARR__INSTANCE_NAME: ${instance_name}

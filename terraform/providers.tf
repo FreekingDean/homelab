@@ -31,8 +31,7 @@ terraform {
 }
 
 provider "proxmox" {
-  #pm_debug    = true
-  endpoint = "https://proxmox.deangalvin.dev/api2/json"
+  endpoint = "https://10.0.0.104:8006/api2/json"
   username = "root@pam"
   insecure = true
 }

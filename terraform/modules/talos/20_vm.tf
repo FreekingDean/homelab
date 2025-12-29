@@ -15,12 +15,13 @@ module "talos_servers" {
   node_index = var.index + 1
   index      = count.index + 1
 
-  memory     = 4096
-  cpus       = 4
-  disk_size  = 64
-  vlan_tag   = var.vlan_tag
-  network_id = var.network_id
-  iso        = "local:iso/talos-${var.talos_version}-amd64.iso"
+  memory        = 4096
+  cpus          = 4
+  disk_size     = 64
+  vlan_tag      = var.vlan_tag
+  ceph_vlan_tag = var.ceph_vlan_tag
+  network_id    = var.network_id
+  iso           = "local:iso/talos-${var.talos_version}-amd64.iso"
 }
 
 module "talos_workers" {
@@ -35,12 +36,13 @@ module "talos_workers" {
   node_index = var.index + 1
   index      = count.index + 2
 
-  memory     = (96 / var.workers) * 1024
-  cpus       = 36 / var.workers
-  disk_size  = 128
-  vlan_tag   = var.vlan_tag
-  network_id = var.network_id
-  iso        = "local:iso/talos-${var.talos_version}-amd64.iso"
+  memory        = (96 / var.workers) * 1024
+  cpus          = 36 / var.workers
+  disk_size     = 128
+  vlan_tag      = var.vlan_tag
+  ceph_vlan_tag = var.ceph_vlan_tag
+  network_id    = var.network_id
+  iso           = "local:iso/talos-${var.talos_version}-amd64.iso"
 }
 
 output "control_plane" {

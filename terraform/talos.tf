@@ -17,8 +17,9 @@ module "discovery" {
   workers = 1
 
 
-  network_id = unifi_network.talos_network.id
-  vlan_tag   = unifi_network.talos_network.vlan_id
+  network_id    = unifi_network.talos_network.id
+  vlan_tag      = unifi_network.talos_network.vlan_id
+  ceph_vlan_tag = 2
 
   talos_version                  = local.talos_version
   talos_machine_secrets          = talos_machine_secrets.this.machine_secrets
@@ -38,8 +39,9 @@ module "cerritos" {
   servers = 1
   workers = 1
 
-  network_id = unifi_network.talos_network.id
-  vlan_tag   = unifi_network.talos_network.vlan_id
+  network_id    = unifi_network.talos_network.id
+  vlan_tag      = unifi_network.talos_network.vlan_id
+  ceph_vlan_tag = 2
 
   talos_version                  = local.talos_version
   talos_machine_secrets          = talos_machine_secrets.this.machine_secrets
@@ -59,8 +61,9 @@ module "protostar" {
   servers = 1
   workers = 1
 
-  network_id = unifi_network.talos_network.id
-  vlan_tag   = unifi_network.talos_network.vlan_id
+  network_id    = unifi_network.talos_network.id
+  vlan_tag      = unifi_network.talos_network.vlan_id
+  ceph_vlan_tag = 2
 
   talos_version                  = local.talos_version
   talos_machine_secrets          = talos_machine_secrets.this.machine_secrets
@@ -81,8 +84,9 @@ module "defiant" {
   servers = 0
   workers = 1
 
-  network_id = unifi_network.talos_network.id
-  vlan_tag   = unifi_network.talos_network.vlan_id
+  network_id    = unifi_network.talos_network.id
+  vlan_tag      = unifi_network.talos_network.vlan_id
+  ceph_vlan_tag = 2
 
   talos_version                  = local.talos_version
   talos_machine_secrets          = talos_machine_secrets.this.machine_secrets

@@ -28,6 +28,11 @@ variable "vlan_tag" {
   type        = number
 }
 
+variable "ceph_vlan_tag" {
+  description = "The VLAN tag to use for the ceph frontend network"
+  type        = number
+}
+
 variable "talos_version" {
   description = "Talos version to use eg. v1.9.5"
   type        = string

@@ -25,6 +25,10 @@ variable "vlan_tag" {
   description = "The VLAN tag to use for the network"
   type        = number
 }
+variable "ceph_vlan_tag" {
+  description = "The VLAN tag to use for the ceph frontend network"
+  type        = number
+}
 variable "network_id" {
   description = "The network id to use for the node"
   type        = string

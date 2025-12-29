@@ -35,6 +35,13 @@ resource "proxmox_virtual_environment_vm" "vm" {
     model    = "virtio"
   }
 
+  network_device {
+    bridge   = "vmbr0"
+    firewall = false
+    vlan_id  = var.ceph_vlan_tag
+    model    = "virtio"
+  }
+
   disk {
     datastore_id = "vmdata"
     file_format  = "raw"

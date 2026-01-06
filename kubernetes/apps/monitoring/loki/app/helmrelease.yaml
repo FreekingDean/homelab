@@ -82,7 +82,7 @@ spec:
       initContainers:
         - name: credential-fetcher
           # This image is to get a tiny jq binary to parse JSON from the secret
-          image: ghcr.io/home-operations/k8s-sidecar:2.1.4
+          image: ghcr.io/home-operations/k8s-sidecar:2.2.3
           volumeMounts:
             - name: credential-fetcher
               mountPath: /s3

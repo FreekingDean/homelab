@@ -39,7 +39,7 @@ spec:
         type: persistentVolumeClaim
     image:
       repository: ghcr.io/ersatztv/ersatztv
-      tag: v25.9.0
+      tag: v26.1.1
     env:
       TZ: America/New_York
     ports:

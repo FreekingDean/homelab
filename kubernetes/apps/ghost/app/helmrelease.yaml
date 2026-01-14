@@ -44,11 +44,9 @@ spec:
       database__connection__user: ghost
       database__connection__database: ghost
       mail__transport: SMTP
-      mail__from: ghost@sandbox7dee39b79f8c47cb9e74c5550bfc0c26.mailgun.org
-      mail__options__service: SMTP
-      mail__options__host: smtp.mailgun.org
-      mail__options__port: "587"
-      mail__options__auth__user: ghost@sandbox7dee39b79f8c47cb9e74c5550bfc0c26.mailgun.org
+      mail__from: no-reply@glimmerlabs.io
+      mail__options__service: Mailgun
+      mail__options__auth__user: no-reply@glimmerlabs.io
       TZ: America/New_York
       url: "https://www.glimmerlabs.io"
       admin__url: "https://www.glimmerlabs.io"

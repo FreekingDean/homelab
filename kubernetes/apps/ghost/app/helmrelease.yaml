@@ -37,7 +37,7 @@ spec:
     stateful: true
     image:
       repository: docker.io/library/ghost
-      tag: 6.12.0
+      tag: 6.13.2
     env:
       database__client: mysql
       database__connection__host: ghost-mariadb.ghost.svc.cluster.local

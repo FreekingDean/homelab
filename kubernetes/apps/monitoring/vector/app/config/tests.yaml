@@ -6,7 +6,7 @@ tests:
         log_fields:
           message: '10.42.2.170 - - [26/Mar/2025:12:43:34 +0000] "POST /loki/api/v1/push HTTP/1.1" 500 0 "-" "canary-push/3.4.2"'
           kubernetes:
-            container_image: "grafana/loki:3.6.3"
+            container_image: "grafana/loki:3.6.4"
             container_name: "nginx"
             pod_name: "loki-0"
             pod_namespace: "monitoring"
@@ -29,7 +29,7 @@ tests:
         log_fields:
           message: "ts=2025-03-26T14:01:03.428285248Z caller=spanlogger.go:111 table-name=loki_index_20173 user-id=fake user=fake caller=log.go:168 level=error msg=\"failed to init user index set\" err=\"RequestError: send request failed\\ncaused by: Get \\\"http://monitoring-loki.10.0.0.102:7480/?delimiter=%2F&list-type=2&prefix=index%2Floki_index_20173%2Ffake%2F\\\": dial tcp: lookup monitoring-loki.10.0.0.102 on 10.43.0.10:53: no such host\""
           kubernetes:
-            container_image: "grafana/loki:3.6.3"
+            container_image: "grafana/loki:3.6.4"
             container_name: "loki"
             pod_name: "loki-0"
             pod_namespace: "monitoring"

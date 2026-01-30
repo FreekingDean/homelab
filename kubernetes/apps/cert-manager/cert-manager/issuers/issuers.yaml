@@ -21,6 +21,7 @@ spec:
             - "deangalvin.dev"
             - "bananaboydean.com"
             - "glimmerlabs.io"
+            - "arclog.com"
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer

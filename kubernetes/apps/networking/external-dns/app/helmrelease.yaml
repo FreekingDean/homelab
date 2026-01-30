@@ -42,7 +42,7 @@ spec:
     sources: ["ingress", "service"]
     txtPrefix: k8s.
     txtOwnerId: default
-    domainFilters: ["deangalvin.com", "deangalvin.dev", "bananaboydean.com", "bananaboydean.dev", "glimmerlabs.io"]
+    domainFilters: ["deangalvin.com", "deangalvin.dev", "bananaboydean.com", "bananaboydean.dev", "glimmerlabs.io", "arclog.com"]
     serviceMonitor:
       enabled: false
     podAnnotations:

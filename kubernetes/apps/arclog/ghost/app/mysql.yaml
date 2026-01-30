@@ -1,0 +1,65 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1beta2.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: ghost
+spec:
+  interval: 1h
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 24.0.3
+  url: oci://registry-1.docker.io/bitnamicharts/mariadb
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ghost-mariadb
+  labels:
+    app.kubernetes.io/instance: ghost
+    app.kubernetes.io/name: ghost-config
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: ceph-rbd
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ghost-mariadb
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: ghost
+  values:
+    auth:
+      existingSecret: ghost-secret
+      username: ghost
+      database: ghost
+    primary:
+      persistence:
+        existingClaim: ghost-mariadb
+      readinessProbe:
+        enabled: true
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        timeoutSeconds: 5
+        failureThreshold: 6
+      livenessProbe:
+        enabled: true
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        timeoutSeconds: 5
+        failureThreshold: 6
+    resources:
+      requests:
+        cpu: 10m
+        memory: 256Mi
+      limits:
+        memory: 512Mi

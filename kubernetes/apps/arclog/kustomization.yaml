@@ -8,7 +8,7 @@ patches:
   - patch: |-
       - op: add
         path: /spec/targetNamespace
-        value: arclog
+        value: arcolog
     target:
       version: v1
       group: kustomize.toolkit.fluxcd.io

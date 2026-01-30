@@ -39,7 +39,7 @@ spec:
       tag: 6.14.0
     env:
       database__client: mysql
-      database__connection__host: ghost-mariadb.ghost.svc.cluster.local
+      database__connection__host: ghost-mariadb.arcolog.svc.cluster.local
       database__connection__user: ghost
       database__connection__database: ghost
       mail__transport: SMTP
@@ -47,8 +47,8 @@ spec:
       mail__options__service: Mailgun
       mail__options__auth__user: no-reply@glimmerlabs.io
       TZ: America/New_York
-      url: "https://www.glimmerlabs.io"
-      admin__url: "https://www.glimmerlabs.io"
+      url: "https://www.arcolog.com"
+      admin__url: "https://www.arcolog.com"
     ports:
       http: 2368
     ingress:

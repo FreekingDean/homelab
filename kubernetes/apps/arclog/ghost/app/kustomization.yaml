@@ -7,4 +7,3 @@ resources:
   - ./ingress-public.yaml
   - ./mysql.yaml
   - ./pvc.yaml
-  - ./secret.yaml

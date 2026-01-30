@@ -52,7 +52,7 @@ spec:
     ports:
       http: 2368
     ingress:
-      subdomain: ghost
+      subdomain: arcolog
       localonly: false
       icon: "mdi:television-classic"
     persistence:

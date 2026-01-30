@@ -4,7 +4,7 @@ kind: Certificate
 metadata:
   name: "arcolog-com-production"
 spec:
-  secretName: "${ARCLOG_COM_PRODUCTION_TLS}"
+  secretName: "${ARCOLOG_COM_PRODUCTION_TLS}"
   secretTemplate:
     annotations: []
   issuerRef:

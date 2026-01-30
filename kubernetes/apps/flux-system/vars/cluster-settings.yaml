@@ -11,3 +11,4 @@ data:
   PRODUCTION_TLS: "deangalvin-dev-production-tls"
   DEANGALVIN_DEV_PRODUCTION_TLS: "deangalvin-dev-production-tls"
   GLIMMERLABS_IO_PRODUCTION_TLS: "glimmerlabs-io-production-tls"
+  ARCOLOG_COM_PRODUCTION_TLS: "arcolog-com-production-tls"

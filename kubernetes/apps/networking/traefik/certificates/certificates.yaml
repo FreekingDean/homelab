@@ -2,6 +2,22 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
+  name: "arcolog-com-production"
+spec:
+  secretName: "${ARCOLOG_COM_PRODUCTION_TLS}"
+  secretTemplate:
+    annotations: []
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: "arcolog.com"
+  dnsNames:
+    - "arcolog.com"
+    - "*.arcolog.com"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
   name: "glimmerlabs-io-production"
 spec:
   secretName: "${GLIMMERLABS_IO_PRODUCTION_TLS}"

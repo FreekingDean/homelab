@@ -11,7 +11,7 @@ The purpose here is to showcase how you can deploy an entire Kubernetes cluster 
 - [Introduction](#introduction)
 - [Prerequisites](#prerequisites)
 - [Repository structure](#repository-structure)
-- [Lets go!](#lets-go)
+- [Let's go!](#lets-go)
 - [Post installation](#post-installation)
 - [Troubleshooting](#troubleshooting)
 - [What's next](#whats-next)
@@ -60,7 +60,7 @@ The Git repository contains the following directories under `kubernetes` and are
 └─📁 apps          # Apps deployed into the cluster grouped by namespace
 ```
 
-## 🚀 Lets go
+## 🚀 Let's go
 
 ### 🔧 Workstation Tools
 
@@ -182,7 +182,7 @@ The cluster application [external-dns](https://github.com/kubernetes-sigs/extern
     # ✔ prerequisites checks passed
     ```
 
-2. Push you changes to git
+2. Push your changes to git
 
     📍 **Verify** all the `*.sops.yaml` and `*.sops.yml` files under the `./kubernetes`, and `./terraform` folders are **encrypted** with SOPS
 

@@ -149,8 +149,8 @@ spec:
           translationStrategy: NoUTF8EscapingWithSuffixes
           keepIdentifyingResourceAttributes: true
         replicas: 2
-        retention: 7d
-        retentionSize: 18GB
+        retention: 365d
+        retentionSize: 64GB
         enableAdminAPI: true
         walCompression: true
         ruleSelectorNilUsesHelmValues: false

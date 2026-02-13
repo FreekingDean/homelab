@@ -45,7 +45,7 @@ spec:
         type: emptyDir
     image:
       repository: ghcr.io/home-operations/plex
-      tag: 1.43.0.10467
+      tag: 1.43.0.10492
     env:
       TZ: America/New_York
       PLEX_ADVERTISE_URL: "https://plex.deangalvin.dev:443"

@@ -39,7 +39,6 @@ spec:
         enabled: true
         size: 32Gi
         storageClassName: replica-block
-    enableAuth: true
     publicURL: https://meet.deangalvin.dev
     jvb:
       service:

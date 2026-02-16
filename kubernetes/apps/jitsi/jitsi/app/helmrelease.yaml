@@ -52,6 +52,6 @@ spec:
           http:
             paths: ["/"]
         tls:
-        - hosts:
-          - meet.deangalvin.dev
-          secretName: deangalvin-dev-production-tls
+          - hosts:
+            - meet.deangalvin.dev
+            secretName: deangalvin-dev-production-tls

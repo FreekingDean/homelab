@@ -43,7 +43,7 @@ spec:
       service:
         type: LoadBalancer
     jibri:
-      enabled: true
+      enabled: false
       singleUseMode: true
       persistence:
         enabled: true

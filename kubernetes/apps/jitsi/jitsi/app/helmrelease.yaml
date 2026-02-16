@@ -48,10 +48,9 @@ spec:
     ingress:
       enabled: true
       hosts:
-        - host: meet.deangalvin.dev
-          http:
-            paths: ["/"]
-        tls:
-          - hosts:
-              - meet.deangalvin.dev
-            secretName: deangalvin-dev-production-tls
+      - host: meet.deangalvin.dev
+        paths: ["/"]
+      tls:
+      - hosts:
+        - meet.deangalvin.dev
+        secretName: deangalvin-dev-production-tls

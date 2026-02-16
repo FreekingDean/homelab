@@ -36,7 +36,7 @@ spec:
       service:
         type: LoadBalancer
       persistence:
-        enabled: true
+        enabled: false
         size: 32Gi
         storageClassName: replica-block
     publicURL: https://meet.deangalvin.dev

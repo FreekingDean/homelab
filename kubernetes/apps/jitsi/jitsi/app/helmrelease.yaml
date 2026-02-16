@@ -1,0 +1,45 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: jitsi
+spec:
+  interval: 1h
+  url: "https://jitsi-contrib.github.io/jitsi-helm"
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: jitsi
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: jitsi-meet
+      version: 2.7.0
+      sourceRef:
+        kind: HelmRepository
+        name: jitsi
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    jvb:
+      service:
+        type: LoadBalancer
+    jibri:
+      enabled: true
+      singleUseMode: true
+      persistence:
+        enabled: true
+        size: 32Gi
+        storageClassName: replica-block
+

@@ -33,6 +33,8 @@ spec:
     keepHistory: false
   values:
     prosody:
+      service:
+        type: LoadBalancer
       persistence:
         enabled: true
         size: 32Gi

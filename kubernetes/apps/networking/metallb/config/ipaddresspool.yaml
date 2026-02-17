@@ -12,7 +12,6 @@ kind: BGPPeer
 metadata:
   name: mycluster-lan
 spec:
-  bfdProfile: mycluster-lan
   disableMP: false
   myASN: 65001
   peerASN: 65000

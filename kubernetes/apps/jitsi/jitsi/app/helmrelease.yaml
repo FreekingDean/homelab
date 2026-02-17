@@ -35,6 +35,7 @@ spec:
     prosody:
       service:
         type: LoadBalancer
+        externalTrafficPolicy: Local
       persistence:
         enabled: false
         size: 32Gi
@@ -43,6 +44,7 @@ spec:
     jvb:
       service:
         type: LoadBalancer
+        externalTrafficPolicy: Local
     jibri:
       enabled: false
       singleUseMode: true

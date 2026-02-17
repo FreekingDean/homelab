@@ -60,6 +60,7 @@ spec:
     service:
       torrent:
         type: LoadBalancer
+        externalTrafficPolicy: Local
         controller: qbittorrent
         ports:
           torrent:

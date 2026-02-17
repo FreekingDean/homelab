@@ -5,4 +5,24 @@ metadata:
   name: default-pool
 spec:
   addresses:
-    - "10.1.21.1/24"
+    - "10.1.21.10-10.1.21.100"
+---
+apiVersion: metallb.io/v1beta2
+kind: BGPPeer
+metadata:
+  name: mycluster-lan
+spec:
+  bfdProfile: mycluster-lan
+  disableMP: false
+  myASN: 65001
+  peerASN: 65000
+  peerAddress: 10.1.21.1
+  peerPort: 179
+---
+apiVersion: metallb.io/v1beta1
+kind: BGPAdvertisement
+metadata:
+  name: services
+spec:
+  ipAddressPools:
+  - default-pool

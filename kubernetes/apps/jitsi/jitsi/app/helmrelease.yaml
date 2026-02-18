@@ -48,6 +48,9 @@ spec:
         size: 32Gi
         storageClassName: replica-block
     publicURL: https://meet.deangalvin.dev
+    turnHost: meet-turn.deangalvin.dev
+    excalidraw:
+      enabled: true
     jvb:
       service:
         type: LoadBalancer

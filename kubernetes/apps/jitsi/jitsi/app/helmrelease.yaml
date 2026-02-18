@@ -32,6 +32,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    coturn:
+      enabled: true
+      turns:
+        enabled: true
     prosody:
       service:
         type: LoadBalancer

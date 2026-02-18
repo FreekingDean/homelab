@@ -36,6 +36,8 @@ spec:
       enabled: true
       turns:
         enabled: true
+        certificate:
+          existingSecretName: deangalvin-dev-production-tls
     prosody:
       service:
         type: LoadBalancer

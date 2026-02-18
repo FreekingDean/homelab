@@ -37,6 +37,7 @@ spec:
       turns:
         enabled: true
         certificate:
+          create: false
           existingSecretName: deangalvin-dev-production-tls
     prosody:
       service:

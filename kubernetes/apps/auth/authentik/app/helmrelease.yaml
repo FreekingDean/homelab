@@ -1,0 +1,79 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app authentik
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: authentik
+      version: 2025.12.4
+      sourceRef:
+        kind: HelmRepository
+        name: authentik
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    global:
+      env:
+        - name: AUTHENTIK_POSTGRESQL__HOST
+          value: postgres-authentik-rw
+        - name: AUTHENTIK_POSTGRESQL__PORT
+          value: "5432"
+        - name: AUTHENTIK_POSTGRESQL__NAME
+          value: app
+        - name: AUTHENTIK_POSTGRESQL__USER
+          value: app
+        - name: AUTHENTIK_POSTGRESQL__PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-authentik-app
+              key: password
+      envFrom:
+        - secretRef:
+            name: authentik-external
+
+    authentik:
+      log_level: info
+      error_reporting:
+        enabled: false
+
+    postgresql:
+      enabled: false
+
+    server:
+      replicas: 2
+      ingress:
+        enabled: true
+        ingressClassName: "${INGRESS_CLASS}"
+        annotations:
+          public.ingress.home.arpa: "true"
+          hajimari.io/icon: mdi:shield-lock
+        hosts:
+          - authentik.${DOMAIN}
+        tls:
+          - secretName: "${PRODUCTION_TLS}"
+            hosts:
+              - authentik.${DOMAIN}
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+
+    worker:
+      replicas: 2
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true

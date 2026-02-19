@@ -6,4 +6,4 @@ resources:
 
 patchesStrategicMerge:
   - overlay/delete-namespace.yaml
-  #- overlay/deployment.yaml
+  - overlay/deployment.yaml

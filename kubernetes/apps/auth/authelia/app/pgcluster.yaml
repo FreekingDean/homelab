@@ -17,19 +17,3 @@ spec:
       shared_buffers: 512MB
   monitoring:
     enablePodMonitor: true
-  backup:
-    retentionPolicy: 30d
-    barmanObjectStore:
-      wal:
-        compression: bzip2
-        maxParallel: 8
-      destinationPath: "s3://authelia-pg-${NAME_SUFFIX}/"
-      endpointURL: "http://10.0.0.104:7480"
-      serverName: "authelia-pg-${NAME_SUFFIX}"
-      s3Credentials:
-        accessKeyId:
-          name: "authelia-pg-${NAME_SUFFIX}"
-          key: AWS_ACCESS_KEY_ID
-        secretAccessKey:
-          name: "authelia-pg-${NAME_SUFFIX}"
-          key: AWS_SECRET_ACCESS_KEY

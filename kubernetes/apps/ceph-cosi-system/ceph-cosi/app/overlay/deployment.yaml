@@ -13,3 +13,5 @@ spec:
       containers:
         - name: objectstorage-provisioner-sidecar
           image: "gcr.io/k8s-staging-sig-storage/objectstorage-sidecar:release-0.2"
+        - name: ceph-cosi-driver
+          image: "ghcr.io/freekingdean/ceph-cosi:master"

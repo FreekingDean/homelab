@@ -31,6 +31,13 @@ spec:
     - host: &host proxmox.deangalvin.dev
       http:
         paths:
+          - path: /sso
+            pathType: Prefix
+            backend:
+              service:
+                name: proxmox-sso
+                port:
+                  number: 80
           - path: /
             pathType: Prefix
             backend:

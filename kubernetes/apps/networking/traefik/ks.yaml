@@ -89,3 +89,20 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-traefik-proxmox-sso
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cluster-apps-traefik
+  path: ./kubernetes/apps/networking/traefik/proxmox-sso
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m

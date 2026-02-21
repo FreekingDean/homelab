@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proxmox SSO Login</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #1a1a2e;
+      color: #e0e0e0;
+    }
+    .container {
+      text-align: center;
+      padding: 2rem;
+    }
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #333;
+      border-top-color: #6c63ff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 1rem auto;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .error {
+      color: #ff6b6b;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Redirecting to Authentik...</h2>
+    <div class="spinner" id="spinner"></div>
+    <p class="error" id="error"></p>
+  </div>
+  <script>
+    (async function() {
+      try {
+        const resp = await fetch("https://proxmox.deangalvin.dev/api2/extjs/access/openid/auth-url", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: "realm=authentik&redirect-url=https://proxmox.deangalvin.dev"
+        });
+        const data = await resp.json();
+        if (data.data) {
+          window.location.href = data.data;
+        } else {
+          throw new Error(data.message || "Unexpected response from Proxmox");
+        }
+      } catch (err) {
+        document.getElementById("spinner").style.display = "none";
+        const el = document.getElementById("error");
+        el.style.display = "block";
+        el.textContent = "SSO login failed: " + err.message;
+      }
+    })();
+  </script>
+</body>
+</html>

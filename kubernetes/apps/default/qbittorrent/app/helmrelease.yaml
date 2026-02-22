@@ -33,6 +33,48 @@ spec:
         runAsGroup: 568
         fsGroup: 568
         fsGroupChangePolicy: "OnRootMismatch"
+    controllers:
+      qbittorrent:
+        containers:
+          gluetun:
+            image:
+              repository: ghcr.io/qdm12/gluetun
+              tag: v3.40.0
+            env:
+              VPN_SERVICE_PROVIDER: protonvpn
+              VPN_TYPE: wireguard
+              SERVER_COUNTRIES: "United States"
+              FIREWALL_VPN_INPUT_PORTS: "8081"
+            envFrom:
+              - secretRef:
+                  name: qbittorrent-gluetun-secret
+            securityContext:
+              runAsUser: 0
+              runAsGroup: 0
+              capabilities:
+                add:
+                  - NET_ADMIN
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 9999
+                  initialDelaySeconds: 30
+                  periodSeconds: 30
+                  failureThreshold: 5
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 9999
+                  initialDelaySeconds: 10
+                  periodSeconds: 5
+                  failureThreshold: 30
     persistence:
       config:
         type: persistentVolumeClaim
@@ -43,6 +85,19 @@ spec:
       ec-media:
         type: persistentVolumeClaim
         existingClaim: ec-media
+      gluetun-data:
+        type: emptyDir
+        advancedMounts:
+          qbittorrent:
+            gluetun:
+              - path: /tmp/gluetun
+      devtun:
+        type: hostPath
+        hostPath: /dev/net/tun
+        advancedMounts:
+          qbittorrent:
+            gluetun:
+              - path: /dev/net/tun
     image:
       repository: ghcr.io/home-operations/qbittorrent
       tag: 5.1.4
@@ -57,11 +112,3 @@ spec:
       icon: mdi:movie-search
     serviceMonitor:
       enabled: false
-    service:
-      torrent:
-        type: LoadBalancer
-        externalTrafficPolicy: Local
-        controller: qbittorrent
-        ports:
-          torrent:
-            port: *torrentPort

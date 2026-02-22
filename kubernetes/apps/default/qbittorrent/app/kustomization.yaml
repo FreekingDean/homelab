@@ -5,6 +5,8 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./pvc.yaml
+  - ./service.yaml
+  - ./externalsecret.yaml
 labels:
   - pairs:
       app.kubernetes.io/name: qbittorrent

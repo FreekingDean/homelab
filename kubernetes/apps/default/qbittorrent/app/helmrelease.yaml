@@ -48,6 +48,7 @@ spec:
               - secretRef:
                   name: qbittorrent-gluetun-secret
             securityContext:
+              privileged: true
               runAsUser: 0
               runAsGroup: 0
               capabilities:

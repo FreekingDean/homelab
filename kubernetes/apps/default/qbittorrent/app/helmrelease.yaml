@@ -43,7 +43,6 @@ spec:
             env:
               VPN_SERVICE_PROVIDER: protonvpn
               VPN_TYPE: wireguard
-              UPDATER_PERIOD: "0"
             envFrom:
               - secretRef:
                   name: qbittorrent-gluetun-secret

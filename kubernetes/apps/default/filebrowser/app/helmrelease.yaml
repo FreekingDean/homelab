@@ -31,13 +31,20 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
     image:
-      repository: docker.io/filebrowser/filebrowser
-      tag: v2.60.0@sha256:a7b81cab28cf93de4c3ac97403d92f38d23191d7247e9c37611d4afa2d8d0c69
+      repository: ghcr.io/gtsteffaniak/filebrowser
+      tag: 1.1.3-stable
     env:
       TZ: America/New_York
-      FB_DATABASE: /config/filebrowser.db
-      FB_ROOT: /media
-      FB_LOG: stdout
+      FILEBROWSER_OIDC_CLIENT_ID:
+        valueFrom:
+          secretKeyRef:
+            name: filebrowser-oidc
+            key: client-id
+      FILEBROWSER_OIDC_CLIENT_SECRET:
+        valueFrom:
+          secretKeyRef:
+            name: filebrowser-oidc
+            key: client-secret
     resources:
       requests:
         cpu: 100m

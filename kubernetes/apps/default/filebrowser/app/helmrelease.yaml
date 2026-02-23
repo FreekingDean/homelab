@@ -30,16 +30,12 @@ spec:
       filebrowser:
         annotations:
           reloader.stakater.com/auto: "true"
-        containers:
-          filebrowser:
-            envFrom:
-              - secretRef:
-                  name: filebrowser-oidc
     image:
       repository: ghcr.io/gtsteffaniak/filebrowser
       tag: 1.1.3-stable
     env:
       TZ: America/New_York
+      FILEBROWSER_CONFIG: "/staticconfig/filebrowser.yaml"
     resources:
       requests:
         cpu: 100m
@@ -54,6 +50,9 @@ spec:
       config:
         type: persistentVolumeClaim
         existingClaim: filebrowser
+      staticconfig:
+        type: persistentVolumeClaim
+        existingClaim: filebrowser-static-config
       media:
         type: persistentVolumeClaim
         existingClaim: media

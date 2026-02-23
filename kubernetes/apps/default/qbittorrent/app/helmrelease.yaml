@@ -44,6 +44,7 @@ spec:
               VPN_SERVICE_PROVIDER: protonvpn
               VPN_TYPE: wireguard
               FIREWALL_VPN_INPUT_PORTS: "8081"
+              UPDATER_PERIOD: "0"
             envFrom:
               - secretRef:
                   name: qbittorrent-gluetun-secret

@@ -39,11 +39,10 @@ spec:
           gluetun:
             image:
               repository: ghcr.io/qdm12/gluetun
-              tag: v3.40.0
+              tag: v3.40.2
             env:
               VPN_SERVICE_PROVIDER: protonvpn
               VPN_TYPE: wireguard
-              SERVER_COUNTRIES: "United States"
               FIREWALL_VPN_INPUT_PORTS: "8081"
             envFrom:
               - secretRef:

@@ -51,8 +51,8 @@ spec:
         type: persistentVolumeClaim
         existingClaim: filebrowser
       staticconfig:
-        type: persistentVolumeClaim
-        existingClaim: filebrowser-static-config
+        type: secret
+        name: filebrowser-static-config
       media:
         type: persistentVolumeClaim
         existingClaim: media

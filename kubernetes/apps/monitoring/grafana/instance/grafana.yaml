@@ -23,8 +23,8 @@ spec:
       enabled: "true"
       name: "authentik"
       allow_sign_up: "true"
-      client_id: ${AUTH_CLIENT_ID}
-      client_secret: ${AUTH_CLIENT_SECRET}
+      client_id: "${AUTH_CLIENT_ID}"
+      client_secret: "${AUTH_CLIENT_SECRET}"
       scopes: "openid email profile offline_access"
       auth_url: "https://authentik.deangalvin.dev/application/o/authorize/"
       token_url: "https://authentik.deangalvin.dev/application/o/token/"

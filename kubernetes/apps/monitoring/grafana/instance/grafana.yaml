@@ -14,28 +14,22 @@ spec:
       feedback_links_enabled: "false"
       reporting_enabled: "false"
     auth:
-      oauth_auto_login: "false"
-      signout_redirect_url: https://auth.deangalvin.dev/logout
+      oauth_auto_login: "true"
+      disable_login_form: "false"
     auth.anonymous:
       enabled: "false"
     auth.generic_oauth:
-      api_url: https://auth.deangalvin.dev/api/oidc/userinfo
-      auth_url: https://auth.deangalvin.dev/api/oidc/authorization
-      client_id: grafana
-      client_secret: grafana_client_secret
-      empty_scopes: "false"
+      # For variables see https://grafana.com/docs/grafana/latest/setup-grafana/configure-grafana/#env-provider
       enabled: "true"
-      groups_attribute_path: groups
-      login_attribute_path: preferred_username
-      name: Authelia
-      name_attribute_path: name
-      scopes: openid profile email groups
-      token_url: https://auth.deangalvin.dev/api/oidc/token
-      use_pkce: "true"
-    auth.generic_oauth.group_mapping:
-      org_id: "1"
-      role_attribute_path: |
-        contains(groups[*], 'admins') && 'Admin' || contains(groups[*], 'people') && 'Viewer'
+      name: "authentik"
+      allow_sign_up: "true"
+      client_id: ${AUTH_CLIENT_ID}
+      client_secret: ${AUTH_CLIENT_SECRET}
+      scopes: "openid email profile offline_access"
+      auth_url: "https://authentik.deangalvin.dev/application/o/authorize/"
+      token_url: "https://authentik.deangalvin.dev/application/o/token/"
+      api_url: "https://authentik.deangalvin.dev/application/o/userinfo/"
+      role_attribute_path: "contains(groups, 'Grafana Admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || 'Viewer'"
     log:
       mode: console
     metrics:
@@ -61,6 +55,9 @@ spec:
                 claimName: grafana-data
           containers:
           - name: grafana
+            envFrom:
+              - secretRef:
+                  name: grafana-oauth
             env:
             - name: GF_SECURITY_ADMIN_USER
               valueFrom:

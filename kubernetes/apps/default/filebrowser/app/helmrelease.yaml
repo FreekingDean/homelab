@@ -32,7 +32,7 @@ spec:
           reloader.stakater.com/auto: "true"
     image:
       repository: ghcr.io/gtsteffaniak/filebrowser
-      tag: 1.2.0-stable
+      tag: 1.2.1-stable
     env:
       TZ: America/New_York
       FILEBROWSER_CONFIG: "/staticconfig/filebrowser.yaml"

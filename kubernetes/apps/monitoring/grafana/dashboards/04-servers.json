@@ -1,0 +1,309 @@
+{
+  "title": "Server Hardware",
+  "uid": "tv-servers",
+  "tags": ["homelab", "tv", "servers", "hardware"],
+  "timezone": "browser",
+  "refresh": "30s",
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Challenger",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 4, "w": 8, "x": 0, "y": 0},
+      "targets": [{
+        "expr": "avg(redfish_chassis_temperature_celsius{job=\"redfish-exporter-challenger\",sensor_id=~\".*CPU.*Temp\"})",
+        "refId": "A"
+      }],
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "value_and_name",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "green"},
+              {"value": 70, "color": "yellow"},
+              {"value": 85, "color": "red"}
+            ]
+          },
+          "unit": "celsius",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Galaxy",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 4, "w": 8, "x": 8, "y": 0},
+      "targets": [{
+        "expr": "avg(redfish_chassis_temperature_celsius{job=\"redfish-exporter-galaxy\",sensor_id=~\".*CPU.*Temp\"})",
+        "refId": "A"
+      }],
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "value_and_name",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "green"},
+              {"value": 70, "color": "yellow"},
+              {"value": 85, "color": "red"}
+            ]
+          },
+          "unit": "celsius",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Yamato",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 4, "w": 8, "x": 16, "y": 0},
+      "targets": [{
+        "expr": "avg(redfish_chassis_temperature_celsius{job=\"redfish-exporter-yamato\",sensor_id=~\".*CPU.*Temp\"})",
+        "refId": "A"
+      }],
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "value_and_name",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "green"},
+              {"value": 70, "color": "yellow"},
+              {"value": 85, "color": "red"}
+            ]
+          },
+          "unit": "celsius",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 4,
+      "type": "timeseries",
+      "title": "CPU Temperatures",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 10, "w": 12, "x": 0, "y": 4},
+      "targets": [{
+        "expr": "redfish_chassis_temperature_celsius{sensor_id=~\".*CPU.*Temp\"}",
+        "legendFormat": "{{job}} - {{sensor_id}}",
+        "refId": "A"
+      }],
+      "options": {
+        "tooltip": {"mode": "multi", "sort": "desc"},
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["last", "max"],
+          "showLegend": true
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "celsius",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 15,
+            "showPoints": "never",
+            "drawStyle": "line"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "green"},
+              {"value": 70, "color": "yellow"},
+              {"value": 85, "color": "red"}
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 5,
+      "type": "timeseries",
+      "title": "System Board Exhaust Temperatures",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 10, "w": 12, "x": 12, "y": 4},
+      "targets": [{
+        "expr": "redfish_chassis_temperature_celsius{sensor_id=~\".*SystemBoardExhaustTemp\"}",
+        "legendFormat": "{{job}}",
+        "refId": "A"
+      }],
+      "options": {
+        "tooltip": {"mode": "multi", "sort": "desc"},
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["last", "max"],
+          "showLegend": true
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "celsius",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 15,
+            "showPoints": "never",
+            "drawStyle": "line"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "green"},
+              {"value": 60, "color": "yellow"},
+              {"value": 75, "color": "red"}
+            ]
+          },
+          "color": {
+            "mode": "thresholds"
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 6,
+      "type": "timeseries",
+      "title": "Fan Speeds (%)",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 10, "w": 12, "x": 0, "y": 14},
+      "targets": [{
+        "expr": "redfish_chassis_fan_rpm_percentage",
+        "legendFormat": "{{job}} - {{fan_name}}",
+        "refId": "A"
+      }],
+      "options": {
+        "tooltip": {"mode": "multi", "sort": "desc"},
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "custom": {
+            "lineWidth": 1,
+            "fillOpacity": 10,
+            "showPoints": "never",
+            "drawStyle": "line"
+          },
+          "color": {
+            "mode": "palette-classic"
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 7,
+      "type": "timeseries",
+      "title": "Power Consumption",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 10, "w": 12, "x": 12, "y": 14},
+      "targets": [{
+        "expr": "redfish_chassis_power_average_consumed_watts",
+        "legendFormat": "{{job}}",
+        "refId": "A"
+      }],
+      "options": {
+        "tooltip": {"mode": "multi", "sort": "desc"},
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["last", "mean", "max"],
+          "showLegend": true
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "watt",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 20,
+            "showPoints": "never",
+            "drawStyle": "line"
+          },
+          "color": {
+            "mode": "palette-classic"
+          }
+        },
+        "overrides": []
+      }
+    }
+  ]
+}

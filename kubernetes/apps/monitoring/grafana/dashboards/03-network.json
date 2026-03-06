@@ -1,0 +1,327 @@
+{
+  "title": "Network",
+  "uid": "tv-network",
+  "tags": ["homelab", "tv", "network"],
+  "timezone": "browser",
+  "refresh": "30s",
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Total RX (6h)",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 6, "w": 6, "x": 0, "y": 0},
+      "targets": [{
+        "expr": "sum(increase(node_network_receive_bytes_total{device=\"ens19\"}[6h])) / 1024 / 1024 / 1024",
+        "refId": "A"
+      }],
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "value",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "blue"}
+            ]
+          },
+          "unit": "decgbytes",
+          "decimals": 1
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Total TX (6h)",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 6, "w": 6, "x": 6, "y": 0},
+      "targets": [{
+        "expr": "sum(increase(node_network_transmit_bytes_total{device=\"ens19\"}[6h])) / 1024 / 1024 / 1024",
+        "refId": "A"
+      }],
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "value",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "blue"}
+            ]
+          },
+          "unit": "decgbytes",
+          "decimals": 1
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Avg RX Rate",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 6, "w": 6, "x": 12, "y": 0},
+      "targets": [{
+        "expr": "avg(rate(node_network_receive_bytes_total{device=\"ens19\"}[5m])) * 8 / 1000000",
+        "refId": "A"
+      }],
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "value",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "green"},
+              {"value": 500, "color": "yellow"},
+              {"value": 900, "color": "red"}
+            ]
+          },
+          "unit": "Mbits",
+          "decimals": 1
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Avg TX Rate",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 6, "w": 6, "x": 18, "y": 0},
+      "targets": [{
+        "expr": "avg(rate(node_network_transmit_bytes_total{device=\"ens19\"}[5m])) * 8 / 1000000",
+        "refId": "A"
+      }],
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "value",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "green"},
+              {"value": 500, "color": "yellow"},
+              {"value": 900, "color": "red"}
+            ]
+          },
+          "unit": "Mbits",
+          "decimals": 1
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 5,
+      "type": "timeseries",
+      "title": "Network Traffic - Receive (ens19)",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 9, "w": 12, "x": 0, "y": 6},
+      "targets": [{
+        "expr": "rate(node_network_receive_bytes_total{device=\"ens19\"}[5m]) * 8 / 1000000",
+        "legendFormat": "{{instance}}",
+        "refId": "A"
+      }],
+      "options": {
+        "tooltip": {"mode": "multi", "sort": "desc"},
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["last", "mean", "max"],
+          "showLegend": true
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "Mbits",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 25,
+            "showPoints": "never",
+            "drawStyle": "line"
+          },
+          "color": {
+            "mode": "palette-classic"
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 6,
+      "type": "timeseries",
+      "title": "Network Traffic - Transmit (ens19)",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 9, "w": 12, "x": 12, "y": 6},
+      "targets": [{
+        "expr": "rate(node_network_transmit_bytes_total{device=\"ens19\"}[5m]) * 8 / 1000000",
+        "legendFormat": "{{instance}}",
+        "refId": "A"
+      }],
+      "options": {
+        "tooltip": {"mode": "multi", "sort": "desc"},
+        "legend": {
+          "displayMode": "table",
+          "placement": "bottom",
+          "calcs": ["last", "mean", "max"],
+          "showLegend": true
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "Mbits",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 25,
+            "showPoints": "never",
+            "drawStyle": "line"
+          },
+          "color": {
+            "mode": "palette-classic"
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 7,
+      "type": "timeseries",
+      "title": "Packet Rate - Receive",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 9, "w": 12, "x": 0, "y": 15},
+      "targets": [{
+        "expr": "rate(node_network_receive_packets_total{device=\"ens19\"}[5m])",
+        "legendFormat": "{{instance}}",
+        "refId": "A"
+      }],
+      "options": {
+        "tooltip": {"mode": "multi", "sort": "desc"},
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "pps",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 20,
+            "showPoints": "never",
+            "drawStyle": "line"
+          },
+          "color": {
+            "mode": "palette-classic"
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 8,
+      "type": "timeseries",
+      "title": "Packet Rate - Transmit",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 9, "w": 12, "x": 12, "y": 15},
+      "targets": [{
+        "expr": "rate(node_network_transmit_packets_total{device=\"ens19\"}[5m])",
+        "legendFormat": "{{instance}}",
+        "refId": "A"
+      }],
+      "options": {
+        "tooltip": {"mode": "multi", "sort": "desc"},
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "pps",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 20,
+            "showPoints": "never",
+            "drawStyle": "line"
+          },
+          "color": {
+            "mode": "palette-classic"
+          }
+        },
+        "overrides": []
+      }
+    }
+  ]
+}

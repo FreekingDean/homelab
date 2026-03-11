@@ -54,6 +54,30 @@ spec:
 
     server:
       replicas: 2
+      volumes:
+        - name: media
+          emptyDir: {}
+        - name: git-sync-sparse
+          configMap:
+            name: authentik-git-sync-sparse
+      volumeMounts:
+        - name: media
+          mountPath: /media
+      extraContainers:
+        - name: git-sync
+          image: registry.k8s.io/git-sync/git-sync:v4.4.1
+          args:
+            - --repo=https://github.com/FreekingDean/homelab
+            - --ref=main
+            - --root=/media
+            - --link=current
+            - --period=60s
+            - --sparse-checkout-file=/etc/git-sync/sparse-checkout
+          volumeMounts:
+            - name: media
+              mountPath: /media
+            - name: git-sync-sparse
+              mountPath: /etc/git-sync
       ingress:
         enabled: true
         ingressClassName: "${INGRESS_CLASS}"
@@ -73,6 +97,30 @@ spec:
 
     worker:
       replicas: 2
+      volumes:
+        - name: media
+          emptyDir: {}
+        - name: git-sync-sparse
+          configMap:
+            name: authentik-git-sync-sparse
+      volumeMounts:
+        - name: media
+          mountPath: /media
+      extraContainers:
+        - name: git-sync
+          image: registry.k8s.io/git-sync/git-sync:v4.4.1
+          args:
+            - --repo=https://github.com/FreekingDean/homelab
+            - --ref=main
+            - --root=/media
+            - --link=current
+            - --period=60s
+            - --sparse-checkout-file=/etc/git-sync/sparse-checkout
+          volumeMounts:
+            - name: media
+              mountPath: /media
+            - name: git-sync-sparse
+              mountPath: /etc/git-sync
       metrics:
         enabled: true
         serviceMonitor:

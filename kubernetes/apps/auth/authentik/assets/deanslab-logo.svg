@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 120" width="380" height="120">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#161b22;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#39d353;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#26a641;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background pill -->
+  <rect x="2" y="2" width="376" height="116" rx="14" ry="14" fill="url(#bgGrad)" stroke="#30363d" stroke-width="1.5"/>
+
+  <!-- Subtle grid lines -->
+  <line x1="20" y1="0" x2="20" y2="120" stroke="#21262d" stroke-width="0.5"/>
+  <line x1="50" y1="0" x2="50" y2="120" stroke="#21262d" stroke-width="0.5"/>
+  <line x1="0" y1="30" x2="320" y2="30" stroke="#21262d" stroke-width="0.5"/>
+  <line x1="0" y1="90" x2="320" y2="90" stroke="#21262d" stroke-width="0.5"/>
+
+  <!-- Flask / beaker icon -->
+  <!-- Flask body -->
+  <path d="M 38 30 L 38 60 L 22 88 Q 19 94 25 97 L 71 97 Q 77 94 74 88 L 58 60 L 58 30 Z"
+        fill="#0d1117" stroke="#39d353" stroke-width="1.5" filter="url(#glow)"/>
+  <!-- Flask neck line -->
+  <line x1="34" y1="38" x2="62" y2="38" stroke="#30363d" stroke-width="1"/>
+  <!-- Flask top rim -->
+  <rect x="33" y="26" width="30" height="6" rx="2" fill="#161b22" stroke="#39d353" stroke-width="1.5" filter="url(#glow)"/>
+  <!-- Liquid in flask -->
+  <path d="M 26 88 Q 23 93 27 96 L 69 96 Q 73 93 70 88 L 56 64 L 40 64 Z"
+        fill="#26a641" fill-opacity="0.25"/>
+  <path d="M 30 88 L 54 88" stroke="#39d353" stroke-width="1" stroke-opacity="0.5"/>
+  <!-- Bubble dots -->
+  <circle cx="42" cy="78" r="2.5" fill="#39d353" fill-opacity="0.6" filter="url(#glow)"/>
+  <circle cx="54" cy="83" r="1.8" fill="#39d353" fill-opacity="0.4" filter="url(#glow)"/>
+  <circle cx="46" cy="86" r="1.5" fill="#39d353" fill-opacity="0.5" filter="url(#glow)"/>
+
+  <!-- Circuit dots on flask -->
+  <circle cx="58" cy="46" r="2" fill="#39d353" filter="url(#glow)"/>
+  <line x1="58" y1="46" x2="68" y2="46" stroke="#39d353" stroke-width="1" stroke-opacity="0.7" filter="url(#glow)"/>
+  <circle cx="68" cy="46" r="1.5" fill="none" stroke="#39d353" stroke-width="1" filter="url(#glow)"/>
+
+  <!-- Main wordmark: Dean's -->
+  <text x="90" y="63"
+        font-family="'Courier New', Courier, monospace"
+        font-size="32"
+        font-weight="700"
+        letter-spacing="1"
+        fill="#e6edf3"
+        filter="url(#softGlow)">Dean's</text>
+
+  <!-- Lab in accent -->
+  <text x="218" y="63"
+        font-family="'Courier New', Courier, monospace"
+        font-size="32"
+        font-weight="700"
+        letter-spacing="2"
+        fill="url(#accentGrad)"
+        filter="url(#glow)">Lab</text>
+
+  <!-- Subdomain tag -->
+  <text x="91" y="82"
+        font-family="'Courier New', Courier, monospace"
+        font-size="10"
+        letter-spacing="2"
+        fill="#8b949e">deangalvin.dev</text>
+
+  <!-- Corner bracket decorations -->
+  <path d="M 8 8 L 8 18 M 8 8 L 18 8" stroke="#39d353" stroke-width="1.5" stroke-opacity="0.5" fill="none"/>
+  <path d="M 372 8 L 372 18 M 372 8 L 362 8" stroke="#39d353" stroke-width="1.5" stroke-opacity="0.5" fill="none"/>
+  <path d="M 8 112 L 8 102 M 8 112 L 18 112" stroke="#39d353" stroke-width="1.5" stroke-opacity="0.5" fill="none"/>
+  <path d="M 372 112 L 372 102 M 372 112 L 362 112" stroke="#39d353" stroke-width="1.5" stroke-opacity="0.5" fill="none"/>
+</svg>

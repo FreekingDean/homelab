@@ -1,0 +1,458 @@
+{
+  "title": "Home Status",
+  "uid": "tv-home",
+  "tags": ["homelab", "tv", "home", "homeassistant"],
+  "timezone": "browser",
+  "refresh": "30s",
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "panels": [
+    {
+      "id": 1,
+      "type": "gauge",
+      "title": "Indoor Temperature",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 8, "w": 6, "x": 0, "y": 0},
+      "targets": [{
+        "expr": "avg(homeassistant_climate_current_temperature_celsius{entity!=\"climate.thermostat\"}) * 9/5 + 32",
+        "refId": "A"
+      }],
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "fahrenheit",
+          "min": 60,
+          "max": 85,
+          "decimals": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "blue"},
+              {"value": 66, "color": "green"},
+              {"value": 77, "color": "yellow"},
+              {"value": 82, "color": "red"}
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "🏠 Dean",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 4, "w": 6, "x": 6, "y": 0},
+      "targets": [{
+        "expr": "homeassistant_person_state{entity=\"person.dean\"}",
+        "refId": "A"
+      }],
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "value",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "semi-dark-blue"},
+              {"value": 1, "color": "green"}
+            ]
+          },
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {"text": "AWAY"},
+                "1": {"text": "HOME"}
+              }
+            }
+          ],
+          "unit": "short"
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "🔒 Front Door",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 4, "w": 6, "x": 6, "y": 4},
+      "targets": [{
+        "expr": "homeassistant_lock_state{entity=\"lock.assure_touchscreen_deadbolt\"}",
+        "refId": "A"
+      }],
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "value",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "red"},
+              {"value": 1, "color": "green"}
+            ]
+          },
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {"text": "UNLOCKED"},
+                "1": {"text": "LOCKED"}
+              }
+            }
+          ]
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "🚪 Back Door",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 4, "w": 6, "x": 12, "y": 0},
+      "targets": [{
+        "expr": "homeassistant_lock_state{entity=\"lock.assure_touchscreen_deadbolt_2\"}",
+        "refId": "A"
+      }],
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "value",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "red"},
+              {"value": 1, "color": "green"}
+            ]
+          },
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {"text": "UNLOCKED"},
+                "1": {"text": "LOCKED"}
+              }
+            }
+          ]
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 5,
+      "type": "stat",
+      "title": "🚗 Volvo Lock",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 4, "w": 6, "x": 18, "y": 0},
+      "targets": [{
+        "expr": "homeassistant_lock_state{entity=\"lock.volvo_xc40_lock\"}",
+        "refId": "A"
+      }],
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "value",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "red"},
+              {"value": 1, "color": "green"}
+            ]
+          },
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {"text": "UNLOCKED"},
+                "1": {"text": "LOCKED"}
+              }
+            }
+          ]
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 6,
+      "type": "stat",
+      "title": "Home Power Draw",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 4, "w": 6, "x": 12, "y": 4},
+      "targets": [{
+        "expr": "sum(homeassistant_sensor_power_w{friendly_name=~\".*Consumption.*\"})",
+        "refId": "A"
+      }],
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "value",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "green"},
+              {"value": 3000, "color": "yellow"},
+              {"value": 5000, "color": "red"}
+            ]
+          },
+          "unit": "watt",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 7,
+      "type": "stat",
+      "title": "Solar Production",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 4, "w": 6, "x": 18, "y": 4},
+      "targets": [{
+        "expr": "sum(homeassistant_sensor_power_w{friendly_name=~\".*Production.*\"})",
+        "refId": "A"
+      }],
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "value",
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "semi-dark-blue"},
+              {"value": 1000, "color": "green"},
+              {"value": 3000, "color": "yellow"}
+            ]
+          },
+          "unit": "watt",
+          "decimals": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 8,
+      "type": "timeseries",
+      "title": "Power Consumption vs Production",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 10, "w": 24, "x": 0, "y": 8},
+      "targets": [
+        {
+          "expr": "sum(homeassistant_sensor_power_w{friendly_name=~\".*Consumption.*\"})",
+          "legendFormat": "Consumption",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(homeassistant_sensor_power_w{friendly_name=~\".*Production.*\"})",
+          "legendFormat": "Production",
+          "refId": "B"
+        }
+      ],
+      "options": {
+        "tooltip": {"mode": "multi", "sort": "desc"},
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "watt",
+          "custom": {
+            "lineWidth": 3,
+            "fillOpacity": 25,
+            "showPoints": "never",
+            "drawStyle": "line"
+          },
+          "color": {
+            "mode": "palette-classic"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {"id": "byName", "options": "Consumption"},
+            "properties": [
+              {"id": "color", "value": {"mode": "fixed", "fixedColor": "red"}}
+            ]
+          },
+          {
+            "matcher": {"id": "byName", "options": "Production"},
+            "properties": [
+              {"id": "color", "value": {"mode": "fixed", "fixedColor": "green"}}
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 9,
+      "type": "timeseries",
+      "title": "Climate Temperatures",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 10, "w": 12, "x": 0, "y": 18},
+      "targets": [{
+        "expr": "homeassistant_climate_current_temperature_celsius{entity!=\"climate.thermostat\"} * 9/5 + 32",
+        "legendFormat": "{{friendly_name}}",
+        "refId": "A"
+      }],
+      "options": {
+        "tooltip": {"mode": "multi", "sort": "desc"},
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "fahrenheit",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 15,
+            "showPoints": "never",
+            "drawStyle": "line"
+          },
+          "color": {
+            "mode": "palette-classic"
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 10,
+      "type": "timeseries",
+      "title": "HVAC Status",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 10, "w": 12, "x": 12, "y": 18},
+      "targets": [{
+        "expr": "homeassistant_climate_action",
+        "legendFormat": "{{entity}} - {{action}}",
+        "refId": "A"
+      }],
+      "options": {
+        "tooltip": {"mode": "multi", "sort": "desc"},
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 30,
+            "showPoints": "never",
+            "drawStyle": "line"
+          },
+          "color": {
+            "mode": "palette-classic"
+          }
+        },
+        "overrides": []
+      }
+    }
+  ]
+}

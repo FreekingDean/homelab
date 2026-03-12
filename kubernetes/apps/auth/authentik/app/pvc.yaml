@@ -1,0 +1,12 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: authentik-media
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: replica-cephfs
+  resources:
+    requests:
+      storage: 1Gi

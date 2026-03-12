@@ -43,6 +43,13 @@ spec:
       envFrom:
         - secretRef:
             name: authentik-external
+      volumeMounts:
+        - name: media
+          mountPath: /media
+      volumes:
+        - name: media
+          persistentVolumeClaim:
+            claimName: authentik-media
 
     authentik:
       log_level: info

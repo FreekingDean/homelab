@@ -1,0 +1,358 @@
+{
+  "title": "Storage & Ceph",
+  "uid": "tv-storage",
+  "tags": ["homelab", "tv", "storage", "ceph"],
+  "timezone": "browser",
+  "refresh": "30s",
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "panels": [
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Ceph Health",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 6, "w": 6, "x": 0, "y": 0},
+      "targets": [{
+        "expr": "ceph_health_status",
+        "refId": "A"
+      }],
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "value",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "green"},
+              {"value": 1, "color": "yellow"},
+              {"value": 2, "color": "red"}
+            ]
+          },
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {"text": "HEALTHY"},
+                "1": {"text": "WARNING"},
+                "2": {"text": "ERROR"}
+              }
+            }
+          ]
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Ceph Capacity",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 6, "w": 6, "x": 6, "y": 0},
+      "targets": [{
+        "expr": "ceph_cluster_total_bytes / 1024 / 1024 / 1024 / 1024",
+        "refId": "A"
+      }],
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "value",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "blue"}
+            ]
+          },
+          "unit": "decbytes",
+          "decimals": 1
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 3,
+      "type": "gauge",
+      "title": "Ceph Usage",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 6, "w": 6, "x": 12, "y": 0},
+      "targets": [{
+        "expr": "(ceph_cluster_total_used_bytes / ceph_cluster_total_bytes) * 100",
+        "refId": "A"
+      }],
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "decimals": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "green"},
+              {"value": 70, "color": "yellow"},
+              {"value": 85, "color": "red"}
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "OSDs Total",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 6, "w": 6, "x": 18, "y": 0},
+      "targets": [{
+        "expr": "ceph_osd_up + ceph_osd_down",
+        "refId": "A"
+      }],
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "orientation": "auto",
+        "textMode": "value",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "blue"}
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 5,
+      "type": "timeseries",
+      "title": "Ceph I/O - Read",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 9, "w": 12, "x": 0, "y": 6},
+      "targets": [{
+        "expr": "rate(ceph_pool_rd_bytes[5m]) / 1024 / 1024",
+        "legendFormat": "{{name}}",
+        "refId": "A"
+      }],
+      "options": {
+        "tooltip": {"mode": "multi", "sort": "desc"},
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "MBs",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 20,
+            "showPoints": "never",
+            "drawStyle": "line"
+          },
+          "color": {
+            "mode": "palette-classic"
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 6,
+      "type": "timeseries",
+      "title": "Ceph I/O - Write",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 9, "w": 12, "x": 12, "y": 6},
+      "targets": [{
+        "expr": "rate(ceph_pool_wr_bytes[5m]) / 1024 / 1024",
+        "legendFormat": "{{name}}",
+        "refId": "A"
+      }],
+      "options": {
+        "tooltip": {"mode": "multi", "sort": "desc"},
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "MBs",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 20,
+            "showPoints": "never",
+            "drawStyle": "line"
+          },
+          "color": {
+            "mode": "palette-classic"
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 7,
+      "type": "bargauge",
+      "title": "Node Disk Usage - /var (4 nodes with metrics)",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 9, "w": 12, "x": 0, "y": 15},
+      "targets": [{
+        "expr": "100 - ((node_filesystem_avail_bytes{mountpoint=\"/var\",fstype=\"xfs\"} / node_filesystem_size_bytes{mountpoint=\"/var\",fstype=\"xfs\"}) * 100)",
+        "legendFormat": "{{instance}}",
+        "instant": true,
+        "refId": "A"
+      }],
+      "options": {
+        "reduceOptions": {
+          "values": false,
+          "calcs": ["lastNotNull"],
+          "fields": ""
+        },
+        "orientation": "horizontal",
+        "displayMode": "gradient",
+        "showUnfilled": true,
+        "minVizWidth": 10,
+        "minVizHeight": 20
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "decimals": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {"value": null, "color": "green"},
+              {"value": 70, "color": "yellow"},
+              {"value": 85, "color": "red"}
+            ]
+          }
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 8,
+      "type": "timeseries",
+      "title": "OSD Status Over Time",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "a3e5bf5e-1ea2-4461-90c7-362806abda1a"
+      },
+      "gridPos": {"h": 9, "w": 12, "x": 12, "y": 15},
+      "targets": [
+        {
+          "expr": "ceph_osd_up",
+          "legendFormat": "Up",
+          "refId": "A"
+        },
+        {
+          "expr": "ceph_osd_down",
+          "legendFormat": "Down",
+          "refId": "B"
+        }
+      ],
+      "options": {
+        "tooltip": {"mode": "multi", "sort": "desc"},
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 25,
+            "showPoints": "never",
+            "drawStyle": "line"
+          },
+          "color": {
+            "mode": "palette-classic"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {"id": "byName", "options": "Up"},
+            "properties": [
+              {"id": "color", "value": {"mode": "fixed", "fixedColor": "green"}}
+            ]
+          },
+          {
+            "matcher": {"id": "byName", "options": "Down"},
+            "properties": [
+              {"id": "color", "value": {"mode": "fixed", "fixedColor": "red"}}
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -33,3 +33,20 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-grafana-dashboards
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cluster-apps-grafana-instance
+  path: ./kubernetes/apps/monitoring/grafana/dashboards
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m

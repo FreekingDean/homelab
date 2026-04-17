@@ -58,6 +58,17 @@
       ],
       "datasourceTemplate": "docker",
       "versioningTemplate": "redhat"
+    },
+    {
+      "description": "Process terraform variable defaults annotated with renovate comments",
+      "fileMatch": [
+        "terraform/.+\\.tf$"
+      ],
+      "matchStrings": [
+        "#\\s*renovate:\\s*datasource=(?<datasource>\\S+)\\s+depName=(?<depName>\\S+)(\\s+versioning=(?<versioning>\\S+))?\\s*\\n\\s*default\\s*=\\s*\"(?<currentValue>.*)\""
+      ],
+      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     }
   ],
   "packageRules": [

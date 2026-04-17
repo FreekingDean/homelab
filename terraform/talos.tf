@@ -1,5 +1,4 @@
 locals {
-  talos_version      = "v1.11.5"
   talos_cluster_name = "main-cluster"
 
   talos_control_plane_virtual_ip = "10.1.21.253"
@@ -21,7 +20,8 @@ module "discovery" {
   vlan_tag      = unifi_network.talos_network.vlan_id
   ceph_vlan_tag = 2
 
-  talos_version                  = local.talos_version
+  talos_version                  = var.talos_version
+  kubernetes_version             = var.kubernetes_version
   talos_machine_secrets          = talos_machine_secrets.this.machine_secrets
   talos_client_configuration     = talos_machine_secrets.this.client_configuration
   talos_cluster_name             = local.talos_cluster_name
@@ -43,7 +43,8 @@ module "cerritos" {
   vlan_tag      = unifi_network.talos_network.vlan_id
   ceph_vlan_tag = 2
 
-  talos_version                  = local.talos_version
+  talos_version                  = var.talos_version
+  kubernetes_version             = var.kubernetes_version
   talos_machine_secrets          = talos_machine_secrets.this.machine_secrets
   talos_client_configuration     = talos_machine_secrets.this.client_configuration
   talos_cluster_name             = local.talos_cluster_name
@@ -65,7 +66,8 @@ module "protostar" {
   vlan_tag      = unifi_network.talos_network.vlan_id
   ceph_vlan_tag = 2
 
-  talos_version                  = local.talos_version
+  talos_version                  = var.talos_version
+  kubernetes_version             = var.kubernetes_version
   talos_machine_secrets          = talos_machine_secrets.this.machine_secrets
   talos_client_configuration     = talos_machine_secrets.this.client_configuration
   talos_cluster_name             = local.talos_cluster_name
@@ -88,7 +90,8 @@ module "defiant" {
   vlan_tag      = unifi_network.talos_network.vlan_id
   ceph_vlan_tag = 2
 
-  talos_version                  = local.talos_version
+  talos_version                  = var.talos_version
+  kubernetes_version             = var.kubernetes_version
   talos_machine_secrets          = talos_machine_secrets.this.machine_secrets
   talos_client_configuration     = talos_machine_secrets.this.client_configuration
   talos_cluster_name             = local.talos_cluster_name

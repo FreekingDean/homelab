@@ -18,6 +18,7 @@ resource "proxmox_virtual_environment_vm" "vm" {
 
   agent {
     enabled = true
+    timeout = "5m"
   }
 
   boot_order = [
@@ -66,4 +67,14 @@ resource "unifi_user" "vm_ip" {
 
 output "vm_ip" {
   value = unifi_user.vm_ip.fixed_ip
+}
+
+output "primary_mac" {
+  description = "MAC address of the primary NIC (net0, main cluster VLAN)."
+  value       = tolist(proxmox_virtual_environment_vm.vm.network_device)[0].mac_address
+}
+
+output "ceph_mac" {
+  description = "MAC address of the secondary NIC (net1, ceph VLAN)."
+  value       = tolist(proxmox_virtual_environment_vm.vm.network_device)[1].mac_address
 }

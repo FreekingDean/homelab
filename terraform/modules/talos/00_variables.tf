@@ -38,6 +38,11 @@ variable "talos_version" {
   type        = string
 }
 
+variable "kubernetes_version" {
+  description = "Kubernetes version to use eg. v1.35.4"
+  type        = string
+}
+
 variable "talos_cluster_name" {
   description = "The name of the talos cluster"
   type        = string

@@ -40,7 +40,7 @@ spec:
     ports:
       http: 5540
     ingress:
-      localonly: false
+      localonly: true
       subdomain: redisinsight
       icon: database
     persistence:

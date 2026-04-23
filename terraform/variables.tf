@@ -9,5 +9,5 @@ variable "kubernetes_version" {
   description = "Kubernetes version to deploy via Talos."
   type        = string
   # renovate: datasource=github-releases depName=kubernetes/kubernetes
-  default = "v1.35.4"
+  default = "v1.36.0"
 }

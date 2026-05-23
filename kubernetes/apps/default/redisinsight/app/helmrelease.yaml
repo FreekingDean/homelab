@@ -27,6 +27,12 @@ spec:
     keepHistory: false
   values:
     stateful: true
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: "OnRootMismatch"
     image:
       repository: redis/redisinsight
       tag: 3.4.2

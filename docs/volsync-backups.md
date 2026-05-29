@@ -67,8 +67,20 @@ The PVC itself lives alongside the app (e.g. `plex/app/pvc.yaml`).
 Tasks live in `.taskfiles/VolSync/Tasks.yml`:
 
 ```bash
-task vs:verify                      # check operator + backup resources
 task vs:snapshot rsrc=config-plex-0 # trigger a backup
 task vs:list     rsrc=config-plex-0 # list snapshots
 task vs:restore  rsrc=config-plex-0 # restore from the latest snapshot
 ```
+
+## Monitoring
+
+Backup health is surfaced through Prometheus and Grafana rather than ad-hoc
+checks:
+
+- **Alerts** — the `volsync-rules` PrometheusRule
+  (`kubernetes/apps/volsync/volsync/app/prometheusrule.yaml`) fires
+  `VolSyncComponentAbsent` and `VolSyncVolumeOutOfSync` into Alertmanager.
+- **Dashboard** — a `GrafanaDashboard` CR
+  (`kubernetes/apps/volsync/volsync/app/grafanadashboard.yaml`) imports the
+  upstream [VolSync dashboard](https://grafana.com/grafana/dashboards/21356)
+  for replication status and sync durations.

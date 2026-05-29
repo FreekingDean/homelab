@@ -86,50 +86,106 @@ kubectl get secret -n volsync volsync-gcp-credentials -o yaml
 
 ## Step 6: Configure Backup Sources
 
-Now you need to add backup sources for your apps. Here's an example for Plex:
+Now you need to add backup sources for your apps. We use a **unified storage component** that creates both the PVC and Volsync backup together.
 
-### Create the backup source:
+### Using the Unified Storage Component
+
+The component `kubernetes/components/storage/volsync-pvc.yaml` creates:
+- A PersistentVolumeClaim (PVC)
+- A Volsync ReplicationSource with Restic backup
+
+### Example: Plex Backup
 
 ```bash
-# Create directory for Plex backup source
-mkdir -p kubernetes/apps/volsync/apps/plex
+# Create directory for Plex storage
+mkdir -p kubernetes/apps/volsync/storage/plex
 
-# Create the ReplicationSource manifest
-cat > kubernetes/apps/volsync/apps/plex/replicationsource.yaml << 'EOF'
----
-apiVersion: volsync.backube/v1alpha1
-kind: ReplicationSource
-metadata:
-  name: plex-backup
-  namespace: default  # Update: match your Plex namespace
-spec:
-  sourcePVC: config-plex-0  # Update: match your Plex PVC name
-  trigger:
-    schedule: "0 2 * * *"  # Daily at 2 AM UTC
-  restic:
-    copyMethod: Snapshot
-    repository: volsync-gcp-credentials
-    capacity: 100Gi
-    retain:
-      hourly: 24   # Keep 24 hourly backups
-      daily: 7     # Keep 7 daily backups
-      weekly: 4    # Keep 4 weekly backups
-      monthly: 12  # Keep 12 monthly backups
-    cacheStorageClass: ceph-rbd  # Update: match your fast storage class
-    cacheCapacity: 20Gi
+# Create the Kustomization
+cat > kubernetes/apps/volsync/storage/plex/kustomization.yaml << 'EOF'
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../../../components/storage/volsync-pvc.yaml
+
+configMapGenerator:
+  - name: volsync-plex-config
+    literals:
+      - name=plex-config
+      - namespace=default
+      - size=50Gi
+      - accessMode=ReadWriteOnce
+      - storageClass=standard
+      - schedule=0 2 * * *
+      - retainHourly=24
+      - retainDaily=7
+      - retainWeekly=4
+      - retainMonthly=12
+      - cacheSize=20Gi
+
+generatorOptions:
+  disableNameSuffixHash: true
 EOF
 ```
 
 ### Add to Flux:
 
 ```bash
-# Create a Kustomization for this app
-cat > kubernetes/apps/volsync/apps/plex/kustomization.yaml << 'EOF'
----
+# Create a Kustomization for the volsync app
+cat > kubernetes/apps/volsync/kustomization.yaml << 'EOF'
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+
 resources:
-  - ./replicationsource.yaml
+  - storage/plex
+  # Add more storage components here:
+  # - storage/jellyfin
+  # - storage/sonarr
+  # - storage/radarr
+EOF
+```
+
+### Component Configuration Options
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `name` | - | PVC/backup name (required) |
+| `namespace` | - | Kubernetes namespace (required) |
+| `size` | `100Gi` | PVC size |
+| `accessMode` | `ReadWriteOnce` | PVC access mode |
+| `storageClass` | `standard` | Storage class name |
+| `schedule` | `0 1 * * *` | Backup schedule (cron) |
+| `retainHourly` | `24` | Keep 24 hourly backups |
+| `retainDaily` | `7` | Keep 7 daily backups |
+| `retainWeekly` | `4` | Keep 4 weekly backups |
+| `retainMonthly` | `12` | Keep 12 monthly backups |
+| `cacheSize` | `20Gi` | Cache PVC size for Restic |
+
+### Example: Jellyfin Backup
+
+```bash
+mkdir -p kubernetes/apps/volsync/storage/jellyfin
+
+cat > kubernetes/apps/volsync/storage/jellyfin/kustomization.yaml << 'EOF'
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../../../components/storage/volsync-pvc.yaml
+
+configMapGenerator:
+  - name: volsync-jellyfin-config
+    literals:
+      - name=jellyfin-data
+      - namespace=default
+      - size=100Gi
+      - accessMode=ReadWriteOnce
+      - storageClass=standard
+      - schedule=0 3 * * *
+      - cacheSize=25Gi
+
+generatorOptions:
+  disableNameSuffixHash: true
 EOF
 ```
 

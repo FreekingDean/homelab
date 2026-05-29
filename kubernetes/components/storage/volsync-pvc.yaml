@@ -1,0 +1,46 @@
+---
+# volsync-pvc.yaml
+# Replicated Storage Component with PVC and Volsync backup
+# Creates a PVC with automatic Volsync backup to GCS
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.name }}
+    app.kubernetes.io/part-of: volsync-storage
+    app.kubernetes.io/component: pvc
+spec:
+  accessModes:
+    - {{ .Values.accessMode | default "ReadWriteOnce" }}
+  resources:
+    requests:
+      storage: {{ .Values.size | default "100Gi" }}
+  storageClassName: {{ .Values.storageClass | default "standard" }}
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: {{ .Values.name }}-backup
+  namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.name }}
+    app.kubernetes.io/part-of: volsync-storage
+    app.kubernetes.io/component: backup
+spec:
+  sourcePVC: {{ .Values.name }}
+  trigger:
+    schedule: {{ .Values.schedule | default "0 1 * * *" }}
+  restic:
+    copyMethod: Snapshot
+    repository: volsync-gcp-credentials
+    capacity: {{ .Values.size | default "100Gi" }}
+    retain:
+      hourly: {{ .Values.retainHourly | default 24 }}
+      daily: {{ .Values.retainDaily | default 7 }}
+      weekly: {{ .Values.retainWeekly | default 4 }}
+      monthly: {{ .Values.retainMonthly | default 12 }}
+    cacheStorageClass: {{ .Values.cacheStorageClass | default "standard" }}
+    cacheCapacity: {{ .Values.cacheSize | default "20Gi" }}

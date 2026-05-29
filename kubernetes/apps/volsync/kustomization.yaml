@@ -5,5 +5,9 @@ resources:
   - ./namespace.yaml
   - ./gcs-credentials.yaml
   - ./replication-destination.yaml
-  - ./plex-backup.yaml
   - ./volsync/ks.yaml
+  - storage/plex
+  # Add more storage components here:
+  # - storage/jellyfin
+  # - storage/sonarr
+  # - storage/radarr

@@ -1,13 +1,17 @@
 ---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./namespace.yaml
-  - ./gcs-credentials.yaml
-  - ./replication-destination.yaml
   - ./volsync/ks.yaml
-  - storage/plex
-  # Add more storage components here:
-  # - storage/jellyfin
-  # - storage/sonarr
-  # - storage/radarr
+patches:
+  - patch: |-
+      - op: add
+        path: /spec/targetNamespace
+        value: volsync
+    target:
+      version: v1
+      group: kustomize.toolkit.fluxcd.io
+      kind: Kustomization
+      labelSelector: setnamespace.flux.home.arpa/disabled notin (true)

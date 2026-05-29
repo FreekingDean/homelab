@@ -19,22 +19,6 @@ vars:
 
 tasks:
 
-  verify:
-    desc: Verify the volsync operator and backup resources are healthy (ex. task vs:verify)
-    silent: true
-    cmds:
-      - echo "== Operator =="
-      - kubectl -n volsync rollout status deployment/volsync --timeout=30s
-      - echo "== ReplicationSources =="
-      - kubectl get replicationsources -A
-      - echo "== Volsync ExternalSecrets =="
-      - kubectl get externalsecrets -A
-      - echo "== Flux Kustomizations =="
-      - kubectl -n flux-system get kustomizations | grep -E 'NAME|volsync' || true
-    preconditions:
-      - sh: kubectl get crd replicationsources.volsync.backube
-        msg: "volsync CRDs not found; is the operator installed?"
-
   fix:
     desc: Fix snapshots taken by restic for a given ReplicationSource (ex. task vs:list rsrc=plex [namespace=default])
     silent: true

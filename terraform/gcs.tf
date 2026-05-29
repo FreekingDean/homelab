@@ -16,11 +16,6 @@ resource "google_storage_bucket" "volsync_backups" {
   # with restic's content-addressed packs (corruption risk on Delete, and
   # COLDLINE retrieval/min-duration costs on restic's frequent reads).
 
-  # Encryption
-  encryption {
-    default_kms_key_name = null  # Use Google-managed encryption
-  }
-  
   # Tags for organization
   labels = {
     environment = "homelab"

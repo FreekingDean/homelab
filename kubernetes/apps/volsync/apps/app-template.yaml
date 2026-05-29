@@ -1,0 +1,21 @@
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: {{APP_NAME}}-backup
+  namespace: {{NAMESPACE}}
+spec:
+  sourcePVC: {{PVC_NAME}}
+  trigger:
+    schedule: "0 {{BACKUP_HOUR}} * * *"  # Daily at {{BACKUP_HOUR}} UTC
+  restic:
+    copyMethod: Snapshot
+    repository: volsync-restic-credentials
+    capacity: {{PVC_CAPACITY}}
+    retain:
+      hourly: 24
+      daily: 7
+      weekly: 4
+      monthly: 12
+    cacheStorageClass: standard
+    cacheCapacity: 20Gi

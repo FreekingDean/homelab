@@ -1,0 +1,26 @@
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: plex-backup
+  namespace: default  # UPDATE: match the namespace where Plex is deployed
+spec:
+  sourcePVC: config-plex-0  # UPDATE: match your actual PVC name
+  trigger:
+    schedule: "0 1 * * *"  # Daily at 1 AM UTC
+  restic:
+    copyMethod: Snapshot
+    repository: volsync-restic-credentials
+    capacity: 100Gi
+    retain:
+      hourly: 24   # Keep 24 hourly backups
+      daily: 7     # Keep 7 daily backups
+      weekly: 4    # Keep 4 weekly backups
+      monthly: 12  # Keep 12 monthly backups
+    cacheStorageClass: standard
+    cacheCapacity: 20Gi
+---
+# Optional: Add a trigger on PVC change (instead of schedule)
+# Uncomment if you want to backup whenever PVC changes
+# trigger:
+#   manual: "true"

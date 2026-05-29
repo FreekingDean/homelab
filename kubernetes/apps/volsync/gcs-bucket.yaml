@@ -1,0 +1,27 @@
+---
+# Create a GCS bucket for Volsync backups
+# Run this manually: gsutil mb -p <YOUR_PROJECT_ID> gs://<YOUR_BUCKET_NAME>
+# Example: gsutil mb -p my-project gs://my-homelab-backups
+
+# This file is a reference - you'll need to create the bucket manually first
+# Bucket naming: <project>-backups or <unique-name>-backups
+# Recommended: Enable versioning and lifecycle policies
+
+# Lifecycle policy example (via gsutil):
+# gsutil lifecycle set lifecycle.json gs://your-bucket-name
+#
+# lifecycle.json:
+# {
+#   "lifecycle": {
+#     "rule": [
+#       {
+#         "action": {"type": "Delete"},
+#         "condition": {"age": 30}
+#       },
+#       {
+#         "action": {"type": "SetStorageClass", "storageClass": "COLDLINE"},
+#         "condition": {"age": 90}
+#       }
+#     ]
+#   }
+# }

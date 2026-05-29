@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/kustomization_v1beta2.json
+# Volsync operator installation
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
@@ -13,11 +13,64 @@ spec:
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  #healthChecks:
-  #  - apiVersion: helm.toolkit.fluxcd.io/v2beta1
-  #    kind: HelmRelease
-  #    name: volsync
-  #    namespace: volsync
   interval: 30m
   retryInterval: 1m
   timeout: 3m
+---
+# Volsync GCP credentials and destination
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-volsync-gcp-config
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cluster-apps-volsync
+    - name: cluster-apps-external-secrets-stores
+  path: ./kubernetes/apps/volsync
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
+---
+# Plex backup source
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-volsync-plex
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cluster-apps-volsync-gcp-config
+  path: ./kubernetes/apps/volsync
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
+  patches:
+    - patch: |-
+        apiVersion: kustomize.toolkit.fluxcd.io/v1
+        kind: Kustomization
+        metadata:
+          name: cluster-apps-volsync-plex
+        spec:
+          patches:
+            - patch: |-
+                - op: replace
+                  path: /spec/sourcePVC
+                  value: config-plex-0
+              target:
+                kind: ReplicationSource
+                name: plex-backup
+              # Note: You'll need to customize this per-app or use postBuild substitutions
+      target:
+        group: kustomize.toolkit.fluxcd.io
+        kind: Kustomization
+        name: cluster-apps-volsync-plex
+---

@@ -20,6 +20,10 @@ terraform {
       source  = "bpg/proxmox"
       version = "0.107.0"
     }
+    google = {
+      source  = "hashicorp/google"
+      version = "~> 6.0"
+    }
     null = {
       source = "hashicorp/null"
     }
@@ -39,4 +43,9 @@ provider "proxmox" {
 provider "unifi" {
   api_url        = "https://unifi.deangalvin.dev"
   allow_insecure = true
+}
+
+provider "google" {
+  project = var.gcp_project_id
+  region  = var.gcp_region
 }

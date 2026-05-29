@@ -31,20 +31,10 @@ resource "google_service_account" "volsync" {
   project      = var.gcp_project_id
 }
 
-# Service Account Key (stored in 1Password externally, this is just the SA)
-# The key will be created manually and stored in 1Password
-
 # IAM Policy: Grant service account access to the bucket
 resource "google_storage_bucket_iam_member" "volsync" {
   bucket = google_storage_bucket.volsync_backups.name
   role   = "roles/storage.objectAdmin"
-  member = "serviceAccount:${google_service_account.volsync.email}"
-}
-
-# Additional IAM: Grant access to list buckets (for Volsync)
-resource "google_storage_bucket_iam_member" "volsync_list" {
-  bucket = google_storage_bucket.volsync_backups.name
-  role   = "roles/storage.legacyBucketReader"
   member = "serviceAccount:${google_service_account.volsync.email}"
 }
 

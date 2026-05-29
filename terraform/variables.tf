@@ -15,7 +15,6 @@ variable "kubernetes_version" {
 variable "gcp_project_id" {
   description = "GCP Project ID for backup storage"
   type        = string
-  # renovate: datasource=github-releases depName=hashicorp/google
 }
 
 variable "gcp_region" {

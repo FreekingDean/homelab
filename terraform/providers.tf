@@ -31,6 +31,14 @@ terraform {
       version = "~> 2.7.0"
       source  = "community-terraform-providers/ignition"
     }
+    onepassword = {
+      source  = "1Password/onepassword"
+      version = "~> 2.1"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.6"
+    }
   }
 }
 
@@ -48,4 +56,9 @@ provider "unifi" {
 provider "google" {
   project = var.gcp_project_id
   region  = var.gcp_region
+}
+
+provider "onepassword" {
+  url   = var.onepassword_connect_host
+  token = var.onepassword_connect_token
 }

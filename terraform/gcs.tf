@@ -38,6 +38,13 @@ resource "google_storage_bucket_iam_member" "volsync" {
   member = "serviceAccount:${google_service_account.volsync.email}"
 }
 
+# HMAC key: restic talks to GCS via the S3-interoperable API, which
+# authenticates with an access id + secret (AWS_ACCESS_KEY_ID / SECRET).
+resource "google_storage_hmac_key" "volsync" {
+  service_account_email = google_service_account.volsync.email
+  project               = var.gcp_project_id
+}
+
 # Output the service account email for 1Password integration
 output "service_account_email" {
   value       = google_service_account.volsync.email

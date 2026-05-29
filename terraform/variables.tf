@@ -28,3 +28,21 @@ variable "gcp_bucket_name_suffix" {
   type        = string
   default     = "backups"
 }
+
+variable "onepassword_connect_host" {
+  description = "1Password Connect host URL used to publish backup credentials."
+  type        = string
+  default     = "https://onepassword-connect.deangalvin.dev"
+}
+
+variable "onepassword_connect_token" {
+  description = "1Password Connect API token (set via TF_VAR / workspace variable)."
+  type        = string
+  sensitive   = true
+}
+
+variable "onepassword_vault" {
+  description = "1Password vault that holds the restic backup item."
+  type        = string
+  default     = "Homelab"
+}

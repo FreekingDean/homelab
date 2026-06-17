@@ -21,4 +21,4 @@ spec:
   storageClassName: ec-cephfs
   resources:
     requests:
-      storage: "120Ti"
+      storage: "150Ti"

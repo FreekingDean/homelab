@@ -20,12 +20,24 @@ terraform {
       source  = "bpg/proxmox"
       version = "0.110.0"
     }
+    google = {
+      source  = "hashicorp/google"
+      version = "~> 6.0"
+    }
     null = {
       source = "hashicorp/null"
     }
     ignition = {
       version = "~> 2.7.0"
       source  = "community-terraform-providers/ignition"
+    }
+    onepassword = {
+      source  = "1Password/onepassword"
+      version = "~> 2.1"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.6"
     }
   }
 }
@@ -39,4 +51,14 @@ provider "proxmox" {
 provider "unifi" {
   api_url        = "https://unifi.deangalvin.dev"
   allow_insecure = true
+}
+
+provider "google" {
+  project = var.gcp_project_id
+  region  = var.gcp_region
+}
+
+provider "onepassword" {
+  url   = var.onepassword_connect_host
+  token = var.onepassword_connect_token
 }

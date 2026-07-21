@@ -35,7 +35,7 @@ spec:
         fsGroupChangePolicy: "OnRootMismatch"
     image:
       repository: redis/redisinsight
-      tag: 3.6.0
+      tag: 3.8.0
     env:
       TZ: America/New_York
       RI_APP_PORT: "5540"

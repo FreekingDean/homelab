@@ -116,6 +116,9 @@ locals {
         }
       }
       network = {
+        cni = {
+          name = "none"
+        }
         podSubnets = [
           var.kubernetes_pod_cidr
         ],

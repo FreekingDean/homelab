@@ -1,4 +1,15 @@
 ---
+# The only way istio lets you set fields on the service it generates. Local
+# keeps the client source IP, which the localonly allowlist depends on.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gw-options
+data:
+  service: |
+    spec:
+      externalTrafficPolicy: Local
+---
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:

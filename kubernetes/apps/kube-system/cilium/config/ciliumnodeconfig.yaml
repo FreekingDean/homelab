@@ -1,4 +1,6 @@
 ---
+# Migration-only. Opts a labelled node into cilium CNI, overriding the global
+# cni.customConf. Deleted in phase 4 along with the label.
 apiVersion: cilium.io/v2
 kind: CiliumNodeConfig
 metadata:

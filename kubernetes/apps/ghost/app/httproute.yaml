@@ -1,0 +1,25 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  labels:
+    app.kubernetes.io/instance: ghost
+    app.kubernetes.io/name: ghost
+  name: ghost-public
+  namespace: ghost
+spec:
+  parentRefs:
+    - name: main
+      namespace: networking
+  hostnames:
+    - glimmerlabs.io
+    - blog.glimmerlabs.io
+    - www.glimmerlabs.io
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: ghost
+          port: 2368

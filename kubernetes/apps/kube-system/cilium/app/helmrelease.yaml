@@ -1,0 +1,54 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cilium
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: cilium
+  interval: 1h
+  values:
+    securityContext:
+      capabilities:
+        ciliumAgent:
+          - CHOWN
+          - KILL
+          - NET_ADMIN
+          - NET_RAW
+          - IPC_LOCK
+          - SYS_ADMIN
+          - SYS_RESOURCE
+          - DAC_OVERRIDE
+          - FOWNER
+          - SETGID
+          - SETUID
+        cleanCiliumState:
+          - NET_ADMIN
+          - SYS_ADMIN
+          - SYS_RESOURCE
+    cgroup:
+      autoMount:
+        enabled: false
+      hostRoot: /sys/fs/cgroup
+    ipam:
+      mode: cluster-pool
+      operator:
+        clusterPoolIPv4PodCIDRList: ["10.201.0.0/16"]
+    tunnelPort: 8473 # flannel owns 8472
+
+    # Migration-only. All four come out in phase 4, once every node is on cilium
+    # and flannel is deleted:
+    #   customConf  -> false    start writing the CNI config everywhere
+    #   restart     -> true     let the operator restart unmanaged pods
+    #   policy      -> default  enforcement becomes real for the first time
+    #   hostLegacy  -> false    no more cross-CNI traffic to route
+    cni:
+      customConf: true
+    operator:
+      unmanagedPodWatcher:
+        restart: false
+    policyEnforcementMode: never
+    bpf:
+      hostLegacyRouting: true

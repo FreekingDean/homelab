@@ -32,32 +32,16 @@ spec:
       autoMount:
         enabled: false
       hostRoot: /sys/fs/cgroup
-    k8sServiceHost: localhost
-    k8sServicePort: 7445
-
-    # Runs as a second, dormant overlay next to flannel: its own pod CIDR and
-    # vxlan port, and customConf keeps it from writing a CNI config until a node
-    # opts in via the CiliumNodeConfig. Everything below flips in later phases.
     ipam:
       mode: cluster-pool
       operator:
         clusterPoolIPv4PodCIDRList: ["10.201.0.0/16"]
-    routingMode: tunnel
-    tunnelProtocol: vxlan
     tunnelPort: 8473
     cni:
       customConf: true
-      uninstall: false
     operator:
       unmanagedPodWatcher:
         restart: false
     policyEnforcementMode: never
     bpf:
       hostLegacyRouting: true
-    kubeProxyReplacement: false
-
-    # Without this, socket LB rewrites the destination inside the pod netns and
-    # Envoy sees a backend IP instead of the ClusterIP, silently bypassing the
-    # istio sidecars that every namespace gets by default.
-    socketLB:
-      hostNamespaceOnly: true

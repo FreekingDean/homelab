@@ -5,6 +5,11 @@ metadata:
   name: main
 spec:
   gatewayClassName: istio
+  infrastructure:
+    parametersRef:
+      group: ""
+      kind: ConfigMap
+      name: main-gateway-parameters
   listeners:
     - name: deangalvin-dev
       protocol: HTTPS

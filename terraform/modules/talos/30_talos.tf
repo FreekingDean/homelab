@@ -116,9 +116,6 @@ locals {
         }
       }
       network = {
-        # Stops talos reconciling its flannel manifest. The running flannel
-        # daemonset is left alone -- talos never deletes what it created -- so
-        # unmigrated nodes keep working until phase 4 removes it by hand.
         cni = {
           name = "none"
         }

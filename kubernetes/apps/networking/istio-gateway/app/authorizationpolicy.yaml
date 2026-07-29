@@ -2,7 +2,7 @@
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
-  name: localonly
+  name: private-by-default
 spec:
   targetRefs:
     - group: gateway.networking.k8s.io
@@ -20,8 +20,23 @@ spec:
               - 10.0.0.0/8
       to:
         - operation:
-            hosts:
-              - ceph.deangalvin.dev
-              - proxmox.deangalvin.dev
-              - unifi.deangalvin.dev
-              - zwave.deangalvin.dev
+            notHosts:
+              - arcolog.com
+              - blog.arcolog.com
+              - www.arcolog.com
+              - arcolog.deangalvin.dev
+              - auth.deangalvin.dev
+              - authentik.deangalvin.dev
+              - filebrowser.deangalvin.dev
+              - flux-webhook.deangalvin.dev
+              - ghost.deangalvin.dev
+              - glimmerlabs.io
+              - blog.glimmerlabs.io
+              - www.glimmerlabs.io
+              - hass.deangalvin.dev
+              - jellyfin.deangalvin.dev
+              - meet.deangalvin.dev
+              - musichero.deangalvin.dev
+              - overseerr.deangalvin.dev
+              - plex.deangalvin.dev
+              - wizarr.deangalvin.dev

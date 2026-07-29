@@ -106,7 +106,7 @@ module "defiant" {
   kubernetes_pod_cidr     = local.kubernetes_pod_cidr
   kubernetes_service_cidr = local.kubernetes_service_cidr
 
-  cilium = false
+  cilium = true
 }
 
 resource "talos_machine_secrets" "this" {}

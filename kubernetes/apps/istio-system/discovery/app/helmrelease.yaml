@@ -41,5 +41,6 @@ spec:
             port: 4318
             http:
               path: "/"
+              timeout: 5s
     global:
       logAsJson: true

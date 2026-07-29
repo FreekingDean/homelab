@@ -95,9 +95,7 @@ locals {
         }
       }
       proxy = {
-        extraArgs = {
-          "feature-gates" = "EnvFiles=true"
-        }
+        disabled = true
       }
       scheduler = {
         extraArgs = {

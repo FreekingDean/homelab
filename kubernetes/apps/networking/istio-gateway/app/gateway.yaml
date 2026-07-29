@@ -1,0 +1,74 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: main
+spec:
+  gatewayClassName: istio
+  listeners:
+    - name: deangalvin-dev
+      protocol: HTTPS
+      port: 443
+      hostname: "deangalvin.dev"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: "${PRODUCTION_TLS}"
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: deangalvin-dev-wildcard
+      protocol: HTTPS
+      port: 443
+      hostname: "*.deangalvin.dev"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: "${PRODUCTION_TLS}"
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: arcolog-com
+      protocol: HTTPS
+      port: 443
+      hostname: "arcolog.com"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: "${ARCOLOG_COM_PRODUCTION_TLS}"
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: arcolog-com-wildcard
+      protocol: HTTPS
+      port: 443
+      hostname: "*.arcolog.com"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: "${ARCOLOG_COM_PRODUCTION_TLS}"
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: glimmerlabs-io
+      protocol: HTTPS
+      port: 443
+      hostname: "glimmerlabs.io"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: "${GLIMMERLABS_IO_PRODUCTION_TLS}"
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: glimmerlabs-io-wildcard
+      protocol: HTTPS
+      port: 443
+      hostname: "*.glimmerlabs.io"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: "${GLIMMERLABS_IO_PRODUCTION_TLS}"
+      allowedRoutes:
+        namespaces:
+          from: All

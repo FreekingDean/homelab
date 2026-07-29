@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./gateway-api/ks.yaml
+  - ./istio-gateway/ks.yaml
   - ./traefik/ks.yaml
   - ./external-dns/ks.yaml
 patches:

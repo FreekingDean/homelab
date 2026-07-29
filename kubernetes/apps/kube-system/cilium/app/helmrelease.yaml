@@ -36,4 +36,4 @@ spec:
       mode: cluster-pool
       operator:
         clusterPoolIPv4PodCIDRList: ["10.201.0.0/16"]
-    tunnelPort: 8473 # 8472 was flannel's; kept to avoid a disruptive restart
+    tunnelPort: 8473 # non-default, see #2483

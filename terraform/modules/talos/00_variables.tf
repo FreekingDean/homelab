@@ -73,17 +73,8 @@ variable "kubernetes_pod_cidr" {
   type        = string
 }
 
-variable "cilium_migrated_nodes" {
-  description = <<-EOT
-    VM names (e.g. "talos-worker-defiant-1") that have been handed over to Cilium
-    during the flannel -> Cilium migration. Listed nodes get the
-    io.cilium.migration/cilium-default label, which opts them in to the
-    CiliumNodeConfig that makes Cilium write the CNI config on that node. Adding a
-    name here also flips that node -- and only that node -- to apply_mode "reboot",
-    so the config apply drains flannel's leftover interfaces and routes.
-
-    Migrate one node at a time. Removing a name rolls that node back to flannel.
-  EOT
-  type        = set(string)
-  default     = []
+variable "cilium" {
+  description = "Hand this host's nodes from flannel to Cilium. Labels them for the CiliumNodeConfig and applies with a reboot. Flip one host at a time."
+  type        = bool
+  default     = false
 }

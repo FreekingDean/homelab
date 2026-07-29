@@ -30,7 +30,7 @@ module "discovery" {
   kubernetes_pod_cidr     = local.kubernetes_pod_cidr
   kubernetes_service_cidr = local.kubernetes_service_cidr
 
-  cilium_migrated_nodes = var.cilium_migrated_nodes
+  cilium = false
 }
 
 module "cerritos" {
@@ -55,7 +55,7 @@ module "cerritos" {
   kubernetes_pod_cidr     = local.kubernetes_pod_cidr
   kubernetes_service_cidr = local.kubernetes_service_cidr
 
-  cilium_migrated_nodes = var.cilium_migrated_nodes
+  cilium = false
 }
 
 module "protostar" {
@@ -80,7 +80,7 @@ module "protostar" {
   kubernetes_pod_cidr     = local.kubernetes_pod_cidr
   kubernetes_service_cidr = local.kubernetes_service_cidr
 
-  cilium_migrated_nodes = var.cilium_migrated_nodes
+  cilium = false
 }
 
 
@@ -106,7 +106,7 @@ module "defiant" {
   kubernetes_pod_cidr     = local.kubernetes_pod_cidr
   kubernetes_service_cidr = local.kubernetes_service_cidr
 
-  cilium_migrated_nodes = var.cilium_migrated_nodes
+  cilium = false
 }
 
 resource "talos_machine_secrets" "this" {}

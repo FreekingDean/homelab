@@ -1,11 +1,11 @@
 locals {
   cluster_endpoint = "https://${var.talos_control_plane_virtual_ip}:6443"
 
-  # Label stamped on nodes being handed from flannel to Cilium. Matches the
-  # nodeSelector on the CiliumNodeConfig in kubernetes/apps/kube-system/cilium.
-  cilium_migration_labels = {
-    "io.cilium.migration/cilium-default" = "true"
-  }
+  cilium_labels = var.cilium ? {
+    nodeLabels = {
+      "io.cilium.migration/cilium-default" = "true"
+    }
+  } : {}
 
   # Per-VM network patch builder.
   #
@@ -25,64 +25,54 @@ locals {
   # metric so its default route loses to the primary. kubelet nodeIP is
   # pinned to the primary subnet so kube registers the correct address.
   server_network_patches = [
-    for idx, vm in module.talos_servers : yamlencode({
-      machine = merge(
-        {
-          kubelet = {
-            nodeIP = {
-              validSubnets = ["10.1.21.0/24"]
-            }
+    for vm in module.talos_servers : yamlencode({
+      machine = merge(local.cilium_labels, {
+        kubelet = {
+          nodeIP = {
+            validSubnets = ["10.1.21.0/24"]
           }
-          network = {
-            interfaces = [
-              {
-                deviceSelector = { hardwareAddr = lower(vm.primary_mac) }
-                dhcp           = true
-                dhcpOptions    = { routeMetric = 1024 }
-                vip            = { ip = var.talos_control_plane_virtual_ip }
-              },
-              {
-                deviceSelector = { hardwareAddr = lower(vm.ceph_mac) }
-                dhcp           = true
-                dhcpOptions    = { routeMetric = 4096 }
-              },
-            ]
-          }
-        },
-        contains(var.cilium_migrated_nodes, local.servers[idx]) ? {
-          nodeLabels = local.cilium_migration_labels
-        } : {},
-      )
+        }
+        network = {
+          interfaces = [
+            {
+              deviceSelector = { hardwareAddr = lower(vm.primary_mac) }
+              dhcp           = true
+              dhcpOptions    = { routeMetric = 1024 }
+              vip            = { ip = var.talos_control_plane_virtual_ip }
+            },
+            {
+              deviceSelector = { hardwareAddr = lower(vm.ceph_mac) }
+              dhcp           = true
+              dhcpOptions    = { routeMetric = 4096 }
+            },
+          ]
+        }
+      })
     })
   ]
   worker_network_patches = [
-    for idx, vm in module.talos_workers : yamlencode({
-      machine = merge(
-        {
-          kubelet = {
-            nodeIP = {
-              validSubnets = ["10.1.21.0/24"]
-            }
+    for vm in module.talos_workers : yamlencode({
+      machine = merge(local.cilium_labels, {
+        kubelet = {
+          nodeIP = {
+            validSubnets = ["10.1.21.0/24"]
           }
-          network = {
-            interfaces = [
-              {
-                deviceSelector = { hardwareAddr = lower(vm.primary_mac) }
-                dhcp           = true
-                dhcpOptions    = { routeMetric = 1024 }
-              },
-              {
-                deviceSelector = { hardwareAddr = lower(vm.ceph_mac) }
-                dhcp           = true
-                dhcpOptions    = { routeMetric = 4096 }
-              },
-            ]
-          }
-        },
-        contains(var.cilium_migrated_nodes, local.workers[idx]) ? {
-          nodeLabels = local.cilium_migration_labels
-        } : {},
-      )
+        }
+        network = {
+          interfaces = [
+            {
+              deviceSelector = { hardwareAddr = lower(vm.primary_mac) }
+              dhcp           = true
+              dhcpOptions    = { routeMetric = 1024 }
+            },
+            {
+              deviceSelector = { hardwareAddr = lower(vm.ceph_mac) }
+              dhcp           = true
+              dhcpOptions    = { routeMetric = 4096 }
+            },
+          ]
+        }
+      })
     })
   ]
 
@@ -91,15 +81,6 @@ locals {
       kubelet = {
         extraArgs = {
           "feature-gates" = "EnvFiles=true"
-        }
-      }
-      # Already the Talos default, but Cilium's kube-proxy replacement points
-      # k8sServiceHost/Port at KubePrism, so pin it explicitly rather than
-      # depending on a default staying put across Talos upgrades.
-      features = {
-        kubePrism = {
-          enabled = true
-          port    = 7445
         }
       }
       kernel = {
@@ -162,7 +143,7 @@ resource "talos_machine_configuration_apply" "control_plane" {
   client_configuration        = var.talos_client_configuration
   machine_configuration_input = data.talos_machine_configuration.control_plane.machine_configuration
   node                        = module.talos_servers[count.index].vm_ip
-  apply_mode                  = contains(var.cilium_migrated_nodes, local.servers[count.index]) ? "reboot" : "auto"
+  apply_mode                  = var.cilium ? "reboot" : "auto"
   config_patches = [
     local.server_network_patches[count.index],
     local.common_patch_yaml,
@@ -184,7 +165,7 @@ resource "talos_machine_configuration_apply" "worker" {
   client_configuration        = var.talos_client_configuration
   machine_configuration_input = data.talos_machine_configuration.worker.machine_configuration
   node                        = module.talos_workers[count.index].vm_ip
-  apply_mode                  = contains(var.cilium_migrated_nodes, local.workers[count.index]) ? "reboot" : "auto"
+  apply_mode                  = var.cilium ? "reboot" : "auto"
   config_patches = [
     local.worker_network_patches[count.index],
     local.common_patch_yaml,

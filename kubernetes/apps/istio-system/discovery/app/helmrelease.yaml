@@ -26,21 +26,5 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    meshConfig:
-      enableTracing: true
-      defaultConfig:
-        tracing:
-          sampling: 10
-      defaultProviders:
-        tracing:
-          - "opentelemetry"
-      extensionProviders:
-        - name: "opentelemetry"
-          opentelemetry:
-            service: tempo.monitoring.svc.cluster.local
-            port: 4318
-            http:
-              path: "/"
-              timeout: 5s
     global:
       logAsJson: true

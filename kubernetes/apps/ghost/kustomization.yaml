@@ -5,6 +5,7 @@ resources:
   - ./namespace.yaml
   - ./app/externalsecret.yaml
   - ./app/helmrelease.yaml
+  - ./app/httproute-private.yaml
   - ./app/httproute.yaml
   - ./app/ingress-public.yaml
   - ./app/mysql.yaml

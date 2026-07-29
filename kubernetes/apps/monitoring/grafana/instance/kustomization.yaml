@@ -5,4 +5,5 @@ resources:
   - ./datasource.yaml
   - ./externalsecret.yaml
   - ./grafana.yaml
+  - ./httproute.yaml
   - ./pvc.yaml

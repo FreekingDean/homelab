@@ -1,0 +1,19 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: grafana
+spec:
+  parentRefs:
+    - name: main
+      namespace: networking
+  hostnames:
+    - grafana.deangalvin.dev
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: grafana-service
+          port: 3000

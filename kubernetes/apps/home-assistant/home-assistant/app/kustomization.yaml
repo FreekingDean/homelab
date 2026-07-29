@@ -4,6 +4,7 @@ kind: Kustomization
 namespace: default
 resources:
   - ./helmrelease.yaml
+  - ./httproute.yaml
   - ./externalsecret.yaml
   - ./pvc.yaml
 labels:

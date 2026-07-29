@@ -6,6 +6,7 @@ namespace: kube-system
 resources:
   - ./secret.sops.yaml
   - ./helmrelease.yaml
+  - ./httproute.yaml
   - ./clustersecretstore.yaml
 labels:
   - pairs:

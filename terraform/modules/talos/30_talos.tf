@@ -1,12 +1,6 @@
 locals {
   cluster_endpoint = "https://${var.talos_control_plane_virtual_ip}:6443"
 
-  cilium_labels = var.cilium ? {
-    nodeLabels = {
-      "io.cilium.migration/cilium-default" = "true"
-    }
-  } : {}
-
   # Per-VM network patch builder.
   #
   # Both NICs are virtio on vmbr0, distinguished only by VLAN tag:
@@ -26,7 +20,7 @@ locals {
   # pinned to the primary subnet so kube registers the correct address.
   server_network_patches = [
     for vm in module.talos_servers : yamlencode({
-      machine = merge(local.cilium_labels, {
+      machine = {
         kubelet = {
           nodeIP = {
             validSubnets = ["10.1.21.0/24"]
@@ -47,12 +41,12 @@ locals {
             },
           ]
         }
-      })
+      }
     })
   ]
   worker_network_patches = [
     for vm in module.talos_workers : yamlencode({
-      machine = merge(local.cilium_labels, {
+      machine = {
         kubelet = {
           nodeIP = {
             validSubnets = ["10.1.21.0/24"]
@@ -72,7 +66,7 @@ locals {
             },
           ]
         }
-      })
+      }
     })
   ]
 
@@ -146,7 +140,6 @@ resource "talos_machine_configuration_apply" "control_plane" {
   client_configuration        = var.talos_client_configuration
   machine_configuration_input = data.talos_machine_configuration.control_plane.machine_configuration
   node                        = module.talos_servers[count.index].vm_ip
-  apply_mode                  = var.cilium ? "reboot" : "auto"
   config_patches = [
     local.server_network_patches[count.index],
     local.common_patch_yaml,
@@ -168,7 +161,6 @@ resource "talos_machine_configuration_apply" "worker" {
   client_configuration        = var.talos_client_configuration
   machine_configuration_input = data.talos_machine_configuration.worker.machine_configuration
   node                        = module.talos_workers[count.index].vm_ip
-  apply_mode                  = var.cilium ? "reboot" : "auto"
   config_patches = [
     local.worker_network_patches[count.index],
     local.common_patch_yaml,

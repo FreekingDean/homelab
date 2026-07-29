@@ -1,0 +1,24 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  labels:
+    app.kubernetes.io/instance: ghost
+    app.kubernetes.io/name: ghost
+  name: ghost-public
+spec:
+  parentRefs:
+    - name: main
+      namespace: networking
+  hostnames:
+    - arcolog.com
+    - blog.arcolog.com
+    - www.arcolog.com
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: ghost
+          port: 2368

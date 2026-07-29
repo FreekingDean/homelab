@@ -1,0 +1,19 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: connect
+spec:
+  parentRefs:
+    - name: main
+      namespace: networking
+  hostnames:
+    - onepassword-connect.deangalvin.dev
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: onepassword-connect
+          port: 8080

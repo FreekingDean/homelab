@@ -1,0 +1,19 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: jitsi-jitsi-meet-web
+spec:
+  parentRefs:
+    - name: main
+      namespace: networking
+  hostnames:
+    - meet.deangalvin.dev
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: jitsi-jitsi-meet-web
+          port: 80

@@ -1,0 +1,27 @@
+---
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: localonly
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: main
+  action: DENY
+  rules:
+    - from:
+        - source:
+            notIpBlocks:
+              - 174.44.7.114/32
+              - 192.168.2.0/24
+              - 72.235.227.218/32
+              - 104.136.73.201/32
+              - 10.0.0.0/8
+      to:
+        - operation:
+            hosts:
+              - ceph.deangalvin.dev
+              - proxmox.deangalvin.dev
+              - unifi.deangalvin.dev
+              - zwave.deangalvin.dev

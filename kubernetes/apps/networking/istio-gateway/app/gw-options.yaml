@@ -1,0 +1,13 @@
+---
+# Strategic merge patches istio applies to the resources it generates for the
+# gateway. externalTrafficPolicy: Local keeps the client source IP intact --
+# without it envoy sees a node address and any remoteIpBlocks allowlist matches
+# 10.0.0.0/8 and fails open.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gw-options
+data:
+  service: |
+    spec:
+      externalTrafficPolicy: Local

@@ -93,8 +93,7 @@ spec:
       enabled: true
       endpoints: *endpoints
     kubeProxy:
-      enabled: true
-      endpoints: *endpoints
+      enabled: false
     kubeEtcd:
       enabled: true
       endpoints: *endpoints

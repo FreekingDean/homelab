@@ -21,7 +21,6 @@ resources:
   - ./jetstack.yaml
   - ./kubernetes-dashboard.yaml
   - ./kyverno.yaml
-  - ./metallb.yaml
   - ./onepassword-connect.yaml
   - ./piraeus.yaml
   - ./prometheus-community.yaml

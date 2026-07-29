@@ -40,3 +40,5 @@ spec:
     kubeProxyReplacement: true
     k8sServiceHost: localhost # kubeprism
     k8sServicePort: 7445
+    bgpControlPlane:
+      enabled: true

@@ -36,19 +36,4 @@ spec:
       mode: cluster-pool
       operator:
         clusterPoolIPv4PodCIDRList: ["10.201.0.0/16"]
-    tunnelPort: 8473 # flannel owns 8472
-
-    # Migration-only. All four come out in phase 4, once every node is on cilium
-    # and flannel is deleted:
-    #   customConf  -> false    start writing the CNI config everywhere
-    #   restart     -> true     let the operator restart unmanaged pods
-    #   policy      -> default  enforcement becomes real for the first time
-    #   hostLegacy  -> false    no more cross-CNI traffic to route
-    cni:
-      customConf: true
-    operator:
-      unmanagedPodWatcher:
-        restart: false
-    policyEnforcementMode: never
-    bpf:
-      hostLegacyRouting: true
+    tunnelPort: 8473 # non-default, see #2483

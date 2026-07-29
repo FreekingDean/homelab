@@ -72,3 +72,9 @@ variable "kubernetes_pod_cidr" {
   description = "The CIDR range for the Kubernetes pods"
   type        = string
 }
+
+variable "cilium" {
+  description = "Hand this host's nodes from flannel to Cilium. Labels them for the CiliumNodeConfig and applies with a reboot. Flip one host at a time."
+  type        = bool
+  default     = false
+}

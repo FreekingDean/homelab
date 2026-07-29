@@ -37,3 +37,11 @@ spec:
       operator:
         clusterPoolIPv4PodCIDRList: ["10.201.0.0/16"]
     tunnelPort: 8473 # non-default, see #2483
+    kubeProxyReplacement: true
+    k8sServiceHost: localhost # kubeprism
+    k8sServicePort: 7445
+    # Confines socket LB to the host namespace. Without it, service resolution
+    # happens inside the pod netns and traffic silently bypasses the istio
+    # sidecars that istiod injects into every namespace by default.
+    socketLB:
+      hostNamespaceOnly: true

@@ -6,6 +6,8 @@ metadata:
 spec:
   gatewayClassName: istio
   infrastructure:
+    annotations:
+      lbipam.cilium.io/ips: "10.1.21.20"
     parametersRef:
       group: ""
       kind: ConfigMap

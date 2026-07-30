@@ -12,7 +12,6 @@ spec:
     - name: main
       namespace: networking
   hostnames:
-    - glimmerlabs.io
     - blog.glimmerlabs.io
     - www.glimmerlabs.io
   rules:
@@ -23,3 +22,24 @@ spec:
       backendRefs:
         - name: ghost
           port: 2368
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  labels:
+    app.kubernetes.io/instance: ghost
+    app.kubernetes.io/name: ghost
+  name: ghost-apex
+  namespace: ghost
+spec:
+  parentRefs:
+    - name: main
+      namespace: networking
+  hostnames:
+    - glimmerlabs.io
+  rules:
+    - filters:
+        - type: RequestRedirect
+          requestRedirect:
+            hostname: www.glimmerlabs.io
+            statusCode: 301

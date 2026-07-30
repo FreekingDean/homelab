@@ -31,12 +31,16 @@ spec:
       metricsGenerator:
         enabled: true
         remoteWriteUrl: http://kube-prometheus-stack-prometheus:9090/api/v1/write
+        processor:
+          local_blocks:
+            flush_to_storage: true
       overrides:
         defaults:
           metrics_generator:
             processors:
               - service-graphs
               - span-metrics
+              - local-blocks
     persistence:
       enabled: true
       size: 100Gi

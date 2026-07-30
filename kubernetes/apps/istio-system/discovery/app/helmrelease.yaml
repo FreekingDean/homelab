@@ -30,8 +30,8 @@ spec:
       extensionProviders:
         - name: authentik
           envoyExtAuthzHttp:
-            service: ak-outpost-authentik-embedded-outpost.auth.svc.cluster.local
-            port: 9000
+            service: authentik-server.auth.svc.cluster.local
+            port: 80
             timeout: 5s
             pathPrefix: /outpost.goauthentik.io/auth/envoy
             includeRequestHeadersInCheck:

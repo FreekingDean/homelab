@@ -29,5 +29,5 @@ spec:
     - b3multi
   sampler:
     type: parentbased_traceidratio
-    argument: "0.1"
+    argument: "0.5"
   dotnet: {}

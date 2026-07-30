@@ -28,7 +28,6 @@ spec:
   values:
     defaultPodOptions:
       annotations:
-        sidecar.istio.io/inject: "false"
         instrumentation.opentelemetry.io/inject-nodejs: monitoring/default
     controllers:
       ghost:

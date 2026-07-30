@@ -29,6 +29,10 @@ spec:
     defaultPodOptions:
       annotations:
         instrumentation.opentelemetry.io/inject-dotnet: monitoring/sampled
+    service:
+      app:
+        labels:
+          istio.io/use-waypoint: none
     stateful: true
     persistence:
       config:

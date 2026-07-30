@@ -3,16 +3,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-istio-gateway
+  name: cluster-apps-certificates
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cluster-apps-gateway-api
-    - name: cluster-apps-certificates
+    - name: cluster-apps-cert-manager-issuers
   interval: 1h
-  path: ./kubernetes/apps/networking/istio-gateway/app
+  path: ./kubernetes/apps/networking/certificates/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
-  wait: false
+  wait: true

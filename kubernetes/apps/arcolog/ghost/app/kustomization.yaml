@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
-  - ./httproute-private.yaml
   - ./httproute.yaml
   - ./ingress-public.yaml
   - ./mysql.yaml

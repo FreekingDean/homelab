@@ -7,3 +7,6 @@ data:
   service: |
     spec:
       externalTrafficPolicy: Local
+  deployment: |
+    spec:
+      replicas: 3

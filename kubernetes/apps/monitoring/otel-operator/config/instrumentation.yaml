@@ -1,0 +1,14 @@
+---
+apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: default
+spec:
+  exporter:
+    endpoint: http://otel-collector-opentelemetry-collector.monitoring:4318
+  propagators:
+    - tracecontext
+    - baggage
+  sampler:
+    type: parentbased_always_on
+  nodejs: {}

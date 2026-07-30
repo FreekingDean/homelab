@@ -26,6 +26,10 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    service:
+      app:
+        labels:
+          istio.io/use-waypoint: none
     stateful: true
     defaultPodOptions:
       securityContext:

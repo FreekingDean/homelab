@@ -41,6 +41,8 @@ spec:
     kind: OCIRepository
     name: ghost
   values:
+    networkPolicy:
+      enabled: false
     auth:
       existingSecret: ghost-secret
       username: ghost

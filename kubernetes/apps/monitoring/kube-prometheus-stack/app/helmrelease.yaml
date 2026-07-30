@@ -123,6 +123,7 @@ spec:
             hosts:
               - *host
       prometheusSpec:
+        enableRemoteWriteReceiver: true
         additionalArgs:
           - name: web.enable-otlp-receiver
             value: ""

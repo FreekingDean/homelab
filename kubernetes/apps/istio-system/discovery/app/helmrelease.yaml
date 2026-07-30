@@ -26,5 +26,25 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    meshConfig:
+      extensionProviders:
+        - name: authentik
+          envoyExtAuthzHttp:
+            service: ak-outpost-authentik-embedded-outpost.auth.svc.cluster.local
+            port: 9000
+            timeout: 5s
+            pathPrefix: /outpost.goauthentik.io/auth/envoy
+            includeRequestHeadersInCheck:
+              - cookie
+            headersToUpstreamOnAllow:
+              - set-cookie
+              - x-authentik-email
+              - x-authentik-groups
+              - x-authentik-name
+              - x-authentik-uid
+              - x-authentik-username
+            headersToDownstreamOnDeny:
+              - content-type
+              - set-cookie
     global:
       logAsJson: true

@@ -4,6 +4,6 @@ kind: Namespace
 metadata:
   name: monitoring
   labels:
-    istio-injection: disabled
     kustomize.toolkit.fluxcd.io/prune: disabled
     pod-security.kubernetes.io/enforce: privileged
+    istio.io/dataplane-mode: ambient

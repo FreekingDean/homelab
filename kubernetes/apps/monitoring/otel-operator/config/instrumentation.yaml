@@ -12,3 +12,18 @@ spec:
   sampler:
     type: parentbased_always_on
   nodejs: {}
+---
+apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: sampled
+spec:
+  exporter:
+    endpoint: http://otel-collector-opentelemetry-collector.monitoring:4318
+  propagators:
+    - tracecontext
+    - baggage
+  sampler:
+    type: parentbased_traceidratio
+    argument: "0.1"
+  dotnet: {}

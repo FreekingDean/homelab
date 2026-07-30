@@ -2,8 +2,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./configmap.yaml
   - ./helmrelease.yaml
   - ./httproute.yaml
   - ./pgcluster.yaml
   - ./pvc.yaml
+configMapGenerator:
+  - name: authentik-blueprints
+    files:
+      - ./blueprints/istio-forward-auth.yaml
+generatorOptions:
+  disableNameSuffixHash: true

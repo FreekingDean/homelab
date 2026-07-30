@@ -2,9 +2,8 @@
 name: "Verify Target Namespace"
 
 on:
-  push:
-    branches:
-      - '*'
+  pull_request:
+    branches: ["main"]
 
 jobs:
   verify-target-namespace:

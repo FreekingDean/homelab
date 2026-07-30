@@ -27,8 +27,16 @@ spec:
     keepHistory: false
   values:
     tempo:
+      retention: 168h
       metricsGenerator:
         enabled: true
+        remoteWriteUrl: http://kube-prometheus-stack-prometheus:9090/api/v1/write
+      overrides:
+        defaults:
+          metrics_generator:
+            processors:
+              - service-graphs
+              - span-metrics
     persistence:
       enabled: true
       size: 100Gi

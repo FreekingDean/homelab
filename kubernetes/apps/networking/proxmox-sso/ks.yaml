@@ -3,14 +3,11 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-apps-istio-gateway
+  name: cluster-apps-proxmox-sso
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: cluster-apps-gateway-api
-    - name: cluster-apps-certificates
   interval: 1h
-  path: ./kubernetes/apps/networking/istio-gateway/app
+  path: ./kubernetes/apps/networking/proxmox-sso/app
   prune: true
   sourceRef:
     kind: GitRepository

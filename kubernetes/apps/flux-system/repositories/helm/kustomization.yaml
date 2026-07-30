@@ -27,4 +27,3 @@ resources:
   - ./redfish-exporter.yaml
   - ./rook.yaml
   - ./stakater.yaml
-  - ./traefik.yaml

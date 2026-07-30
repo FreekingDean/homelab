@@ -42,9 +42,6 @@ spec:
     k8sServicePort: 7445
     bgpControlPlane:
       enabled: true
-    # Both required by istio ambient. exclusive lets istio-cni chain itself into
-    # the conflist instead of cilium deleting it; hostNamespaceOnly keeps socket
-    # LB out of the pod netns so ztunnel sees the original destination.
     cni:
       exclusive: false
     socketLB:

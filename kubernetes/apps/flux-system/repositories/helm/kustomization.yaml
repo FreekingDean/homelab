@@ -22,7 +22,6 @@ resources:
   - ./kubernetes-dashboard.yaml
   - ./kyverno.yaml
   - ./onepassword-connect.yaml
-  - ./open-telemetry.yaml
   - ./piraeus.yaml
   - ./prometheus-community.yaml
   - ./redfish-exporter.yaml

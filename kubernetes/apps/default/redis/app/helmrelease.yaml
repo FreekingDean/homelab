@@ -36,6 +36,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    networkPolicy:
+      enabled: false
     auth:
       enabled: false
       sentinel: false

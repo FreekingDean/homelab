@@ -42,3 +42,7 @@ spec:
     k8sServicePort: 7445
     bgpControlPlane:
       enabled: true
+    cni:
+      exclusive: false
+    socketLB:
+      hostNamespaceOnly: true

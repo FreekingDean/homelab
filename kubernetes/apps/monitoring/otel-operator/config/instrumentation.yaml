@@ -27,3 +27,4 @@ spec:
     type: parentbased_traceidratio
     argument: "0.1"
   dotnet: {}
+  python: {}

@@ -4,7 +4,6 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: ghost
-  namespace: ghost
 spec:
   interval: 15m
   chart:

@@ -5,3 +5,4 @@ metadata:
   name: elastic-system
   labels:
     kustomize.toolkit.fluxcd.io/prune: disabled
+    istio.io/dataplane-mode: ambient

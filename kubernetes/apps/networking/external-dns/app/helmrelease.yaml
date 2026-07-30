@@ -39,7 +39,7 @@ spec:
       - name: EXTERNAL_DNS_DEFAULT_TARGETS
         value: "96.234.119.68"
     policy: sync
-    sources: ["ingress", "service"]
+    sources: ["gateway-httproute", "ingress", "service"]
     txtPrefix: k8s.
     txtOwnerId: default
     domainFilters: ["deangalvin.com", "deangalvin.dev", "bananaboydean.com", "bananaboydean.dev", "glimmerlabs.io", "arcolog.com"]

@@ -31,7 +31,7 @@ spec:
     stateful: true
     defaultPodOptions:
       annotations:
-        instrumentation.opentelemetry.io/inject-python: monitoring/sampled
+        instrumentation.opentelemetry.io/inject-dotnet: monitoring/default
       securityContext:
         runAsNonRoot: true
         runAsUser: 568

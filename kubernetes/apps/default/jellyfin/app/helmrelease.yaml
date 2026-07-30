@@ -28,7 +28,7 @@ spec:
   values:
     defaultPodOptions:
       annotations:
-        instrumentation.opentelemetry.io/inject-dotnet: monitoring/sampled
+        instrumentation.opentelemetry.io/inject-dotnet: monitoring/default
     service:
       app:
         labels:

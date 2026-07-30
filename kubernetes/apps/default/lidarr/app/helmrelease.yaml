@@ -27,6 +27,8 @@ spec:
     keepHistory: false
   values:
     defaultPodOptions:
+      annotations:
+        instrumentation.opentelemetry.io/inject-dotnet: monitoring/default
       securityContext:
         runAsUser: 0
         runAsGroup: 0

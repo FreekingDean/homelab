@@ -8,6 +8,8 @@ resources:
   # Flux-Kustomizations
   - ./base/ks.yaml
   - ./discovery/ks.yaml
+  - ./cni/ks.yaml
+  - ./ztunnel/ks.yaml
   # - ./monitoring/ks.yaml
 patches:
   - patch: |-

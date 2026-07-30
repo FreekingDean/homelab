@@ -20,6 +20,7 @@ metadata:
   name: ghost-mariadb
   namespace: ghost
   labels:
+    kustomize.toolkit.fluxcd.io/prune: disabled
     app.kubernetes.io/instance: ghost
     app.kubernetes.io/name: ghost-config
 spec:

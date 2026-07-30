@@ -6,9 +6,3 @@ resources:
   - ./httproute.yaml
   - ./pgcluster.yaml
   - ./pvc.yaml
-configMapGenerator:
-  - name: authentik-blueprints
-    files:
-      - ./blueprints/istio-forward-auth.yaml
-generatorOptions:
-  disableNameSuffixHash: true

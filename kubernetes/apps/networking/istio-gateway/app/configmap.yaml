@@ -1,9 +1,0 @@
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: main-gateway-parameters
-data:
-  service: |
-    spec:
-      externalTrafficPolicy: Local

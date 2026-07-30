@@ -8,10 +8,6 @@ spec:
   infrastructure:
     annotations:
       lbipam.cilium.io/ips: "10.1.21.20"
-    parametersRef:
-      group: ""
-      kind: ConfigMap
-      name: main-gateway-parameters
   listeners:
     - name: deangalvin-dev
       protocol: HTTPS

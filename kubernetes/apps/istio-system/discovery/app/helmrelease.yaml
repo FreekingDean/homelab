@@ -26,5 +26,13 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    gatewayClasses:
+      istio:
+        deployment:
+          spec:
+            replicas: 3
+        service:
+          spec:
+            externalTrafficPolicy: Local
     global:
       logAsJson: true

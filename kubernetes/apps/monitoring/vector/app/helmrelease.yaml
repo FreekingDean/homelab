@@ -46,6 +46,9 @@ spec:
         mountPath: /etc/vector/transforms
     existingConfigMaps:
       - vector-config
+    envFrom:
+      - secretRef:
+          name: openobserve
     args:
       - --config-dir
       - "/etc/vector/"

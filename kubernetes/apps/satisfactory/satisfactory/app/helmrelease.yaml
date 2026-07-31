@@ -45,9 +45,7 @@ spec:
     udpPorts:
       server: 7777
     ingress:
-      enabled: true
-      subdomain: satisfactory
-      icon: mdi:gamepad-variant
+      enabled: false
     loadbalanced: true
     persistence:
       config:

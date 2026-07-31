@@ -54,9 +54,7 @@ spec:
     ports:
       http: 3000
     ingress:
-      localonly: false
-      subdomain: musichero
-      icon: "mdi:music"
+      enabled: false
     persistence:
       config:
         type: persistentVolumeClaim

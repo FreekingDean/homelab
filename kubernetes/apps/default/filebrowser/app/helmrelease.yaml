@@ -44,8 +44,7 @@ spec:
     ports:
       http: 80
     ingress:
-      localonly: false
-      subdomain: filebrowser
+      enabled: false
     persistence:
       config:
         type: persistentVolumeClaim

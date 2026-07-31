@@ -50,8 +50,7 @@ spec:
     ports:
       http: *port
     ingress:
-      subdomain: ${instance_name}
-      icon: "mdi:filmstrip"
+      enabled: false
     persistence:
       config:
         type: persistentVolumeClaim

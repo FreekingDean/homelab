@@ -49,8 +49,7 @@ spec:
     ports:
       http: *port
     ingress:
-      subdomain: ${instance_name}
-      icon: "mdi:television-classic"
+      enabled: false
     persistence:
       config:
         type: persistentVolumeClaim

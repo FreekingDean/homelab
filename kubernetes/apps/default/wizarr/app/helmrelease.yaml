@@ -46,7 +46,6 @@ spec:
     ports:
       http: 5690
     ingress:
-      localonly: false
-      subdomain: wizarr
+      enabled: false
     serviceMonitor:
       enabled: false

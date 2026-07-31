@@ -15,7 +15,6 @@ resources:
   - ./freekingdean.yaml
   - ./glauth.yaml
   - ./grafana.yaml
-  - ./hajimari.yaml
   - ./istio.yaml
   - ./jaeger.yaml
   - ./jetstack.yaml

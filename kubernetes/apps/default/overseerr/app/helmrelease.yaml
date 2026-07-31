@@ -29,7 +29,7 @@ spec:
     stateful: true
     defaultPodOptions:
       annotations:
-        instrumentation.opentelemetry.io/inject-dotnet: monitoring/default
+        instrumentation.opentelemetry.io/inject-nodejs: monitoring/default
       securityContext:
         runAsUser: 0
         runAsGroup: 0

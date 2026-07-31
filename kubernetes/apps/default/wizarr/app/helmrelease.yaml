@@ -26,6 +26,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions:
+      annotations:
+        instrumentation.opentelemetry.io/inject-dotnet: monitoring/default
     stateful: true
     persistence:
       data:

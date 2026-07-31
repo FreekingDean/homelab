@@ -10,11 +10,6 @@ spec:
   hostNetwork: true
   podDnsConfig:
     policy: ClusterFirstWithHostNet
-  env:
-    - name: POD_NAME
-      valueFrom:
-        fieldRef:
-          fieldPath: metadata.name
   tolerations:
     - key: CriticalAddonsOnly
       operator: Exists
@@ -51,10 +46,6 @@ spec:
       prometheus:
         config:
           scrape_configs: []
-        target_allocator:
-          endpoint: http://otel-collector-targetallocator:80
-          interval: 30s
-          collector_id: ${env:POD_NAME}
     processors:
       memory_limiter:
         check_interval: 5s

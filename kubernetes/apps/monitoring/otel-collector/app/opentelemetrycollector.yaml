@@ -2,22 +2,31 @@
 apiVersion: opentelemetry.io/v1beta1
 kind: OpenTelemetryCollector
 metadata:
-  name: otel-metrics
+  name: otel-collector
 spec:
-  mode: statefulset
-  replicas: 2
+  mode: daemonset
   image: otel/opentelemetry-collector-contrib:0.156.0
-  serviceAccount: otel-metrics-collector
+  serviceAccount: otel-collector
+  hostNetwork: true
+  podDnsConfig:
+    policy: ClusterFirstWithHostNet
   env:
     - name: POD_NAME
       valueFrom:
         fieldRef:
           fieldPath: metadata.name
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+      effect: NoExecute
+    - key: CephOSDOnly
+      operator: Exists
+      effect: NoExecute
   targetAllocator:
     enabled: true
     replicas: 1
     allocationStrategy: consistent-hashing
-    serviceAccount: otel-metrics-targetallocator
+    serviceAccount: otel-targetallocator
     prometheusCR:
       enabled: true
       scrapeInterval: 30s
@@ -33,11 +42,17 @@ spec:
         memory: 512Mi
   config:
     receivers:
+      otlp:
+        protocols:
+          grpc:
+            endpoint: 0.0.0.0:4317
+          http:
+            endpoint: 0.0.0.0:4318
       prometheus:
         config:
           scrape_configs: []
         target_allocator:
-          endpoint: http://otel-metrics-targetallocator:80
+          endpoint: http://otel-collector-targetallocator:80
           interval: 30s
           collector_id: ${env:POD_NAME}
     processors:
@@ -45,10 +60,20 @@ spec:
         check_interval: 5s
         limit_percentage: 80
         spike_limit_percentage: 20
+      k8sattributes:
+        passthrough: false
+        pod_association:
+          - sources:
+              - from: resource_attribute
+                name: k8s.pod.ip
       batch:
         timeout: 5s
         send_batch_size: 1024
     exporters:
+      otlp:
+        endpoint: tempo:4317
+        tls:
+          insecure: true
       prometheusremotewrite:
         endpoint: http://kube-prometheus-stack-prometheus:9090/api/v1/write
         namespace: otel
@@ -61,13 +86,17 @@ spec:
           num_consumers: 10
     service:
       pipelines:
+        traces:
+          receivers: [otlp]
+          processors: [memory_limiter, k8sattributes, batch]
+          exporters: [otlp]
         metrics:
           receivers: [prometheus]
           processors: [memory_limiter, batch]
           exporters: [prometheusremotewrite]
   resources:
     requests:
-      cpu: 500m
-      memory: 2Gi
+      cpu: 100m
+      memory: 512Mi
     limits:
-      memory: 4Gi
+      memory: 2Gi

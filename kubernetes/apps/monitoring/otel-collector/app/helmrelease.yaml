@@ -26,6 +26,9 @@ spec:
     presets:
       kubernetesAttributes:
         enabled: true
+    extraEnvsFrom:
+      - secretRef:
+          name: openobserve
     ports:
       jaeger-compact:
         enabled: false
@@ -45,6 +48,11 @@ spec:
           endpoint: tempo:4317
           tls:
             insecure: true
+        otlphttp/openobserve:
+          endpoint: http://openobserve:5080/api/default
+          headers:
+            Authorization: $${env:OPENOBSERVE_AUTH_HEADER}
+            stream-name: default
       processors:
         batch:
           timeout: 5s
@@ -56,7 +64,7 @@ spec:
           traces:
             receivers: [otlp]
             processors: [batch]
-            exporters: [otlp]
+            exporters: [otlp, otlphttp/openobserve]
     resources:
       requests:
         cpu: 50m

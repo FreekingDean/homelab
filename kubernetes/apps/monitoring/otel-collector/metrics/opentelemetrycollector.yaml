@@ -1,0 +1,73 @@
+---
+apiVersion: opentelemetry.io/v1beta1
+kind: OpenTelemetryCollector
+metadata:
+  name: otel-metrics
+spec:
+  mode: statefulset
+  replicas: 2
+  image: otel/opentelemetry-collector-contrib:0.156.0
+  serviceAccount: otel-metrics-collector
+  env:
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+  targetAllocator:
+    enabled: true
+    replicas: 1
+    allocationStrategy: consistent-hashing
+    serviceAccount: otel-metrics-targetallocator
+    prometheusCR:
+      enabled: true
+      scrapeInterval: 30s
+      serviceMonitorSelector: {}
+      podMonitorSelector: {}
+      probeSelector: {}
+      scrapeConfigSelector: {}
+    resources:
+      requests:
+        cpu: 50m
+        memory: 256Mi
+      limits:
+        memory: 512Mi
+  config:
+    receivers:
+      prometheus:
+        config:
+          scrape_configs: []
+        target_allocator:
+          endpoint: http://otel-metrics-targetallocator:80
+          interval: 30s
+          collector_id: ${env:POD_NAME}
+    processors:
+      memory_limiter:
+        check_interval: 5s
+        limit_percentage: 80
+        spike_limit_percentage: 20
+      batch:
+        timeout: 5s
+        send_batch_size: 1024
+    exporters:
+      prometheusremotewrite:
+        endpoint: http://kube-prometheus-stack-prometheus:9090/api/v1/write
+        namespace: otel
+        translation_strategy: NoTranslation
+        target_info:
+          enabled: false
+        resource_to_telemetry_conversion:
+          enabled: false
+        remote_write_queue:
+          num_consumers: 10
+    service:
+      pipelines:
+        metrics:
+          receivers: [prometheus]
+          processors: [memory_limiter, batch]
+          exporters: [prometheusremotewrite]
+  resources:
+    requests:
+      cpu: 500m
+      memory: 2Gi
+    limits:
+      memory: 4Gi

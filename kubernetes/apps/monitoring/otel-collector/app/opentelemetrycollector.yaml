@@ -6,7 +6,6 @@ metadata:
 spec:
   mode: daemonset
   image: otel/opentelemetry-collector-contrib:0.156.0
-  serviceAccount: otel-collector
   envFrom:
     - secretRef:
         name: openobserve
@@ -29,14 +28,17 @@ spec:
   targetAllocator:
     enabled: true
     replicas: 1
-    serviceAccount: otel-targetallocator
     prometheusCR:
       enabled: true
       scrapeInterval: 30s
-      serviceMonitorSelector: {}
-      podMonitorSelector: {}
-      probeSelector: {}
-      scrapeConfigSelector: {}
+      serviceMonitorSelector: &notPrometheusNative
+        matchExpressions:
+          - key: monitoring.deangalvin.dev/prometheus.scrape
+            operator: NotIn
+            values: ["true"]
+      podMonitorSelector: *notPrometheusNative
+      probeSelector: *notPrometheusNative
+      scrapeConfigSelector: *notPrometheusNative
     resources:
       requests:
         cpu: 50m

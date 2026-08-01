@@ -132,7 +132,7 @@ spec:
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelector: &prometheusOptIn
           matchLabels:
-            scrape-with-prometheus: "true"
+            monitoring.deangalvin.dev/prometheus.scrape: "true"
         podMonitorSelector: *prometheusOptIn
         probeSelector: *prometheusOptIn
         scrapeConfigSelector: *prometheusOptIn

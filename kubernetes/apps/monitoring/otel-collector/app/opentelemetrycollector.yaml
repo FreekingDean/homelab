@@ -17,10 +17,15 @@ spec:
     - key: CephOSDOnly
       operator: Exists
       effect: NoExecute
+    - key: node-role.kubernetes.io/control-plane
+      operator: Exists
+      effect: NoSchedule
+    - key: node-role.kubernetes.io/master
+      operator: Exists
+      effect: NoSchedule
   targetAllocator:
     enabled: true
     replicas: 1
-    allocationStrategy: consistent-hashing
     serviceAccount: otel-targetallocator
     prometheusCR:
       enabled: true
@@ -67,7 +72,6 @@ spec:
           insecure: true
       prometheusremotewrite:
         endpoint: http://kube-prometheus-stack-prometheus:9090/api/v1/write
-        namespace: otel
         translation_strategy: NoTranslation
         target_info:
           enabled: false

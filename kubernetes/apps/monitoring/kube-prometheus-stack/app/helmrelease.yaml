@@ -154,9 +154,12 @@ spec:
         enableAdminAPI: true
         walCompression: true
         ruleSelectorNilUsesHelmValues: false
-        serviceMonitorSelectorNilUsesHelmValues: false
-        podMonitorSelectorNilUsesHelmValues: false
-        probeSelectorNilUsesHelmValues: false
+        serviceMonitorSelector: &prometheusOptIn
+          matchLabels:
+            scrape-with-prometheus: "true"
+        podMonitorSelector: *prometheusOptIn
+        probeSelector: *prometheusOptIn
+        scrapeConfigSelector: *prometheusOptIn
         storageSpec:
           volumeClaimTemplate:
             spec:

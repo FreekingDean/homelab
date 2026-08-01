@@ -36,6 +36,8 @@ spec:
           spec:
             externalTrafficPolicy: Local
     meshConfig:
+      defaultConfig:
+        tracingServiceName: CANONICAL_NAME_ONLY
       extensionProviders:
         - name: otel
           opentelemetry:

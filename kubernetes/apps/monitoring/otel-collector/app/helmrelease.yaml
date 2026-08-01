@@ -54,6 +54,17 @@ spec:
             Authorization: $${env:OPENOBSERVE_AUTH_HEADER}
             stream-name: default
       processors:
+        transform/service_name:
+          error_mode: ignore
+          trace_statements:
+            - set(attributes["service.name"], Concat([resource.attributes["service.name"], "socket"], "-"))
+              where IsMatch(attributes["http.url"], "^wss?://|/websocket|/ws/")
+              or IsMatch(attributes["url.full"], "^wss?://|/websocket|/ws/")
+            - set(attributes["service.name"], Concat([resource.attributes["service.name"], "stream"], "-"))
+              where IsMatch(attributes["http.url"], "/[Vv]ideos/[^/]+/(stream|master|main|live|hls)")
+              or IsMatch(attributes["url.full"], "/[Vv]ideos/[^/]+/(stream|master|main|live|hls)")
+        groupbyattrs:
+          keys: [service.name]
         batch:
           timeout: 5s
           send_batch_size: 1024
@@ -63,7 +74,7 @@ spec:
           metrics: null
           traces:
             receivers: [otlp]
-            processors: [batch]
+            processors: [transform/service_name, groupbyattrs, batch]
             exporters: [otlp, otlphttp/openobserve]
     resources:
       requests:

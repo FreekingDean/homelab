@@ -31,7 +31,7 @@ spec:
     stateful: true
     defaultPodOptions:
       annotations:
-        instrumentation.opentelemetry.io/inject-dotnet: monitoring/default
+        instrumentation.opentelemetry.io/inject-python: monitoring/default
       securityContext:
         runAsNonRoot: true
         runAsUser: 568
@@ -66,6 +66,4 @@ spec:
     ports:
       http: 8123
     ingress:
-      localonly: false
-      subdomain: hass
-      icon: mdi:home-assistant
+      enabled: false

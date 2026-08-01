@@ -7,6 +7,9 @@ spec:
   mode: daemonset
   image: otel/opentelemetry-collector-contrib:0.156.0
   serviceAccount: otel-collector
+  envFrom:
+    - secretRef:
+        name: openobserve
   hostNetwork: true
   podDnsConfig:
     policy: ClusterFirstWithHostNet
@@ -70,6 +73,11 @@ spec:
         endpoint: tempo:4317
         tls:
           insecure: true
+      otlphttp/openobserve:
+        endpoint: http://openobserve:5080/api/default
+        headers:
+          Authorization: $${env:OPENOBSERVE_AUTH_HEADER}
+          stream-name: default
       prometheusremotewrite:
         endpoint: http://kube-prometheus-stack-prometheus:9090/api/v1/write
         translation_strategy: NoTranslation
@@ -84,7 +92,7 @@ spec:
         traces:
           receivers: [otlp]
           processors: [memory_limiter, k8sattributes, batch]
-          exporters: [otlp]
+          exporters: [otlp, otlphttp/openobserve]
         metrics:
           receivers: [prometheus]
           processors: [memory_limiter, batch]

@@ -14,6 +14,20 @@ sinks:
     inputs:
       - internal_metrics
     address: "0.0.0.0:9001"
+  openobserve:
+    type: http
+    inputs:
+      - final
+    uri: "http://openobserve.monitoring.svc.cluster.local:5080/api/default/kubernetes/_json"
+    method: post
+    auth:
+      strategy: basic
+      user: "${ZO_ROOT_USER_EMAIL}"
+      password: "${ZO_ROOT_USER_PASSWORD}"
+    compression: gzip
+    encoding:
+      codec: json
+      timestamp_format: rfc3339
   loki:
     remove_label_fields: true
     encoding:

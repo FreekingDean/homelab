@@ -46,9 +46,7 @@ spec:
     ports:
       http: 5540
     ingress:
-      localonly: true
-      subdomain: redisinsight
-      icon: database
+      enabled: false
     persistence:
       data:
         existingClaim: config-redisinsight-0

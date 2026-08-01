@@ -61,34 +61,6 @@ spec:
         - name: *app
           port: 8080
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: &app ceph
-  annotations:
-    traefik.ingress.kubernetes.io/router.middlewares: networking-localonly@kubernetescrd,networking-authelia@kubernetescrd
-    hajimari.io/icon: mdi:server
-  labels:
-    app.kubernetes.io/name: *app
-    app.kubernetes.io/instance: *app
-spec:
-  ingressClassName: "${INGRESS_CLASS}"
-  rules:
-    - host: &host ceph.deangalvin.dev
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: *app
-                port:
-                  number: 8080
-  tls:
-    - hosts:
-        - *host
-      secretName: "${PRODUCTION_TLS}"
----
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:

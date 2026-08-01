@@ -34,19 +34,7 @@ spec:
     cleanPrometheusOperatorObjectNames: true
     alertmanager:
       ingress:
-        enabled: true
-        pathType: Prefix
-        ingressClassName: "${INGRESS_CLASS}"
-        annotations:
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd"
-          hajimari.io/appName: "Alert Manager"
-          hajimari.io/icon: mdi:alert-decagram-outline
-        hosts:
-          - &host "alert-manager.${DOMAIN}"
-        tls:
-          - secretName: "${PRODUCTION_TLS}"
-            hosts:
-              - *host
+        enabled: false
       alertmanagerSpec:
         useExistingSecret: true
         secrets:
@@ -109,19 +97,7 @@ spec:
       enabled: false
     prometheus:
       ingress:
-        enabled: true
-        pathType: Prefix
-        ingressClassName: "${INGRESS_CLASS}"
-        annotations:
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-localonly@kubernetescrd"
-          hajimari.io/appName: "Prometheus"
-          hajimari.io/icon: simple-icons:prometheus
-        hosts:
-          - &host "prometheus.${DOMAIN}"
-        tls:
-          - secretName: "${PRODUCTION_TLS}"
-            hosts:
-              - *host
+        enabled: false
       prometheusSpec:
         enableRemoteWriteReceiver: true
         additionalArgs:

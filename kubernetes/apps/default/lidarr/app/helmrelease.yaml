@@ -46,8 +46,7 @@ spec:
     ports:
       http: 8686
     ingress:
-      subdomain: lidarr
-      icon: "mdi:music"
+      enabled: false
     persistence:
       config:
         type: persistentVolumeClaim

@@ -67,8 +67,6 @@ spec:
     ports:
       http: 8096
     ingress:
-      localonly: false
-      subdomain: jellyfin
-      icon: mdi:movie
+      enabled: false
     serviceMonitor:
       enabled: false

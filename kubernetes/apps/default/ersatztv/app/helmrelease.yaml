@@ -49,6 +49,6 @@ spec:
     ports:
       http: 8409
     ingress:
-      subdomain: tvadmin
+      enabled: false
     serviceMonitor:
       enabled: false

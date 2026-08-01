@@ -52,7 +52,6 @@ spec:
     ports:
       http: *port
     ingress:
-      subdomain: prowlarr
-      icon: mdi:movie-search
+      enabled: false
     serviceMonitor:
       enabled: false

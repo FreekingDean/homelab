@@ -30,14 +30,7 @@ spec:
       kind: Deployment
       replicas: 3
     ingress:
-      enabled: true
-      className: "${INGRESS_CLASS}"
-      annotations:
-        public.ingress.home.arpa: "true"
-        hajimari.io/icon: mdi:shield-account
-      tls:
-        enabled: true
-        secret: "${PRODUCTION_TLS}"
+      enabled: false
     secret:
       additionalSecrets:
         postgres-dev-app:

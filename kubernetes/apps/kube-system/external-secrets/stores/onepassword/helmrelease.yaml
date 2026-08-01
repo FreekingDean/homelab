@@ -31,15 +31,4 @@ spec:
       credentialsName: onepassword-connect-secret
       host: &host "onepassword-connect.${DOMAIN}"
       ingress:
-        enabled: true
-        ingressClassName: "${INGRESS_CLASS}"
-        hosts:
-          - host: *host
-        annotations:
-          traefik.ingress.kubernetes.io/router.middlewares: |
-            networking-localonly@kubernetescrd
-          hajimari.io/icon: onepassword
-        tls:
-          - secretName: "${PRODUCTION_TLS}"
-            hosts:
-              - *host
+        enabled: false

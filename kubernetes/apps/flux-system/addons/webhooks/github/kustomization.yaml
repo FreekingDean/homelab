@@ -4,5 +4,4 @@ kind: Kustomization
 resources:
   - ./secret.sops.yaml
   - ./httproute.yaml
-  - ./ingress.yaml
   - ./receiver.yaml

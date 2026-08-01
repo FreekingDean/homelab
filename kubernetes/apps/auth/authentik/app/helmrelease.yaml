@@ -62,17 +62,7 @@ spec:
     server:
       replicas: 2
       ingress:
-        enabled: true
-        ingressClassName: "${INGRESS_CLASS}"
-        annotations:
-          public.ingress.home.arpa: "true"
-          hajimari.io/icon: mdi:shield-lock
-        hosts:
-          - authentik.${DOMAIN}
-        tls:
-          - secretName: "${PRODUCTION_TLS}"
-            hosts:
-              - authentik.${DOMAIN}
+        enabled: false
       metrics:
         enabled: true
         serviceMonitor:

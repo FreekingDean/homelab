@@ -5,7 +5,6 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ./httproute.yaml
-  - ./ingress-public.yaml
   - ./mysql.yaml
   - ./pvc.yaml
   - ./waypoint.yaml

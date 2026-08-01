@@ -51,8 +51,6 @@ spec:
     ports:
       http: *port
     ingress:
-      localonly: false
-      subdomain: overseerr
-      icon: mdi:eye-circle
+      enabled: false
     serviceMonitor:
       enabled: false

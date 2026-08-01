@@ -130,12 +130,12 @@ spec:
         enableAdminAPI: true
         walCompression: true
         ruleSelectorNilUsesHelmValues: false
-        serviceMonitorSelector: &prometheusOptIn
+        serviceMonitorSelector: &scrapedByPrometheus
           matchLabels:
-            monitoring.deangalvin.dev/prometheus.scrape: "true"
-        podMonitorSelector: *prometheusOptIn
-        probeSelector: *prometheusOptIn
-        scrapeConfigSelector: *prometheusOptIn
+            monitoring.deangalvin.dev/scraper: prometheus
+        podMonitorSelector: *scrapedByPrometheus
+        probeSelector: *scrapedByPrometheus
+        scrapeConfigSelector: *scrapedByPrometheus
         storageSpec:
           volumeClaimTemplate:
             spec:

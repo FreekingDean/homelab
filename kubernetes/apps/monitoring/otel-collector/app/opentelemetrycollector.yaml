@@ -31,14 +31,14 @@ spec:
     prometheusCR:
       enabled: true
       scrapeInterval: 30s
-      serviceMonitorSelector: &notPrometheusNative
+      serviceMonitorSelector: &notScrapedByPrometheus
         matchExpressions:
-          - key: monitoring.deangalvin.dev/prometheus.scrape
+          - key: monitoring.deangalvin.dev/scraper
             operator: NotIn
-            values: ["true"]
-      podMonitorSelector: *notPrometheusNative
-      probeSelector: *notPrometheusNative
-      scrapeConfigSelector: *notPrometheusNative
+            values: [prometheus]
+      podMonitorSelector: *notScrapedByPrometheus
+      probeSelector: *notScrapedByPrometheus
+      scrapeConfigSelector: *notScrapedByPrometheus
     resources:
       requests:
         cpu: 50m

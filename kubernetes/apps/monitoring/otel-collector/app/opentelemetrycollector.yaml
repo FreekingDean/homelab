@@ -107,7 +107,7 @@ spec:
         metrics:
           receivers: [prometheus]
           processors: [memory_limiter, batch]
-          exporters: [prometheusremotewrite]
+          exporters: [prometheusremotewrite, otlphttp/openobserve]
   resources:
     requests:
       cpu: 100m

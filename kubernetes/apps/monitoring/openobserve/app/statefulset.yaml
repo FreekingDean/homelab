@@ -35,27 +35,92 @@ spec:
         runAsUser: 10000
         runAsGroup: 3000
         runAsNonRoot: true
+      initContainers:
+        - name: credential-fetcher
+          image: ghcr.io/home-operations/k8s-sidecar:2.10.0
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              set -eu
+              jq -r '
+                "ZO_S3_BUCKET_NAME=\(.spec.bucketName)",
+                "ZO_S3_SERVER_URL=\(.spec.secretS3.endpoint)",
+                "ZO_S3_ACCESS_KEY=\(.spec.secretS3.accessKeyID)",
+                "ZO_S3_SECRET_KEY=\(.spec.secretS3.accessSecretKey)"
+              ' /s3-secret/BucketInfo > /s3/config.env
+          volumeMounts:
+            - name: credential-fetcher
+              mountPath: /s3
+            - name: s3-credentials
+              mountPath: /s3-secret
+              readOnly: true
       containers:
         - name: openobserve
           image: o2cr.ai/openobserve/openobserve:v0.91.5
           env:
             - name: ZO_DATA_DIR
               value: /data
+            - name: ZO_LOCAL_MODE_STORAGE
+              value: s3
+            - name: ZO_S3_PROVIDER
+              value: s3
+            - name: ZO_S3_REGION_NAME
+              value: us-east-1
+            - name: ZO_MEM_TABLE_MAX_SIZE
+              value: "4096"
+            - name: ZO_MAX_FILE_SIZE_IN_MEMORY
+              value: "128"
+            - name: ZO_MEM_PERSIST_INTERVAL
+              value: "3"
+            - name: ZO_S3_BUCKET_NAME
+              valueFrom:
+                fileKeyRef:
+                  path: config.env
+                  volumeName: credential-fetcher
+                  key: ZO_S3_BUCKET_NAME
+                  optional: false
+            - name: ZO_S3_SERVER_URL
+              valueFrom:
+                fileKeyRef:
+                  path: config.env
+                  volumeName: credential-fetcher
+                  key: ZO_S3_SERVER_URL
+                  optional: false
+            - name: ZO_S3_ACCESS_KEY
+              valueFrom:
+                fileKeyRef:
+                  path: config.env
+                  volumeName: credential-fetcher
+                  key: ZO_S3_ACCESS_KEY
+                  optional: false
+            - name: ZO_S3_SECRET_KEY
+              valueFrom:
+                fileKeyRef:
+                  path: config.env
+                  volumeName: credential-fetcher
+                  key: ZO_S3_SECRET_KEY
+                  optional: false
           envFrom:
             - secretRef:
                 name: openobserve
           resources:
             requests:
-              cpu: 256m
-              memory: 512Mi
+              cpu: 500m
+              memory: 4Gi
             limits:
-              memory: 2Gi
+              memory: 12Gi
           ports:
             - containerPort: 5080
               name: http
           volumeMounts:
             - name: data
               mountPath: /data
+      volumes:
+        - name: credential-fetcher
+          emptyDir: {}
+        - name: s3-credentials
+          secret:
+            secretName: openobserve-bucket-credentials
   volumeClaimTemplates:
     - metadata:
         name: data

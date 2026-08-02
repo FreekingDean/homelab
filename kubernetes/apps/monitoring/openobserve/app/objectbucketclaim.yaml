@@ -1,0 +1,19 @@
+---
+apiVersion: objectstorage.k8s.io/v1alpha1
+kind: BucketClaim
+metadata:
+  name: openobserve
+spec:
+  bucketClassName: ceph
+  protocols:
+    - s3
+---
+apiVersion: objectstorage.k8s.io/v1alpha1
+kind: BucketAccess
+metadata:
+  name: openobserve
+spec:
+  bucketClaimName: openobserve
+  bucketAccessClassName: ceph
+  credentialsSecretName: openobserve-bucket-credentials
+  protocol: s3

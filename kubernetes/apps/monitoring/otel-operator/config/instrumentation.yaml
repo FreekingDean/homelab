@@ -5,7 +5,7 @@ metadata:
   name: default
 spec:
   exporter:
-    endpoint: http://otel-collector-opentelemetry-collector.monitoring:4318
+    endpoint: http://$(OTEL_NODE_IP):4318
   propagators:
     - tracecontext
     - baggage

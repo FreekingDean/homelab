@@ -1,0 +1,118 @@
+---
+apiVersion: opentelemetry.io/v1beta1
+kind: OpenTelemetryCollector
+metadata:
+  name: otel-collector
+spec:
+  mode: daemonset
+  image: otel/opentelemetry-collector-contrib:0.156.0
+  envFrom:
+    - secretRef:
+        name: openobserve
+  hostNetwork: true
+  podDnsConfig:
+    policy: ClusterFirstWithHostNet
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+      effect: NoExecute
+    - key: CephOSDOnly
+      operator: Exists
+      effect: NoExecute
+    - key: node-role.kubernetes.io/control-plane
+      operator: Exists
+      effect: NoSchedule
+    - key: node-role.kubernetes.io/master
+      operator: Exists
+      effect: NoSchedule
+  targetAllocator:
+    enabled: true
+    replicas: 1
+    prometheusCR:
+      enabled: true
+      scrapeInterval: 30s
+      serviceMonitorSelector: &notScrapedByPrometheus
+        matchExpressions:
+          - key: monitoring.deangalvin.dev/scraper
+            operator: NotIn
+            values: [prometheus]
+      podMonitorSelector: *notScrapedByPrometheus
+      probeSelector: *notScrapedByPrometheus
+      scrapeConfigSelector: *notScrapedByPrometheus
+    resources:
+      requests:
+        cpu: 50m
+        memory: 256Mi
+      limits:
+        memory: 512Mi
+  config:
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+            endpoint: 0.0.0.0:4317
+          http:
+            endpoint: 0.0.0.0:4318
+      prometheus:
+        config:
+          scrape_configs: []
+    processors:
+      memory_limiter:
+        check_interval: 5s
+        limit_percentage: 80
+        spike_limit_percentage: 20
+      k8sattributes:
+        passthrough: false
+        pod_association:
+          - sources:
+              - from: resource_attribute
+                name: k8s.pod.ip
+      transform/service_name:
+        error_mode: ignore
+        trace_statements:
+          - set(attributes["service.name"], Concat([resource.attributes["service.name"], "socket"], "-"))
+            where IsMatch(attributes["http.url"], "^wss?://|/websocket|/ws/")
+            or IsMatch(attributes["url.full"], "^wss?://|/websocket|/ws/")
+          - set(attributes["service.name"], Concat([resource.attributes["service.name"], "stream"], "-"))
+            where IsMatch(attributes["http.url"], "/[Vv]ideos/[^/]+/(stream|master|main|live|hls)")
+            or IsMatch(attributes["url.full"], "/[Vv]ideos/[^/]+/(stream|master|main|live|hls)")
+      groupbyattrs:
+        keys: [service.name]
+      batch:
+        timeout: 5s
+        send_batch_size: 1024
+    exporters:
+      otlp:
+        endpoint: tempo:4317
+        tls:
+          insecure: true
+      otlphttp/openobserve:
+        endpoint: http://openobserve:5080/api/default
+        headers:
+          Authorization: $${env:OPENOBSERVE_AUTH_HEADER}
+          stream-name: default
+      prometheusremotewrite:
+        endpoint: http://kube-prometheus-stack-prometheus:9090/api/v1/write
+        translation_strategy: NoTranslation
+        target_info:
+          enabled: false
+        resource_to_telemetry_conversion:
+          enabled: false
+        remote_write_queue:
+          num_consumers: 10
+    service:
+      pipelines:
+        traces:
+          receivers: [otlp]
+          processors: [memory_limiter, k8sattributes, transform/service_name, groupbyattrs, batch]
+          exporters: [otlp, otlphttp/openobserve]
+        metrics:
+          receivers: [prometheus]
+          processors: [memory_limiter, batch]
+          exporters: [prometheusremotewrite]
+  resources:
+    requests:
+      cpu: 100m
+      memory: 512Mi
+    limits:
+      memory: 2Gi

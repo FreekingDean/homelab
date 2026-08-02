@@ -7,6 +7,8 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
+    - name: cluster-apps-otel-operator
+    - name: cluster-apps-kube-prometheus-stack
     - name: cluster-apps-openobserve
   path: ./kubernetes/apps/monitoring/otel-collector/app
   prune: true

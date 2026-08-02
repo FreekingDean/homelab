@@ -20,6 +20,7 @@ spec:
     keepHistory: false
   values:
     manager:
+      createRbacPermissions: true
       resources:
         requests:
           cpu: 25m

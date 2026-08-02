@@ -25,7 +25,6 @@ spec:
               - arcolog.com
               - blog.arcolog.com
               - www.arcolog.com
-              - auth.deangalvin.dev
               - authentik.deangalvin.dev
               - filebrowser.deangalvin.dev
               - flux-webhook.deangalvin.dev

@@ -92,7 +92,6 @@ spec:
           stream-name: default
       prometheusremotewrite:
         endpoint: http://kube-prometheus-stack-prometheus:9090/api/v1/write
-        translation_strategy: NoTranslation
         target_info:
           enabled: false
         resource_to_telemetry_conversion:

@@ -31,6 +31,7 @@ spec:
         app: openobserve
     spec:
       securityContext:
+        fsGroupChangePolicy: "OnRootMismatch"
         fsGroup: 2000
         runAsUser: 10000
         runAsGroup: 3000
@@ -43,10 +44,10 @@ spec:
             - |
               set -eu
               jq -r '
-                "ZO_S3_BUCKET_NAME=\(.spec.bucketName)",
-                "ZO_S3_SERVER_URL=\(.spec.secretS3.endpoint)",
-                "ZO_S3_ACCESS_KEY=\(.spec.secretS3.accessKeyID)",
-                "ZO_S3_SECRET_KEY=\(.spec.secretS3.accessSecretKey)"
+                "ZO_S3_BUCKET_NAME=\(.spec.bucketName | @sh)",
+                "ZO_S3_SERVER_URL=\(.spec.secretS3.endpoint | @sh)",
+                "ZO_S3_ACCESS_KEY=\(.spec.secretS3.accessKeyID | @sh)",
+                "ZO_S3_SECRET_KEY=\(.spec.secretS3.accessSecretKey | @sh)"
               ' /s3-secret/BucketInfo > /s3/config.env
           volumeMounts:
             - name: credential-fetcher

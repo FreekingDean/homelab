@@ -32,6 +32,7 @@ spec:
     spec:
       securityContext:
         fsGroup: 2000
+        fsGroupChangePolicy: OnRootMismatch
         runAsUser: 10000
         runAsGroup: 3000
         runAsNonRoot: true

@@ -58,7 +58,7 @@ spec:
     processors:
       memory_limiter:
         check_interval: 5s
-        limit_percentage: 80
+        limit_percentage: 90
         spike_limit_percentage: 20
       k8sattributes:
         passthrough: false
@@ -69,8 +69,7 @@ spec:
       transform/service_name:
         error_mode: ignore
         trace_statements:
-          - set(resource.attributes["service.name"], Concat([resource.attributes["service.name"], "socket"], "-"))
-            where IsMatch(resource.attributes["http.url"], "^wss?://|/websocket|/ws/")
+          - set(resource.attributes["service.name"], Concat([resource.attributes["service.name"], "socket"], "-")) where IsMatch(resource.attributes["http.url"], "^wss?://|/websocket|/ws/")
             or IsMatch(resource.attributes["url.full"], "^wss?://|/websocket|/ws/")
           - set(resource.attributes["service.name"], Concat([resource.attributes["service.name"], "stream"], "-"))
             where IsMatch(resource.attributes["http.url"], "/[Vv]ideos/[^/]+/(stream|master|main|live|hls)")
@@ -110,7 +109,7 @@ spec:
           exporters: [prometheusremotewrite, otlphttp/openobserve]
   resources:
     requests:
-      cpu: 100m
-      memory: 512Mi
-    limits:
+      cpu: 500m
       memory: 2Gi
+    limits:
+      memory: 4Gi

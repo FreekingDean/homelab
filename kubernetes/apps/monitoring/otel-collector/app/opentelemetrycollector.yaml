@@ -69,12 +69,12 @@ spec:
       transform/service_name:
         error_mode: ignore
         trace_statements:
-          - set(attributes["service.name"], Concat([resource.attributes["service.name"], "socket"], "-"))
-            where IsMatch(attributes["http.url"], "^wss?://|/websocket|/ws/")
-            or IsMatch(attributes["url.full"], "^wss?://|/websocket|/ws/")
-          - set(attributes["service.name"], Concat([resource.attributes["service.name"], "stream"], "-"))
-            where IsMatch(attributes["http.url"], "/[Vv]ideos/[^/]+/(stream|master|main|live|hls)")
-            or IsMatch(attributes["url.full"], "/[Vv]ideos/[^/]+/(stream|master|main|live|hls)")
+          - set(resource.attributes["service.name"], Concat([resource.attributes["service.name"], "socket"], "-"))
+            where IsMatch(resource.attributes["http.url"], "^wss?://|/websocket|/ws/")
+            or IsMatch(resource.attributes["url.full"], "^wss?://|/websocket|/ws/")
+          - set(resource.attributes["service.name"], Concat([resource.attributes["service.name"], "stream"], "-"))
+            where IsMatch(resource.attributes["http.url"], "/[Vv]ideos/[^/]+/(stream|master|main|live|hls)")
+            or IsMatch(resource.attributes["url.full"], "/[Vv]ideos/[^/]+/(stream|master|main|live|hls)")
       groupbyattrs:
         keys: [service.name]
       batch:

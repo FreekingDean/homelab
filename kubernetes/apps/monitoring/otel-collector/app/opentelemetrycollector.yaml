@@ -10,8 +10,6 @@ spec:
     - secretRef:
         name: openobserve
   hostNetwork: true
-  podDnsConfig:
-    policy: ClusterFirstWithHostNet
   tolerations:
     - key: CriticalAddonsOnly
       operator: Exists

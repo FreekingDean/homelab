@@ -40,7 +40,7 @@ spec:
         existingClaim: jellyfin-config
       media:
         type: persistentVolumeClaim
-        existingClaim: media
+        existingClaim: replica-media
       cache:
         type: persistentVolumeClaim
         existingClaim: jellyfin-cache

@@ -41,7 +41,7 @@ spec:
         existingClaim: plex-config
       media:
         type: persistentVolumeClaim
-        existingClaim: media
+        existingClaim: replica-media
       ec-media:
         type: persistentVolumeClaim
         existingClaim: ec-media

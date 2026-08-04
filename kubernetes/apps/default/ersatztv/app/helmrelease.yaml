@@ -36,7 +36,7 @@ spec:
         existingClaim: ersatztv-config
         type: persistentVolumeClaim
       media:
-        existingClaim: media
+        existingClaim: replica-media
         type: persistentVolumeClaim
       ec-media:
         existingClaim: ec-media

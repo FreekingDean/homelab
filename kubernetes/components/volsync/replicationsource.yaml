@@ -14,11 +14,11 @@ spec:
     copyMethod: "Snapshot"
     pruneIntervalDays: 14
     repository: "${PVC_NAME}-volsync-r2-secret"
-    volumeSnapshotClassName: "csi-ceph-rbd"
+    volumeSnapshotClassName: "csi-replica-block"
     cacheCapacity: "2Gi"
-    cacheStorageClassName: "ceph-block"
+    cacheStorageClassName: "replica-block"
     cacheAccessModes: ["ReadWriteOnce"]
-    storageClassName: "ceph-block"
+    storageClassName: "replica-block"
     accessModes: ["ReadWriteOnce"]
     moverSecurityContext:
       runAsUser: 1000

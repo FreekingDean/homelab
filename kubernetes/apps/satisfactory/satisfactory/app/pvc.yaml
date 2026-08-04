@@ -13,3 +13,18 @@ spec:
     requests:
       storage: 50Gi
   storageClassName: ceph-rbd
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: satisfactory-data
+  labels:
+    app.kubernetes.io/instance: satisfactory
+    app.kubernetes.io/name: satisfactory-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: replica-block

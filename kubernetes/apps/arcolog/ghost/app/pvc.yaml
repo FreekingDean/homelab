@@ -5,7 +5,7 @@ metadata:
   name: ghost-config
   labels:
     app.kubernetes.io/instance: ghost
-    app.kubernetes.io/name: ghost-config
+    app.kubernetes.io/name: ghost
 spec:
   accessModes:
   - ReadWriteOnce
@@ -13,3 +13,48 @@ spec:
     requests:
       storage: 50Gi
   storageClassName: ceph-rbd
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ghost-mariadb
+  labels:
+    app.kubernetes.io/instance: ghost
+    app.kubernetes.io/name: ghost
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: ceph-rbd
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ghost-config-tmp
+  labels:
+    app.kubernetes.io/instance: arcolog-ghost
+    app.kubernetes.io/name: ghost
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: replica-block
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mariadb-data
+  labels:
+    app.kubernetes.io/instance: arcolog-mariadb
+    app.kubernetes.io/name: mariadb
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+  storageClassName: replica-block

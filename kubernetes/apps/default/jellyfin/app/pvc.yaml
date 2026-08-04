@@ -22,3 +22,15 @@ spec:
     requests:
       storage: 100Gi
   storageClassName: replica-block
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jellyfin-config
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Gi
+  storageClassName: replica-block

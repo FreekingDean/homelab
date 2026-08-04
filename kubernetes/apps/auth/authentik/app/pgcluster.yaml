@@ -9,7 +9,7 @@ spec:
   primaryUpdateStrategy: unsupervised
   storage:
     size: 100Gi
-    storageClass: ceph-rbd
+    storageClass: replica-block
   postgresql:
     parameters:
       max_connections: "600"

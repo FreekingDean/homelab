@@ -29,3 +29,33 @@ spec:
       storage: 2Gi
   storageClassName: ceph-rbd
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tmp-backend-data
+  labels:
+    app.kubernetes.io/instance: projectionlab-backend
+    app.kubernetes.io/name: backend-data
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: replica-block
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tmp-backend-crypto
+  labels:
+    app.kubernetes.io/instance: projectionlab-backend
+    app.kubernetes.io/name: backend-crypto
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: replica-block
+---

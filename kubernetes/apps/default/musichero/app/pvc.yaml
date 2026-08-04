@@ -12,3 +12,18 @@ spec:
     requests:
       storage: 15Gi
   storageClassName: ceph-rbd
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: musichero-config
+  labels:
+    app.kubernetes.io/instance: musichero
+    app.kubernetes.io/name: musichero
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 15Gi
+  storageClassName: replica-block

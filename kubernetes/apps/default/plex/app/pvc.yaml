@@ -12,3 +12,18 @@ spec:
     requests:
       storage: 150Gi
   storageClassName: ceph-rbd
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: plex-config
+  labels:
+    app.kubernetes.io/instance: plex
+    app.kubernetes.io/name: plex
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 150Gi
+  storageClassName: replica-block

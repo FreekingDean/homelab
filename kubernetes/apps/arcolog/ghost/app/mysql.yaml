@@ -13,21 +13,6 @@ spec:
     tag: 27.0.1
   url: oci://registry-1.docker.io/bitnamicharts/mariadb
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: ghost-mariadb
-  labels:
-    app.kubernetes.io/instance: ghost
-    app.kubernetes.io/name: ghost-config
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 50Gi
-  storageClassName: ceph-rbd
----
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:

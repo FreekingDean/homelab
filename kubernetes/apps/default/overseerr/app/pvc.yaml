@@ -12,3 +12,18 @@ spec:
     requests:
       storage: 1Gi
   storageClassName: ceph-rbd
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: overseerr-config
+  labels:
+    app.kubernetes.io/instance: overseerr
+    app.kubernetes.io/name: overseerr
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: replica-block

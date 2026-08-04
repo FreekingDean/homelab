@@ -22,3 +22,15 @@ spec:
   resources:
     requests:
       storage: "150Ti"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: replica-media
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: replica-cephfs
+  resources:
+    requests:
+      storage: "100Ti"

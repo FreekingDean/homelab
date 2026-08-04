@@ -12,3 +12,18 @@ spec:
     requests:
       storage: 15Gi
   storageClassName: ceph-rbd
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ${instance_name}-config
+  labels:
+    app.kubernetes.io/instance: ${instance_name}
+    app.kubernetes.io/name: ${instance_name}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 15Gi
+  storageClassName: replica-block

@@ -12,3 +12,18 @@ spec:
     requests:
       storage: 2Gi
   storageClassName: ceph-rbd
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: prowlarr-config
+  labels:
+    app.kubernetes.io/instance: prowlarr
+    app.kubernetes.io/name: prowlarr-config
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: replica-block

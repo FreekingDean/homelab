@@ -44,7 +44,7 @@ spec:
     persistence:
       data:
         type: persistentVolumeClaim
-        existingClaim: backend-data
+        existingClaim: tmp-backend-data
       crypto:
         type: persistentVolumeClaim
-        existingClaim: backend-crypto
+        existingClaim: tmp-backend-crypto

@@ -32,7 +32,7 @@ spec:
     stateful: true
     persistence:
       data:
-        existingClaim: config-wizarr-0
+        existingClaim: wizarr-config
         type: persistentVolumeClaim
       media:
         existingClaim: media

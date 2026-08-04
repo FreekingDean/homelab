@@ -38,7 +38,7 @@ spec:
         supplementalGroups: [10000]
     persistence:
       config:
-        existingClaim: config-sabnzbd-0
+        existingClaim: sabnzbd-config
         type: persistentVolumeClaim
       ec-media:
         type: persistentVolumeClaim

@@ -38,7 +38,7 @@ spec:
     persistence:
       config:
         type: persistentVolumeClaim
-        existingClaim: config-prowlarr-0
+        existingClaim: prowlarr-config
     image:
       repository: ghcr.io/home-operations/prowlarr
       tag: 2.6.0.5494

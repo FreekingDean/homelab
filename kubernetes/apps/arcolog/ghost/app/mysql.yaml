@@ -31,7 +31,7 @@ spec:
       database: ghost
     primary:
       persistence:
-        existingClaim: ghost-mariadb
+        existingClaim: mariadb-data
       readinessProbe:
         enabled: true
         initialDelaySeconds: 30

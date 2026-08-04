@@ -49,7 +49,7 @@ spec:
       enabled: false
     persistence:
       data:
-        existingClaim: config-redisinsight-0
+        existingClaim: redisinsight-config
         type: persistentVolumeClaim
         mountPath: /data
     resources:

@@ -33,7 +33,7 @@ spec:
     stateful: true
     persistence:
       config:
-        existingClaim: config-ersatztv-0
+        existingClaim: ersatztv-config
         type: persistentVolumeClaim
       media:
         existingClaim: media

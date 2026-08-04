@@ -50,7 +50,7 @@ spec:
     persistence:
       config:
         type: persistentVolumeClaim
-        existingClaim: config-lidarr-0
+        existingClaim: lidarr-config
       ec-media:
         type: persistentVolumeClaim
         existingClaim: ec-media

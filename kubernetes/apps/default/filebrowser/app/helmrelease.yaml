@@ -48,7 +48,7 @@ spec:
     persistence:
       config:
         type: persistentVolumeClaim
-        existingClaim: filebrowser
+        existingClaim: filebrowser-config
       staticconfig:
         type: secret
         name: filebrowser-static-config

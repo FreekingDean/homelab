@@ -50,7 +50,7 @@ spec:
       template:
         spec:
           volumes:
-            - name: grafana-data
+            - name: grafana-data-tmp
               persistentVolumeClaim:
                 claimName: grafana-data-tmp
           containers:

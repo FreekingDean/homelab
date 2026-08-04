@@ -77,7 +77,7 @@ spec:
     persistence:
       config:
         type: persistentVolumeClaim
-        existingClaim: config-qbittorrent-0
+        existingClaim: qbittorrent-config
       media:
         type: persistentVolumeClaim
         existingClaim: replica-media

@@ -7,7 +7,8 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-    - name: cluster-apps-rook-ceph-cluster
+    - name: cluster-apps-ceph-csi-rbd
+    - name: cluster-apps-ceph-csi-cephfs
     - name: cluster-apps-volsync
   path: ./kubernetes/apps/default/plex/app
   prune: true

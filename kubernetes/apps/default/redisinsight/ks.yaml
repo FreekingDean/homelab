@@ -8,7 +8,8 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-redis
-    - name: cluster-apps-rook-ceph-cluster
+    - name: cluster-apps-ceph-csi-rbd
+    - name: cluster-apps-ceph-csi-cephfs
   path: ./kubernetes/apps/default/redisinsight/app
   prune: true
   sourceRef:

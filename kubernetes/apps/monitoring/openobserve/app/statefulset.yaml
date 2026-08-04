@@ -128,7 +128,7 @@ spec:
       spec:
         accessModes:
           - ReadWriteOnce
-        storageClassName: ceph-rbd
+        storageClassName: replica-block
         resources:
           requests:
             storage: 50Gi

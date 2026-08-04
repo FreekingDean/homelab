@@ -33,10 +33,10 @@ spec:
     stateful: true
     persistence:
       config:
-        existingClaim: config-ersatztv-0
+        existingClaim: ersatztv-config
         type: persistentVolumeClaim
       media:
-        existingClaim: media
+        existingClaim: replica-media
         type: persistentVolumeClaim
       ec-media:
         existingClaim: ec-media

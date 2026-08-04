@@ -32,10 +32,10 @@ spec:
     stateful: true
     persistence:
       data:
-        existingClaim: config-wizarr-0
+        existingClaim: wizarr-config
         type: persistentVolumeClaim
       media:
-        existingClaim: media
+        existingClaim: replica-media
         type: persistentVolumeClaim
     image:
       repository: ghcr.io/wizarrrr/wizarr

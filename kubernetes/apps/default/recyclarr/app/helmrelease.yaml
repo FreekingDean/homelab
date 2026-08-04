@@ -41,7 +41,7 @@ spec:
     persistence:
       config:
         type: persistentVolumeClaim
-        existingClaim: config-recyclarr-0
+        existingClaim: recyclarr-config
       config-file:
         type: configMap
         name: recyclarr-configmap

@@ -58,6 +58,6 @@ spec:
     persistence:
       config:
         type: persistentVolumeClaim
-        existingClaim: config-musichero-0
+        existingClaim: musichero-config
     serviceMonitor:
       enabled: false

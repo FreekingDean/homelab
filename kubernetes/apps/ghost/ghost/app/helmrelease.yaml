@@ -60,7 +60,7 @@ spec:
     persistence:
       config:
         type: persistentVolumeClaim
-        existingClaim: ghost-config
+        existingClaim: ghost-config-tmp
         globalMounts:
           - path: /var/lib/ghost/content
     serviceMonitor:

@@ -31,6 +31,7 @@ spec:
   accessModes:
     - ReadWriteMany
   storageClassName: replica-cephfs
+  volumeName: replica-media-ceph
   resources:
     requests:
       storage: "100Ti"

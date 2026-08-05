@@ -38,7 +38,7 @@ spec:
         runAsNonRoot: true
       initContainers:
         - name: credential-fetcher
-          image: ghcr.io/home-operations/k8s-sidecar:2.10.0
+          image: ghcr.io/home-operations/k8s-sidecar:2.10.1
           command: ["/bin/sh", "-c"]
           args:
             - |

@@ -17,3 +17,10 @@ spec:
       backendRefs:
         - name: jellyfin
           port: 8096
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /gojellyfin
+      backendRefs:
+        - name: gojellyfin
+          port: 8081

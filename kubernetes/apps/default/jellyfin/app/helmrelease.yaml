@@ -113,12 +113,12 @@ spec:
         type: emptyDir
       transcode:
         type: emptyDir
-      #media:
-      #  type: persistentVolumeClaim
-      #  existingClaim: replica-media
-      #ec-media:
-      #  type: persistentVolumeClaim
-      #  existingClaim: ec-media
+      media:
+        type: persistentVolumeClaim
+        existingClaim: replica-media
+      ec-media:
+        type: persistentVolumeClaim
+        existingClaim: ec-media
     image:
       repository: ghcr.io/freekingdean/gojellyfin
       tag: main

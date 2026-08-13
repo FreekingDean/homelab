@@ -102,7 +102,17 @@ spec:
       gojellyfin:
         containers:
           gojellyfin:
+            args: ["server"]
             env:
+              - name: TRANSCODER_TOKEN
+                value: bad-token
+              - name: TRANSCODER_WORKERS
+                value: >-
+                  gojellyfin-transcode-0.gojellyfin-transcode-headless,
+                  gojellyfin-transcode-1.gojellyfin-transcode-headless,
+                  gojellyfin-transcode-2.gojellyfin-transcode-headless,
+                  gojellyfin-transcode-3.gojellyfin-transcode-headless,
+                  gojellyfin-transcode-4.gojellyfin-transcode-headless
               - name: DATABASE_URL 
                 valueFrom:
                   secretKeyRef:
@@ -124,10 +134,10 @@ spec:
       tag: main
     resources:
       requests:
-        cpu: 8
-        memory: 32Gi
+        cpu: 2
+        memory: 8Gi
       limits:
-        memory: 64Gi
+        memory: 16Gi
     ports:
       http: 8081
     ingress:

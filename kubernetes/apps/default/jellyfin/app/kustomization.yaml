@@ -7,3 +7,5 @@ resources:
   - ./httproute.yaml
   - ./pvc.yaml
   - ./pgcluster.yaml
+  - ./service.yaml
+  - ./statefulset.yaml

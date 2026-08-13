@@ -56,4 +56,4 @@ spec:
             value: /
       backendRefs:
         - name: gojellyfin
-          port: 80
+          port: 8081

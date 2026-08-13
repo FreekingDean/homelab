@@ -4,7 +4,7 @@ metadata:
   name: gojellyfin-transcode
 spec:
   serviceName: gojellyfin-transcode
-  replicas: 1
+  replicas: 5
   selector:
     matchLabels:
       app: gojellyfin-transcode

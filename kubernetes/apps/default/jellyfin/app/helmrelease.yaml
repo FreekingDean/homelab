@@ -108,6 +108,8 @@ spec:
             imagePullPolicy: Always
             args: ["server"]
             env:
+              - name: PUBLISHED_SERVER_URL
+                value: "https://gojellyfin.deangalvin.dev"
               - name: TRANSCODER_TOKEN
                 value: bad-token
               - name: TRANSCODER_WORKERS

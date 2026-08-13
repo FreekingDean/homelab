@@ -102,6 +102,7 @@ spec:
       gojellyfin:
         containers:
           gojellyfin:
+            imagePullPolicy: Always
             args: ["server"]
             env:
               - name: TRANSCODER_TOKEN

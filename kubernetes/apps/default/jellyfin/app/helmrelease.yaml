@@ -120,7 +120,7 @@ spec:
       #  type: persistentVolumeClaim
       #  existingClaim: ec-media
     image:
-      repository: ghcr.io/FreekingDean/gojellyfin
+      repository: ghcr.io/freekingdean/gojellyfin
       tag: main
     resources:
       requests:

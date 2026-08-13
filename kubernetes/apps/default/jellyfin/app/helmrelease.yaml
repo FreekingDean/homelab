@@ -98,6 +98,9 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    defaultPodOptions:
+      annotations:
+        instrumentation.opentelemetry.io/inject-go: monitoring/default
     controllers:
       gojellyfin:
         containers:

@@ -21,7 +21,10 @@ spec:
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: gojellyfin
+  name: gojellyfin-web
+  labels:
+    app.kubernetes.io/name: gojellyfin
+    app.kubernetes.io/component: web
 spec:
   parentRefs:
     - name: main
@@ -31,8 +34,41 @@ spec:
   rules:
     - matches:
         - path:
+            type: Exact
+            value: /
+      filters:
+        - type: RequestRedirect
+          requestRedirect:
+            path:
+              type: ReplaceFullPath
+              replaceFullPath: /web/
+            statusCode: 302
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /web
+      backendRefs:
+        - name: gojellyfin-web
+          port: 80
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: gojellyfin-api
+  labels:
+    app.kubernetes.io/name: gojellyfin
+    app.kubernetes.io/component: api
+spec:
+  parentRefs:
+    - name: main
+      namespace: networking
+  hostnames:
+    - gojellyfin.example.com
+  rules:
+    - matches:
+        - path:
             type: PathPrefix
             value: /
       backendRefs:
         - name: gojellyfin
-          port: 8081
+          port: 80

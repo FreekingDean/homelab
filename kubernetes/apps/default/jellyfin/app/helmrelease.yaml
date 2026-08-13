@@ -98,6 +98,16 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    controllers:
+      gojellyfin:
+        containers:
+          gojellyfin:
+            env:
+              - name: DATABASE_URL 
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-gojellyfin-app
+                    key: uri
     persistence:
       tmp:
         type: emptyDir
@@ -124,3 +134,4 @@ spec:
       enabled: false
     serviceMonitor:
       enabled: false
+    envFrom:

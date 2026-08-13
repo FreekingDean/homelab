@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gojellyfin-web
+  labels:
+    app.kubernetes.io/name: gojellyfin
+    app.kubernetes.io/component: web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: gojellyfin
+      app.kubernetes.io/component: web
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: gojellyfin
+        app.kubernetes.io/component: web
+    spec:
+      initContainers:
+        - name: client
+          image: jellyfin/jellyfin:10.11.11
+          command: ["cp", "-a", "/jellyfin/jellyfin-web/.", "/client/"]
+          volumeMounts:
+            - name: client
+              mountPath: /client
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+      containers:
+        - name: nginx
+          image: nginxinc/nginx-unprivileged:alpine
+          ports:
+            - name: http
+              containerPort: 8080
+          volumeMounts:
+            - name: client
+              mountPath: /usr/share/nginx/html/web
+              readOnly: true
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              memory: 128Mi
+          livenessProbe:
+            httpGet:
+              path: /web/index.html
+              port: http
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /web/index.html
+              port: http
+            periodSeconds: 10
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ALL]
+      volumes:
+        - name: client
+          emptyDir: {}

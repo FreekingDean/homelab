@@ -1,0 +1,70 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app temporal
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: temporal
+      version: 1.6.0
+      sourceRef:
+        kind: HelmRepository
+        name: temporal
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    schema:
+      useHelmHooks: false
+    shims:
+      dockerize: false
+      elasticsearchTool: false
+    server:
+      metrics:
+        serviceMonitor:
+          enabled: true
+      config:
+        persistence:
+          numHistoryShards: 512
+          datastores:
+            default:
+              sql:
+                createDatabase: false
+                manageSchema: true
+                pluginName: postgres12
+                driverName: postgres12
+                databaseName: temporal
+                host: postgres-temporal-rw
+                port: 5432
+                user: app
+                existingSecret: postgres-temporal-app
+                maxConns: 20
+            visibility:
+              elasticsearch:
+                manageSchema: true
+                version: v8
+                url:
+                  scheme: http
+                  host: "temporal-es-http:9200"
+                username: elastic
+                existingSecret: temporal-es-elastic-user
+                secretKey: elastic
+                logLevel: error
+                indices:
+                  visibility: temporal_visibility_v1
+        namespaces:
+          create: true
+          namespace:
+            - name: default
+              retention: 3d

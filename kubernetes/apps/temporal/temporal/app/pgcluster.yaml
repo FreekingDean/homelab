@@ -1,0 +1,18 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres-temporal
+spec:
+  instances: 3
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.6
+  primaryUpdateStrategy: unsupervised
+  bootstrap:
+    initdb:
+      database: temporal
+      owner: app
+  storage:
+    size: 20Gi
+    storageClass: replica-block
+  monitoring:
+    enablePodMonitor: true

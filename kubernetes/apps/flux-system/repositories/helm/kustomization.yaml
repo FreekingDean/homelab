@@ -25,3 +25,4 @@ resources:
   - ./redfish-exporter.yaml
   - ./rook.yaml
   - ./stakater.yaml
+  - ./temporal.yaml

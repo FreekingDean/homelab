@@ -64,3 +64,42 @@ spec:
       volumes:
         - name: client
           emptyDir: {}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gojellyfin-worker
+  labels:
+    app.kubernetes.io/name: gojellyfin
+    app.kubernetes.io/component: web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: gojellyfin
+      app.kubernetes.io/component: worker
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: gojellyfin
+        app.kubernetes.io/component: worker
+    spec:
+      containers:
+        - name: gojellyfin
+          image:
+            repository: ghcr.io/freekingdean/gojellyfin
+            tag: main
+          imagePullPolicy: Always
+          args: ["worker"]
+          env:
+            - name: TEMPORAL_NAMESPACE
+              value: default
+            - name: TEMPORAL_HOSTPORT
+              value: "temporal-frontend.temporal:7233"
+            - name: PUBLISHED_SERVER_URL
+              value: "https://gojellyfin.deangalvin.dev"
+            - name: DATABASE_URL 
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-jellyfin-app
+                  key: uri

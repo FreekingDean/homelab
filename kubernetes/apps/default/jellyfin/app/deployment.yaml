@@ -86,9 +86,7 @@ spec:
     spec:
       containers:
         - name: gojellyfin
-          image:
-            repository: ghcr.io/freekingdean/gojellyfin
-            tag: main
+          image: ghcr.io/freekingdean/gojellyfin:main
           imagePullPolicy: Always
           args: ["worker"]
           env:

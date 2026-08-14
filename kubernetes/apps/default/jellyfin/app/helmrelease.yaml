@@ -109,7 +109,7 @@ spec:
             args: ["server"]
             env:
               - name: TEMPORAL_HOSTPORT
-                value: "temporal-es-http.temporal:9200"
+                value: "temporal-frontend.temporal:7233"
               - name: PUBLISHED_SERVER_URL
                 value: "https://gojellyfin.deangalvin.dev"
               - name: TRANSCODER_TOKEN

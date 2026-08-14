@@ -108,6 +108,8 @@ spec:
             imagePullPolicy: Always
             args: ["server"]
             env:
+              - name: TEMPORAL_NAMESPACE
+                value: default
               - name: TEMPORAL_HOSTPORT
                 value: "temporal-frontend.temporal:7233"
               - name: PUBLISHED_SERVER_URL

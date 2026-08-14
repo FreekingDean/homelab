@@ -45,8 +45,7 @@ spec:
                 pluginName: postgres12
                 driverName: postgres12
                 databaseName: temporal
-                host: postgres-temporal-rw
-                port: 5432
+                connectAddr: "postgres-temporal-rw:5432"
                 user: app
                 existingSecret: postgres-temporal-app
                 maxConns: 20

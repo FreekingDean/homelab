@@ -101,3 +101,10 @@ spec:
                 secretKeyRef:
                   name: postgres-jellyfin-app
                   key: uri
+          volumeMounts:
+            - name: ec-media
+              mountPath: /ec-media
+      volumes:
+        ec-media:
+          type: persistentVolumeClaim
+          existingClaim: ec-media

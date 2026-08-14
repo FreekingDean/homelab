@@ -9,4 +9,3 @@ resources:
   - ./pvc.yaml
   - ./pgcluster.yaml
   - ./service.yaml
-  - ./statefulset.yaml

@@ -114,15 +114,6 @@ spec:
                 value: "temporal-frontend.temporal:7233"
               - name: PUBLISHED_SERVER_URL
                 value: "https://gojellyfin.deangalvin.dev"
-              - name: TRANSCODER_TOKEN
-                value: bad-token
-              - name: TRANSCODER_WORKERS
-                value: >-
-                  gojellyfin-transcode-0.gojellyfin-transcode-headless,
-                  gojellyfin-transcode-1.gojellyfin-transcode-headless,
-                  gojellyfin-transcode-2.gojellyfin-transcode-headless,
-                  gojellyfin-transcode-3.gojellyfin-transcode-headless,
-                  gojellyfin-transcode-4.gojellyfin-transcode-headless
               - name: DATABASE_URL 
                 valueFrom:
                   secretKeyRef:

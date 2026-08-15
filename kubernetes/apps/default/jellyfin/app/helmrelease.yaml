@@ -27,6 +27,9 @@ spec:
     keepHistory: false
   values:
     defaultPodOptions:
+      labels:
+        istio.io/use-waypoint: none
+        istio.io/dataplane-mode: none
       annotations:
         instrumentation.opentelemetry.io/inject-dotnet: monitoring/default
     service:
@@ -99,6 +102,9 @@ spec:
     keepHistory: false
   values:
     defaultPodOptions:
+      labels:
+        istio.io/use-waypoint: none
+        istio.io/dataplane-mode: none
       annotations:
         instrumentation.opentelemetry.io/inject-go: monitoring/default
     controllers:

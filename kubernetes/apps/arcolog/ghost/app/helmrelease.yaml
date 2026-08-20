@@ -39,7 +39,7 @@ spec:
     stateful: true
     image:
       repository: docker.io/library/ghost
-      tag: 6.57.1
+      tag: 6.59.0
     env:
       OTEL_SERVICE_NAME: arcolog
       database__client: mysql

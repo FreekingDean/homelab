@@ -114,6 +114,11 @@ spec:
             imagePullPolicy: Always
             args: ["server"]
             env:
+              - name: TMDB_API_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: tmdb
+                    key: apikey
               - name: TEMPORAL_NAMESPACE
                 value: default
               - name: TEMPORAL_HOSTPORT

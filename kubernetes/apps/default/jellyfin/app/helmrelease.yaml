@@ -83,11 +83,11 @@ spec:
   interval: 15m
   chart:
     spec:
-      chart: app-template
-      version: 0.0.14
+      chart: ./charts/gojellyfin
+      reconcileStrategy: Revision
       sourceRef:
-        kind: HelmRepository
-        name: freekingdean
+        kind: GitRepository
+        name: gojellyfin
         namespace: flux-system
   maxHistory: 3
   install:
@@ -101,58 +101,68 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    defaultPodOptions:
-      labels:
-        istio.io/use-waypoint: none
-        istio.io/dataplane-mode: none
-      annotations:
-        instrumentation.opentelemetry.io/inject-go: monitoring/default
-    controllers:
-      gojellyfin:
-        containers:
-          gojellyfin:
-            imagePullPolicy: Always
-            args: ["server"]
-            env:
-              - name: TMDB_API_KEY
-                valueFrom:
-                  secretKeyRef:
-                    name: tmdb
-                    key: apikey
-              - name: TEMPORAL_NAMESPACE
-                value: default
-              - name: TEMPORAL_HOSTPORT
-                value: "temporal-frontend.temporal:7233"
-              - name: PUBLISHED_SERVER_URL
-                value: "https://gojellyfin.deangalvin.dev"
-              - name: DATABASE_URL 
-                valueFrom:
-                  secretKeyRef:
-                    name: postgres-jellyfin-app
-                    key: uri
-    persistence:
-      tmp:
-        type: emptyDir
-      transcode:
-        type: emptyDir
-      media:
-        type: persistentVolumeClaim
-        existingClaim: replica-media
-      ec-media:
-        type: persistentVolumeClaim
-        existingClaim: ec-media
     image:
       repository: ghcr.io/freekingdean/gojellyfin
       tag: main
-    resources:
-      requests:
-        cpu: 2
-        memory: 8Gi
-      limits:
-        memory: 16Gi
-    ports:
-      http: 8081
-    ingress:
-      enabled: false
-    serviceMonitor:
-      enabled: false
+      pullPolicy: Always
+    hostname: gojellyfin.deangalvin.dev
+    httpPort: 8081
+    database:
+      existingSecret: postgres-jellyfin-app
+      secretKey: uri
+    tmdb:
+      existingSecret: tmdb
+      secretKey: apikey
+    temporal:
+      hostPort: temporal-frontend.temporal:7233
+      namespace: default
+    media:
+      mountPath: /ec-media
+      volume:
+        persistentVolumeClaim:
+          claimName: ec-media
+    api:
+      replicaCount: 2
+      podAnnotations:
+        instrumentation.opentelemetry.io/inject-go: monitoring/default
+      resources:
+        requests:
+          cpu: 500m
+          memory: 2Gi
+        limits:
+          cpu: "1"
+          memory: 8Gi
+    streaming:
+      enabled: true
+      replicaCount: 2
+      podAnnotations:
+        instrumentation.opentelemetry.io/inject-go: monitoring/default
+      resources:
+        requests:
+          cpu: "2"
+          memory: 2Gi
+        limits:
+          cpu: "2"
+          memory: 8Gi
+    worker:
+      enabled: true
+      replicaCount: 3
+      mediaReadOnly: false
+      podAnnotations:
+        instrumentation.opentelemetry.io/inject-go: monitoring/default
+      resources:
+        requests:
+          cpu: 200m
+          memory: 512Mi
+        limits:
+          cpu: "1"
+          memory: 4Gi
+    web:
+      replicaCount: 2
+      client:
+        tag: "10.11.11"
+    httpRoute:
+      enabled: true
+      parentRefs:
+        - name: main
+          namespace: networking

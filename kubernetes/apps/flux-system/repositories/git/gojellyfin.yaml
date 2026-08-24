@@ -1,0 +1,14 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: gojellyfin
+  namespace: flux-system
+spec:
+  interval: 5m
+  url: https://github.com/FreekingDean/gojellyfin
+  ref:
+    name: refs/pull/553/head
+  ignore: |
+    /*
+    !/charts/gojellyfin

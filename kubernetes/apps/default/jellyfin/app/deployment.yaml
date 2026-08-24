@@ -90,6 +90,11 @@ spec:
           imagePullPolicy: Always
           args: ["worker"]
           env:
+            - name: TMDB_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: tmdb
+                  key: apikey
             - name: TEMPORAL_NAMESPACE
               value: default
             - name: TEMPORAL_HOSTPORT

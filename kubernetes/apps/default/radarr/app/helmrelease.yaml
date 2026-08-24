@@ -38,7 +38,7 @@ spec:
     stateful: true
     image:
       repository: ghcr.io/home-operations/radarr
-      tag: 6.4.1.10545
+      tag: 6.4.2.10590
     env:
       TZ: America/New_York
       RADARR__INSTANCE_NAME: ${instance_name}

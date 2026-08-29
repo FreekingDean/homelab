@@ -4,24 +4,19 @@ kind: ConfigMap
 metadata:
   name: authentik-blueprints
 data:
-  grafana-groups.yaml: |
+  nested-groups.yaml: |
     version: 1
     metadata:
-      name: grafana groups scope
+      name: Nested groups scope
     entries:
-      - model: authentik_providers_oauth2.scopemapping
-        identifiers:
-          managed: homelab/grafana-groups
+      - identifiers:
+          managed: homelab/providers/oauth2/scope-nested-groups
+        model: authentik_providers_oauth2.scopemapping
         attrs:
-          name: Grafana groups
-          scope_name: groups
-          description: Group names a user belongs to, including parent groups
+          name: "homelab OAuth Mapping: nested_groups"
+          scope_name: nested_groups
+          description: "Group names a user belongs to, including ancestors"
           expression: |
-            names = set()
-            for group in request.user.ak_groups.all():
-                names.add(group.name)
-                parent = group.parent
-                while parent:
-                    names.add(parent.name)
-                    parent = parent.parent
-            return {"groups": sorted(names)}
+            return {
+                "nested_groups": [group.name for group in request.user.all_groups()],
+            }

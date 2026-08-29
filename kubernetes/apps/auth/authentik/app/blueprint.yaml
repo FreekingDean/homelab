@@ -1,0 +1,22 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: authentik-blueprints
+data:
+  nested-groups.yaml: |
+    version: 1
+    metadata:
+      name: Nested groups scope
+    entries:
+      - identifiers:
+          managed: homelab/providers/oauth2/scope-nested-groups
+        model: authentik_providers_oauth2.scopemapping
+        attrs:
+          name: "homelab OAuth Mapping: nested_groups"
+          scope_name: nested_groups
+          description: "Group names a user belongs to, including ancestors"
+          expression: |
+            return {
+                "nested_groups": [group.name for group in request.user.all_groups()],
+            }

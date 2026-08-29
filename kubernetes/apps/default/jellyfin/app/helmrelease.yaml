@@ -106,6 +106,7 @@ spec:
         istio.io/use-waypoint: none
         istio.io/dataplane-mode: none
       annotations:
+        version: v1
         instrumentation.opentelemetry.io/inject-go: monitoring/default
     controllers:
       gojellyfin:

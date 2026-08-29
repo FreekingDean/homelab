@@ -83,6 +83,7 @@ spec:
       labels:
         app.kubernetes.io/name: gojellyfin
         app.kubernetes.io/component: worker
+        version: v1
     spec:
       containers:
         - name: gojellyfin

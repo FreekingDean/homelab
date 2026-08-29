@@ -89,14 +89,17 @@ spec:
         headers:
           Authorization: $${env:OPENOBSERVE_AUTH_HEADER}
           stream-name: default
-      prometheusremotewrite:
-        endpoint: http://kube-prometheus-stack-prometheus:9090/api/v1/write
+      prometheusremotewrite/replica-0: &prometheusremotewrite
+        endpoint: http://prometheus-kube-prometheus-stack-prometheus-0.prometheus-operated:9090/api/v1/write
         target_info:
           enabled: false
         resource_to_telemetry_conversion:
           enabled: false
         remote_write_queue:
           num_consumers: 10
+      prometheusremotewrite/replica-1:
+        <<: *prometheusremotewrite
+        endpoint: http://prometheus-kube-prometheus-stack-prometheus-1.prometheus-operated:9090/api/v1/write
     service:
       pipelines:
         traces:
@@ -106,7 +109,7 @@ spec:
         metrics:
           receivers: [prometheus]
           processors: [memory_limiter, batch]
-          exporters: [prometheusremotewrite, otlphttp/openobserve]
+          exporters: [prometheusremotewrite/replica-0, prometheusremotewrite/replica-1, otlphttp/openobserve]
   resources:
     requests:
       cpu: 500m

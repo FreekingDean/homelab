@@ -46,10 +46,15 @@ spec:
       volumeMounts:
         - name: media
           mountPath: /media
+        - name: blueprints
+          mountPath: /blueprints/custom
       volumes:
         - name: media
           persistentVolumeClaim:
             claimName: authentik-media
+        - name: blueprints
+          configMap:
+            name: authentik-blueprints
 
     authentik:
       log_level: info

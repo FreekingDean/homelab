@@ -25,7 +25,7 @@ spec:
       allow_sign_up: "true"
       client_id: "$${AUTH_CLIENT_ID}"
       client_secret: "$${AUTH_CLIENT_SECRET}"
-      scopes: "openid email profile offline_access"
+      scopes: "openid email profile offline_access groups"
       auth_url: "https://authentik.deangalvin.dev/application/o/authorize/"
       token_url: "https://authentik.deangalvin.dev/application/o/token/"
       api_url: "https://authentik.deangalvin.dev/application/o/userinfo/"

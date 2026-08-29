@@ -1,0 +1,27 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: authentik-blueprints
+data:
+  grafana-groups.yaml: |
+    version: 1
+    metadata:
+      name: grafana groups scope
+    entries:
+      - model: authentik_providers_oauth2.scopemapping
+        identifiers:
+          managed: homelab/grafana-groups
+        attrs:
+          name: Grafana groups
+          scope_name: groups
+          description: Group names a user belongs to, including parent groups
+          expression: |
+            names = set()
+            for group in request.user.ak_groups.all():
+                names.add(group.name)
+                parent = group.parent
+                while parent:
+                    names.add(parent.name)
+                    parent = parent.parent
+            return {"groups": sorted(names)}

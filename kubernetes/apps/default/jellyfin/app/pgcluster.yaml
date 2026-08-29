@@ -8,11 +8,11 @@ spec:
   imageName: ghcr.io/cloudnative-pg/postgresql:16.6
   primaryUpdateStrategy: unsupervised
   storage:
-    size: 100Gi
+    size: 600Gi
     storageClass: replica-block
   postgresql:
     parameters:
       max_connections: "600"
-      shared_buffers: 512MB
+      shared_buffers: 4Gi
   monitoring:
     enablePodMonitor: true

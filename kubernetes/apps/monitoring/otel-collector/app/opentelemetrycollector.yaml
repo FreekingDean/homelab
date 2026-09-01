@@ -4,6 +4,8 @@ kind: OpenTelemetryCollector
 metadata:
   name: otel-collector
 spec:
+  networkPolicy:
+    enabled: false
   mode: daemonset
   image: otel/opentelemetry-collector-contrib:0.159.0
   envFrom:
@@ -25,6 +27,8 @@ spec:
       effect: NoSchedule
   targetAllocator:
     enabled: true
+    networkPolicy:
+      enabled: false
     allocationStrategy: per-node
     replicas: 1
     prometheusCR:

@@ -28,8 +28,8 @@ items:
       <<: *spec
       postBuild:
         substitute:
-          DOMAIN_NAME: deangalvin.com
-          DOMAIN_SLUG: deangalvin-com
+          DOMAIN_NAME: deangalvin.dev
+          DOMAIN_SLUG: deangalvin-dev
   - apiVersion: kustomize.toolkit.fluxcd.io/v1
     kind: Kustomization
     metadata:

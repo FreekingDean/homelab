@@ -1,0 +1,29 @@
+---
+apiVersion:	gateway.networking.k8s.io/v1
+kind: ListenerSet
+metadata:
+  name:  "${DOMAIN_SLUG}-listener-set"
+spec:
+  listeners:
+    - name:  "${DOMAIN_SLUG}"
+      protocol:  HTTPS
+      port:  443
+      hostname:  "${DOMAIN_NAME}"
+      tls:
+        mode:  Terminate
+        certificateRefs:
+          - name:  "${DOMAIN_SLUG}-production"
+      allowedRoutes:
+        namespaces:
+          from:  All
+    - name:  "${DOMAIN_SLUG}-wildcard"
+      protocol:  HTTPS
+      port:  443
+      hostname:  "*.${DOMAIN_NAME}"
+      tls:
+        mode:  Terminate
+        certificateRefs:
+          - name:  "${DOMAIN_SLUG}-production-wildcard"
+      allowedRoutes:
+        namespaces:
+          from:  All

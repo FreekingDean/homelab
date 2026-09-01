@@ -1,0 +1,28 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: "${DOMAIN_SLUG}-production"
+spec:
+  secretName: "${DOMAIN_SLUG}-production"
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: "${DOMAIN_NAME}"
+  dnsNames:
+    - "${DOMAIN_NAME}"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: "${DOMAIN_SLUG}-production-wildcard"
+spec:
+  secretName: "${DOMAIN_SLUG}-production-wildcard"
+  secretTemplate:
+    annotations: []
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: "*.${DOMAIN_NAME}"
+  dnsNames:
+    - "*.${DOMAIN_NAME}"

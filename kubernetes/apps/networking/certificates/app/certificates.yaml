@@ -18,9 +18,9 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: "glimmerlabs-io-production"
+  name: "glimmerlabs-io-production-apex"
 spec:
-  secretName: "${GLIMMERLABS_IO_PRODUCTION_TLS}"
+  secretName: "glimmerlabs-io-production-apex"
   secretTemplate:
     annotations: []
   issuerRef:
@@ -29,6 +29,20 @@ spec:
   commonName: "glimmerlabs.io"
   dnsNames:
     - "glimmerlabs.io"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: "glimmerlabs-io-production-wildcard"
+spec:
+  secretName: "glimmerlabs-io-production-wildcard"
+  secretTemplate:
+    annotations: []
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: "*.glimmerlabs.io"
+  dnsNames:
     - "*.glimmerlabs.io"
 ---
 apiVersion: cert-manager.io/v1

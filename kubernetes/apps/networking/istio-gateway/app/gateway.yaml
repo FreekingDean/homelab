@@ -62,7 +62,7 @@ spec:
       tls:
         mode: Terminate
         certificateRefs:
-          - name: "${GLIMMERLABS_IO_PRODUCTION_TLS}"
+          - name: "glimmerlabs-io-production-apex"
       allowedRoutes:
         namespaces:
           from: All
@@ -73,7 +73,7 @@ spec:
       tls:
         mode: Terminate
         certificateRefs:
-          - name: "${GLIMMERLABS_IO_PRODUCTION_TLS}"
+          - name: "glimmerlabs-io-production-wildcard"
       allowedRoutes:
         namespaces:
           from: All

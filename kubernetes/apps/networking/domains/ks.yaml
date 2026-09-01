@@ -1,0 +1,87 @@
+apiVersion: v1
+kind: List
+items:
+  - apiVersion: kustomize.toolkit.fluxcd.io/v1
+    kind: Kustomization
+    metadata:
+      name: domain-deangalvin-com
+      namespace: flux-system
+    spec: &spec
+      path: ./kubernetes/apps/networking/domains/domain
+      prune: true
+      sourceRef:
+        kind: GitRepository
+        name: home-kubernetes
+      interval: 30m
+      retryInterval: 1m
+      timeout: 3m
+      postBuild:
+        substitute:
+          DOMAIN_NAME: deangalvin.com
+          DOMAIN_SLUG: deangalvin-com
+  - apiVersion: kustomize.toolkit.fluxcd.io/v1
+    kind: Kustomization
+    metadata:
+      name: domain-deangalvin-dev
+      namespace: flux-system
+    spec:
+      <<: *spec
+      postBuild:
+        substitute:
+          DOMAIN_NAME: deangalvin.com
+          DOMAIN_SLUG: deangalvin-com
+  - apiVersion: kustomize.toolkit.fluxcd.io/v1
+    kind: Kustomization
+    metadata:
+      name: domain-bananaboydean-com
+      namespace: flux-system
+    spec:
+      <<: *spec
+      postBuild:
+        substitute:
+          DOMAIN_NAME: bananaboydean.com
+          DOMAIN_SLUG: bananaboydean-com
+  - apiVersion: kustomize.toolkit.fluxcd.io/v1
+    kind: Kustomization
+    metadata:
+      name: domain-bananaboydean-dev
+      namespace: flux-system
+    spec:
+      <<: *spec
+      postBuild:
+        substitute:
+          DOMAIN_NAME: bananaboydean.dev
+          DOMAIN_SLUG: bananaboydean-dev
+  - apiVersion: kustomize.toolkit.fluxcd.io/v1
+    kind: Kustomization
+    metadata:
+      name: domain-glimmerlabs-io
+      namespace: flux-system
+    spec:
+      <<: *spec
+      postBuild:
+        substitute:
+          DOMAIN_NAME: glimmerlabs.io
+          DOMAIN_SLUG: glimmerlabs-io
+  - apiVersion: kustomize.toolkit.fluxcd.io/v1
+    kind: Kustomization
+    metadata:
+      name: domain-arcolog-com
+      namespace: flux-system
+    spec:
+      <<: *spec
+      postBuild:
+        substitute:
+          DOMAIN_NAME: arcolog.com
+          DOMAIN_SLUG: arcolog-com
+  - apiVersion: kustomize.toolkit.fluxcd.io/v1
+    kind: Kustomization
+    metadata:
+      name: domain-subtle-studio-com
+      namespace: flux-system
+    spec:
+      <<: *spec
+      postBuild:
+        substitute:
+          DOMAIN_NAME: subtle-studio.com
+          DOMAIN_SLUG: subtle-studio-com

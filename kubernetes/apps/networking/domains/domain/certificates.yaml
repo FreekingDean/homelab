@@ -18,8 +18,6 @@ metadata:
   name: "${DOMAIN_SLUG}-production-wildcard"
 spec:
   secretName: "${DOMAIN_SLUG}-production-wildcard"
-  secretTemplate:
-    annotations: []
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer

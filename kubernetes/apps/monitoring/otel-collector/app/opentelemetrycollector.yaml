@@ -107,11 +107,11 @@ spec:
         traces:
           receivers: [otlp]
           processors: [memory_limiter, k8sattributes, transform/service_name, groupbyattrs, batch]
-          exporters: [otlp, otlphttp/openobserve]
+          exporters: [otlp]
         metrics:
           receivers: [prometheus]
           processors: [memory_limiter, batch]
-          exporters: [prometheusremotewrite/replica-0, prometheusremotewrite/replica-1, otlphttp/openobserve]
+          exporters: [prometheusremotewrite/replica-0, prometheusremotewrite/replica-1]
   resources:
     requests:
       cpu: 500m

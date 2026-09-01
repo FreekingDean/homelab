@@ -67,10 +67,10 @@ spec:
               value: s3
             - name: ZO_S3_REGION_NAME
               value: us-east-1
-            - name: ZO_MEM_TABLE_MAX_SIZE
-              value: "4096"
-            - name: ZO_MAX_FILE_SIZE_IN_MEMORY
+            - name: ZO_MAX_FILE_SIZE_ON_DISK
               value: "128"
+            - name: ZO_MAX_FILE_SIZE_IN_MEMORY
+              value: "256"
             - name: ZO_MEM_PERSIST_INTERVAL
               value: "3"
             - name: ZO_S3_BUCKET_NAME

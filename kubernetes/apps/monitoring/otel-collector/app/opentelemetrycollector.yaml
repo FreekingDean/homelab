@@ -27,8 +27,6 @@ spec:
       effect: NoSchedule
   targetAllocator:
     enabled: true
-    networkPolicy:
-      enabled: false
     allocationStrategy: per-node
     replicas: 1
     prometheusCR:

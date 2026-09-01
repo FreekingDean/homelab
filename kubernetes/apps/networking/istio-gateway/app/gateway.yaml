@@ -12,3 +12,11 @@ spec:
       service.istio.io/canonical-name: istio-gateway
   allowedListeners:
     from: Same
+  listeners:
+    - name: placeholder
+      port: 80
+      protocol: HTTP
+      hostname: placeholder.invalid
+      allowedRoutes:
+        namespaces: { from: Same }
+        kinds: []

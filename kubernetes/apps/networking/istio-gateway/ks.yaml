@@ -8,7 +8,6 @@ metadata:
 spec:
   dependsOn:
     - name: cluster-apps-gateway-api
-    - name: cluster-apps-certificates
   interval: 1h
   path: ./kubernetes/apps/networking/istio-gateway/app
   prune: true

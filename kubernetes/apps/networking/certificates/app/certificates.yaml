@@ -78,3 +78,33 @@ spec:
     - "*.deangalvin.com"
     - "*.public.deangalvin.com"
     - "*.local.deangalvin.com"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: "subtle-studio-com-production-apex"
+spec:
+  secretName: "subtle-studio-com-production-apex"
+  secretTemplate:
+    annotations: []
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: "subtle-studio.com"
+  dnsNames:
+    - "subtle-studio.com"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: "subtle-studio-com-production-wildcard"
+spec:
+  secretName: "subtle-studio-com-production-wildcard"
+  secretTemplate:
+    annotations: []
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: "*.subtle-studio.com"
+  dnsNames:
+    - "*.subtle-studio.com"

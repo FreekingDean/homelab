@@ -77,3 +77,25 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
+    - name: subtle-studio-com
+      protocol: HTTPS
+      port: 443
+      hostname: "subtle-studio.com"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: "subtle-studio-com-production-apex"
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: subtle-studio-com-wildcard
+      protocol: HTTPS
+      port: 443
+      hostname: "*.subtle-studio.com"
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: "subtle-studio-com-production-wildcard"
+      allowedRoutes:
+        namespaces:
+          from: All

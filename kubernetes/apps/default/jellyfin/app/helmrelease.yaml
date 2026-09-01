@@ -115,6 +115,12 @@ spec:
             imagePullPolicy: Always
             args: ["server"]
             env:
+              - name: HOST_IP
+                valueFrom:
+                  fieldRef:
+                    fieldPath: status.hostIP
+              - name: OTEL_EXPORTER_OTLP_ENDPOINT
+                value: "http://$(HOST_IP):4317"
               - name: TMDB_API_KEY
                 valueFrom:
                   secretKeyRef:

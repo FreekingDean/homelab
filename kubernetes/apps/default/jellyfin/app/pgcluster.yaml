@@ -13,6 +13,6 @@ spec:
   postgresql:
     parameters:
       max_connections: "600"
-      shared_buffers: 4Gi
+      shared_buffers: 4GB
   monitoring:
     enablePodMonitor: true

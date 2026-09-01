@@ -22,6 +22,7 @@ spec:
             - "bananaboydean.com"
             - "glimmerlabs.io"
             - "arcolog.com"
+            - "subtle-studio.com"
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer

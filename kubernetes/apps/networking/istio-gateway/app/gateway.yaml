@@ -10,4 +10,5 @@ spec:
       lbipam.cilium.io/ips: "10.1.21.20"
     labels:
       service.istio.io/canonical-name: istio-gateway
-  listeners: []
+  allowedListeners:
+    from: Same

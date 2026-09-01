@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ./rbac.yaml
   - ./opentelemetrycollector.yaml
+  - ./networkpolicy.yaml

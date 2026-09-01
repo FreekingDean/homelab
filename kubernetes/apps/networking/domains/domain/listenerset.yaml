@@ -4,6 +4,8 @@ kind: ListenerSet
 metadata:
   name:  "${DOMAIN_SLUG}-listener-set"
 spec:
+  parentRefs:
+    - name: main
   listeners:
     - name:  "${DOMAIN_SLUG}"
       protocol:  HTTPS

@@ -5,7 +5,8 @@ metadata:
   name: plex
 spec:
   parentRefs:
-    - name: main
+    - kind: ListenerSet
+      name: deangalvin-dev-listener-set
       namespace: networking
   hostnames:
     - plex.deangalvin.dev

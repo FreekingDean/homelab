@@ -49,7 +49,8 @@ metadata:
     app.kubernetes.io/instance: *app
 spec:
   parentRefs:
-    - name: main
+    - kind: ListenerSet
+      name: deangalvin-dev-listener-set
       namespace: networking
   hostnames:
     - unifi.deangalvin.dev

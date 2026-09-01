@@ -5,7 +5,8 @@ metadata:
   name: jitsi-jitsi-meet-web
 spec:
   parentRefs:
-    - name: main
+    - kind: ListenerSet
+      name: deangalvin-dev-listener-set
       namespace: networking
   hostnames:
     - meet.deangalvin.dev

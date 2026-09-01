@@ -5,7 +5,8 @@ metadata:
   name: kube-prometheus-stack-prometheus
 spec:
   parentRefs:
-    - name: main
+    - kind: ListenerSet
+      name: deangalvin-dev-listener-set
       namespace: networking
   hostnames:
     - prometheus.deangalvin.dev
@@ -24,7 +25,8 @@ metadata:
   name: kube-prometheus-stack-alertmanager
 spec:
   parentRefs:
-    - name: main
+    - kind: ListenerSet
+      name: deangalvin-dev-listener-set
       namespace: networking
   hostnames:
     - alert-manager.deangalvin.dev

@@ -5,7 +5,8 @@ metadata:
   name: grafana
 spec:
   parentRefs:
-    - name: main
+    - kind: ListenerSet
+      name: deangalvin-dev-listener-set
       namespace: networking
   hostnames:
     - grafana.deangalvin.dev

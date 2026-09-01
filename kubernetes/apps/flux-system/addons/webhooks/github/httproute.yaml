@@ -6,7 +6,8 @@ metadata:
   namespace: flux-system
 spec:
   parentRefs:
-    - name: main
+    - kind: ListenerSet
+      name: deangalvin-dev-listener-set
       namespace: networking
   hostnames:
     - "flux-webhook.${DOMAIN}"

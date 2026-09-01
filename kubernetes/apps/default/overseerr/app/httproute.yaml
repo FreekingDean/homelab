@@ -5,7 +5,8 @@ metadata:
   name: overseerr
 spec:
   parentRefs:
-    - name: main
+    - kind: ListenerSet
+      name: deangalvin-dev-listener-set
       namespace: networking
   hostnames:
     - overseerr.deangalvin.dev

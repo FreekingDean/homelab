@@ -8,7 +8,8 @@ metadata:
   name: ghost-public
 spec:
   parentRefs:
-    - name: main
+    - kind: ListenerSet
+      name: glimmerlabs-io-listener-set
       namespace: networking
   hostnames:
     - blog.glimmerlabs.io
@@ -31,7 +32,8 @@ metadata:
   name: ghost-apex
 spec:
   parentRefs:
-    - name: main
+    - kind: ListenerSet
+      name: glimmerlabs-io-listener-set
       namespace: networking
   hostnames:
     - glimmerlabs.io

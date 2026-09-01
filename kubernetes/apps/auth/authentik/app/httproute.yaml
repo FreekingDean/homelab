@@ -5,7 +5,8 @@ metadata:
   name: authentik-server
 spec:
   parentRefs:
-    - name: main
+    - kind: ListenerSet
+      name: deangalvin-dev-listener-set
       namespace: networking
   hostnames:
     - authentik.deangalvin.dev

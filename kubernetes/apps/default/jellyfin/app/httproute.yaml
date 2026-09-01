@@ -5,7 +5,8 @@ metadata:
   name: jellyfin
 spec:
   parentRefs:
-    - name: main
+    - kind: ListenerSet
+      name: deangalvin-dev-listener-set
       namespace: networking
   hostnames:
     - jellyfin.deangalvin.dev
@@ -27,7 +28,8 @@ metadata:
     app.kubernetes.io/component: app
 spec:
   parentRefs:
-    - name: main
+    - kind: ListenerSet
+      name: deangalvin-dev-listener-set
       namespace: networking
   hostnames:
     - gojellyfin.deangalvin.dev

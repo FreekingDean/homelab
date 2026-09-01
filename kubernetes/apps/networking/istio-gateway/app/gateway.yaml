@@ -11,7 +11,8 @@ spec:
     labels:
       service.istio.io/canonical-name: istio-gateway
   allowedListeners:
-    from: Same
+    namespaces:
+      from: Same
   listeners:
     - name: placeholder
       port: 80

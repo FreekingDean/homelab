@@ -23,6 +23,9 @@ spec:
       to:
         - operation:
             notHosts:
+              - subtle-studio.com
+              - blog.subtle-studio.com
+              - www.subtle-studio.com
               - arcolog.com
               - blog.arcolog.com
               - www.arcolog.com

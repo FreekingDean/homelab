@@ -101,7 +101,7 @@ spec:
       prometheusSpec:
         enableRemoteWriteReceiver: true
         tsdb:
-          outOfOrderTimeWindow: 10m
+          outOfOrderTimeWindow: 1m
         additionalArgs:
           - name: web.enable-otlp-receiver
             value: ""

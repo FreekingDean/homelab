@@ -17,7 +17,7 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 3m
-postBuild:
-  substitute:
-    DOMAIN: "arcolog.com"
-    SLUG: "arcolog"
+  postBuild:
+    substitute:
+      DOMAIN: "arcolog.com"
+      SLUG: "arcolog"

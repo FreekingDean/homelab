@@ -4,7 +4,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: ghost-config-tmp
   labels:
-    app.kubernetes.io/instance: arcolog-ghost
+    app.kubernetes.io/instance: ghost
     app.kubernetes.io/name: ghost
 spec:
   accessModes:
@@ -19,7 +19,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: mariadb-data
   labels:
-    app.kubernetes.io/instance: arcolog-mariadb
+    app.kubernetes.io/instance: ghost-mariadb
     app.kubernetes.io/name: mariadb
 spec:
   accessModes:

@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - ./namespace.yaml
   - ./addons/ks.yaml
+  - ./konflate/ks.yaml
   - ./operator
   - ./repositories
   - ./vars

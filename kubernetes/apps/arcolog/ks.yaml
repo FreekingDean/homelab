@@ -9,7 +9,7 @@ spec:
   dependsOn:
     - name: cluster-apps-external-secrets-stores
   components:
-   - ./kubernetes/components/ghost
+   - ../../../../components/ghost
   prune: true
   sourceRef:
     kind: GitRepository

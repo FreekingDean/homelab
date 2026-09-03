@@ -7,7 +7,7 @@ spec:
   networkPolicy:
     enabled: false
   mode: daemonset
-  image: otel/opentelemetry-collector-contrib:0.159.0
+  image: otel/opentelemetry-collector-contrib:0.160.0
   envFrom:
     - secretRef:
         name: openobserve

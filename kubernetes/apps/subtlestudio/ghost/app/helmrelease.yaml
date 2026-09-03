@@ -39,7 +39,7 @@ spec:
     stateful: true
     image:
       repository: docker.io/library/ghost
-      tag: 6.61.0
+      tag: 6.62.0
     env:
       OTEL_SERVICE_NAME: subtlestudio
       database__client: mysql

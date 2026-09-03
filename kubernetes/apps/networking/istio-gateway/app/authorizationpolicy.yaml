@@ -37,6 +37,7 @@ spec:
               - www.glimmerlabs.io
               - hass.deangalvin.dev
               - jellyfin.deangalvin.dev
+              - konflate.deangalvin.dev
               - meet.deangalvin.dev
               - musichero.deangalvin.dev
               - overseerr.deangalvin.dev

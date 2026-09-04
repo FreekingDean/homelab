@@ -39,7 +39,7 @@ jobs:
               failure=1
             fi
 
-            ksfiles=$(find ./kubernetes/apps/$dir/*/ks.yaml)
+            ksfiles=$(find . -path ./kubernetes/apps/$dir/*/ks.yaml)
 
             for ks in $ksfiles; do
               found=$(cat $ks | yq '.spec.targetNamespace | select(. != null and . != "")')

@@ -9,11 +9,11 @@ metadata:
 spec:
   parentRefs:
     - kind: ListenerSet
-      name: arcolog-com-listener-set
+      name: ${SLUG}-listener-set
       namespace: networking
   hostnames:
-    - blog.arcolog.com
-    - www.arcolog.com
+    - "blog.${DOMAIN}"
+    - "www.${DOMAIN}"
   rules:
     - matches:
         - path:
@@ -33,13 +33,13 @@ metadata:
 spec:
   parentRefs:
     - kind: ListenerSet
-      name: arcolog-com-listener-set
+      name: ${SLUG}-listener-set
       namespace: networking
   hostnames:
-    - arcolog.com
+    - "${DOMAIN}"
   rules:
     - filters:
         - type: RequestRedirect
           requestRedirect:
-            hostname: www.arcolog.com
+            hostname: "www.${DOMAIN}"
             statusCode: 301

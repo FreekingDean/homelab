@@ -16,3 +16,4 @@ spec:
       name: actions-runner-controller
     flags:
       watchSingleNamespace: actions-runner-system
+      logFormat: json

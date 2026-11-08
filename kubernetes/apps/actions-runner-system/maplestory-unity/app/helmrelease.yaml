@@ -64,6 +64,8 @@ spec:
                 mountPath: /home/runner/externals
               - name: docker-data
                 mountPath: /var/lib/docker
+              - name: game-ci
+                mountPath: /home/runner/.game-ci
         containers:
           - name: runner
             image: ghcr.io/actions/actions-runner:latest
@@ -84,6 +86,8 @@ spec:
                 mountPath: /home/runner/_work
               - name: dind-sock
                 mountPath: /var/run
+              - name: game-ci
+                mountPath: /home/runner/.game-ci
         volumes:
           - name: work
             persistentVolumeClaim:
@@ -91,6 +95,8 @@ spec:
           - name: dind-sock
             emptyDir: {}
           - name: dind-externals
+            emptyDir: {}
+          - name: game-ci
             emptyDir: {}
           - name: docker-data
             persistentVolumeClaim:

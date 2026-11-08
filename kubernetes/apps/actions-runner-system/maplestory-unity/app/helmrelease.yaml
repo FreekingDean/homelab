@@ -73,6 +73,8 @@ spec:
                 value: unix:///var/run/docker.sock
               - name: RUNNER_WAIT_FOR_DOCKER_IN_SECONDS
                 value: "120"
+              - name: ACTIONS_RUNNER_PRINT_LOG_TO_STDOUT
+                value: "1"
             resources:
               requests:
                 cpu: 500m

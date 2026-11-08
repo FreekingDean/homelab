@@ -13,7 +13,7 @@ spec:
     githubConfigUrl: https://github.com/FreekingDean/MapleStory
     githubConfigSecret: maplestory-unity-runner
     runnerScaleSetName: maplestory-unity
-    minRunners: 0
+    minRunners: 1
     maxRunners: 1
     controllerServiceAccount:
       namespace: actions-runner-system

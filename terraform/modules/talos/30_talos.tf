@@ -128,7 +128,7 @@ data "talos_machine_configuration" "control_plane" {
   machine_type       = "controlplane"
   cluster_endpoint   = local.cluster_endpoint
   machine_secrets    = var.talos_machine_secrets
-  talos_version      = var.talos_version
+  talos_version      = "v1.13.0"
   kubernetes_version = var.kubernetes_version
 }
 
@@ -149,7 +149,7 @@ data "talos_machine_configuration" "worker" {
   machine_type       = "worker"
   cluster_endpoint   = local.cluster_endpoint
   machine_secrets    = var.talos_machine_secrets
-  talos_version      = var.talos_version
+  talos_version      = "v1.13.0"
   kubernetes_version = var.kubernetes_version
 }
 

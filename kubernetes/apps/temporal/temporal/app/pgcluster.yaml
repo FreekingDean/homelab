@@ -12,7 +12,7 @@ spec:
       database: temporal
       owner: app
   storage:
-    size: 20Gi
+    size: 200Gi
     storageClass: replica-block
   monitoring:
     enablePodMonitor: true

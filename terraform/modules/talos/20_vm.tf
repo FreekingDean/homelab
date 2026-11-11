@@ -15,7 +15,7 @@ module "talos_servers" {
   node_index = var.index + 1
   index      = count.index + 1
 
-  memory        = 4096
+  memory        = 6144
   cpus          = 4
   disk_size     = 64
   vlan_tag      = var.vlan_tag

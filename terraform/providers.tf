@@ -37,6 +37,6 @@ provider "proxmox" {
 }
 
 provider "unifi" {
-  api_url        = "https://unifi.deangalvin.dev"
+  api_url        = "https://10.0.0.1"
   allow_insecure = true
 }

@@ -103,6 +103,8 @@ spec:
     # keeps gojellyfin's own id. Needs a chart that includes gojellyfin#684.
     serverId: ""
     env:
+      - name: SERVER_ID
+        value: e10a32fca79342d7b8b9d96e255ce1bc
       - name: "SOURCE_API_KEY_DEFAULT"
         value: "this-is-a-bad-api-key"
       - name: HOST_IP
@@ -115,6 +117,15 @@ spec:
     tmdb:
       existingSecret: tmdb
       secretKey: apikey
+    # Sign-on stays off until clientId is filled in. The Authentik provider's
+    # redirect URI is https://gojellyfin.deangalvin.dev/sso/oidc/callback, and
+    # its client secret goes in a Secret named gojellyfin-oidc under the key
+    # OIDC_CLIENT_SECRET.
+    oidc:
+      issuerUrl: https://authentik.deangalvin.dev/application/o/gojellyfin/
+      clientId: ""
+      existingSecret: gojellyfin-oidc
+      linkExistingUsers: true
     temporal:
       hostPort: temporal-frontend.temporal:7233
       namespace: default
@@ -173,7 +184,7 @@ spec:
         enabled: true
     web:
       client:
-        tag: 10.11.11
+        tag: "12.4"
     service:
       labels:
         istio.io/use-waypoint: none

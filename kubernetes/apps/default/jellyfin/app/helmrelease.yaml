@@ -99,7 +99,7 @@ spec:
     hostname: gojellyfin.deangalvin.dev
     env:
       - name: "SOURCE_API_KEY_DEFAULT"
-        value: "this-is-a-base-api-key"
+        value: "this-is-a-bad-api-key"
       - name: HOST_IP
         valueFrom:
           fieldRef:

@@ -2,26 +2,6 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: jellyfin
-spec:
-  parentRefs:
-    - kind: ListenerSet
-      name: deangalvin-dev-listener-set
-      namespace: networking
-  hostnames:
-    - jellyfin.deangalvin.dev
-  rules:
-    - matches:
-        - path:
-            type: PathPrefix
-            value: /
-      backendRefs:
-        - name: jellyfin
-          port: 8096
----
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
-metadata:
   name: gojellyfin-root
 spec:
   parentRefs:
@@ -29,7 +9,7 @@ spec:
       name: deangalvin-dev-listener-set
       namespace: networking
   hostnames:
-    - gojellyfin.deangalvin.dev
+    - jellyfin.deangalvin.dev
   rules:
     - matches:
         - path:
@@ -42,3 +22,21 @@ spec:
               type: ReplaceFullPath
               replaceFullPath: /web/
             statusCode: 302
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: gojellyfin-old-hostname
+spec:
+  parentRefs:
+    - kind: ListenerSet
+      name: deangalvin-dev-listener-set
+      namespace: networking
+  hostnames:
+    - gojellyfin.deangalvin.dev
+  rules:
+    - filters:
+        - type: RequestRedirect
+          requestRedirect:
+            hostname: jellyfin.deangalvin.dev
+            statusCode: 301

@@ -90,6 +90,7 @@ spec:
       retries: 3
   upgrade:
     cleanupOnFail: true
+    chartNameChangeStrategy: Reinstall
     remediation:
       retries: 3
   uninstall:

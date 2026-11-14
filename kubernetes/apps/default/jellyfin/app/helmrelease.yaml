@@ -97,6 +97,11 @@ spec:
     keepHistory: false
   values:
     hostname: gojellyfin.deangalvin.dev
+    env:
+      - name: HOST_IP
+        valueFrom:
+          fieldRef:
+            fieldPath: status.hostIP
     database:
       existingSecret: postgres-jellyfin-app
       secretKey: uri
@@ -107,12 +112,18 @@ spec:
       hostPort: temporal-frontend.temporal:7233
       namespace: default
     tracing:
-      otlpEndpoint: http://otel-collector-collector.monitoring:4317
+      otlpEndpoint: http://$(HOST_IP):4318
     media:
       mountPath: /ec-media
       volume:
         persistentVolumeClaim:
           claimName: ec-media
+      extraVolumes:
+        - name: replica-media
+          mountPath: /media
+          volume:
+            persistentVolumeClaim:
+              claimName: replica-media
     migration:
       enabled: true
     api:
@@ -124,11 +135,17 @@ spec:
           cpu: null
           memory: 16Gi
       pod:
+        labels:
+          istio.io/use-waypoint: none
+          istio.io/dataplane-mode: none
         annotations:
           version: v1
           instrumentation.opentelemetry.io/inject-go: monitoring/default
     streaming:
       pod:
+        labels:
+          istio.io/use-waypoint: none
+          istio.io/dataplane-mode: none
         annotations:
           version: v1
           instrumentation.opentelemetry.io/inject-go: monitoring/default
@@ -138,6 +155,9 @@ spec:
     web:
       client:
         tag: 10.11.11
+    service:
+      labels:
+        istio.io/use-waypoint: none
     httpRoute:
       enabled: true
       parentRefs:

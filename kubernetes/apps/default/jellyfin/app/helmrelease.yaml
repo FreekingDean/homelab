@@ -121,6 +121,10 @@ spec:
       clientId: ""
       existingSecret: gojellyfin-oidc
       linkExistingUsers: true
+    # The Cilium pod network, so the gateway and waypoint pass on the client's
+    # address in X-Forwarded-For.
+    trustedProxies:
+      - 10.201.0.0/16
     temporal:
       hostPort: temporal-frontend.temporal:7233
       namespace: default

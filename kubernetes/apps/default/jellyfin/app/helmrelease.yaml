@@ -97,10 +97,9 @@ spec:
     keepHistory: false
   values:
     hostname: jellyfin.deangalvin.dev
-    # Jellyfin's server id, printed by scripts/jellyfinmigrate. Clients file
-    # their token under it, so this is what keeps them signed in.
-    serverId: e10a32fca79342d7b8b9d96e255ce1bc
     env:
+      - name: SERVER_ID
+        value: e10a32fca79342d7b8b9d96e255ce1bc
       - name: "SOURCE_API_KEY_DEFAULT"
         value: "this-is-a-bad-api-key"
       - name: HOST_IP

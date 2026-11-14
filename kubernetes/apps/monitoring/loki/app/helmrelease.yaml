@@ -46,6 +46,9 @@ spec:
           secretAccessKey: $${S3_LOKI_SECRET_ACCESS_KEY}
           endpoint: $${S3_LOKI_ENDPOINT}
           region: ""
+          # RGW is addressed by IP, so virtual-hosted style (<bucket>.10.0.0.x) can't resolve.
+          s3ForcePathStyle: true
+          insecure: true
       schemaConfig:
         configs:
           - from: "2024-04-01"

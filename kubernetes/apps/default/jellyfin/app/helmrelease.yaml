@@ -98,6 +98,8 @@ spec:
   values:
     hostname: gojellyfin.deangalvin.dev
     env:
+      - name: SERVER_ID
+        value: e10a32fca79342d7b8b9d96e255ce1bc
       - name: "SOURCE_API_KEY_DEFAULT"
         value: "this-is-a-bad-api-key"
       - name: HOST_IP

@@ -110,6 +110,15 @@ spec:
     tmdb:
       existingSecret: tmdb
       secretKey: apikey
+    # Sign-on stays off until clientId is filled in. The Authentik provider's
+    # redirect URI is https://gojellyfin.deangalvin.dev/sso/oidc/callback, and
+    # its client secret goes in a Secret named gojellyfin-oidc under the key
+    # OIDC_CLIENT_SECRET.
+    oidc:
+      issuerUrl: https://authentik.deangalvin.dev/application/o/gojellyfin/
+      clientId: ""
+      existingSecret: gojellyfin-oidc
+      linkExistingUsers: true
     temporal:
       hostPort: temporal-frontend.temporal:7233
       namespace: default

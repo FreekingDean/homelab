@@ -153,7 +153,19 @@ spec:
           instrumentation.opentelemetry.io/inject-go: monitoring/default
     worker:
       enabled: true
-      replicas: 3
+      resources:
+        requests:
+          cpu: 1
+          memory: 256Mi
+        limits:
+          cpu: 1
+          memory: 1Gi
+      autoscaling:
+        enabled: true
+        minReplicas: 1
+        maxReplicas: 6
+      podDisruptionBudget:
+        enabled: true
     web:
       client:
         tag: 10.11.11

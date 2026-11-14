@@ -34,6 +34,13 @@ spec:
       metrics:
         serviceMonitor:
           enabled: true
+          # Temporal tags metrics with its own `namespace`, which collides with the
+          # Kubernetes one and lands as `exported_namespace`. Give it a clear name.
+          metricRelabelings:
+            - sourceLabels: [exported_namespace]
+              targetLabel: temporal_namespace
+            - action: labeldrop
+              regex: exported_namespace
       config:
         persistence:
           numHistoryShards: 512

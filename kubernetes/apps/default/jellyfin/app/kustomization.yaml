@@ -9,3 +9,12 @@ resources:
   - ./ocirepository.yaml
   - ./pvc.yaml
   - ./pgcluster.yaml
+  - ./grafanadashboard.yaml
+configMapGenerator:
+  - name: gojellyfin-dashboard
+    files:
+      - ./dashboards/gojellyfin.json
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled

@@ -6,3 +6,12 @@ resources:
   - ./httproute.yaml
   - ./pgcluster.yaml
   - ./elasticsearch.yaml
+  - ./grafanadashboard.yaml
+configMapGenerator:
+  - name: temporal-dashboard
+    files:
+      - ./dashboards/temporal.json
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled

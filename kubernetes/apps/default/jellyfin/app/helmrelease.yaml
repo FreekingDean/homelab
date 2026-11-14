@@ -74,92 +74,73 @@ spec:
     serviceMonitor:
       enabled: false
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helmrelease_v2beta1.json
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: gojellyfin
 spec:
   interval: 15m
-  chart:
-    spec:
-      chart: app-template
-      version: 0.0.14
-      sourceRef:
-        kind: HelmRepository
-        name: freekingdean
-        namespace: flux-system
+  chartRef:
+    kind: OCIRepository
+    name: gojellyfin
   maxHistory: 3
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
+    chartNameChangeStrategy: Reinstall
     remediation:
       retries: 3
   uninstall:
     keepHistory: false
   values:
-    defaultPodOptions:
-      labels:
-        istio.io/use-waypoint: none
-        istio.io/dataplane-mode: none
-      annotations:
-        version: v1
-        instrumentation.opentelemetry.io/inject-go: monitoring/default
-    controllers:
-      gojellyfin:
-        containers:
-          gojellyfin:
-            imagePullPolicy: Always
-            args: ["server"]
-            env:
-              - name: HOST_IP
-                valueFrom:
-                  fieldRef:
-                    fieldPath: status.hostIP
-              - name: OTEL_EXPORTER_OTLP_ENDPOINT
-                value: "http://$(HOST_IP):4317"
-              - name: TMDB_API_KEY
-                valueFrom:
-                  secretKeyRef:
-                    name: tmdb
-                    key: apikey
-              - name: TEMPORAL_NAMESPACE
-                value: default
-              - name: TEMPORAL_HOSTPORT
-                value: "temporal-frontend.temporal:7233"
-              - name: PUBLISHED_SERVER_URL
-                value: "https://gojellyfin.deangalvin.dev"
-              - name: DATABASE_URL 
-                valueFrom:
-                  secretKeyRef:
-                    name: postgres-jellyfin-app
-                    key: uri
-    persistence:
-      tmp:
-        type: emptyDir
-      transcode:
-        type: emptyDir
-      media:
-        type: persistentVolumeClaim
-        existingClaim: replica-media
-      ec-media:
-        type: persistentVolumeClaim
-        existingClaim: ec-media
-    image:
-      repository: ghcr.io/freekingdean/gojellyfin
-      tag: main
-    resources:
-      requests:
-        cpu: 2
-        memory: 8Gi
-      limits:
-        memory: 16Gi
-    ports:
-      http: 8081
-    ingress:
-      enabled: false
-    serviceMonitor:
-      enabled: false
+    hostname: gojellyfin.deangalvin.dev
+    database:
+      existingSecret: postgres-jellyfin-app
+      secretKey: uri
+    tmdb:
+      existingSecret: tmdb
+      secretKey: apikey
+    temporal:
+      hostPort: temporal-frontend.temporal:7233
+      namespace: default
+    tracing:
+      otlpEndpoint: http://otel-collector-collector.monitoring:4317
+    media:
+      mountPath: /ec-media
+      volume:
+        persistentVolumeClaim:
+          claimName: ec-media
+    migration:
+      enabled: true
+    api:
+      resources:
+        requests:
+          cpu: 2
+          memory: 8Gi
+        limits:
+          cpu: null
+          memory: 16Gi
+      pod:
+        annotations:
+          version: v1
+          instrumentation.opentelemetry.io/inject-go: monitoring/default
+    streaming:
+      pod:
+        annotations:
+          version: v1
+          instrumentation.opentelemetry.io/inject-go: monitoring/default
+    worker:
+      enabled: true
+      replicas: 3
+    web:
+      client:
+        tag: 10.11.11
+    httpRoute:
+      enabled: true
+      parentRefs:
+        - kind: ListenerSet
+          name: deangalvin-dev-listener-set
+          namespace: networking

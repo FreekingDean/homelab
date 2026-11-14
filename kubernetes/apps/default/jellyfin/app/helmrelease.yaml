@@ -107,12 +107,9 @@ spec:
       hostPort: temporal-frontend.temporal:7233
       namespace: default
     tracing:
-      otlpEndpoint: http://$(HOST_IP):4317
+      otlpEndpoint: http://otel-collector-collector.monitoring:4317
     media:
       mountPath: /ec-media
-      directories:
-        - /ec-media
-        - /media
       volume:
         persistentVolumeClaim:
           claimName: ec-media
@@ -147,45 +144,3 @@ spec:
         - kind: ListenerSet
           name: deangalvin-dev-listener-set
           namespace: networking
-  postRenderers:
-    - kustomize:
-        patches:
-          - target:
-              kind: Deployment
-              labelSelector: app.kubernetes.io/component in (api,streaming)
-            patch: |
-              - op: add
-                path: /spec/template/metadata/labels/istio.io~1use-waypoint
-                value: none
-              - op: add
-                path: /spec/template/metadata/labels/istio.io~1dataplane-mode
-                value: none
-              - op: add
-                path: /spec/template/spec/volumes/-
-                value:
-                  name: replica-media
-                  persistentVolumeClaim:
-                    claimName: replica-media
-              - op: add
-                path: /spec/template/spec/containers/0/volumeMounts/-
-                value:
-                  name: replica-media
-                  mountPath: /media
-          - target:
-              kind: Deployment
-              labelSelector: app.kubernetes.io/component in (api,streaming,worker)
-            patch: |
-              - op: add
-                path: /spec/template/spec/containers/0/env/0
-                value:
-                  name: HOST_IP
-                  valueFrom:
-                    fieldRef:
-                      fieldPath: status.hostIP
-          - target:
-              kind: Service
-              labelSelector: app.kubernetes.io/component in (api,streaming)
-            patch: |
-              - op: add
-                path: /metadata/labels/istio.io~1use-waypoint
-                value: none

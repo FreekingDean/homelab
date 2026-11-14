@@ -96,7 +96,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    hostname: gojellyfin.deangalvin.dev
+    hostname: jellyfin.deangalvin.dev
     env:
       - name: SERVER_ID
         value: e10a32fca79342d7b8b9d96e255ce1bc
@@ -113,7 +113,7 @@ spec:
       existingSecret: tmdb
       secretKey: apikey
     # Sign-on stays off until clientId is filled in. The Authentik provider's
-    # redirect URI is https://gojellyfin.deangalvin.dev/sso/oidc/callback, and
+    # redirect URI is https://jellyfin.deangalvin.dev/sso/oidc/callback, and
     # its client secret goes in a Secret named gojellyfin-oidc under the key
     # OIDC_CLIENT_SECRET.
     oidc:

@@ -97,6 +97,11 @@ spec:
     keepHistory: false
   values:
     hostname: gojellyfin.deangalvin.dev
+    # Jellyfin's server id, so clients that were signed in to Jellyfin stay
+    # signed in after the cutover. It is the contents of device.txt in
+    # Jellyfin's data directory, and scripts/jellyfinmigrate prints it. Empty
+    # keeps gojellyfin's own id. Needs a chart that includes gojellyfin#684.
+    serverId: ""
     env:
       - name: "SOURCE_API_KEY_DEFAULT"
         value: "this-is-a-bad-api-key"

@@ -177,7 +177,7 @@ spec:
         enabled: true
     web:
       client:
-        tag: 10.11.11
+        tag: "12.4"
     service:
       labels:
         istio.io/use-waypoint: none

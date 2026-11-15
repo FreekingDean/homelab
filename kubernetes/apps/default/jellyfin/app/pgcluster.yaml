@@ -7,6 +7,9 @@ spec:
   instances: 3
   imageName: ghcr.io/cloudnative-pg/postgresql:16.6
   primaryUpdateStrategy: unsupervised
+  resources:
+    requests:
+      cpu: 4
   storage:
     size: 600Gi
     storageClass: replica-block

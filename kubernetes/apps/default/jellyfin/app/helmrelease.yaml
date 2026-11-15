@@ -157,7 +157,19 @@ spec:
           istio.io/dataplane-mode: none
         annotations:
           version: v1
+      autoscaling:
+        enabled: true
+        minReplicas: 2
+        maxReplicas: 6
+      podDisruptionBudget:
+        enabled: true
     streaming:
+      autoscaling:
+        enabled: true
+        minReplicas: 2
+        maxReplicas: 8
+      podDisruptionBudget:
+        enabled: true
       pod:
         labels:
           istio.io/use-waypoint: none
@@ -182,6 +194,8 @@ spec:
     web:
       client:
         tag: "12.4"
+      podDisruptionBudget:
+        enabled: true
     service:
       labels:
         istio.io/use-waypoint: none

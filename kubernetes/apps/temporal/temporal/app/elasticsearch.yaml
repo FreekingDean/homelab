@@ -10,7 +10,10 @@ spec:
       selfSignedCertificate:
         disabled: true
   nodeSets:
-    - name: default
+    # Renamed from "default" to move onto fast-replica-block: ECK can't change a
+    # nodeSet's storage class in place, so it brings up the new nodeSet,
+    # migrates shards onto it, then removes the old one.
+    - name: fast
       count: 1
       config:
         node.store.allow_mmap: false
@@ -23,4 +26,4 @@ spec:
             resources:
               requests:
                 storage: 20Gi
-            storageClassName: replica-block
+            storageClassName: fast-replica-block

@@ -24,6 +24,6 @@ spec:
       owner: app
   storage:
     size: 200Gi
-    storageClass: replica-block
+    storageClass: fast-replica-block
   monitoring:
     enablePodMonitor: true

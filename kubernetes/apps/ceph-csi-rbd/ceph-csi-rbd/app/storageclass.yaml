@@ -21,3 +21,30 @@ parameters:
 reclaimPolicy: Retain
 allowVolumeExpansion: true
 volumeBindingMode: Immediate
+---
+# RBD on the Optane (device class nvme) OSDs. Pool: kubernetes-fast-replica-pool,
+# CRUSH rule replicated-nvme-chassis (created by hand on the Ceph side).
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: fast-replica-block
+provisioner: rbd.csi.ceph.com
+parameters:
+  clusterID: ceph
+  pool: kubernetes-fast-replica-pool
+  imageFormat: "2"
+  imageFeatures: layering,exclusive-lock,object-map,fast-diff,deep-flatten
+  csi.storage.k8s.io/fstype: ext4
+  csi.storage.k8s.io/controller-expand-secret-name: &secretName csi-rbd-credentials
+  csi.storage.k8s.io/controller-expand-secret-namespace: &secretNamespace ceph-csi-rbd
+  csi.storage.k8s.io/controller-publish-secret-name: *secretName
+  csi.storage.k8s.io/controller-publish-secret-namespace: *secretNamespace
+  csi.storage.k8s.io/node-stage-secret-name: *secretName
+  csi.storage.k8s.io/node-stage-secret-namespace: *secretNamespace
+  csi.storage.k8s.io/provisioner-secret-name: *secretName
+  csi.storage.k8s.io/provisioner-secret-namespace: *secretNamespace
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+volumeBindingMode: Immediate
+mountOptions:
+  - discard

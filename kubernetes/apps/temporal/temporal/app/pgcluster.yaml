@@ -7,6 +7,17 @@ spec:
   instances: 3
   imageName: ghcr.io/cloudnative-pg/postgresql:16.6
   primaryUpdateStrategy: unsupervised
+  postgresql:
+    parameters:
+      # Record I/O and WAL sync timings so blk_write_time and pg_stat_wal
+      # show real numbers instead of 0.
+      track_io_timing: "on"
+      track_wal_io_timing: "on"
+      # Temporal makes hundreds of small commits a second, and each one would
+      # otherwise wait for a WAL fsync on Ceph RBD. With this off, a crash can
+      # lose the last few hundred milliseconds of commits, but the database
+      # stays consistent.
+      synchronous_commit: "off"
   bootstrap:
     initdb:
       database: temporal

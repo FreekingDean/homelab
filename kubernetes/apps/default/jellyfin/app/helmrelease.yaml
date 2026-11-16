@@ -123,7 +123,7 @@ spec:
     # gojellyfin-oidc ExternalSecret; clientId is filled in by valuesFrom
     # above, so it must not be set here, where it would win.
     oidc:
-      issuerUrl: https://authentik.deangalvin.dev/application/o/gojellyfin/
+      issuerUrl: https://authentik.deangalvin.dev/application/o/jellyfin/
       existingSecret: gojellyfin-oidc
       linkExistingUsers: true
     # The Cilium pod network, so the gateway and waypoint pass on the client's

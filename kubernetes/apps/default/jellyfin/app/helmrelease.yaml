@@ -95,6 +95,11 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  valuesFrom:
+    - kind: Secret
+      name: gojellyfin-oidc
+      valuesKey: OIDC_CLIENT_ID
+      targetPath: oidc.clientId
   values:
     hostname: jellyfin.deangalvin.dev
     env:
@@ -112,13 +117,13 @@ spec:
     tmdb:
       existingSecret: tmdb
       secretKey: apikey
-    # Sign-on stays off until clientId is filled in. The Authentik provider's
-    # redirect URI is https://jellyfin.deangalvin.dev/sso/oidc/callback, and
-    # its client secret goes in a Secret named gojellyfin-oidc under the key
-    # OIDC_CLIENT_SECRET.
+    # The Authentik provider's redirect URI is
+    # https://jellyfin.deangalvin.dev/sso/oidc/callback. Its client id and
+    # secret come from the 1Password item "jellyfin" through the
+    # gojellyfin-oidc ExternalSecret; clientId is filled in by valuesFrom
+    # above, so it must not be set here, where it would win.
     oidc:
       issuerUrl: https://authentik.deangalvin.dev/application/o/gojellyfin/
-      clientId: ""
       existingSecret: gojellyfin-oidc
       linkExistingUsers: true
     # The Cilium pod network, so the gateway and waypoint pass on the client's

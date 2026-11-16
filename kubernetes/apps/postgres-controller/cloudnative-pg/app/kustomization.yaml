@@ -5,3 +5,4 @@ kind: Kustomization
 namespace: postgres-controller
 resources:
   - ./helmrelease.yaml
+  - ./grafanadashboard.yaml

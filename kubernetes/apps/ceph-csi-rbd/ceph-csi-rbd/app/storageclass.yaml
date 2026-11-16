@@ -27,7 +27,7 @@ volumeBindingMode: Immediate
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: nvme-block
+  name: fast-replica-block
 provisioner: rbd.csi.ceph.com
 parameters:
   clusterID: ceph

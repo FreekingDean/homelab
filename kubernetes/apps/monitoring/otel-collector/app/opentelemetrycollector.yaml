@@ -12,6 +12,24 @@ spec:
     - secretRef:
         name: openobserve
   hostNetwork: true
+  # Root is needed to read /var/log/pods on the host (files are root-owned)
+  podSecurityContext:
+    runAsUser: 0
+    runAsGroup: 0
+  volumes:
+    - name: varlogpods
+      hostPath:
+        path: /var/log/pods
+    - name: otelcol-state
+      hostPath:
+        path: /var/lib/otelcol
+        type: DirectoryOrCreate
+  volumeMounts:
+    - name: varlogpods
+      mountPath: /var/log/pods
+      readOnly: true
+    - name: otelcol-state
+      mountPath: /var/lib/otelcol
   tolerations:
     - key: CriticalAddonsOnly
       operator: Exists
@@ -47,7 +65,28 @@ spec:
       limits:
         memory: 512Mi
   config:
+    extensions:
+      # Persists filelog read offsets across collector restarts
+      file_storage:
+        directory: /var/lib/otelcol
     receivers:
+      filelog:
+        include:
+          - /var/log/pods/*/*/*.log
+        exclude:
+          # Don't ship our own logs (feedback loop on export errors)
+          - /var/log/pods/monitoring_otel-collector-collector-*_*/otc-container/*.log
+        start_at: end
+        include_file_path: true
+        include_file_name: false
+        storage: file_storage
+        retry_on_failure:
+          enabled: true
+        operators:
+          # Parses CRI format and sets k8s.namespace.name, k8s.pod.name,
+          # k8s.pod.uid and k8s.container.name from the file path
+          - type: container
+            id: container-parser
       otlp:
         protocols:
           grpc:
@@ -64,10 +103,78 @@ spec:
         spike_limit_percentage: 20
       k8sattributes:
         passthrough: false
+        extract:
+          metadata:
+            - k8s.namespace.name
+            - k8s.pod.name
+            - k8s.pod.uid
+            - k8s.node.name
+            - k8s.deployment.name
+            - k8s.statefulset.name
+            - k8s.daemonset.name
+            - k8s.cronjob.name
+            - k8s.job.name
+          labels:
+            - tag_name: app.kubernetes.io/name
+              key: app.kubernetes.io/name
+              from: pod
+            - tag_name: app.kubernetes.io/instance
+              key: app.kubernetes.io/instance
+              from: pod
+            - tag_name: app.kubernetes.io/component
+              key: app.kubernetes.io/component
+              from: pod
+            - tag_name: app
+              key: app
+              from: pod
         pod_association:
           - sources:
               - from: resource_attribute
+                name: k8s.pod.uid
+          - sources:
+              - from: resource_attribute
                 name: k8s.pod.ip
+      # Logs read from files carry no service.name; derive it the same way the
+      # old Vector pipeline did so logs and traces share one app key.
+      transform/logs_service_name:
+        error_mode: ignore
+        log_statements:
+          - context: resource
+            statements:
+              - set(attributes["service.name"], attributes["app.kubernetes.io/name"]) where attributes["service.name"] == nil
+              - set(attributes["service.name"], attributes["app.kubernetes.io/instance"]) where attributes["service.name"] == nil
+              - set(attributes["service.name"], attributes["app"]) where attributes["service.name"] == nil
+              - set(attributes["service.name"], attributes["k8s.container.name"]) where attributes["service.name"] == nil
+      # Generic structured-log parsing (replaces the per-app Vector remaps)
+      transform/logs_parse:
+        error_mode: ignore
+        log_statements:
+          # JSON lines: lift fields into attributes
+          - context: log
+            conditions:
+              - IsString(body) and IsMatch(body, "^\\s*\\{")
+            statements:
+              - merge_maps(attributes, ParseJSON(body), "upsert")
+          # logfmt lines (Loki, Grafana, Go kit style)
+          - context: log
+            conditions:
+              - IsString(body) and IsMatch(body, "^(ts|time|t|level|lvl)=")
+            statements:
+              - merge_maps(attributes, ParseKeyValue(body), "upsert")
+          - context: log
+            statements:
+              # Use the structured message as the log line when present
+              - set(body, attributes["msg"]) where attributes["msg"] != nil
+              - delete_key(attributes, "msg")
+              - set(body, attributes["message"]) where attributes["message"] != nil
+              - delete_key(attributes, "message")
+              # *arr style "[Info] Component: message"
+              - merge_maps(attributes, ExtractPatterns(body, "^\\[(?P<level>(?i:fatal|error|warn|info|debug|trace))\\] "), "upsert") where attributes["level"] == nil and IsString(body)
+              - set(severity_text, ToLowerCase(attributes["level"])) where severity_text == "" and IsString(attributes["level"])
+              - set(severity_text, ToLowerCase(attributes["lvl"])) where severity_text == "" and IsString(attributes["lvl"])
+              # Promote trace ids found in log fields so Loki stores them as trace_id
+              - set(trace_id.string, attributes["trace_id"]) where IsString(attributes["trace_id"]) and Len(attributes["trace_id"]) == 32
+              - set(trace_id.string, attributes["traceId"]) where IsString(attributes["traceId"]) and Len(attributes["traceId"]) == 32
       transform/service_name:
         error_mode: ignore
         trace_statements:
@@ -86,6 +193,16 @@ spec:
         endpoint: tempo:4317
         tls:
           insecure: true
+      otlphttp/loki:
+        # Loki native OTLP ingestion; service.name / k8s.* resource attributes become labels
+        endpoint: http://loki-gateway:80/otlp
+        tls:
+          insecure: true
+      otlphttp/openobserve-logs:
+        endpoint: http://openobserve:5080/api/default
+        headers:
+          Authorization: $${env:OPENOBSERVE_AUTH_HEADER}
+          stream-name: kubernetes
       otlphttp/openobserve:
         endpoint: http://openobserve:5080/api/default
         headers:
@@ -100,7 +217,12 @@ spec:
         remote_write_queue:
           num_consumers: 20
     service:
+      extensions: [file_storage]
       pipelines:
+        logs:
+          receivers: [filelog, otlp]
+          processors: [memory_limiter, k8sattributes, transform/logs_service_name, transform/logs_parse, batch]
+          exporters: [otlphttp/loki, otlphttp/openobserve-logs]
         traces:
           receivers: [otlp]
           processors: [memory_limiter, k8sattributes, transform/service_name, groupbyattrs, batch]

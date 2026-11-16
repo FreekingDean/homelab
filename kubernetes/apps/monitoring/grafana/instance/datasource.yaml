@@ -41,8 +41,17 @@ spec:
     url: http://loki-gateway:80/
     jsonData:
       derivedFields:
-        # Turn trace IDs in log lines (JSON or logfmt style) into a link to Tempo
+        # OTLP logs carry trace_id as structured metadata (set by SDKs or
+        # promoted by the collector from JSON/logfmt fields)
+        - name: trace_id
+          matcherType: label
+          matcherRegex: trace_id
+          datasourceUid: tempo
+          url: "$${__value.raw}"
+          urlDisplayLabel: View trace
+        # Fallback: trace IDs embedded in the raw log line
         - name: TraceID
+          matcherType: regex
           matcherRegex: '(?i)"?trace_?id"?\s*[:=]\s*"?([0-9a-f]{16,32})'
           datasourceUid: tempo
           url: "$${__value.raw}"
@@ -82,9 +91,9 @@ spec:
         filterByTraceID: false
         filterBySpanID: false
         customQuery: true
-        # Vector ships pod logs to Loki with kubernetes_namespace / kubernetes_pod labels;
-        # the otel collector's k8sattributes processor adds the matching span attributes.
-        query: '{kubernetes_namespace="$${__span.tags["k8s.namespace.name"]}", kubernetes_pod="$${__span.tags["k8s.pod.name"]}"}'
+        # Logs and spans both pass through the otel collector's k8sattributes
+        # processor, so k8s.* attributes match (Loki turns dots into underscores).
+        query: '{k8s_namespace_name="$${__span.tags["k8s.namespace.name"]}", k8s_pod_name="$${__span.tags["k8s.pod.name"]}"}'
       tracesToMetrics:
         datasourceUid: prometheus
         spanStartTimeShift: -5m

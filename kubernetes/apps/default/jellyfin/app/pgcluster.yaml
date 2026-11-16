@@ -12,7 +12,7 @@ spec:
       cpu: 4
   storage:
     size: 600Gi
-    storageClass: replica-block
+    storageClass: fast-replica-block
   postgresql:
     parameters:
       max_connections: "600"

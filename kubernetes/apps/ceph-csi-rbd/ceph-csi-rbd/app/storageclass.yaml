@@ -22,7 +22,7 @@ reclaimPolicy: Retain
 allowVolumeExpansion: true
 volumeBindingMode: Immediate
 ---
-# RBD on the Optane (device class nvme) OSDs. Pool: kubernetes-nvme-pool,
+# RBD on the Optane (device class nvme) OSDs. Pool: kubernetes-fast-replica-pool,
 # CRUSH rule replicated-nvme-chassis (created by hand on the Ceph side).
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
@@ -31,7 +31,7 @@ metadata:
 provisioner: rbd.csi.ceph.com
 parameters:
   clusterID: ceph
-  pool: kubernetes-nvme-pool
+  pool: kubernetes-fast-replica-pool
   imageFormat: "2"
   imageFeatures: layering,exclusive-lock,object-map,fast-diff,deep-flatten
   csi.storage.k8s.io/fstype: ext4

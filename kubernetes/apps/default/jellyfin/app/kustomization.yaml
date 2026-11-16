@@ -7,7 +7,6 @@ resources:
   - ./helmrelease.yaml
   - ./httproute.yaml
   - ./ocirepository.yaml
-  - ./pvc.yaml
   - ./pgcluster.yaml
   - ./grafanadashboard.yaml
 configMapGenerator:

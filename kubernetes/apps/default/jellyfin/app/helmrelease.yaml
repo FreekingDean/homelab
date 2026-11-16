@@ -171,7 +171,7 @@ spec:
     streaming:
       autoscaling:
         enabled: true
-        minReplicas: 2
+        minReplicas: 3
         maxReplicas: 8
       podDisruptionBudget:
         enabled: true
@@ -192,8 +192,8 @@ spec:
           memory: 1Gi
       autoscaling:
         enabled: true
-        minReplicas: 1
-        maxReplicas: 6
+        minReplicas: 2
+        maxReplicas: 40
       podDisruptionBudget:
         enabled: true
     web:

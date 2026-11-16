@@ -8,9 +8,6 @@ spec:
     enabled: false
   mode: daemonset
   image: otel/opentelemetry-collector-contrib:0.165.0
-  envFrom:
-    - secretRef:
-        name: openobserve
   hostNetwork: true
   # Root is needed to read /var/log/pods on the host (files are root-owned)
   podSecurityContext:
@@ -198,16 +195,6 @@ spec:
         endpoint: http://loki-gateway:80/otlp
         tls:
           insecure: true
-      otlphttp/openobserve-logs:
-        endpoint: http://openobserve:5080/api/default
-        headers:
-          Authorization: $${env:OPENOBSERVE_AUTH_HEADER}
-          stream-name: kubernetes
-      otlphttp/openobserve:
-        endpoint: http://openobserve:5080/api/default
-        headers:
-          Authorization: $${env:OPENOBSERVE_AUTH_HEADER}
-          stream-name: default
       prometheusremotewrite: 
         endpoint: http://kube-prometheus-stack-prometheus:9090/api/v1/write
         target_info:
@@ -222,7 +209,7 @@ spec:
         logs:
           receivers: [filelog, otlp]
           processors: [memory_limiter, k8sattributes, transform/logs_service_name, transform/logs_parse, batch]
-          exporters: [otlphttp/loki, otlphttp/openobserve-logs]
+          exporters: [otlphttp/loki]
         traces:
           receivers: [otlp]
           processors: [memory_limiter, k8sattributes, transform/service_name, groupbyattrs, batch]

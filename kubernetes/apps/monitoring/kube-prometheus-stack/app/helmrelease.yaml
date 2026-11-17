@@ -128,7 +128,8 @@ spec:
           keepIdentifyingResourceAttributes: true
         replicas: 1
         retention: 365d
-        retentionSize: 64GB
+        # Must stay below the 50Gi PVC or Prometheus fills the volume before pruning
+        retentionSize: 45GB
         enableAdminAPI: true
         walCompression: true
         ruleSelectorNilUsesHelmValues: false
@@ -141,7 +142,8 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: replica-block
+              # Optane-backed pool; TSDB compaction/queries were latency-bound on HDD
+              storageClassName: fast-replica-block
               resources:
                 requests:
                   storage: 50Gi

@@ -45,14 +45,10 @@ spec:
       root_url: https://grafana.deangalvin.dev
   deployment:
     spec:
-      strategy:
-        type: Recreate
+      # Stateless: datasources/dashboards come from CRs and users from Authentik,
+      # so /var/lib/grafana stays on the operator's default emptyDir.
       template:
         spec:
-          volumes:
-            - name: grafana-data-tmp
-              persistentVolumeClaim:
-                claimName: grafana-data-tmp
           containers:
           - name: grafana
             envFrom:

@@ -6,4 +6,3 @@ resources:
   - ./externalsecret.yaml
   - ./grafana.yaml
   - ./httproute.yaml
-  - ./pvc.yaml

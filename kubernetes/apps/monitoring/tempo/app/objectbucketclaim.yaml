@@ -1,0 +1,19 @@
+---
+apiVersion: objectstorage.k8s.io/v1alpha1
+kind: BucketClaim
+metadata:
+  name: tempo
+spec:
+  bucketClassName: ceph
+  protocols:
+    - s3
+---
+apiVersion: objectstorage.k8s.io/v1alpha1
+kind: BucketAccess
+metadata:
+  name: tempo
+spec:
+  bucketClaimName: tempo
+  bucketAccessClassName: ceph
+  credentialsSecretName: tempo-bucket-credentials
+  protocol: s3

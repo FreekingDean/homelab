@@ -135,5 +135,7 @@ spec:
               - local-blocks
     persistence:
       enabled: true
-      size: 100Gi
-      storageClassName: replica-block
+      # Only the WAL and metrics-generator blocks live here now (traces are in S3),
+      # on the Optane-backed pool
+      size: 20Gi
+      storageClassName: fast-replica-block

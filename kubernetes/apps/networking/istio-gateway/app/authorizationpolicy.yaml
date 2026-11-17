@@ -30,7 +30,6 @@ spec:
               - blog.arcolog.com
               - www.arcolog.com
               - authentik.deangalvin.dev
-              - authentik-media.deangalvin.dev
               - filebrowser.deangalvin.dev
               - flux-webhook.deangalvin.dev
               - glimmerlabs.io

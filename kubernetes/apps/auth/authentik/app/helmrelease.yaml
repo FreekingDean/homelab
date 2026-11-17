@@ -60,7 +60,8 @@ spec:
         # RGW is addressed by IP, so virtual-hosted style can't resolve.
         - name: AUTHENTIK_STORAGE__S3__ADDRESSING_STYLE
           value: path
-        # Presigned URLs are signed for the public RGW route (see rgw.yaml).
+        # Presigned URLs are signed for Authentik's own host; the gateway sends
+        # signed reads there on to RGW (see rgw.yaml).
         # custom_domain must include the bucket name for path-style buckets.
         - name: AUTHENTIK_STORAGE__S3__CUSTOM_DOMAIN
           value: file:///s3/custom_domain
@@ -111,7 +112,7 @@ spec:
             jq -r '.spec.secretS3.endpoint' "$info" | tr -d '\n' > /s3/endpoint
             jq -r '.spec.secretS3.accessKeyID' "$info" | tr -d '\n' > /s3/access_key
             jq -r '.spec.secretS3.accessSecretKey' "$info" | tr -d '\n' > /s3/secret_key
-            printf '%s' "authentik-media.deangalvin.dev/$bucket" > /s3/custom_domain
+            printf '%s' "authentik.deangalvin.dev/$bucket" > /s3/custom_domain
 
     server:
       replicas: 2

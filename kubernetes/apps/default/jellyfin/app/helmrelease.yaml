@@ -118,7 +118,7 @@ spec:
       autoscaling:
         enabled: true
         minReplicas: 2
-        maxReplicas: 40
+        maxReplicas: 10
       podDisruptionBudget:
         enabled: true
     web:

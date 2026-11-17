@@ -148,12 +148,20 @@ spec:
     backend:
       <<: *deployment_template
       replicas: 3
+      persistence:
+        # Optane-backed pool (WAL / compactor working dir); chunks live in S3
+        storageClass: fast-replica-block
+        size: 10Gi
     read:
       <<: *deployment_template
       replicas: 3
     write:
       <<: *deployment_template
       replicas: 3 # To ensure data durability with replication
+      persistence:
+        # Optane-backed pool (WAL / compactor working dir); chunks live in S3
+        storageClass: fast-replica-block
+        size: 10Gi
 
     gateway:
       service:

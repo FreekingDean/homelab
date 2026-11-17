@@ -1,10 +1,14 @@
 ---
+# Datasources carry fixed UIDs so they can link to each other (traces <-> logs <-> metrics).
+# spec.uid is immutable and can't be added to an existing CR, hence the "-ds" resource names.
+# Note: "$$" escapes Flux postBuild substitution; Grafana sees a single "$".
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadatasource_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDatasource
 metadata:
-  name: prometheus
+  name: prometheus-ds
 spec:
+  uid: prometheus
   instanceSelector:
     matchLabels:
       grafana.internal/instance: grafana
@@ -14,13 +18,19 @@ spec:
     access: proxy
     isDefault: true
     url: http://kube-prometheus-stack-prometheus:9090
+    jsonData:
+      exemplarTraceIdDestinations:
+        - name: trace_id
+          datasourceUid: tempo
+          urlDisplayLabel: View trace
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadatasource_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDatasource
 metadata:
-  name: loki
+  name: loki-ds
 spec:
+  uid: loki
   instanceSelector:
     matchLabels:
       grafana.internal/instance: grafana
@@ -29,13 +39,31 @@ spec:
     name: loki
     access: proxy
     url: http://loki-gateway:80/
+    jsonData:
+      derivedFields:
+        # OTLP logs carry trace_id as structured metadata (set by SDKs or
+        # promoted by the collector from JSON/logfmt fields)
+        - name: trace_id
+          matcherType: label
+          matcherRegex: trace_id
+          datasourceUid: tempo
+          url: "$${__value.raw}"
+          urlDisplayLabel: View trace
+        # Fallback: trace IDs embedded in the raw log line
+        - name: TraceID
+          matcherType: regex
+          matcherRegex: '(?i)"?trace_?id"?\s*[:=]\s*"?([0-9a-f]{16,32})'
+          datasourceUid: tempo
+          url: "$${__value.raw}"
+          urlDisplayLabel: View trace
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/grafana.integreatly.org/grafanadatasource_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDatasource
 metadata:
-  name: tempo
+  name: tempo-ds
 spec:
+  uid: tempo
   instanceSelector:
     matchLabels:
       grafana.internal/instance: grafana
@@ -44,3 +72,39 @@ spec:
     name: tempo
     access: proxy
     url: http://tempo:3200
+    jsonData:
+      # Service graph / RED metrics come from Tempo's metrics-generator via remote write
+      serviceMap:
+        datasourceUid: prometheus
+      nodeGraph:
+        enabled: true
+      search:
+        hide: false
+      traceQuery:
+        timeShiftEnabled: true
+        spanStartTimeShift: -30m
+        spanEndTimeShift: 30m
+      tracesToLogsV2:
+        datasourceUid: loki
+        spanStartTimeShift: -5m
+        spanEndTimeShift: 5m
+        filterByTraceID: false
+        filterBySpanID: false
+        customQuery: true
+        # Logs and spans both pass through the otel collector's k8sattributes
+        # processor, so k8s.* attributes match (Loki turns dots into underscores).
+        query: '{k8s_namespace_name="$${__span.tags["k8s.namespace.name"]}", k8s_pod_name="$${__span.tags["k8s.pod.name"]}"}'
+      tracesToMetrics:
+        datasourceUid: prometheus
+        spanStartTimeShift: -5m
+        spanEndTimeShift: 5m
+        tags:
+          - key: service.name
+            value: service
+        queries:
+          - name: Request rate
+            query: sum(rate(traces_spanmetrics_calls_total{$$__tags}[5m]))
+          - name: Error rate
+            query: sum(rate(traces_spanmetrics_calls_total{$$__tags, status_code="STATUS_CODE_ERROR"}[5m]))
+          - name: p95 latency
+            query: histogram_quantile(0.95, sum by (le) (rate(traces_spanmetrics_latency_bucket{$$__tags}[5m])))

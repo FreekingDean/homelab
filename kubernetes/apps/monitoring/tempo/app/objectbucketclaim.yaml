@@ -2,7 +2,7 @@
 apiVersion: objectstorage.k8s.io/v1alpha1
 kind: BucketClaim
 metadata:
-  name: openobserve
+  name: tempo
 spec:
   bucketClassName: ceph
   protocols:
@@ -11,9 +11,9 @@ spec:
 apiVersion: objectstorage.k8s.io/v1alpha1
 kind: BucketAccess
 metadata:
-  name: openobserve
+  name: tempo
 spec:
-  bucketClaimName: openobserve
+  bucketClaimName: tempo
   bucketAccessClassName: ceph
-  credentialsSecretName: openobserve-bucket-credentials
+  credentialsSecretName: tempo-bucket-credentials
   protocol: s3

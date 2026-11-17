@@ -6,12 +6,10 @@ resources:
   - ./grafana/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./loki/ks.yaml
-  - ./openobserve/ks.yaml
   - ./otel-collector/ks.yaml
   - ./otel-operator/ks.yaml
   - ./redfish-exporter/ks.yaml
   - ./tempo/ks.yaml
-  - ./vector/ks.yaml
 patches:
   - patch: |-
       - op: add

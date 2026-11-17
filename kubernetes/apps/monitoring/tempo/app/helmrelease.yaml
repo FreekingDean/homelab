@@ -25,9 +25,101 @@ spec:
       retries: 3
   uninstall:
     keepHistory: false
+  # The chart has no initContainers value; inject the COSI credential fetcher
+  # (same approach as Loki) with a post-render patch.
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: StatefulSet
+              name: tempo
+            patch: |
+              apiVersion: apps/v1
+              kind: StatefulSet
+              metadata:
+                name: tempo
+              spec:
+                template:
+                  spec:
+                    initContainers:
+                      - name: credential-fetcher
+                        # Tiny image that ships jq, used to parse the COSI BucketInfo JSON
+                        image: ghcr.io/home-operations/k8s-sidecar:2.14.3
+                        command: ["/bin/sh", "-c"]
+                        args:
+                          - |
+                            set -eu
+                            jq -r '
+                              "TEMPO_S3_BUCKET=\(.spec.bucketName | @sh)",
+                              "TEMPO_S3_ENDPOINT=\(.spec.secretS3.endpoint | sub("^https?://"; "") | @sh)",
+                              "TEMPO_S3_ACCESS_KEY_ID=\(.spec.secretS3.accessKeyID | @sh)",
+                              "TEMPO_S3_SECRET_ACCESS_KEY=\(.spec.secretS3.accessSecretKey | @sh)"
+                            ' /s3-secret/BucketInfo > /s3/config.env
+                        volumeMounts:
+                          - name: credential-fetcher
+                            mountPath: /s3
+                          - name: s3-credentials
+                            mountPath: /s3-secret
+                            readOnly: true
   values:
+    extraVolumes:
+      - name: credential-fetcher
+        emptyDir: {}
+      - name: s3-credentials
+        secret:
+          secretName: tempo-bucket-credentials
     tempo:
       retention: 168h
+      # Traces live in a Ceph RGW bucket (COSI); the PVC below only holds the
+      # WAL and metrics-generator blocks.
+      storage:
+        trace:
+          backend: s3
+          s3:
+            bucket: $${TEMPO_S3_BUCKET}
+            # Tempo wants host:port without a scheme (stripped by the init container)
+            endpoint: $${TEMPO_S3_ENDPOINT}
+            access_key: $${TEMPO_S3_ACCESS_KEY_ID}
+            secret_key: $${TEMPO_S3_SECRET_ACCESS_KEY}
+            insecure: true
+            # RGW is addressed by IP, so virtual-hosted style can't resolve
+            forcepathstyle: true
+          wal:
+            path: /var/tempo/wal
+      extraArgs:
+        config.expand-env: true
+      extraVolumeMounts:
+        - name: credential-fetcher
+          mountPath: /s3-credentials
+      extraEnv:
+        - name: TEMPO_S3_BUCKET
+          valueFrom:
+            fileKeyRef:
+              path: config.env
+              volumeName: credential-fetcher
+              key: TEMPO_S3_BUCKET
+              optional: false
+        - name: TEMPO_S3_ENDPOINT
+          valueFrom:
+            fileKeyRef:
+              path: config.env
+              volumeName: credential-fetcher
+              key: TEMPO_S3_ENDPOINT
+              optional: false
+        - name: TEMPO_S3_ACCESS_KEY_ID
+          valueFrom:
+            fileKeyRef:
+              path: config.env
+              volumeName: credential-fetcher
+              key: TEMPO_S3_ACCESS_KEY_ID
+              optional: false
+        - name: TEMPO_S3_SECRET_ACCESS_KEY
+          valueFrom:
+            fileKeyRef:
+              path: config.env
+              volumeName: credential-fetcher
+              key: TEMPO_S3_SECRET_ACCESS_KEY
+              optional: false
       metricsGenerator:
         enabled: true
         remoteWriteUrl: http://kube-prometheus-stack-prometheus:9090/api/v1/write

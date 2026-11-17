@@ -41,7 +41,7 @@ spec:
       extensionProviders:
         - name: otel
           opentelemetry:
-            service: otel-collector-opentelemetry-collector.monitoring.svc.cluster.local
+            service: otel-collector-collector.monitoring.svc.cluster.local
             port: 4317
     global:
       logAsJson: true

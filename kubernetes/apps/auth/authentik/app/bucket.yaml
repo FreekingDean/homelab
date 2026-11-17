@@ -1,0 +1,22 @@
+---
+# Authentik keeps all of its state in Postgres; uploaded files (media: icons,
+# logos, branding; reports: CSV exports) live in this Ceph RGW bucket instead
+# of a PVC, so the pods are stateless.
+apiVersion: objectstorage.k8s.io/v1alpha1
+kind: BucketClaim
+metadata:
+  name: authentik
+spec:
+  bucketClassName: ceph
+  protocols:
+    - s3
+---
+apiVersion: objectstorage.k8s.io/v1alpha1
+kind: BucketAccess
+metadata:
+  name: authentik
+spec:
+  bucketClaimName: authentik
+  bucketAccessClassName: ceph
+  credentialsSecretName: authentik-bucket-credentials
+  protocol: s3

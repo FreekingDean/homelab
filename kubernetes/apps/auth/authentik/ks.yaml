@@ -25,6 +25,7 @@ spec:
   dependsOn:
     - name: cluster-apps-authentik-secrets
     - name: cluster-apps-cloudnative-pg
+    - name: cluster-apps-ceph-cosi-system-classes
   path: ./kubernetes/apps/auth/authentik/app
   prune: true
   sourceRef:

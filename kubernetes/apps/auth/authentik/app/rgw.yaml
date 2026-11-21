@@ -1,0 +1,72 @@
+---
+# Authentik serves files as presigned S3 URLs that the browser fetches
+# directly. RGW is only on the LAN over plain HTTP, so the gateway forwards
+# signed reads on Authentik's hostname to it (see the HTTPRoute below).
+apiVersion: v1
+kind: Service
+metadata:
+  name: &app rgw
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+spec:
+  clusterIP: None
+  ports:
+    - name: http
+      port: &port 7480
+      protocol: TCP
+      targetPort: *port
+---
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: &app rgw
+  labels:
+    app.kubernetes.io/name: *app
+    app.kubernetes.io/instance: *app
+subsets:
+  - addresses:
+      - ip: 10.0.0.104
+    ports:
+      - name: http
+        port: 7480
+        protocol: TCP
+---
+# Signed object reads are served from Authentik's own hostname, so RGW gets no
+# hostname of its own and stays off the public allowlist. Only GET/HEAD
+# requests for media/report keys that carry an S3 presigned signature are sent
+# to RGW; everything else on this host still goes to authentik-server
+# (httproute.yaml). Objects are private, so a request without a valid
+# signature from Authentik is rejected by RGW.
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: authentik-files
+spec:
+  parentRefs:
+    - kind: ListenerSet
+      name: deangalvin-dev-listener-set
+      namespace: networking
+  hostnames:
+    - authentik.deangalvin.dev
+  rules:
+    - matches:
+        - path:
+            type: RegularExpression
+            value: "^/[a-z0-9.-]+/(media|reports)/public/.+"
+          method: GET
+          queryParams:
+            - type: RegularExpression
+              name: X-Amz-Signature
+              value: ".+"
+        - path:
+            type: RegularExpression
+            value: "^/[a-z0-9.-]+/(media|reports)/public/.+"
+          method: HEAD
+          queryParams:
+            - type: RegularExpression
+              name: X-Amz-Signature
+              value: ".+"
+      backendRefs:
+        - name: rgw
+          port: 7480

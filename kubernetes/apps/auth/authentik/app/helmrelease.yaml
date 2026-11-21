@@ -40,18 +40,46 @@ spec:
             secretKeyRef:
               name: postgres-authentik-app
               key: password
+        # Files (media + reports) go to the COSI bucket instead of a PVC.
+        # The bucket-credentials init container writes each value to a file
+        # under /s3, and authentik reads file:// config values at runtime.
+        - name: AUTHENTIK_STORAGE__BACKEND
+          value: s3
+        - name: AUTHENTIK_STORAGE__S3__ENDPOINT
+          value: file:///s3/endpoint
+        - name: AUTHENTIK_STORAGE__S3__BUCKET_NAME
+          value: file:///s3/bucket_name
+        - name: AUTHENTIK_STORAGE__S3__ACCESS_KEY
+          value: file:///s3/access_key
+        - name: AUTHENTIK_STORAGE__S3__SECRET_KEY
+          value: file:///s3/secret_key
+        - name: AUTHENTIK_STORAGE__S3__REGION
+          value: us-east-1
+        - name: AUTHENTIK_STORAGE__S3__USE_SSL
+          value: "false"
+        # RGW is addressed by IP, so virtual-hosted style can't resolve.
+        - name: AUTHENTIK_STORAGE__S3__ADDRESSING_STYLE
+          value: path
+        # Presigned URLs are signed for Authentik's own host; the gateway sends
+        # signed reads there on to RGW (see rgw.yaml).
+        # custom_domain must include the bucket name for path-style buckets.
+        - name: AUTHENTIK_STORAGE__S3__CUSTOM_DOMAIN
+          value: file:///s3/custom_domain
       envFrom:
         - secretRef:
             name: authentik-external
       volumeMounts:
-        - name: media
-          mountPath: /media
+        - name: s3-config
+          mountPath: /s3
+          readOnly: true
         - name: blueprints
           mountPath: /blueprints/custom
       volumes:
-        - name: media
-          persistentVolumeClaim:
-            claimName: authentik-media
+        - name: s3-config
+          emptyDir: {}
+        - name: s3-credentials
+          secret:
+            secretName: authentik-bucket-credentials
         - name: blueprints
           configMap:
             name: authentik-blueprints
@@ -64,8 +92,31 @@ spec:
     postgresql:
       enabled: false
 
+    _init_containers: &init_containers
+      - name: bucket-credentials
+        # Tiny image that ships jq, to split the COSI BucketInfo JSON into files
+        image: ghcr.io/home-operations/k8s-sidecar:2.14.3
+        volumeMounts:
+          - name: s3-config
+            mountPath: /s3
+          - name: s3-credentials
+            mountPath: /s3-secret
+            readOnly: true
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            set -eu
+            info=/s3-secret/BucketInfo
+            bucket="$(jq -r '.spec.bucketName' "$info")"
+            printf '%s' "$bucket" > /s3/bucket_name
+            jq -r '.spec.secretS3.endpoint' "$info" | tr -d '\n' > /s3/endpoint
+            jq -r '.spec.secretS3.accessKeyID' "$info" | tr -d '\n' > /s3/access_key
+            jq -r '.spec.secretS3.accessSecretKey' "$info" | tr -d '\n' > /s3/secret_key
+            printf '%s' "authentik.deangalvin.dev/$bucket" > /s3/custom_domain
+
     server:
       replicas: 2
+      initContainers: *init_containers
       ingress:
         enabled: false
       metrics:
@@ -75,6 +126,7 @@ spec:
 
     worker:
       replicas: 2
+      initContainers: *init_containers
       metrics:
         enabled: true
         serviceMonitor:

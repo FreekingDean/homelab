@@ -1,0 +1,43 @@
+---
+# Silo's blobs live in Ceph RGW instead of on a volume, so the API keeps no
+# state on disk. public: artwork, trickplay, markers, chapter images,
+# subtitles. private: avatars, diagnostics, job artifacts, backups.
+# Point these at the buckets from the first install: moving storage later is
+# a managed transition in Silo, not a values change.
+apiVersion: objectstorage.k8s.io/v1alpha1
+kind: BucketClaim
+metadata:
+  name: silo-public
+spec:
+  bucketClassName: ceph
+  protocols:
+    - s3
+---
+apiVersion: objectstorage.k8s.io/v1alpha1
+kind: BucketAccess
+metadata:
+  name: silo-public
+spec:
+  bucketClaimName: silo-public
+  bucketAccessClassName: ceph
+  credentialsSecretName: silo-public-bucket-credentials
+  protocol: s3
+---
+apiVersion: objectstorage.k8s.io/v1alpha1
+kind: BucketClaim
+metadata:
+  name: silo-private
+spec:
+  bucketClassName: ceph
+  protocols:
+    - s3
+---
+apiVersion: objectstorage.k8s.io/v1alpha1
+kind: BucketAccess
+metadata:
+  name: silo-private
+spec:
+  bucketClaimName: silo-private
+  bucketAccessClassName: ceph
+  credentialsSecretName: silo-private-bucket-credentials
+  protocol: s3

@@ -70,12 +70,24 @@ spec:
             persistentVolumeClaim:
               claimName: replica-media
 
-    # Stateless: nothing on disk outside the media mounts. The database holds
-    # the state. Needs the chart to support running the API without its data
-    # PVC (/config/silo as an emptyDir), which it can't do yet.
+    # Stateless: no PVC. Postgres and the two buckets hold the state; a
+    # restart loses only the plugin cache (rebuilt from Postgres) and the
+    # Jellyfin web client (reinstalled from admin settings).
     persistence:
       data:
         enabled: false
+    # The buckets come from COSI (bucket.yaml), whose credentials Secret is
+    # one BucketInfo JSON document rather than OBC-style keys. cosiSecret is
+    # a value the chart doesn't have yet: it would read the endpoint, bucket
+    # name and keys out of BucketInfo. RGW is addressed by IP, so path style.
+    objectStorage:
+      enabled: true
+      public:
+        cosiSecret: silo-public-bucket-credentials
+        pathStyle: true
+      private:
+        cosiSecret: silo-private-bucket-credentials
+        pathStyle: true
 
     metrics:
       enabled: true

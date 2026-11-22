@@ -1,0 +1,124 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: silo
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: ./charts/silo
+      reconcileStrategy: Revision
+      sourceRef:
+        kind: GitRepository
+        name: silo-charts
+  maxHistory: 3
+  install:
+    # First install waits on migrations, which can take a while.
+    timeout: 25m
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    timeout: 25m
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    # A checkout of the chart defaults to latest. Upstream publishes no
+    # semver tags, so pin a build.
+    image:
+      tag: build-1302
+
+    hostname: silo.${DOMAIN}
+    # jellyfin.deangalvin.dev already belongs to gojellyfin, so Silo's
+    # Jellyfin-compatible listener gets a name of its own.
+    jellyfin:
+      hostname: silo-jf.${DOMAIN}
+    timeZone: ${TIMEZONE}
+    # The Cilium pod network, as for gojellyfin.
+    trustedProxies:
+      - 10.201.0.0/16
+
+    secretKey:
+      existingSecret: silo
+    # CloudNativePG's app Secret already holds a full URI.
+    database:
+      existingSecret: postgres-silo-app
+      secretKey: uri
+    redis:
+      existingSecret: silo-redis
+    secretSettings:
+      existingSecret: silo-settings
+    settings:
+      SILO_SERVER_NAME: Silo
+      SILO_SIGNUP_ENABLED: "false"
+
+    # The same media at the same paths as gojellyfin, so both servers see one
+    # library.
+    media:
+      mountPath: /ec-media
+      volume:
+        persistentVolumeClaim:
+          claimName: ec-media
+      extraVolumes:
+        - name: replica-media
+          mountPath: /media
+          volume:
+            persistentVolumeClaim:
+              claimName: replica-media
+
+    # Stateless: no PVC. Postgres and the two buckets hold the state; a
+    # restart loses only the plugin cache (rebuilt from Postgres) and the
+    # Jellyfin web client (reinstalled from admin settings).
+    persistence:
+      data:
+        enabled: false
+    # The buckets come from COSI (bucket.yaml). cosiSecret names each
+    # BucketAccess's credentials Secret; an init container on the API pods
+    # reads the endpoint, bucket name and keys out of its BucketInfo. RGW is
+    # addressed by IP, so path style.
+    objectStorage:
+      enabled: true
+      public:
+        cosiSecret: silo-public-bucket-credentials
+        pathStyle: true
+      private:
+        cosiSecret: silo-private-bucket-credentials
+        pathStyle: true
+
+    metrics:
+      enabled: true
+
+    # Out of the mesh, like gojellyfin: the gateway talks to the pods
+    # directly and streams skip the waypoint.
+    pod:
+      labels:
+        istio.io/use-waypoint: none
+        istio.io/dataplane-mode: none
+    service:
+      labels:
+        istio.io/use-waypoint: none
+
+    api:
+      resources:
+        requests:
+          cpu: 1
+          memory: 2Gi
+        limits:
+          memory: 8Gi
+      autoscaling:
+        enabled: true
+        minReplicas: 2
+        maxReplicas: 4
+      podDisruptionBudget:
+        enabled: true
+
+    httpRoute:
+      enabled: true
+      parentRefs:
+        - kind: ListenerSet
+          name: deangalvin-dev-listener-set
+          namespace: networking

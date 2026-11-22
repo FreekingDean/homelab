@@ -116,32 +116,6 @@ spec:
       podDisruptionBudget:
         enabled: true
 
-    # Playback egress. Each pod is published as silo-proxy-<n>.deangalvin.dev,
-    # which the *.deangalvin.dev listener and certificate already cover and
-    # external-dns picks up from the HTTPRoutes.
-    proxy:
-      enabled: true
-      replicas: 2
-      domain: ${DOMAIN}
-      podDisruptionBudget:
-        enabled: true
-
-    # CPU-only encode nodes: the cluster has no GPU device plugin. Keys come
-    # from the silo-transcode-keys ExternalSecret, one per pod.
-    transcode:
-      enabled: true
-      replicas: 2
-      keys:
-        existingSecret: silo-transcode-keys
-      resources:
-        requests:
-          cpu: 4
-          memory: 2Gi
-        limits:
-          memory: 8Gi
-      podDisruptionBudget:
-        enabled: true
-
     httpRoute:
       enabled: true
       parentRefs:

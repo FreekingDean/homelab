@@ -11,9 +11,9 @@ spec:
   primaryUpdateStrategy: unsupervised
   postgresql:
     parameters:
-      # Silo opens up to 20 connections per process: 2 API pods and 2 proxies
-      # here, with room to autoscale and for admin sessions.
-      max_connections: "300"
+      # Silo opens up to 20 connections per process: up to 4 API pods here,
+      # plus room for admin sessions.
+      max_connections: "200"
       shared_buffers: 1GB
       pg_stat_statements.max: "10000"
   bootstrap:

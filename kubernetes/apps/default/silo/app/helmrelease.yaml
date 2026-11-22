@@ -55,13 +55,6 @@ spec:
     settings:
       SILO_SERVER_NAME: Silo
       SILO_SIGNUP_ENABLED: "false"
-      # Silo only learns about media by scanning, so let the arrs drive it:
-      # no filesystem watcher here. Sonarr and Radarr are autoscan sources
-      # (admin UI), whose webhooks scan only the folder that changed:
-      #   http://silo.default.svc.cluster.local/api/v2/autoscan/webhooks/<token>
-      # The daily full scan (scan_libraries) has no env var; its schedule is
-      # set in Admin > Tasks.
-      SILO_SCANNER_REALTIME_MONITORING: "false"
 
     # The same media at the same paths as gojellyfin, so both servers see one
     # library.

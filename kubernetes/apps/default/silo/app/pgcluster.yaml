@@ -1,0 +1,34 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres-silo
+spec:
+  instances: 3
+  # CloudNativePG's standard images ship pgvector. Silo needs PostgreSQL 18
+  # at most (its image's pg_dump is 18).
+  imageName: ghcr.io/cloudnative-pg/postgresql:16.6
+  primaryUpdateStrategy: unsupervised
+  postgresql:
+    parameters:
+      # Silo opens up to 20 connections per process: 2 API pods and 2 proxies
+      # here, with room to autoscale and for admin sessions.
+      max_connections: "300"
+      shared_buffers: 1GB
+      pg_stat_statements.max: "10000"
+  bootstrap:
+    initdb:
+      database: silo
+      owner: silo
+      # The app role CloudNativePG creates is not a superuser, and vector is
+      # not a trusted extension, so create the three Silo needs here, as the
+      # superuser, before it migrates.
+      postInitApplicationSQL:
+        - CREATE EXTENSION IF NOT EXISTS vector;
+        - CREATE EXTENSION IF NOT EXISTS pg_trgm;
+        - CREATE EXTENSION IF NOT EXISTS citext;
+  storage:
+    size: 50Gi
+    storageClass: fast-replica-block
+  monitoring:
+    enablePodMonitor: true

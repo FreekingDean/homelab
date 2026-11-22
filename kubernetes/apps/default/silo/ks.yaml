@@ -1,0 +1,28 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app cluster-apps-silo
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cluster-apps-ceph-csi-rbd
+    - name: cluster-apps-ceph-csi-cephfs
+    - name: cluster-apps-media
+    - name: cluster-apps-redis
+  path: ./kubernetes/apps/default/silo/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: silo
+      namespace: default
+  interval: 30m
+  retryInterval: 1m
+  # The API runs migrations before it turns Ready, and the chart's startup
+  # probe allows up to 22.5 minutes for them on a first install.
+  timeout: 25m

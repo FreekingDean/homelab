@@ -1,0 +1,15 @@
+---
+# /config/silo on every API pod: artwork, plugins and the Jellyfin web client.
+# Two API pods share it, so it has to be CephFS (ReadWriteMany) rather than
+# replica-block, which also means the volsync component (RBD snapshots) does
+# not cover it.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: silo-data
+spec:
+  accessModes: ["ReadWriteMany"]
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: replica-cephfs

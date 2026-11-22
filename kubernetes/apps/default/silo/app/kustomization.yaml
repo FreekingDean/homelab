@@ -1,0 +1,20 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./externalsecret.yaml
+  - ./gitrepository.yaml
+  - ./helmrelease.yaml
+  - ./pgcluster.yaml
+  - ./podmonitor.yaml
+  - ./pvc.yaml
+secretGenerator:
+  # The shared Redis in default runs without auth, so this holds no secret.
+  # The chart only reads REDIS_URL from a Secret, hence the generator.
+  # DB 4 keeps Silo's keys apart from the other apps on that Redis.
+  - name: silo-redis
+    literals:
+      - REDIS_URL=redis://redis-master.default.svc.cluster.local:6379/4
+generatorOptions:
+  disableNameSuffixHash: true

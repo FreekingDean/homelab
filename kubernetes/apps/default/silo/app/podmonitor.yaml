@@ -1,0 +1,15 @@
+---
+# The chart opens /metrics (metrics.enabled) but renders no ServiceMonitor or
+# PodMonitor, so scrape every Silo pod here.
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: silo
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: silo
+      app.kubernetes.io/name: silo
+  podMetricsEndpoints:
+    - port: metrics
+      path: /metrics

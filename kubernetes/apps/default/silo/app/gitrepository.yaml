@@ -1,0 +1,31 @@
+---
+# The charts are not published yet, so Flux builds this one from the branch of
+# FreekingDean/silo-charts#1. Once that PR merges and the release workflow
+# pushes v0.1.0, swap this for an OCIRepository like gojellyfin's:
+#
+#   apiVersion: source.toolkit.fluxcd.io/v1
+#   kind: OCIRepository
+#   metadata:
+#     name: silo
+#   spec:
+#     interval: 15m
+#     layerSelector:
+#       mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+#       operation: copy
+#     ref:
+#       tag: 0.1.0
+#     url: oci://ghcr.io/freekingdean/charts/silo
+#
+# and point the HelmRelease at it with chartRef.
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: silo-charts
+spec:
+  interval: 15m
+  url: https://github.com/FreekingDean/silo-charts
+  ref:
+    branch: claude/project-thread-lwf282
+  ignore: |
+    /*
+    !/charts/silo

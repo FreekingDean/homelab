@@ -70,12 +70,12 @@ spec:
             persistentVolumeClaim:
               claimName: replica-media
 
+    # Stateless: nothing on disk outside the media mounts. The database holds
+    # the state. Needs the chart to support running the API without its data
+    # PVC (/config/silo as an emptyDir), which it can't do yet.
     persistence:
       data:
-        existingClaim: silo-data
-        # existingClaim is not enough for the chart to know the claim is
-        # shared: it checks accessModes before it lets api run 2 pods.
-        accessModes: [ReadWriteMany]
+        enabled: false
 
     metrics:
       enabled: true

@@ -8,7 +8,6 @@ resources:
   - ./helmrelease.yaml
   - ./pgcluster.yaml
   - ./podmonitor.yaml
-  - ./pvc.yaml
 secretGenerator:
   # The shared Redis in default runs without auth, so this holds no secret.
   # The chart only reads REDIS_URL from a Secret, hence the generator.

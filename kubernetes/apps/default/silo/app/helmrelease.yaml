@@ -76,10 +76,10 @@ spec:
     persistence:
       data:
         enabled: false
-    # The buckets come from COSI (bucket.yaml), whose credentials Secret is
-    # one BucketInfo JSON document rather than OBC-style keys. cosiSecret is
-    # a value the chart doesn't have yet: it would read the endpoint, bucket
-    # name and keys out of BucketInfo. RGW is addressed by IP, so path style.
+    # The buckets come from COSI (bucket.yaml). cosiSecret names each
+    # BucketAccess's credentials Secret; an init container on the API pods
+    # reads the endpoint, bucket name and keys out of its BucketInfo. RGW is
+    # addressed by IP, so path style.
     objectStorage:
       enabled: true
       public:

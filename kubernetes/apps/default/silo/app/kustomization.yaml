@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   - ./bucket.yaml
   - ./externalsecret.yaml
-  - ./gitrepository.yaml
+  - ./ocirepository.yaml
   - ./helmrelease.yaml
   - ./pgcluster.yaml
   - ./podmonitor.yaml

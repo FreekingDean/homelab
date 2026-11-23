@@ -6,13 +6,9 @@ metadata:
   name: silo
 spec:
   interval: 15m
-  chart:
-    spec:
-      chart: ./charts/silo
-      reconcileStrategy: Revision
-      sourceRef:
-        kind: GitRepository
-        name: silo-charts
+  chartRef:
+    kind: OCIRepository
+    name: silo
   maxHistory: 3
   install:
     # First install waits on migrations, which can take a while.
@@ -27,8 +23,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    # A checkout of the chart defaults to latest. Upstream publishes no
-    # semver tags, so pin a build.
+    # Upstream publishes no semver tags, so pin a build.
     image:
       tag: build-1302
 

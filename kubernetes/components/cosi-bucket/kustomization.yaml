@@ -1,0 +1,36 @@
+---
+# Flattens one COSI bucket's credentials into a plain Secret.
+#
+# A v1alpha1 BucketAccess writes its credentials as one BucketInfo JSON
+# document, which apps can't read with secretKeyRef. This component reads
+# that document with External Secrets (Kubernetes provider) and writes
+# ${COSI_BUCKET}-bucket-s3 with one key per value, named the way COSI
+# v1alpha2 names them:
+#
+#   BUCKET_NAME, AWS_ENDPOINT_URL, AWS_DEFAULT_REGION,
+#   AWS_S3_ADDRESSING_STYLE, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+#
+# plus S3_ENDPOINT_HOST (the endpoint without its scheme), which is ours, not
+# COSI's, for clients that want host:port.
+#
+# Once COSI v1alpha2 is running, the BucketAccess Secret holds those keys
+# itself: drop this component and point apps at that Secret instead.
+#
+# The BucketClaim and BucketAccess stay with the app. Use from a Flux
+# Kustomization:
+#
+#   components:
+#     - ../../../../components/cosi-bucket
+#   postBuild:
+#     substitute:
+#       COSI_BUCKET: loki            # the BucketAccess's name
+#       COSI_NAMESPACE: monitoring   # the namespace it lives in
+#
+# The BucketAccess's credentialsSecretName must be
+# ${COSI_BUCKET}-bucket-credentials.
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+resources:
+  - ./rbac.yaml
+  - ./secretstore.yaml
+  - ./externalsecret.yaml

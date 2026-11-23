@@ -28,7 +28,7 @@ spec:
   # up chart changes only when this file changes.
   ref:
     branch: claude/project-thread-lwf282
-    commit: 80c9356248858189fe2e06a217d1127023d9d49d
+    commit: fa1785081c1914894a39263593bffd0f1ba1b733
   ignore: |
     /*
     !/charts/silo

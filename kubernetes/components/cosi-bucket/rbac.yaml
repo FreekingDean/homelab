@@ -1,0 +1,29 @@
+---
+# The SecretStore authenticates as this ServiceAccount, which can read only
+# the one BucketAccess Secret.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ${COSI_BUCKET}-cosi-reader
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: ${COSI_BUCKET}-cosi-reader
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    resourceNames: ["${COSI_BUCKET}-bucket-credentials"]
+    verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: ${COSI_BUCKET}-cosi-reader
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: ${COSI_BUCKET}-cosi-reader
+subjects:
+  - kind: ServiceAccount
+    name: ${COSI_BUCKET}-cosi-reader

@@ -55,9 +55,6 @@ spec:
     settings:
       SILO_SERVER_NAME: Silo
       SILO_SIGNUP_ENABLED: "false"
-      SILO_ARTWORK_STORAGE: s3
-      SILO_S3_PUBLIC_PATH_STYLE: "true"
-      SILO_S3_PRIVATE_PATH_STYLE: "true"
 
     # The same media at the same paths as gojellyfin, so both servers see one
     # library.
@@ -79,6 +76,17 @@ spec:
     persistence:
       data:
         enabled: false
+    # The buckets come from COSI (bucket.yaml). The cosi-bucket component
+    # (ks.yaml) flattens each BucketAccess Secret into silo-<bucket>-bucket-s3
+    # with COSI v1alpha2 key names, which the chart reads by default. RGW is
+    # addressed by IP, so path style (the chart's default).
+    objectStorage:
+      enabled: true
+      public:
+        existingSecret: silo-public-bucket-s3
+      private:
+        existingSecret: silo-private-bucket-s3
+
     metrics:
       enabled: true
 
@@ -93,61 +101,6 @@ spec:
         istio.io/use-waypoint: none
 
     api:
-      # The buckets come from COSI (bucket.yaml). The cosi-bucket component
-      # (ks.yaml) flattens each BucketAccess Secret into silo-<bucket>-bucket-s3,
-      # so the API reads every value with secretKeyRef. RGW is addressed by IP,
-      # so path style (settings above).
-      env:
-        - name: SILO_S3_PUBLIC_ENDPOINT
-          valueFrom:
-            secretKeyRef:
-              name: silo-public-bucket-s3
-              key: AWS_ENDPOINT_URL
-        - name: SILO_S3_PUBLIC_BUCKET
-          valueFrom:
-            secretKeyRef:
-              name: silo-public-bucket-s3
-              key: BUCKET_NAME
-        - name: SILO_S3_PUBLIC_REGION
-          valueFrom:
-            secretKeyRef:
-              name: silo-public-bucket-s3
-              key: AWS_DEFAULT_REGION
-        - name: SILO_S3_PUBLIC_ACCESS_KEY
-          valueFrom:
-            secretKeyRef:
-              name: silo-public-bucket-s3
-              key: AWS_ACCESS_KEY_ID
-        - name: SILO_S3_PUBLIC_SECRET_KEY
-          valueFrom:
-            secretKeyRef:
-              name: silo-public-bucket-s3
-              key: AWS_SECRET_ACCESS_KEY
-        - name: SILO_S3_PRIVATE_ENDPOINT
-          valueFrom:
-            secretKeyRef:
-              name: silo-private-bucket-s3
-              key: AWS_ENDPOINT_URL
-        - name: SILO_S3_PRIVATE_BUCKET
-          valueFrom:
-            secretKeyRef:
-              name: silo-private-bucket-s3
-              key: BUCKET_NAME
-        - name: SILO_S3_PRIVATE_REGION
-          valueFrom:
-            secretKeyRef:
-              name: silo-private-bucket-s3
-              key: AWS_DEFAULT_REGION
-        - name: SILO_S3_PRIVATE_ACCESS_KEY
-          valueFrom:
-            secretKeyRef:
-              name: silo-private-bucket-s3
-              key: AWS_ACCESS_KEY_ID
-        - name: SILO_S3_PRIVATE_SECRET_KEY
-          valueFrom:
-            secretKeyRef:
-              name: silo-private-bucket-s3
-              key: AWS_SECRET_ACCESS_KEY
       resources:
         requests:
           cpu: 1

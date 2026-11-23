@@ -52,6 +52,13 @@ spec:
       existingSecret: silo-redis
     secretSettings:
       existingSecret: silo-settings
+    settings:
+      SILO_SERVER_NAME: Silo
+      SILO_SIGNUP_ENABLED: "false"
+      SILO_ARTWORK_STORAGE: s3
+      SILO_S3_PUBLIC_PATH_STYLE: "true"
+      SILO_S3_PRIVATE_PATH_STYLE: "true"
+
     # The same media at the same paths as gojellyfin, so both servers see one
     # library.
     media:
@@ -72,22 +79,6 @@ spec:
     persistence:
       data:
         enabled: false
-    # The buckets come from COSI (bucket.yaml). Each BucketAccess writes one
-    # Secret holding a BucketInfo JSON document with a generated bucket name,
-    # so the s3-env init container below unpacks both into an env file, and
-    # the API reads each value from it with fileKeyRef (the cluster runs with
-    # the EnvFiles feature gate). The env file format only takes single-quoted
-    # values with no escapes, so a value holding ' fails the init container.
-    # RGW is addressed by IP, so path style.
-    settings:
-      SILO_SERVER_NAME: Silo
-      SILO_SIGNUP_ENABLED: "false"
-      SILO_ARTWORK_STORAGE: s3
-      SILO_S3_PUBLIC_REGION: us-east-1
-      SILO_S3_PUBLIC_PATH_STYLE: "true"
-      SILO_S3_PRIVATE_REGION: us-east-1
-      SILO_S3_PRIVATE_PATH_STYLE: "true"
-
     metrics:
       enabled: true
 
@@ -102,108 +93,61 @@ spec:
         istio.io/use-waypoint: none
 
     api:
-      pod:
-        initContainers:
-          - name: s3-env
-            image: docker.io/mikefarah/yq:4.54.1
-            command: ["/bin/sh", "-c"]
-            args:
-              - |
-                set -eu
-                out=/run/s3/s3.env
-                : > "$out"
-                put() {
-                  v="$(yq -p json -o json -r "$3 // \"\"" "$1")"
-                  if [ -z "$v" ]; then
-                    echo "$1 has no $3" >&2
-                    exit 1
-                  fi
-                  case "$v" in
-                    *"'"*) echo "$1: $3 holds a single quote" >&2; exit 1 ;;
-                  esac
-                  printf "%s='%s'\n" "$2" "$v" >> "$out"
-                }
-                for b in public private; do
-                  f="/cosi/$b/BucketInfo"
-                  p="SILO_S3_$(echo "$b" | tr a-z A-Z)"
-                  put "$f" "$p"_ENDPOINT .spec.secretS3.endpoint
-                  put "$f" "$p"_BUCKET .spec.bucketName
-                  put "$f" "$p"_ACCESS_KEY .spec.secretS3.accessKeyID
-                  put "$f" "$p"_SECRET_KEY .spec.secretS3.accessSecretKey
-                done
-            securityContext:
-              allowPrivilegeEscalation: false
-              capabilities:
-                drop: [ALL]
-            volumeMounts:
-              - name: s3-env
-                mountPath: /run/s3
-              - name: cosi-public
-                mountPath: /cosi/public
-                readOnly: true
-              - name: cosi-private
-                mountPath: /cosi/private
-                readOnly: true
-      extraVolumes:
-        - name: s3-env
-          emptyDir:
-            medium: Memory
-            sizeLimit: 1Mi
-        - name: cosi-public
-          secret:
-            secretName: silo-public-bucket-credentials
-        - name: cosi-private
-          secret:
-            secretName: silo-private-bucket-credentials
+      # The buckets come from COSI (bucket.yaml). The cosi-bucket component
+      # (ks.yaml) flattens each BucketAccess Secret into silo-<bucket>-bucket-s3,
+      # so the API reads every value with secretKeyRef. RGW is addressed by IP,
+      # so path style (settings above).
       env:
         - name: SILO_S3_PUBLIC_ENDPOINT
           valueFrom:
-            fileKeyRef:
-              volumeName: s3-env
-              path: s3.env
-              key: SILO_S3_PUBLIC_ENDPOINT
+            secretKeyRef:
+              name: silo-public-bucket-s3
+              key: AWS_ENDPOINT_URL
         - name: SILO_S3_PUBLIC_BUCKET
           valueFrom:
-            fileKeyRef:
-              volumeName: s3-env
-              path: s3.env
-              key: SILO_S3_PUBLIC_BUCKET
+            secretKeyRef:
+              name: silo-public-bucket-s3
+              key: BUCKET_NAME
+        - name: SILO_S3_PUBLIC_REGION
+          valueFrom:
+            secretKeyRef:
+              name: silo-public-bucket-s3
+              key: AWS_DEFAULT_REGION
         - name: SILO_S3_PUBLIC_ACCESS_KEY
           valueFrom:
-            fileKeyRef:
-              volumeName: s3-env
-              path: s3.env
-              key: SILO_S3_PUBLIC_ACCESS_KEY
+            secretKeyRef:
+              name: silo-public-bucket-s3
+              key: AWS_ACCESS_KEY_ID
         - name: SILO_S3_PUBLIC_SECRET_KEY
           valueFrom:
-            fileKeyRef:
-              volumeName: s3-env
-              path: s3.env
-              key: SILO_S3_PUBLIC_SECRET_KEY
+            secretKeyRef:
+              name: silo-public-bucket-s3
+              key: AWS_SECRET_ACCESS_KEY
         - name: SILO_S3_PRIVATE_ENDPOINT
           valueFrom:
-            fileKeyRef:
-              volumeName: s3-env
-              path: s3.env
-              key: SILO_S3_PRIVATE_ENDPOINT
+            secretKeyRef:
+              name: silo-private-bucket-s3
+              key: AWS_ENDPOINT_URL
         - name: SILO_S3_PRIVATE_BUCKET
           valueFrom:
-            fileKeyRef:
-              volumeName: s3-env
-              path: s3.env
-              key: SILO_S3_PRIVATE_BUCKET
+            secretKeyRef:
+              name: silo-private-bucket-s3
+              key: BUCKET_NAME
+        - name: SILO_S3_PRIVATE_REGION
+          valueFrom:
+            secretKeyRef:
+              name: silo-private-bucket-s3
+              key: AWS_DEFAULT_REGION
         - name: SILO_S3_PRIVATE_ACCESS_KEY
           valueFrom:
-            fileKeyRef:
-              volumeName: s3-env
-              path: s3.env
-              key: SILO_S3_PRIVATE_ACCESS_KEY
+            secretKeyRef:
+              name: silo-private-bucket-s3
+              key: AWS_ACCESS_KEY_ID
         - name: SILO_S3_PRIVATE_SECRET_KEY
           valueFrom:
-            fileKeyRef:
-              volumeName: s3-env
-              path: s3.env
-              key: SILO_S3_PRIVATE_SECRET_KEY
+            secretKeyRef:
+              name: silo-private-bucket-s3
+              key: AWS_SECRET_ACCESS_KEY
       resources:
         requests:
           cpu: 1

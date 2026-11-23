@@ -82,6 +82,11 @@ spec:
     # addressed by IP, so path style.
     objectStorage:
       enabled: true
+      # The cluster runs with the EnvFiles feature gate (Talos config), so the
+      # endpoint and bucket are read from the init container's env file with
+      # fileKeyRef and silo starts without a shell wrapper.
+      cosi:
+        envFiles: true
       public:
         cosiSecret: silo-public-bucket-credentials
         pathStyle: true

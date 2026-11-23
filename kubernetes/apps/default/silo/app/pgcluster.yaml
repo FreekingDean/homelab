@@ -5,9 +5,10 @@ metadata:
   name: postgres-silo
 spec:
   instances: 3
-  # CloudNativePG's standard images ship pgvector. Silo needs PostgreSQL 18
-  # at most (its image's pg_dump is 18).
-  imageName: ghcr.io/cloudnative-pg/postgresql:16.6
+  # Silo's schema migration sets transaction_timeout, which PostgreSQL only
+  # has from 17, and its image's pg_dump is 18, so it needs exactly 18. The
+  # standard images ship pgvector.
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.7-standard-trixie
   primaryUpdateStrategy: unsupervised
   postgresql:
     parameters:

@@ -1,0 +1,8 @@
+---
+# Empty on purpose: the cluster-apps-silo-*-bucket-s3 Kustomizations (ks.yaml)
+# render only the cosi-bucket component here, once per bucket, because the
+# component takes one bucket per Flux Kustomization. The BucketClaims and
+# BucketAccesses stay in app/bucket.yaml.
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources: []

@@ -11,6 +11,8 @@ spec:
     - name: cluster-apps-ceph-csi-cephfs
     - name: cluster-apps-media
     - name: cluster-apps-redis
+    - name: cluster-apps-silo-public-bucket-s3
+    - name: cluster-apps-silo-private-bucket-s3
   path: ./kubernetes/apps/default/silo/app
   prune: true
   sourceRef:
@@ -26,3 +28,51 @@ spec:
   # The API runs migrations before it turns Ready, and the chart's startup
   # probe allows up to 22.5 minutes for them on a first install.
   timeout: 25m
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-silo-public-bucket-s3
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cluster-apps-external-secrets
+  path: ./kubernetes/apps/default/silo/bucket-secrets
+  components:
+    - ../../../../components/cosi-bucket
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
+  postBuild:
+    substitute:
+      COSI_BUCKET: silo-public
+      COSI_NAMESPACE: default
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-apps-silo-private-bucket-s3
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cluster-apps-external-secrets
+  path: ./kubernetes/apps/default/silo/bucket-secrets
+  components:
+    - ../../../../components/cosi-bucket
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+  interval: 30m
+  retryInterval: 1m
+  timeout: 3m
+  postBuild:
+    substitute:
+      COSI_BUCKET: silo-private
+      COSI_NAMESPACE: default

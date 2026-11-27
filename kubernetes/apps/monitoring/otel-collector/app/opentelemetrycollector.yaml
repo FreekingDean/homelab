@@ -7,7 +7,7 @@ spec:
   networkPolicy:
     enabled: false
   mode: daemonset
-  image: otel/opentelemetry-collector-contrib:0.165.0
+  image: otel/opentelemetry-collector-contrib:0.166.0
   hostNetwork: true
   # Root is needed to read /var/log/pods on the host (files are root-owned)
   podSecurityContext:
